@@ -4,7 +4,8 @@
   "description": "Pokemon Showdown - Node Client",
   "main": "connect.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "nodemon --exec babel-node connect.js"
   },
   "keywords": [
     "pokemon"
@@ -14,6 +15,10 @@
   "dependencies": {
     "websockets": "~0.2.0",
     "ws": "~0.8.0",
-    "request": "~2.61.0"
+    "request": "~2.61.0",
+    "babel": "~5.8.23"
+  },
+  "devDependencies": {
+    "nodemon": "~1.4.1"
   }
 }

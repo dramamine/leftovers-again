@@ -13,14 +13,18 @@ ws.on('open', function() {
 
 ws.on('message', function(msg) {
   console.log('received: %s', msg);
-  return handleMessage(msg);
+  var messages = msg.split('\n');
+  for(var i=0; i<messages.length; i++) {
+    handleMessage(messages[i]);
+  };
 });
 
 ActionUrl = url.parse('https://play.pokemonshowdown.com/~~' + 'localhost:8000' + '/action.php');
 
 Config = {
-  nick: '5nowden5320',
-  pass: ''
+  nick: '5nowden' + Math.floor(Math.random() * 10000),
+  chatroom: 'lobby',
+  battletype: 'randombattle'
 };
 
 toId = function(text) {
@@ -34,12 +38,17 @@ handleMessage = function(message) {
     case 'updateuser':
       if (spl[2] !== Config.nick) {
         console.log('nickname was ', spl[2], ' expecting ', Config.nick);
+        return;
       }
       if (spl[3] !== '1') {
         console.error('failed to log in, still guest');
+        return;
       }
       console.log('logged in as ' + spl[2]);
-      return console.log('would send', '|/blockchallenges');
+
+      ws.send('|/join ' + Config.chatroom);
+      break;
+      // return console.log('would send', '|/blockchallenges');
     case 'challstr':
       console.info('received challstr, logging in...');
       id = spl[2];
@@ -114,7 +123,52 @@ handleMessage = function(message) {
         req.write(data);
       }
       return req.end();
+    case 'j':
+    case 'l':
+    case ':':
+    case 'init':
+      break;
+      // this is a multiline message.
+      // message.split('\n');
+      // break;
+    case 'users':
+      var userList = spl[2].split(', ');
+      for(var i=1; i<userList.length; i++) {
+        console.log('THE REAL LIST: ' + userList[i]);
+        ws.send('|/challenge ' + userList[i] + ', ' + Config.battletype);
+      }
+      break;
+    case 'updatechallenges':
+      var challenges = JSON.parse(spl[2]);
+      console.log(challenges);
+      for (let username in challenges.challengesFrom) {
+        // only accept battles of the type we're designed for
+        if (challenges.challengesFrom[username] == Config.battletype) {
+          // this is the point at which we need to pick a team!
+          // TODO use promises here to maybe wait for user to pick a team
+          // team message is: /utm ('use team')
+          ws.send('|/accept ' + username);
+        }
+      }
     default:
       return console.log('not really handling message', spl[1]);
   }
 };
+
+
+
+function exitHandler(options, err) {
+    if (options.cleanup) console.log('clean');
+    if (err) console.log(err.stack);
+    ws.close();
+    if (options.exit) process.exit();
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
