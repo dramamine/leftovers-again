@@ -4,7 +4,7 @@
   "description": "Pokemon Showdown - Node Client",
   "main": "connect.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "develop": "nodemon --exec babel-node connect.js"
   },
   "keywords": [
@@ -13,12 +13,22 @@
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "websockets": "~0.2.0",
-    "ws": "~0.8.0",
+    "babel": "~5.8.23",
+    "eslint": "^1.3.1",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-jasmine": "^0.3.6",
+    "mocha": "^2.3.0",
     "request": "~2.61.0",
-    "babel": "~5.8.23"
+    "websockets": "~0.2.0",
+    "ws": "~0.8.0"
   },
   "devDependencies": {
-    "nodemon": "~1.4.1"
+    "jasmine": "^2.3.2",
+    "karma-babel-preprocessor": "^5.2.2",
+    "karma-coverage": "^0.5.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "nodemon": "~1.4.1",
+    "phantomjs": "^1.9.18"
   }
 }

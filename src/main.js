@@ -25,9 +25,6 @@ const Config = {
   battletype: 'randombattle'
 };
 
-const toId = function(text) {
-  return text.toLowerCase().replace(/[^a-z0-9]/g, '');
-};
 
 const handleMessage = function(message) {
   var data, id, req, requestOptions, spl, str;
@@ -162,7 +159,15 @@ const handleMessage = function(message) {
 };
 
 
-
+/**
+ * This is kind of crappy, but this helps out with testing. When you're using
+ * nodemon for 'livereload'-ish functionality, you want to close your connection
+ * before you do anything.
+ *
+ * @param  {[type]} options [description]
+ * @param  {[type]} err     [description]
+ * @return {[type]}         [description]
+ */
 function exitHandler(options, err) {
     if (options.cleanup) console.log('clean');
     if (err) console.log(err.stack);
