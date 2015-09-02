@@ -1,11 +1,9 @@
-var ActionUrl, Config, WebSocket, handleMessage, http, https, querystring, toId, url, ws;
-
-WebSocket = require('ws');
-querystring = require('querystring');
-http = require('http');
-https = require('https');
-url = require('url');
-ws = new WebSocket('ws://localhost:8000/showdown/websocket');
+const WebSocket = require('ws');
+const querystring = require('querystring');
+const http = require('http');
+const https = require('https');
+const url = require('url');
+const ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
 ws.on('open', function() {
   return ws.send('something');
@@ -13,25 +11,25 @@ ws.on('open', function() {
 
 ws.on('message', function(msg) {
   console.log('received: %s', msg);
-  var messages = msg.split('\n');
+  const messages = msg.split('\n');
   for(var i=0; i<messages.length; i++) {
     handleMessage(messages[i]);
   };
 });
 
-ActionUrl = url.parse('https://play.pokemonshowdown.com/~~' + 'localhost:8000' + '/action.php');
+const ActionUrl = url.parse('https://play.pokemonshowdown.com/~~' + 'localhost:8000' + '/action.php');
 
-Config = {
+const Config = {
   nick: '5nowden' + Math.floor(Math.random() * 10000),
   chatroom: 'lobby',
   battletype: 'randombattle'
 };
 
-toId = function(text) {
+const toId = function(text) {
   return text.toLowerCase().replace(/[^a-z0-9]/g, '');
 };
 
-handleMessage = function(message) {
+const handleMessage = function(message) {
   var data, id, req, requestOptions, spl, str;
   spl = message.split('|');
   switch (spl[1]) {
@@ -71,13 +69,13 @@ handleMessage = function(message) {
           'Content-Length': data.length
         };
       }
-      req = https.request(requestOptions, (function(res) {
+      req = https.request(requestOptions, ( (res) => {
         res.setEncoding('utf8');
         data = '';
-        res.on('data', function(chunk) {
+        res.on('data', (chunk) => {
           return data += chunk;
         });
-        return res.on('end', (function() {
+        return res.on('end', ( () => {
           var e;
           if (data === ';') {
             console.error('failed to log in; nick is registered - invalid or no password given');
@@ -114,11 +112,13 @@ handleMessage = function(message) {
             console.error('error trying to parse data:', e);
           }
           return ws.send('|/trn ' + Config.nick + ',0,' + data);
-        }).bind(this));
-      }).bind(this));
-      req.on('error', function(err) {
+        }));
+      }));
+
+      req.on('error', (err) => {
         return console.error('login error: ' + err.stack);
       });
+
       if (data) {
         req.write(data);
       }
@@ -133,13 +133,19 @@ handleMessage = function(message) {
       // break;
     case 'users':
       var userList = spl[2].split(', ');
+      let user;
+      // userlist[0] is just the count of users. skip it
       for(var i=1; i<userList.length; i++) {
-        console.log('THE REAL LIST: ' + userList[i]);
-        ws.send('|/challenge ' + userList[i] + ', ' + Config.battletype);
+        user = userList[i];
+        // don't challenge yourself
+        if(Config.user !== user) {
+          console.log('challenging user..', userList[i]);
+          ws.send('|/challenge ' + userList[i] + ', ' + Config.battletype);
+        }
       }
       break;
     case 'updatechallenges':
-      var challenges = JSON.parse(spl[2]);
+      let challenges = JSON.parse(spl[2]);
       console.log(challenges);
       for (let username in challenges.challengesFrom) {
         // only accept battles of the type we're designed for

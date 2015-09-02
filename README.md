@@ -1,4 +1,8 @@
 ## MY SHOWDOWN CLIENT
+If you're reading this, you're WAY too early to the party.
+Come back in a few months.
+
+
 
 ## NOTES
 9/1/2015
