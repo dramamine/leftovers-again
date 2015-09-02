@@ -1,0 +1,19 @@
+{
+  "name": "pokemon-showdown-node-client",
+  "version": "0.0.0",
+  "description": "Pokemon Showdown - Node Client",
+  "main": "connect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pokemon"
+  ],
+  "author": "marten",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "websockets": "~0.2.0",
+    "ws": "~0.8.0",
+    "request": "~2.61.0"
+  }
+}
