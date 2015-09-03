@@ -1,22 +1,18 @@
 
-
-
-
-
-
+let listeners;
 class Listener {
   constructor() {
-    let listeners = {};
+    listeners = {};
   }
 
   relay(type, params) {
-    if(!listeners['type']) return false;
+    if(!listeners['type']) return;
     listeners['type'].map( (callback) => {
       callback.call(null, params);
     });
   }
 
-  listensTo(type, callback) {
+  subscribe(type, callback) {
     if(!listeners.type) {
       listeners.type = [];
     }
@@ -25,19 +21,17 @@ class Listener {
 
   unsubscribe(type, callback) {
     if(!listeners.type) {
-      console.warn('Listener.unsubscribe: No listeners of that type!', type);
       return false;
     }
     const idx = listeners.type.indexOf(callback);
     if(idx>=0) {
       listeners.type.splice(idx,1);
     } else {
-      console.warn('Listener.unsubscribe: No listeners of that callback!',
-        type, callback);
       return false;
     }
     return true;
   }
 }
 
-export default Listener;
+const listener = new Listener();
+export default listener;

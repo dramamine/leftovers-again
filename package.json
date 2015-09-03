@@ -1,12 +1,17 @@
 {
-  "name": "pokemon-showdown-node-client",
-  "version": "0.0.0",
+  "name": "leftovers-again",
+  "version": "0.0.1",
   "description": "Pokemon Showdown - Node Client",
-  "main": "connect.js",
+  "main": "src/main.js",
   "scripts": {
-    "test": "mocha",
+    "test": "jasmine",
     "develop": "nodemon --exec babel-node connect.js"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dramamine/leftovers-again.git"
+  },
+
   "keywords": [
     "pokemon"
   ],
@@ -14,21 +19,14 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "babel": "~5.8.23",
-    "eslint": "^1.3.1",
-    "jasmine-core": "^2.3.4",
-    "karma": "^0.13.9",
-    "karma-jasmine": "^0.3.6",
-    "mocha": "^2.3.0",
     "request": "~2.61.0",
     "websockets": "~0.2.0",
     "ws": "~0.8.0"
   },
   "devDependencies": {
+    "eslint": "^1.3.1",
     "jasmine": "^2.3.2",
-    "karma-babel-preprocessor": "^5.2.2",
-    "karma-coverage": "^0.5.1",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "nodemon": "~1.4.1",
-    "phantomjs": "^1.9.18"
+    "jasmine-es6": "0.0.17",
+    "nodemon": "~1.4.1"
   }
 }
