@@ -1,6 +1,8 @@
 const config = {
   // bot name. hopefully no collisions, lol WHAT ARE THE CHANCES
   nick: '5nowden' + Math.floor(Math.random() * 10000),
+  // don't use a password
+  pass: null,
   // the chat room in which bots gather. using lobby for now, but could use a
   // bot room if our users had permission to create rooms
   chatroom: 'lobby',

@@ -16,7 +16,7 @@ describe('chat', () => {
     it('should challenge a single opponent', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
-    	config.battletype = 'battle';
+      config.battletype = 'battle';
       chat.onUsers(['2, myself, yourself']);
 
       expect(connection.send).toHaveBeenCalledWith('|/challenge yourself, battle');
@@ -37,7 +37,6 @@ describe('chat', () => {
       chat.onUsers(['343243249']);
 
       expect(connection.send).not.toHaveBeenCalled();
-
     });
   });
 
@@ -64,5 +63,29 @@ describe('chat', () => {
     });
   });
 
+  describe('acceptChallenges', () => {
+    const challenges = JSON.stringify({
+      challengesFrom: {
+        'enemy': 'type1',
+        'frenemy': 'type2',
+        'friend': 'type2'
+      }
+    });
+
+    it('should accept a single challenge', () => {
+      spyOn(connection, 'send');
+      config.battletype = 'type1';
+      chat.acceptChallenges(challenges);
+      expect(connection.send).toHaveBeenCalledWith('|/accept enemy');
+    });
+
+    it('should accept a multiple challenges', () => {
+      spyOn(connection, 'send');
+      config.battletype = 'type2';
+      chat.acceptChallenges(challenges);
+      expect(connection.send.calls.argsFor(0)[0]).toEqual('|/accept frenemy');
+      expect(connection.send.calls.argsFor(1)[0]).toEqual('|/accept friend');
+    });
+  });
 });
 

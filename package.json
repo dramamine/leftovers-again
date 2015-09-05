@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "jasmine",
-    "develop": "nodemon --exec babel-node connect.js"
+    "develop": "nodemon --exec babel-node src/main.js"
   },
   "repository": {
     "type": "git",
