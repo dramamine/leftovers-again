@@ -1,0 +1,68 @@
+import chat from '../src/chat';
+import config from '../src/config';
+import connection from '../src/connection';
+import listener from '../src/listener';
+
+describe('chat', () => {
+  beforeEach( () => {
+    spyOn(listener, 'subscribe').and.callFake( () => { return true; } );
+  });
+
+  it('should load chat', () => {
+    expect(chat).toBeDefined();
+  });
+
+  describe('onUsers', () => {
+    it('should challenge a single opponent', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+    	config.battletype = 'battle';
+      chat.onUsers(['2, myself, yourself']);
+
+      expect(connection.send).toHaveBeenCalledWith('|/challenge yourself, battle');
+    });
+    it('should challenge multiple opponents', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+      config.battletype = 'battle';
+      chat.onUsers(['3, myself, he, she']);
+
+      expect(connection.send.calls.argsFor(0)[0]).toEqual('|/challenge he, battle');
+      expect(connection.send.calls.argsFor(1)[0]).toEqual('|/challenge she, battle');
+    });
+    it('should give up if the data is weird', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+      config.battletype = 'battle';
+      chat.onUsers(['343243249']);
+
+      expect(connection.send).not.toHaveBeenCalled();
+
+    });
+  });
+
+  describe('onUpdateUser', () => {
+    it('should join the config chat room when we logged in successfully', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+      chat.onUpdateUser('myself', '1');
+      expect(connection.send).toHaveBeenCalledWith('|/join lobby');
+    });
+    it('should not do anything if the status code isn\'t 1', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+      const result = chat.onUpdateUser('myself', '0');
+      expect(result).toBe(false);
+      expect(connection.send).not.toHaveBeenCalled();
+    });
+    it('should not do anything if our nickname doesn\'t match', () => {
+      spyOn(connection, 'send');
+      config.nick = 'myself';
+      const result = chat.onUpdateUser('someone-else', '1');
+      expect(result).toBe(false);
+      expect(connection.send).not.toHaveBeenCalled();
+    });
+  });
+
+});
+

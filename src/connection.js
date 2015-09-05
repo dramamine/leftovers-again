@@ -1,9 +1,14 @@
-import listener from 'listener';
+import listener from './listener';
+import url from 'url';
+import WebSocket from 'ws';
+import http from 'http';
+import https from 'https';
+import toId from './util';
 
-const ws;
+let ws;
 
 
-const ActionUrl = url.parse('https://play.pokemonshowdown.com/~~' + 'localhost:8000' + '/action.php');
+const ActionUrl = url.parse('https://play.pokemonshowdown.com/~~localhost:8000/action.php');
 
 const Config = {
   nick: '5nowden' + Math.floor(Math.random() * 10000),
@@ -27,7 +32,7 @@ class Connection {
       };
     });
 
-    listener.subscribe('challstr', respondToChallenge);
+    listener.subscribe('challstr', this.respondToChallenge);
 
 
   }
@@ -37,15 +42,15 @@ class Connection {
   }
 
   respondToChallenge(args) {
-    [id, str] = args;
+    const [id, str] = args;
 
-    requestOptions = {
+    const requestOptions = {
       hostname: ActionUrl.hostname,
       port: ActionUrl.port,
       path: ActionUrl.pathname,
       agent: false
     };
-    data = '';
+    let data = '';
     if (!Config.pass) {
       requestOptions.method = 'GET';
       requestOptions.path += '?act=getassertion&userid=' + toId(Config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
@@ -57,9 +62,9 @@ class Connection {
         'Content-Length': data.length
       };
     }
-    req = https.request(requestOptions, ( (res) => {
+    const req = https.request(requestOptions, ( (res) => {
       res.setEncoding('utf8');
-      data = '';
+      let data = '';
       res.on('data', (chunk) => {
         return data += chunk;
       });
@@ -88,15 +93,14 @@ class Connection {
           return;
         }
         try {
-          data = JSON.parse(data.substr(1));
+          let data = JSON.parse(data.substr(1));
           if (data.actionsuccess) {
             data = data.assertion;
           } else {
             error('could not log in; action was not successful: ' + JSON.stringify(data));
             process.exit(-1);
           }
-        } catch (_error) {
-          e = _error;
+        } catch (e) {
           console.error('error trying to parse data:', e);
         }
         return ws.send('|/trn ' + Config.nick + ',0,' + data);

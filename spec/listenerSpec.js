@@ -1,33 +1,46 @@
-import Listener from '../src/listener';
+import listener from '../src/listener';
 
 
 describe('listener', () => {
   it('should load listener', () => {
-    console.log('testing...');
-    expect(Listener).toBeDefined();
+    expect(listener).toBeDefined();
   });
 
   it('should listen for and receive a message', () => {
     const spy = jasmine.createSpy('spy');
-    Listener.subscribe('hello', spy);
-    Listener.relay('hello','world');
+    listener.subscribe('hello', spy);
+    listener.relay('hello','world');
     expect(spy).toHaveBeenCalledWith('world');
+
+
+    listener.unsubscribe('hello', spy);
   });
+
+
+  it('should not pass along messages of the wrong type', () => {
+    const spy = jasmine.createSpy('spy');
+    listener.subscribe('hello', spy);
+    listener.relay('goodbye','world');
+    expect(spy).not.toHaveBeenCalled();
+
+    listener.unsubscribe('hello', spy);
+  });
+
 
   it('should unsubscribe from messages', () => {
     const spy = jasmine.createSpy('spy');
-    Listener.subscribe('hello', spy);
-    Listener.unsubscribe('hello', spy);
-    const result = Listener.relay('hello','world');
+    listener.subscribe('hello', spy);
+    listener.unsubscribe('hello', spy);
+    const result = listener.relay('hello','world');
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('should return false when unsubscribing from something not subscribed', () => {
-    let result = Listener.unsubscribe('fake', () => {});
+    let result = listener.unsubscribe('fake', () => {});
     expect(result).toBe(false);
 
-    result = Listener.subscribe('fake', () => {});
-    result = Listener.unsubscribe('fake', () => {});
+    result = listener.subscribe('fake', () => {});
+    result = listener.unsubscribe('fake', () => {});
     expect(result).toBe(false);
   });
 
