@@ -22,7 +22,24 @@ class Battle {
     //   'disabled': boolean for whether this move can be used.
     //
     //   Pokemon look like this:
-    //   'ident':
+    //   'ident': ex. 'p1: Wormadam'
+    //   'details': ex. 'Wormadam, L83, F'
+    //   'condition': ex. '255/255'
+    //   'hp': current HP
+    //   'maxhp': maximum HP
+    //   'active': boolean, true if pokemon is currently active
+    //   'stats':
+    //     'atk': attack
+    //     'def': defense
+    //     'spa': special attack
+    //     'spd': special defense
+    //     'spe': speed
+    //   'moves': Array of move IDs
+    //   'baseAbility': the ability of the Pokemon (ex. 'overcoat')
+    //   'item' the Pokemon's held item (ex. 'leftovers')
+    //   'pokeball': what kind of pokeball the Pokemon was caught with
+    //   'canMegaEvo': Boolean for whether this Pokemon can mega-evolve
+    //
     //
     this.state = {};
 
@@ -71,7 +88,6 @@ class Battle {
 
       const hps = mon.condition.split('/');
       [mon.hp, mon.maxhp] = hps;
-      console.log(mon);
     });
 
     this.myBot().onRequest(this.state);

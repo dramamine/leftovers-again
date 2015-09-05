@@ -10,10 +10,73 @@ Come back in a few months.
 - when we get the 'turn' message (or something), call getMove() on your AI object.
 
 
+
+API HACKING
+example search:
+http://replay.pokemonshowdown.com/search?user=DKFirelord
+
+
+
+
 import Battles from (./battles)
 
 class Battle {
 }
+
+things were sending out
+bid|action|rqid
+battle-randombattle-89|/choose move 2|1
+battle-randombattle-89|/choose switch 6|1
+
+|move|p2a: Pyroar|Hyper Voice|p1a: Goodra
+|-crit|p1a: Goodra
+|-damage|p1a: Goodra|73/100
+|-weather|SunnyDay|[upkeep]
+|-weather|none
+
+|-heal|p2a: Slurpuff|59/100|[from] item: Leftovers
+|switch|p2a: Slurpuff|Slurpuff, L77, M|100/100
+|-resisted|p1a: Goodra
+|-fail|p2a: Slurpuff|move: Substitute|[weak] // move failed because the pokemon didnt have enough HP
+
+|-ability|p2a: Pyroar|Unnerve|p1: 5nowden
+
+|-status|p2a: Pyroar|par
+
+|cant|p2a: Goodra|par
+
+|move|p1a: Goodra|Fire Blast|p2a: Pyroar
+|-resisted|p2a: Pyroar
+
+|-damage|p1a: Goodra|0 fnt
+
+|faint|p1a: Goodra
+
+|detailschange|p1a: Groudon|Groudon-Primal, L73
+
+|-status|p1a: Groudon|psn
+|
+|-weather|DesolateLand|[upkeep]
+|-damage|p1a: Groudon|75/100 psn|[from] psn
+
+|move|p2a: Latios|Calm Mind|p2a: Latios
+|-boost|p2a: Latios|spa|1
+|-boost|p2a: Latios|spd|1
+
+"condition":"0 fnt",
+"condition":"15/271 par"
+
+|-immune|p2a: Latios|[msg]
+|-miss|p1a: Groudon|p2a: Latios
+
+|-unboost|p2a: Latios|spa|2
+|-cureteam|p1a: Umbreon|[from] move: HealBell
+|-supereffective|p2a: Serperior
+
+|win|5nowden5
+
+|request|{"forceSwitch":[true],"side":{"name":"5nowden","id":"p1","pokemon":[{"ident":"p1: Goodra","details":"Goodra, L77, M","condition":"0 fnt","active":true,"stats":{"atk":199,"def":152,"spa":214,"spd":276,"spe":168},"moves":["dragonpulse","thunderbolt","earthquake","fireblast"],"baseAbility":"sapsipper","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Umbreon","details":"Umbreon, L77, F","condition":"273/273","active":false,"stats":{"atk":145,"def":214,"spa":137,"spd":245,"spe":145},"moves":["foulplay","toxic","protect","healbell"],"baseAbility":"synchronize","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Cherrim","details":"Cherrim, L83, F","condition":"252/252","active":false,"stats":{"atk":146,"def":163,"spa":192,"spd":177,"spe":189},"moves":["hiddenpowerice60","synthesis","energyball","sunnyday"],"baseAbility":"flowergift","item":"heatrock","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Groudon","details":"Groudon, L73","condition":"266/266","active":false,"stats":{"atk":261,"def":247,"spa":188,"spd":174,"spe":174},"moves":["overheat","thunderwave","stoneedge","earthquake"],"baseAbility":"drought","item":"redorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Xatu","details":"Xatu, L81, M","condition":"238/238","active":false,"stats":{"atk":168,"def":160,"spa":201,"spd":160,"spe":201},"moves":["psychic","roost","toxic","uturn"],"baseAbility":"magicbounce","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Delibird","details":"Delibird, L83, M","condition":"210/210","active":false,"stats":{"atk":140,"def":122,"spa":156,"spd":122,"spe":172},"moves":["destinybond","aerialace","icepunch","rapidspin"],"baseAbility":"hustle","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false}]},"rqid":23,"noCancel":true}
+
 
 here's a dump of what we get from |request
 {  
