@@ -2,6 +2,8 @@ import http from 'http';
 import cheerio from 'cheerio';
 import fs from 'fs';
 
+// cd ~/leftovers-again/scripts/ && git pull && babel-node replay-saver.js > ../replays/replay-saver.out
+
 const start = new Date().getTime();
 // replays counter
 let replays = 0;
@@ -15,11 +17,9 @@ let pages = 0;
 const maxPages = 100;
 
 function checkThisUsersReplays(user) {
-  console.log('checkThisUsersReplays called for', user);
   fs.exists('../replays/search-' + user, (existence) => {
     if (existence) return;
     fs.writeFile('../replays/search-' + user, '');
-    console.log('looking up user', user);
     http.request({
       host: options.host,
       path: `/search?user=${user}`
@@ -47,7 +47,6 @@ function handleReplay(res) {
 
     // find more battles
     if (pages >= maxPages) return;
-    console.log(pages, maxPages);
 
     body('h1 a.subtle').each( (i, el) => {
       const sub = el.attribs.href;
