@@ -24,6 +24,8 @@ function checkThisUsersReplays(user) {
       host: options.host,
       path: `/search?user=${user}`
     }, handleIndex).end(); // eslint-ignore-line
+
+    pages++;
   });
 }
 
@@ -45,6 +47,7 @@ function handleReplay(res) {
 
     // find more battles
     if (pages >= maxPages) return;
+    console.log(pages, maxPages);
 
     body('h1 a.subtle').each( (i, el) => {
       const sub = el.attribs.href;
@@ -76,7 +79,6 @@ function handleHtml(html) {
 }
 
 function handleIndex(res) {
-  pages++;
 
   let html = '';
   // another chunk of data has been recieved, so append it to `str`
