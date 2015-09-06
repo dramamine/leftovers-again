@@ -23,10 +23,15 @@ import Battles from (./battles)
 class Battle {
 }
 
+
 things were sending out
 bid|action|rqid
 battle-randombattle-89|/choose move 2|1
 battle-randombattle-89|/choose switch 6|1
+
+
+# bettter reading on this:
+# client/data/protocol.txt
 
 |move|p2a: Pyroar|Hyper Voice|p1a: Goodra
 |-crit|p1a: Goodra

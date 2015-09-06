@@ -85,9 +85,26 @@ class Battle {
       mon.type = deets[0];
       mon.level = parseInt(deets[1].substr(1), 10);
       mon.gender = deets[2];
+      mon.dead = false;
+      mon.conditions = [];
 
       const hps = mon.condition.split('/');
-      [mon.hp, mon.maxhp] = hps;
+      if (hps.length === 2) {
+        mon.hp = parseInt(hps[0], 10);
+        const maxhpAndConditions = hps[1].split(' ');
+        mon.maxhp = parseInt(maxhpAndConditions[0], 10);
+
+        if (maxhpAndConditions.length > 1) {
+          mon.conditions = maxhpAndConditions.slice(1);
+        }
+
+      } else if (mon.condition === '0 fnt') {
+        mon.dead = true;
+        mon.hp = 0;
+        mon.maxhp = 0;
+      } else {
+        console.error('weird condition:', mon.condition);
+      }
     });
 
     this.myBot().onRequest(this.state);

@@ -20,7 +20,6 @@ class Chat {
       return false;
     }
 
-    console.log('joining a room');
     connection.send('|/join ' + config.chatroom);
   }
 

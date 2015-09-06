@@ -209,6 +209,28 @@ describe('battle', () => {
       expect(out.side.pokemon[0].hp).toEqual(jasmine.any(Number));
       expect(out.side.pokemon[0].maxhp).toEqual(jasmine.any(Number));
     });
+
+    it('calls dead pokemons dead', () => {
+      sampleTurn.side.pokemon[1].condition = '0 fnt';
+      battle.handleRequest(JSON.stringify(sampleTurn));
+      expect(spy).toHaveBeenCalled();
+
+      const out = spy.calls.argsFor(0)[0];
+      expect(out.side.pokemon[1].dead).toBe(true);
+      expect(out.side.pokemon[1].hp).toBe(0);
+      expect(out.side.pokemon[1].maxhp).toBe(0);
+    });
+    it('tracks a pokemons conditions', () => {
+      sampleTurn.side.pokemon[1].condition = '10/10 poi par';
+      battle.handleRequest(JSON.stringify(sampleTurn));
+      expect(spy).toHaveBeenCalled();
+
+      const out = spy.calls.argsFor(0)[0];
+      expect(out.side.pokemon[1].dead).toBe(false);
+      expect(out.side.pokemon[1].hp).toBe(10);
+      expect(out.side.pokemon[1].maxhp).toBe(10);
+      expect(out.side.pokemon[1].conditions).toEqual(['poi', 'par']);
+    });
   });
 });
 

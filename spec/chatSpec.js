@@ -44,20 +44,20 @@ describe('chat', () => {
     it('should join the config chat room when we logged in successfully', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
-      chat.onUpdateUser('myself', '1');
+      chat.onUpdateUser(['myself', '1']);
       expect(connection.send).toHaveBeenCalledWith('|/join lobby');
     });
     it('should not do anything if the status code isn\'t 1', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
-      const result = chat.onUpdateUser('myself', '0');
+      const result = chat.onUpdateUser(['myself', '0']);
       expect(result).toBe(false);
       expect(connection.send).not.toHaveBeenCalled();
     });
     it('should not do anything if our nickname doesn\'t match', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
-      const result = chat.onUpdateUser('someone-else', '1');
+      const result = chat.onUpdateUser(['someone-else', '1']);
       expect(result).toBe(false);
       expect(connection.send).not.toHaveBeenCalled();
     });
