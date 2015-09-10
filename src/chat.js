@@ -5,8 +5,17 @@ import config from './config';
 class Chat {
   constructor() {
     listener.subscribe('updateuser', this.onUpdateUser);
-    listener.subscribe('users', this.onUsers);
     listener.subscribe('updatechallenges', this.acceptChallenges);
+
+    const args = process.argv.slice(2);
+    console.log(args);
+
+    if ( !args.find(x => x === '--spawned') ) {
+      // only issue challenges in non-spawned copies
+      // the main dude issues all challenges; spawns just sit back and relax.
+      // otherwise, spawns would all challenge each other and overheat and die
+      listener.subscribe('users', this.challengeOnJoin);
+    }
   }
 
   onUpdateUser(args) {
@@ -23,7 +32,7 @@ class Chat {
     connection.send('|/join ' + config.chatroom);
   }
 
-  onUsers(args) {
+  challengeOnJoin(args) {
     let user; // user for iterator
     const [usersStr] = args;
     const userList = usersStr.split(', ');
