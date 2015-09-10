@@ -20,7 +20,9 @@
     "babel": "~5.8.23",
     "request": "~2.61.0",
     "websockets": "~0.2.0",
-    "ws": "~0.8.0"
+    "ws": "~0.8.0",
+    "colors": "~1.1.2",
+    "glob": "~5.0.14"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.1",
