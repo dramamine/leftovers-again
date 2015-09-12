@@ -27,9 +27,8 @@ class Connection {
       const messages = msg.split('\n');
       let bid = null;
       if (messages[0].indexOf('>') === 0) {
-        console.log('found battle Id');
         bid = messages[0].split('>')[1];
-        if (!battles[bid]) battles[bid] = new Battle();
+        if (!battles[bid]) battles[bid] = new Battle(bid);
       }
 
       for (let i = 0; i < messages.length; i++) {

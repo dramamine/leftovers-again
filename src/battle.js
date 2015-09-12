@@ -1,7 +1,12 @@
 import config from './config';
+import connection from './connection';
+
 
 class Battle {
-  constructor() {
+  constructor(bid) {
+    // battle ID
+    console.log('battle constructed with id', bid);
+    this.bid = bid;
     // what does state look like? WELL. Check out these properties:
     // 'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
     //         These don't match up perfectly with turns bc you may have to swap
@@ -77,7 +82,19 @@ class Battle {
 
   handleRequest(json) {
     const data = JSON.parse(json);
-    Object.assign(this.state, data);
+    this.state = data;
+    console.dir(data);
+
+    // @TODO this is bad, you should wait for a 'start' message instead!
+    if (!data.rqid) {
+      // this is not a request, just data.
+      return;
+    }
+
+    // do what it says.
+    if (data.wait) {
+      return;
+    }
 
     // some cleaner methods
     this.state.side.pokemon.map( (mon) => {
@@ -97,7 +114,6 @@ class Battle {
         if (maxhpAndConditions.length > 1) {
           mon.conditions = maxhpAndConditions.slice(1);
         }
-
       } else if (mon.condition === '0 fnt') {
         mon.dead = true;
         mon.hp = 0;
@@ -107,7 +123,10 @@ class Battle {
       }
     });
 
-    this.myBot().onRequest(this.state);
+    // console.log('would have moved.');
+    const move = this.myBot().onRequest(this.state);
+    const msg = `${this.bid}|${move}|${this.state.rqid}`;
+    connection.send( msg );
   }
 }
 

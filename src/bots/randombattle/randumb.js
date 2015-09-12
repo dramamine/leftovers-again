@@ -12,7 +12,8 @@ class Randumb extends AI {
   }
 
   onRequest(state) {
-    if (state.forceSwitch && state.forceSwitch[0] === true) {
+
+    if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
       const possibleMons = state.side.pokemon.reduce(
@@ -23,17 +24,16 @@ class Randumb extends AI {
           return prev;
         }, []);
       const myMon = this.pickOne(possibleMons) + 1; // pokemons are 1-indexed
-      return `/choose ${myMon}`;
+      return `/switch ${myMon}`;
     }
     // pick a random move
-    const possibleMoves = state.active.moves.reduce(
+    const possibleMoves = state.active[0].moves.reduce(
       (prev, current, idx) => {
         if (current.pp > 0 && !current.disabled) {
           prev.push(idx);
         }
         return prev;
       }, []);
-
     const myMove = this.pickOne(possibleMoves) + 1; // moves are 1-indexed
     return `/move ${myMove}`;
   }

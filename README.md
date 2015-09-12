@@ -5,6 +5,10 @@ Come back in a few months.
 
 
 ## NOTES
+9/11/2015
+- Now two bots can fight each other to the end! In one terminal, run `babel-node scripts/spawn.js` and run `babel-node src/main.js --bot=randombattle/martenbot.js` in the other.
+
+
 9/1/2015
 - add a data store with battle info to connect.js or whatever. this might need to be an object with the battleId as its key to support multiple battles.
 - when we get the 'turn' message (or something), call getMove() on your AI object.

@@ -15,7 +15,7 @@ const cfg = {
   botPath: './bots/randombattle/randumb'
 };
 
-class config {
+class Config {
   get() {
     return cfg;
   }
@@ -62,6 +62,5 @@ class config {
   }
 }
 
-const cfgclass = new config();
+const cfgclass = new Config();
 export default cfgclass;
-
