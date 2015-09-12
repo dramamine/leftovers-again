@@ -1,4 +1,4 @@
-const config = {
+const cfg = {
   // bot name. hopefully no collisions, lol WHAT ARE THE CHANCES
   nick: '5nowden' + Math.floor(Math.random() * 10000),
   // don't use a password
@@ -10,7 +10,58 @@ const config = {
   // should be in bot config
   battletype: 'randombattle',
 
-  actionurl: 'https://play.pokemonshowdown.com/~~localhost:8000/action.php'
+  actionurl: 'https://play.pokemonshowdown.com/~~localhost:8000/action.php',
+
+  botPath: './bots/randombattle/randumb'
 };
 
-export default config;
+class config {
+  get() {
+    return cfg;
+  }
+
+  get nick() {
+    return cfg.nick;
+  }
+  set nick(i) {
+    cfg.nick = i;
+  }
+
+  get chatroom() {
+    return cfg.chatroom;
+  }
+  set chatroom(i) {
+    cfg.chatroom = i;
+  }
+  get pass() {
+    return cfg.pass;
+  }
+  set pass(i) {
+    cfg.pass = i;
+  }
+  get battletype() {
+    return cfg.battletype;
+  }
+  set battletype(i) {
+    cfg.battletype = i;
+  }
+
+  get actionurl() {
+    return cfg.actionurl;
+  }
+  set actionurl(i) {
+    cfg.actionurl = i;
+  }
+
+  get botPath() {
+    return cfg.botPath;
+  }
+
+  set botPath(path) {
+    cfg.botPath = path;
+  }
+}
+
+const cfgclass = new config();
+export default cfgclass;
+

@@ -8,19 +8,31 @@ class Spawn {
   }
 
   getServer() {
-    const showdown = spawn('node', ['app.js'], {cwd: '../../server'});
-    // const showdown = spawn('npm start', [], {cwd: '../../server'});
+    return new Promise( (resolve, reject) => {
+      const showdown = spawn('node', ['app.js'], {cwd: '../../server'});
+      let done = false;
+      // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
-    showdown.stdout.on('data', (data) => {
-      console.log(colors.cyan(data.toString().replace(/\n+$/, '')));
-    });
+      showdown.stdout.on('data', (data) => {
+        console.log(colors.cyan(data.toString().replace(/\n+$/, '')));
+        if (data.toString().indexOf('now listening on') > 0) {
+          done = true;
+          resolve(true);
+        }
+      });
 
-    showdown.stderr.on('data', (data) => {
-      console.log(colors.cyan.inverse(data));
-    });
+      showdown.stderr.on('data', (data) => {
+        console.log(colors.cyan.inverse(data));
 
-    showdown.on('close', (code) => {
-      console.log(colors.cyan.underline('server process exited with code ' + code));
+      });
+
+      showdown.on('close', (code) => {
+        console.log(colors.cyan.underline('server process exited with code ' + code));
+        if(!done) {
+          reject(code);
+        }
+      });
+
     });
   }
 
@@ -35,8 +47,8 @@ class Spawn {
         // reject self
         if (file.indexOf(self) === 0) return;
         console.log('spawning opponent from file ' + file);
-
-        const op = spawn('babel-node', ['main.js', '--spawned' ], {cwd: '../src/'});
+        const botrootForMain = 'bot=' + type + '/' + file;
+        const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: '../src/'});
         // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
         op.stdout.on('data', (data) => {
@@ -59,7 +71,9 @@ export default Spawn;
 
 
 const myspawn = new Spawn();
-// myspawn.getServer();
 const self = 'martenbot.js';
 const type = 'randombattle';
-myspawn.loadMeAndMyChallengers(self, type);
+myspawn.getServer().then( () => {
+  console.log('loading challengers...');
+  myspawn.loadMeAndMyChallengers(self, type);
+});

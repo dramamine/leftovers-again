@@ -5,14 +5,7 @@
  *
  */
 
-export const meta = {
-  name: 'randumb',
-  author: 'marten',
-  version: 'alpha',
-  gametype: 'randombattle'
-};
-
-import AI from '../ai';
+import AI from '../../ai';
 class Randumb extends AI {
   constructor() {
     super();

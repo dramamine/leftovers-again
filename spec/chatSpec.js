@@ -12,12 +12,12 @@ describe('chat', () => {
     expect(chat).toBeDefined();
   });
 
-  describe('onUsers', () => {
+  describe('challengeOnJoin', () => {
     it('should challenge a single opponent', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
       config.battletype = 'battle';
-      chat.onUsers(['2, myself, yourself']);
+      chat.challengeOnJoin(['2, myself, yourself']);
 
       expect(connection.send).toHaveBeenCalledWith('|/challenge yourself, battle');
     });
@@ -25,7 +25,7 @@ describe('chat', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
       config.battletype = 'battle';
-      chat.onUsers(['3, myself, he, she']);
+      chat.challengeOnJoin(['3, myself, he, she']);
 
       expect(connection.send.calls.argsFor(0)[0]).toEqual('|/challenge he, battle');
       expect(connection.send.calls.argsFor(1)[0]).toEqual('|/challenge she, battle');
@@ -34,7 +34,7 @@ describe('chat', () => {
       spyOn(connection, 'send');
       config.nick = 'myself';
       config.battletype = 'battle';
-      chat.onUsers(['343243249']);
+      chat.challengeOnJoin(['343243249']);
 
       expect(connection.send).not.toHaveBeenCalled();
     });

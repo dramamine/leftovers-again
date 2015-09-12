@@ -1,4 +1,4 @@
-import Randumb from '../../src/bots/randumb';
+import Randumb from '../../src/bots/randombattle/randumb';
 const randumb = new Randumb();
 
 describe('Randumb', () => {

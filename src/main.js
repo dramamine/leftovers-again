@@ -2,8 +2,13 @@
 import chat from './chat';
 import listener from './listener';
 import connection from './connection';
+import config from './config';
 
-
+const argv = require('minimist')(process.argv.slice(2));
+if (argv.botfile) {
+  console.log('good, loading my bot.');
+  config.botPath(argv.botfile);
+}
 
 // import WebSocket from 'ws';
 // import querystring from 'querystring';

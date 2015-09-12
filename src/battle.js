@@ -1,4 +1,4 @@
-import botcfg from './botcfg';
+import config from './config';
 
 class Battle {
   constructor() {
@@ -49,7 +49,7 @@ class Battle {
     //   });
     // }();
 
-    const AI = require(botcfg.file);
+    const AI = require(config.botPath);
     this.bot = new AI();
     // listener.subscribe('title', saveTitle);
     // listener.subscribe('request', onRequest);

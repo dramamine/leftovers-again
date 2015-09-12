@@ -9,7 +9,6 @@ import config from './config';
 
 let ws;
 
-
 const requestUrl = url.parse(config.actionurl);
 
 const battles = {};

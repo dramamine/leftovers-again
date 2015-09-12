@@ -22,7 +22,8 @@
     "websockets": "~0.2.0",
     "ws": "~0.8.0",
     "colors": "~1.1.2",
-    "glob": "~5.0.14"
+    "glob": "~5.0.14",
+    "minimist": "~1.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.1",
