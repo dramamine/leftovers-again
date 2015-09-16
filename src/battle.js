@@ -46,7 +46,10 @@ class Battle {
     //   'canMegaEvo': Boolean for whether this Pokemon can mega-evolve
     //
     //
-    this.state = {};
+    // data = {};
+
+    // model of the opponent's 6 pokemon
+    this.opponent = [];
 
     // this.state.activemon = () => {
     //   return this.state.side.pokemon.filter( (mon) => {
@@ -74,15 +77,34 @@ class Battle {
       this.handleRequest(message);
       break;
     case 'switch':
+      this.handleSwitch(message);
       break;
     default:
       break;
     }
   }
 
+  handleSwitch(message) {
+    // p2a: Slurpuff|Slurpuff, L77, M|100/100
+    [pokemonsname, details, condition] = message;
+
+
+    const parsedMon = processMon({
+      details,
+      condition
+    });
+
+    // warning, this might overwrite our opponent
+    opponent[pokemonsname] = parsedMon;
+
+    this.opponentActive = parsedMon;
+  }
+
   handleRequest(json) {
     const data = JSON.parse(json);
-    this.state = data;
+    //this.state = data;
+    data.opponent = this.opponent;
+
     console.dir(data);
 
     // @TODO this is bad, you should wait for a 'start' message instead!
@@ -97,36 +119,38 @@ class Battle {
     }
 
     // some cleaner methods
-    this.state.side.pokemon.map( (mon) => {
-      const deets = mon.details.split(', ');
-      mon.type = deets[0];
-      mon.level = parseInt(deets[1].substr(1), 10);
-      mon.gender = deets[2];
-      mon.dead = false;
-      mon.conditions = [];
-
-      const hps = mon.condition.split('/');
-      if (hps.length === 2) {
-        mon.hp = parseInt(hps[0], 10);
-        const maxhpAndConditions = hps[1].split(' ');
-        mon.maxhp = parseInt(maxhpAndConditions[0], 10);
-
-        if (maxhpAndConditions.length > 1) {
-          mon.conditions = maxhpAndConditions.slice(1);
-        }
-      } else if (mon.condition === '0 fnt') {
-        mon.dead = true;
-        mon.hp = 0;
-        mon.maxhp = 0;
-      } else {
-        console.error('weird condition:', mon.condition);
-      }
-    });
+    data.side.pokemon.map( processMon );
 
     // console.log('would have moved.');
-    const move = this.myBot().onRequest(this.state);
-    const msg = `${this.bid}|${move}|${this.state.rqid}`;
+    const move = this.myBot().onRequest(data);
+    const msg = `${this.bid}|${move}|${data.rqid}`;
     connection.send( msg );
+  }
+
+  processMon(mon) {
+    const deets = mon.details.split(', ');
+    mon.type = deets[0];
+    mon.level = parseInt(deets[1].substr(1), 10);
+    mon.gender = deets[2];
+    mon.dead = false;
+    mon.conditions = [];
+
+    const hps = mon.condition.split('/');
+    if (hps.length === 2) {
+      mon.hp = parseInt(hps[0], 10);
+      const maxhpAndConditions = hps[1].split(' ');
+      mon.maxhp = parseInt(maxhpAndConditions[0], 10);
+
+      if (maxhpAndConditions.length > 1) {
+        mon.conditions = maxhpAndConditions.slice(1);
+      }
+    } else if (mon.condition === '0 fnt') {
+      mon.dead = true;
+      mon.hp = 0;
+      mon.maxhp = 0;
+    } else {
+      console.error('weird condition:', mon.condition);
+    }
   }
 }
 

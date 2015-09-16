@@ -187,6 +187,22 @@ const sampleTurn = {
 };
 
 describe('battle', () => {
+  describe('handleSwitch', () => {
+    let battle;
+    let spy;
+    beforeEach( () => {
+      battle = new Battle();
+      console.log('battle created.', battle);
+      spy = jasmine.createSpy('spy');
+      spyOn(battle, 'myBot').and.returnValue({
+        onRequest: spy
+      });
+    });
+    it('handles bizness', () => {
+
+    });
+
+  });
   describe('handleRequest', () => {
     let battle;
     let spy;
