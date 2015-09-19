@@ -4,12 +4,12 @@ const randumb = new Randumb();
 describe('Randumb', () => {
   it('picks moves randomly', () => {
     const state = {
-      active: {
+      active: [{
         moves: [{ disabled: false, pp: 99 },
         { disabled: false, pp: 99 },
         { disabled: false, pp: 99 },
         { disabled: false, pp: 99 }]
-      }
+      }]
     };
 
     for (let i = 0; i < 10; i++) {
@@ -23,12 +23,12 @@ describe('Randumb', () => {
 
   it('only picks a move that is possible', () => {
     const state = {
-      active: {
+      active: [{
         moves: [{ disabled: false, pp: 99 },
         { disabled: true, pp: 99 },
         { disabled: true, pp: 0 },
         { disabled: false, pp: 0 }]
-      }
+      }]
     };
 
     const result = randumb.onRequest(state);
@@ -48,8 +48,8 @@ describe('Randumb', () => {
 
     for (let i = 0; i < 10; i++) {
       const result = randumb.onRequest(state);
-      expect(result.indexOf('/choose ')).toEqual(0);
-      const choiceId = result.split('/choose ').pop();
+      expect(result.indexOf('/switch ')).toEqual(0);
+      const choiceId = result.split('/switch ').pop();
       expect(choiceId).toBeGreaterThan(0);
       expect(choiceId).toBeLessThan(3);
     }

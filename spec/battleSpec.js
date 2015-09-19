@@ -1,4 +1,5 @@
 import Battle from '../src/battle';
+import connection from '../src/connection';
 
 const sampleTurn = {
   "active":[
@@ -187,33 +188,47 @@ const sampleTurn = {
 };
 
 describe('battle', () => {
-  describe('handleSwitch', () => {
-    let battle;
-    let spy;
-    beforeEach( () => {
-      battle = new Battle();
-      console.log('battle created.', battle);
-      spy = jasmine.createSpy('spy');
-      spyOn(battle, 'myBot').and.returnValue({
-        onRequest: spy
-      });
+  let battle;
+  let spy;
+  beforeEach( () => {
+    battle = new Battle();
+    console.log('battle created.', battle);
+    spy = jasmine.createSpy('spy');
+    spyOn(battle, 'myBot').and.returnValue({
+      onRequest: spy
     });
-    it('handles bizness', () => {
-
-    });
-
+    spyOn(connection, 'send');
   });
-  describe('handleRequest', () => {
-    let battle;
-    let spy;
-    beforeEach( () => {
-      battle = new Battle();
-      console.log('battle created.', battle);
-      spy = jasmine.createSpy('spy');
-      spyOn(battle, 'myBot').and.returnValue({
-        onRequest: spy
-      });
+  describe('handle', () => {
+    it('calls an appropriate function', () => {
+      battle.handle('player', ['p1']);
+      expect(battle.ord).toEqual('p1');
     });
+  });
+  describe('handleSwitch', () => {
+    // this is testing processMon pretty hard
+    it('handles bizness', () => {
+      battle.ord = 'p1';
+      battle.handleSwitch('p2a: Slurpuff', 'Slurpuff, L77, M', '100/100');
+      expect(battle.activeOpponent).toEqual(jasmine.any(Object));
+      expect(battle.activeOpponent.hp).toEqual(100);
+      expect(battle.activeOpponent.maxhp).toEqual(100);
+      expect(battle.activeOpponent.level).toEqual(77);
+    });
+    it('skips a pokemon it owns', () => {
+      battle.ord = 'p2';
+      const res = battle.handleSwitch('p2a: Slurpuff', 'Slurpuff, L77, M', '100/100');
+      expect(res).toBe(false);
+    });
+  });
+  describe('handlePlayer', () => {
+    it('logs the user\'s ord ID', () => {
+      battle.handlePlayer('p1', 'x', 'y');
+      expect(battle.ord).toEqual('p1');
+    });
+  });
+
+  describe('handleRequest', () => {
     it('interprets a mon\'s details', () => {
       battle.handleRequest(JSON.stringify(sampleTurn));
       expect(spy).toHaveBeenCalled();
@@ -246,6 +261,20 @@ describe('battle', () => {
       expect(out.side.pokemon[1].hp).toBe(10);
       expect(out.side.pokemon[1].maxhp).toBe(10);
       expect(out.side.pokemon[1].conditions).toEqual(['poi', 'par']);
+    });
+    it('rejects a request with no requestId', () => {
+      const requestless = {};
+      Object.assign(requestless, sampleTurn);
+      requestless.rqid = undefined;
+      const res = battle.handleRequest(JSON.stringify(requestless));
+      expect(res).toBe(false);
+    });
+    it('rejects a request with the \'wait\' property', () => {
+      const requestless = {};
+      Object.assign(requestless, sampleTurn);
+      requestless.wait = true;
+      const res = battle.handleRequest(JSON.stringify(requestless));
+      expect(res).toBe(false);
     });
   });
 });
