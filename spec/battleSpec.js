@@ -205,6 +205,28 @@ describe('battle', () => {
       expect(battle.ord).toEqual('p1');
     });
   });
+
+  describe('handleDamage', () => {
+    it('should record damage appropriately', () => {
+      battle.allmon['p1: Fakechu'] = {
+        hp: 200,
+        condition: '200/200'
+      };
+      battle.handleDamage('p1: Fakechu', '150/200', '[from] Attack');
+      expect(battle.allmon['p1: Fakechu'].hp).toEqual(150);
+      expect(battle.allmon['p1: Fakechu'].events[0]).toEqual(jasmine.any(Object));
+      expect(battle.allmon['p1: Fakechu'].events[0].hplost).toEqual(50);
+    });
+    it('should panic if it can\'t find the right one', () => {
+      battle.allmon['p1: Fakechu'] = {
+        hp: 200,
+        condition: '200/200'
+      };
+      const res = battle.handleDamage('sdafkdjnf', '150/200', '[from] Attack');
+      expect(res).toBe(false);
+    });
+  });
+
   describe('handleSwitch', () => {
     // this is testing processMon pretty hard
     it('handles bizness', () => {

@@ -47,10 +47,13 @@ class Battle {
     //
     // data = {};
     this.handlers = {
+      '-damage': this.handleDamage,
       player: this.handlePlayer,
       switch: this.handleSwitch,
-      request: this.handleRequest
+      request: this.handleRequest,
     };
+
+    this.allmon = {};
 
     // model of the opponent's 6 pokemon
     this.opponent = [];
@@ -72,16 +75,36 @@ class Battle {
 
 
   handle(type, message) {
-    console.log('handling', type);
     if (this.handlers[type]) {
       this.handlers[type].apply(this, message);
     }
   }
 
-  handlePlayer(ordinal, nick, id) {
-    console.log('handlePlayer called with ', ordinal, nick, id);
-    // ex. p2|5nowden4271|101
-    // const [] = message; // eslint-disable-line
+  // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
+  handleDamage(victim, condition, explanation) {
+    const vic = this.allmon[victim];
+    if (vic) {
+      const oldHp = vic.hp;
+      const oldCondition = vic.condition;
+      vic.condition = condition;
+
+      const processed = this.processMon(vic);
+
+      processed.events.push({
+        type: 'damage',
+        hplost: oldHp - processed.hp,
+        explanation,
+        from: oldCondition,
+        to: condition
+      });
+    } else {
+      console.error('handleDamage: didnt have a record of that pokemon!',
+        victim, condition, explanation);
+      return false;
+    }
+  }
+
+  handlePlayer(ordinal, nick, id) { // eslint-disable-line
     this.ord = ordinal;
   }
 
@@ -93,25 +116,25 @@ class Battle {
    * @param  {[type]} message [description]
    * @return {[type]}         [description]
    */
-  handleSwitch(pokemonsname, details, condition) {
-    console.log('switch called.', pokemonsname, details, condition, '( i am ' + this.ord);
+  handleSwitch(ident, details, condition) {
     // p2a: Slurpuff|Slurpuff, L77, M|100/100
     // const [] = message;
 
     // my own pokemon switched
-    if (pokemonsname.indexOf(this.ord) === 0) {
+    if (ident.indexOf(this.ord) === 0) {
       console.log('nm this is my own pokemon');
       return false;
     }
 
     // create a pokemon object and parse its data
     const parsedMon = this.processMon({
+      ident,
       details,
       condition
     });
 
     // warning, this might overwrite our opponent
-    this.opponent[pokemonsname] = parsedMon;
+    this.opponent[ident] = parsedMon;
 
     this.activeOpponent = parsedMon;
     console.log('updated opponent to ', this.activeOpponent);
@@ -136,16 +159,25 @@ class Battle {
     }
 
     // some cleaner methods
-    data.side.pokemon.map( this.processMon );
+    data.side.pokemon.map( (mon) => {
+      this.processMon( mon );
+    });
 
-    // console.log('would have moved.');
+    // save my current data
+    this.state = data;
     const move = this.myBot().onRequest(data);
     const msg = `${this.bid}|${move}|${data.rqid}`;
     connection.send( msg );
   }
 
+
   processMon(mon) {
-    console.log('processMon called');
+    try {
+      mon.owner = mon.ident.split(': ')[0];
+    } catch (e) {
+      console.error('processMon: weird owner', mon.ident);
+    }
+
     try {
       const deets = mon.details.split(', ');
       mon.type = deets[0];
@@ -179,9 +211,20 @@ class Battle {
       console.error('processMon: error parsing mon.condition', e);
     }
 
-    console.log('processMon returning...');
+    // this is the part where we sync up with whatever's in storage.
+    // upsert
+    if (this.allmon[mon.ident]) {
+      // if we ever wanted diffs, this would be the spot for 'em.
+      // otherwise just take all this processed data and overwrite our model
+      Object.assign(this.allmon[mon.ident], mon);
+    } else {
+      mon.events = [];
+      this.allmon[mon.ident] = mon;
+    }
     return mon;
   }
+
+
 }
 
 export default Battle;
