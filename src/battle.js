@@ -85,24 +85,26 @@ class Battle {
   }
 
   handleSwitch(message) {
+    console.log('switch called.', message);
     // p2a: Slurpuff|Slurpuff, L77, M|100/100
-    [pokemonsname, details, condition] = message;
+    const [pokemonsname, details, condition] = message;
 
 
-    const parsedMon = processMon({
+    const parsedMon = this.processMon({
       details,
       condition
     });
 
     // warning, this might overwrite our opponent
-    opponent[pokemonsname] = parsedMon;
+    this.opponent[pokemonsname] = parsedMon;
 
     this.opponentActive = parsedMon;
+    console.log('opponent data:', this.opponentActive, this.opponent);
   }
 
   handleRequest(json) {
     const data = JSON.parse(json);
-    //this.state = data;
+    // this.state = data;
     data.opponent = this.opponent;
 
     console.dir(data);
@@ -119,7 +121,7 @@ class Battle {
     }
 
     // some cleaner methods
-    data.side.pokemon.map( processMon );
+    data.side.pokemon.map( this.processMon );
 
     // console.log('would have moved.');
     const move = this.myBot().onRequest(data);
@@ -128,10 +130,11 @@ class Battle {
   }
 
   processMon(mon) {
+    console.log('processMon called with ', mon);
     const deets = mon.details.split(', ');
     mon.type = deets[0];
     mon.level = parseInt(deets[1].substr(1), 10);
-    mon.gender = deets[2];
+    mon.gender = deets[2] || 'M';
     mon.dead = false;
     mon.conditions = [];
 
@@ -151,6 +154,7 @@ class Battle {
     } else {
       console.error('weird condition:', mon.condition);
     }
+    return mon;
   }
 }
 

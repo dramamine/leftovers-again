@@ -37,7 +37,7 @@ class Connection {
           const passThese = messageParts.slice(2);
           if (bid) {
             battles[bid].handle(messageParts[1], passThese);
-            break;
+            continue;
           }
           listener.relay(messageParts[1], passThese);
         }
