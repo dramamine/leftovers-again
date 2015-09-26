@@ -1,70 +1,69 @@
-
-
 import typeChart from './typechart';
-const AT = 'atk', DF = 'def', SA = 'spa', SD = 'spd', SP = 'spe', HP = 'hp';
-
+const AT = 'atk';
+const DF = 'def';
+const SA = 'spa';
+const SD = 'spd';
+const SP = 'spe';
 const gen = 6;
 
+// function CALCULATE_ALL_MOVES_BW(p1, p2, field) {
+//   checkAirLock(p1, field);
+//   checkAirLock(p2, field);
+//   checkForecast(p1, field.getWeather());
+//   checkForecast(p2, field.getWeather());
+//   checkKlutz(p1);
+//   checkKlutz(p2);
+//   p1.stats[DF] = getModifiedStat(p1.rawStats[DF], p1.boosts[DF]);
+//   p1.stats[SD] = getModifiedStat(p1.rawStats[SD], p1.boosts[SD]);
+//   p1.stats[SP] = getFinalSpeed(p1, field.getWeather());
+//   p2.stats[DF] = getModifiedStat(p2.rawStats[DF], p2.boosts[DF]);
+//   p2.stats[SD] = getModifiedStat(p2.rawStats[SD], p2.boosts[SD]);
+//   p2.stats[SP] = getFinalSpeed(p2, field.getWeather());
+//   checkIntimidate(p1, p2);
+//   checkIntimidate(p2, p1);
+//   checkDownload(p1, p2);
+//   checkDownload(p2, p1);
+//   p1.stats[AT] = getModifiedStat(p1.rawStats[AT], p1.boosts[AT]);
+//   p1.stats[SA] = getModifiedStat(p1.rawStats[SA], p1.boosts[SA]);
+//   p2.stats[AT] = getModifiedStat(p2.rawStats[AT], p2.boosts[AT]);
+//   p2.stats[SA] = getModifiedStat(p2.rawStats[SA], p2.boosts[SA]);
+//   var side1 = field.getSide(1);
+//   var side2 = field.getSide(0);
+//   checkInfiltrator(p1, side1);
+//   checkInfiltrator(p2, side2);
+//   var results = [[], []];
+//   for (var i = 0; i < 4; i++) {
+//     results[0][i] = getDamageResult(p1, p2, p1.moves[i], side1);
+//     results[1][i] = getDamageResult(p2, p1, p2.moves[i], side2);
+//   }
+//   return results;
+// }
 
-
-function CALCULATE_ALL_MOVES_BW(p1, p2, field) {
-  checkAirLock(p1, field);
-  checkAirLock(p2, field);
-  checkForecast(p1, field.getWeather());
-  checkForecast(p2, field.getWeather());
-  checkKlutz(p1);
-  checkKlutz(p2);
-  p1.stats[DF] = getModifiedStat(p1.rawStats[DF], p1.boosts[DF]);
-  p1.stats[SD] = getModifiedStat(p1.rawStats[SD], p1.boosts[SD]);
-  p1.stats[SP] = getFinalSpeed(p1, field.getWeather());
-  p2.stats[DF] = getModifiedStat(p2.rawStats[DF], p2.boosts[DF]);
-  p2.stats[SD] = getModifiedStat(p2.rawStats[SD], p2.boosts[SD]);
-  p2.stats[SP] = getFinalSpeed(p2, field.getWeather());
-  checkIntimidate(p1, p2);
-  checkIntimidate(p2, p1);
-  checkDownload(p1, p2);
-  checkDownload(p2, p1);
-  p1.stats[AT] = getModifiedStat(p1.rawStats[AT], p1.boosts[AT]);
-  p1.stats[SA] = getModifiedStat(p1.rawStats[SA], p1.boosts[SA]);
-  p2.stats[AT] = getModifiedStat(p2.rawStats[AT], p2.boosts[AT]);
-  p2.stats[SA] = getModifiedStat(p2.rawStats[SA], p2.boosts[SA]);
-  var side1 = field.getSide(1);
-  var side2 = field.getSide(0);
-  checkInfiltrator(p1, side1);
-  checkInfiltrator(p2, side2);
-  var results = [[], []];
-  for (var i = 0; i < 4; i++) {
-    results[0][i] = getDamageResult(p1, p2, p1.moves[i], side1);
-    results[1][i] = getDamageResult(p2, p1, p2.moves[i], side2);
-  }
-  return results;
-}
-
-function CALCULATE_MOVES_OF_ATTACKER_BW(attacker, defender, field) {
-  checkAirLock(attacker, field);
-  checkAirLock(defender, field);
-  checkForecast(attacker, field.getWeather());
-  checkForecast(defender, field.getWeather());
-  checkKlutz(attacker);
-  checkKlutz(defender);
-  attacker.stats[SP] = getFinalSpeed(attacker, field.getWeather());
-  defender.stats[DF] = getModifiedStat(defender.rawStats[DF], defender.boosts[DF]);
-  defender.stats[SD] = getModifiedStat(defender.rawStats[SD], defender.boosts[SD]);
-  defender.stats[SP] = getFinalSpeed(defender, field.getWeather());
-  checkIntimidate(attacker, defender);
-  checkIntimidate(defender, attacker);
-  checkDownload(attacker, defender);
-  attacker.stats[AT] = getModifiedStat(attacker.rawStats[AT], attacker.boosts[AT]);
-  attacker.stats[SA] = getModifiedStat(attacker.rawStats[SA], attacker.boosts[SA]);
-  defender.stats[AT] = getModifiedStat(defender.rawStats[AT], defender.boosts[AT]);
-  var defenderSide = field.getSide(~~(mode === 'one-vs-all'));
-  checkInfiltrator(attacker, defenderSide);
-  var results = [];
-  for (var i = 0; i < 4; i++) {
-    results[i] = getDamageResult(attacker, defender, attacker.moves[i], defenderSide);
-  }
-  return results;
-}
+// function CALCULATE_MOVES_OF_ATTACKER_BW(attacker, defender, field) {
+//   checkAirLock(attacker, field);
+//   checkAirLock(defender, field);
+//   checkForecast(attacker, field.getWeather());
+//   checkForecast(defender, field.getWeather());
+//   checkKlutz(attacker);
+//   checkKlutz(defender);
+//   attacker.stats[SP] = getFinalSpeed(attacker, field.getWeather());
+//   defender.stats[DF] = getModifiedStat(defender.rawStats[DF], defender.boosts[DF]);
+//   defender.stats[SD] = getModifiedStat(defender.rawStats[SD], defender.boosts[SD]);
+//   defender.stats[SP] = getFinalSpeed(defender, field.getWeather());
+//   checkIntimidate(attacker, defender);
+//   checkIntimidate(defender, attacker);
+//   checkDownload(attacker, defender);
+//   attacker.stats[AT] = getModifiedStat(attacker.rawStats[AT], attacker.boosts[AT]);
+//   attacker.stats[SA] = getModifiedStat(attacker.rawStats[SA], attacker.boosts[SA]);
+//   defender.stats[AT] = getModifiedStat(defender.rawStats[AT], defender.boosts[AT]);
+//   var defenderSide = field.getSide(~~(mode === 'one-vs-all'));
+//   checkInfiltrator(attacker, defenderSide);
+//   var results = [];
+//   for (var i = 0; i < 4; i++) {
+//     results[i] = getDamageResult(attacker, defender, attacker.moves[i], defenderSide);
+//   }
+//   return results;
+// }
 
 export default class Damage {
 
@@ -106,6 +105,8 @@ export default class Damage {
     move.ignoresDefenseBoosts = move.ignoreDefensive || false;
     move.makesContact = (move.flags.contact) || false;
     move.hasSecondaryEffect = !!move.secondary;
+
+    // isAerilate || isPixilate || isRefrigerate
     return move;
   }
 
@@ -193,7 +194,7 @@ export default class Damage {
     } else if (move.name === 'Judgment' && attacker.item.indexOf('Plate') !== -1) {
       move.type = getItemBoostType(attacker.item);
     } else if (move.name === 'Natural Gift' && attacker.item.indexOf('Berry') !== -1) {
-      var gift = getNaturalGift(attacker.item);
+      const gift = getNaturalGift(attacker.item);
       move.type = gift.t;
       move.bp = gift.p;
       description.attackerItem = attacker.item;
@@ -238,7 +239,7 @@ export default class Damage {
       (move.isSound && defAbility === 'Soundproof')) {
       description.defenderAbility = defAbility;
       return {
-        'damage': [0],
+        'damage': [0, 0],
         'description': buildDescription(description)
       };
     }
@@ -249,7 +250,7 @@ export default class Damage {
     if (move.type === 'Ground' && !field.isGravity && defender.item === 'Air Balloon') {
       description.defenderItem = defender.item;
       return {
-        'damage': [0],
+        'damage': [0, 0],
         'description': buildDescription(description)
       };
     }
@@ -258,7 +259,7 @@ export default class Damage {
     // description.HPEVs = defender.HPEVs + ' HP';
 
     if (move.name === 'Seismic Toss' || move.name === 'Night Shade') {
-      var lv = attacker.level;
+      let lv = attacker.level;
       if (attacker.ability === 'Parental Bond') {
         lv *= 2;
       }
@@ -273,96 +274,95 @@ export default class Damage {
     }
 
 
-    var turnOrder = attacker.stats[SP] > defender.stats[SP] ? 'FIRST' : 'LAST';
-    console.log('turn order:', turnOrder);
+    const turnOrder = attacker.stats[SP] > defender.stats[SP] ? 'FIRST' : 'LAST';
 
     ////////////////////////////////
     ////////// BASE POWER //////////
     ////////////////////////////////
-    var basePower;
+    let basePower;
     switch (move.name) {
-      case 'Payback':
-        basePower = turnOrder === 'LAST' ? 100 : 50;
-        description.moveBP = basePower;
-        break;
-      case 'Electro Ball':
-        var r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
-        basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
-        description.moveBP = basePower;
-        break;
-      case 'Gyro Ball':
-        basePower = Math.min(150, Math.floor(25 * defender.stats[SP] / attacker.stats[SP]));
-        description.moveBP = basePower;
-        break;
-      case 'Punishment':
-        basePower = Math.min(200, 60 + 20 * countBoosts(defender.boosts));
-        description.moveBP = basePower;
-        break;
-      case 'Low Kick':
-      case 'Grass Knot':
-        var w = defender.weight;
-        basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
-        description.moveBP = basePower;
-        break;
-      case 'Hex':
-        basePower = move.bp * (defender.status !== 'Healthy' ? 2 : 1);
-        description.moveBP = basePower;
-        break;
-      case 'Heavy Slam':
-      case 'Heat Crash':
-        var wr = attacker.weight / defender.weight;
-        basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
-        description.moveBP = basePower;
-        break;
-      case 'Stored Power':
-        basePower = 20 + 20 * countBoosts(attacker.boosts);
-        description.moveBP = basePower;
-        break;
-      case 'Acrobatics':
-        basePower = attacker.item === 'Flying Gem' || attacker.item === '' ? 110 : 55;
-        description.moveBP = basePower;
-        break;
-      case 'Wake-Up Slap':
-        basePower = move.bp * (defender.status === 'Asleep' ? 2 : 1);
-        description.moveBP = basePower;
-        break;
-      case 'Weather Ball':
-        basePower = field.weather !== '' ? 100 : 50;
-        description.moveBP = basePower;
-        break;
-      case 'Fling':
-        basePower = getFlingPower(attacker.item);
-        description.moveBP = basePower;
-        description.attackerItem = attacker.item;
-        break;
-      case 'Eruption':
-      case 'Water Spout':
-        basePower = Math.max(1, Math.floor(150 * attacker.curHP / attacker.maxHP));
-        description.moveBP = basePower;
-        break;
-      case 'Flail':
-      case 'Reversal':
-        var p = Math.floor(48 * attacker.curHP / attacker.maxHP);
-        basePower = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
-        description.moveBP = basePower;
-        break;
-      case 'Earthquake':
-        basePower = (field.terrain === 'Grassy') ? move.bp / 2 : move.bp;
-        description.terrain = field.terrain;
-        break;
-      case 'Nature Power':
-        basePower = (field.terrain === 'Electric' || field.terrain === 'Grassy') ? 90 : (field.terrain === 'Misty') ? 95 : 80;
-        break;
-      case 'Venoshock':
-        basePower = move.bp * (defender.status == 'Poisoned' ? 2 : 1);
-        description.moveBP = basePower;
-        break;
-      default:
-        basePower = move.bp;
+    case 'Payback':
+      basePower = turnOrder === 'LAST' ? 100 : 50;
+      description.moveBP = basePower;
+      break;
+    case 'Electro Ball':
+      var r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
+      basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
+      description.moveBP = basePower;
+      break;
+    case 'Gyro Ball':
+      basePower = Math.min(150, Math.floor(25 * defender.stats[SP] / attacker.stats[SP]));
+      description.moveBP = basePower;
+      break;
+    case 'Punishment':
+      basePower = Math.min(200, 60 + 20 * countBoosts(defender.boosts));
+      description.moveBP = basePower;
+      break;
+    case 'Low Kick':
+    case 'Grass Knot':
+      var w = defender.weight;
+      basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
+      description.moveBP = basePower;
+      break;
+    case 'Hex':
+      basePower = move.bp * (defender.status !== 'Healthy' ? 2 : 1);
+      description.moveBP = basePower;
+      break;
+    case 'Heavy Slam':
+    case 'Heat Crash':
+      var wr = attacker.weight / defender.weight;
+      basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
+      description.moveBP = basePower;
+      break;
+    case 'Stored Power':
+      basePower = 20 + 20 * countBoosts(attacker.boosts);
+      description.moveBP = basePower;
+      break;
+    case 'Acrobatics':
+      basePower = attacker.item === 'Flying Gem' || attacker.item === '' ? 110 : 55;
+      description.moveBP = basePower;
+      break;
+    case 'Wake-Up Slap':
+      basePower = move.bp * (defender.status === 'Asleep' ? 2 : 1);
+      description.moveBP = basePower;
+      break;
+    case 'Weather Ball':
+      basePower = field.weather !== '' ? 100 : 50;
+      description.moveBP = basePower;
+      break;
+    case 'Fling':
+      basePower = getFlingPower(attacker.item);
+      description.moveBP = basePower;
+      description.attackerItem = attacker.item;
+      break;
+    case 'Eruption':
+    case 'Water Spout':
+      basePower = Math.max(1, Math.floor(150 * attacker.curHP / attacker.maxHP));
+      description.moveBP = basePower;
+      break;
+    case 'Flail':
+    case 'Reversal':
+      const p = Math.floor(48 * attacker.curHP / attacker.maxHP);
+      basePower = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
+      description.moveBP = basePower;
+      break;
+    case 'Earthquake':
+      basePower = (field.terrain === 'Grassy') ? move.bp / 2 : move.bp;
+      description.terrain = field.terrain;
+      break;
+    case 'Nature Power':
+      basePower = (field.terrain === 'Electric' || field.terrain === 'Grassy') ? 90 : (field.terrain === 'Misty') ? 95 : 80;
+      break;
+    case 'Venoshock':
+      basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
+      description.moveBP = basePower;
+      break;
+    default:
+      basePower = move.bp;
     }
     console.log('base power:', basePower);
 
-    var bpMods = [];
+    const bpMods = [];
     if ((attacker.ability === 'Technician' && basePower <= 60) ||
       (attacker.ability === 'Flare Boost' && attacker.status === 'Burned' && move.category === 'Special') ||
       (attacker.ability === 'Toxic Boost' && (attacker.status === 'Poisoned' || attacker.status === 'Badly Poisoned') &&
@@ -418,7 +418,7 @@ export default class Damage {
       (move.name === 'Venoshock' && (defender.status === 'Poisoned' || defender.status === 'Badly Poisoned'))) {
       bpMods.push(0x2000);
       description.moveBP = move.bp * 2;
-    } else if ((move.name === 'Solar Beam' || move.name == 'SolarBeam') && ['Rain', 'Heavy Rain', 'Sand', 'Hail'].indexOf(field.weather) !== -1) {
+    } else if ((move.name === 'Solar Beam' || move.name === 'SolarBeam') && ['Rain', 'Heavy Rain', 'Sand', 'Hail'].indexOf(field.weather) !== -1) {
       bpMods.push(0x800);
       description.moveBP = move.bp / 2;
       description.weather = field.weather;
@@ -446,8 +446,8 @@ export default class Damage {
       description.attackerAbility = attacker.ability;
     }
 
-    var isAttackerAura = attacker.ability === (move.type + ' Aura');
-    var isDefenderAura = defAbility === (move.type + ' Aura');
+    const isAttackerAura = attacker.ability === (move.type + ' Aura');
+    const isDefenderAura = defAbility === (move.type + ' Aura');
     if (isAttackerAura || isDefenderAura) {
       if (attacker.ability === 'Aura Break' || defAbility === 'Aura Break') {
         bpMods.push(0x0C00);
@@ -467,12 +467,12 @@ export default class Damage {
     basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
     console.log('with mods:', basePower);
 
-    ////////////////////////////////
-    ////////// (SP)ATTACK //////////
-    ////////////////////////////////
-    var attack;
-    var attackSource = move.name === 'Foul Play' ? defender : attacker;
-    var attackStat = move.category === 'Physical' ? AT : SA;
+    // //////////////////////////////
+    // //////// (SP)ATTACK //////////
+    // //////////////////////////////
+    let attack;
+    const attackSource = move.name === 'Foul Play' ? defender : attacker;
+    const attackStat = move.category === 'Physical' ? AT : SA;
     // description.attackEVs = attacker.evs[attackStat] +
     //   (NATURES[attacker.nature][0] === attackStat ? '+' : NATURES[attacker.nature][1] === attackStat ? '-' : '')
     //   + ' ' + toSmogonStat(attackStat);
@@ -492,7 +492,7 @@ export default class Damage {
       description.attackerAbility = attacker.ability;
     }
 
-    var atMods = [];
+    const atMods = [];
     if (defAbility === 'Thick Fat' && (move.type === 'Fire' || move.type === 'Ice')) {
       atMods.push(0x800);
       description.defenderAbility = defAbility;
@@ -536,12 +536,12 @@ export default class Damage {
 
     attack = Math.max(1, pokeRound(attack * chainMods(atMods) / 0x1000));
 
-    ////////////////////////////////
-    ///////// (SP)DEFENSE //////////
-    ////////////////////////////////
-    var defense;
-    var hitsPhysical = move.category === 'Physical' || move.dealsPhysicalDamage;
-    var defenseStat = hitsPhysical ? DF : SD;
+    // //////////////////////////////
+    // /////// (SP)DEFENSE //////////
+    // //////////////////////////////
+    let defense;
+    const hitsPhysical = move.category === 'Physical' || move.dealsPhysicalDamage;
+    const defenseStat = hitsPhysical ? DF : SD;
     // description.defenseEVs = defender.evs[defenseStat] +
     //   (NATURES[defender.nature][0] === defenseStat ? '+' : NATURES[defender.nature][1] === defenseStat ? '-' : '') + ' ' +
     //   toSmogonStat(defenseStat);
@@ -561,7 +561,7 @@ export default class Damage {
       description.weather = field.weather;
     }
 
-    var dfMods = [];
+    const dfMods = [];
     if (defAbility === 'Marvel Scale' && defender.status !== 'Healthy' && hitsPhysical) {
       dfMods.push(0x1800);
       description.defenderAbility = defAbility;
@@ -586,10 +586,10 @@ export default class Damage {
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
 
-    ////////////////////////////////
-    //////////// DAMAGE ////////////
-    ////////////////////////////////
-    var baseDamage = Math.floor(Math.floor((Math.floor((2 * attacker.level) / 5 + 2) * basePower * attack) / defense) / 50 + 2);
+    // //////////////////////////////
+    // ////////// DAMAGE ////////////
+    // //////////////////////////////
+    let baseDamage = Math.floor(Math.floor((Math.floor((2 * attacker.level) / 5 + 2) * basePower * attack) / defense) / 50 + 2);
     if (field.format !== 'Singles' && move.isSpread) {
       baseDamage = pokeRound(baseDamage * 0xC00 / 0x1000);
     }
@@ -601,8 +601,7 @@ export default class Damage {
       description.weather = field.weather;
     } else if ((field.weather === 'Harsh Sunshine' && move.type === 'Water') || (field.weather === 'Heavy Rain' && move.type === 'Fire')) {
       return {
-        'damage': [0],
-        'description': buildDescription(description)
+        damage: [0, 0]
       };
     }
     if (field.isGravity || (attacker.type1 !== 'Flying' && attacker.type2 !== 'Flying' &&
@@ -610,7 +609,7 @@ export default class Damage {
       if (field.terrain === 'Electric' && move.type === 'Electric') {
         baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
         description.terrain = field.terrain;
-      } else if (field.terrain === 'Grassy' && move.type == 'Grass') {
+      } else if (field.terrain === 'Grassy' && move.type === 'Grass') {
         baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
         description.terrain = field.terrain;
       }
@@ -627,7 +626,7 @@ export default class Damage {
       description.isCritical = isCritical;
     }
     // the random factor is applied between the crit mod and the stab mod, so don't apply anything below this until we're inside the loop
-    var stabMod = 0x1000;
+    let stabMod = 0x1000;
     if (move.type === attacker.type1 || move.type === attacker.type2) {
       if (attacker.ability === 'Adaptability') {
         stabMod = 0x2000;
@@ -639,9 +638,9 @@ export default class Damage {
       stabMod = 0x1800;
       description.attackerAbility = attacker.ability;
     }
-    var applyBurn = (attacker.status === 'Burned' && move.category === 'Physical' && attacker.ability !== 'Guts' && !move.ignoresBurn);
+    const applyBurn = (attacker.status === 'Burned' && move.category === 'Physical' && attacker.ability !== 'Guts' && !move.ignoresBurn);
     description.isBurned = applyBurn;
-    var finalMods = [];
+    const finalMods = [];
     if (field.isReflect && move.category === 'Physical' && !isCritical) {
       finalMods.push(field.format !== 'Singles' ? 0xA8F : 0x800);
       description.isReflect = true;
@@ -676,112 +675,45 @@ export default class Damage {
       finalMods.push(0x800);
       description.defenderItem = defender.item;
     }
-    var finalMod = chainMods(finalMods);
+    const finalMod = chainMods(finalMods);
 
-    var damage = [];
-    for (var i = 0; i < 16; i++) {
-      damage[i] = Math.floor(baseDamage * (85 + i) / 100);
-      damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
-      damage[i] = Math.floor(damage[i] * typeEffectiveness);
+    // lots of weird rounding here - didn't want to mess with it in case
+    // it has some significance
+    const damage = [];
+    for (let i = 0; i < 16; i += 15) {
+      let dmg = Math.floor(baseDamage * (85 + i) / 100);
+      dmg = pokeRound(dmg * stabMod / 0x1000);
+      dmg = Math.floor(dmg * typeEffectiveness);
       if (applyBurn) {
-        damage[i] = Math.floor(damage[i] / 2);
+        dmg = Math.floor(dmg / 2);
       }
-      damage[i] = Math.max(1, damage[i]);
-      damage[i] = pokeRound(damage[i] * finalMod / 0x1000);
+      dmg = Math.max(1, dmg);
+      dmg = pokeRound(dmg * finalMod / 0x1000);
 
       // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
       if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
-        damage[i] = Math.floor(damage[i] * 3 / 2);
-        description.attackerAbility = attacker.ability;
+        dmg = Math.floor(dmg * 3 / 2);
+        // description.attackerAbility = attacker.ability;
       }
+      damage.push(dmg);
     }
     return {
-      'damage': damage,
-      'description': buildDescription(description)
+      damage
     };
   }
 }
 
-function buildDescription(description) {
-  var output = '';
-  if (description.attackBoost) {
-    if (description.attackBoost > 0) {
-      output += '+';
-    }
-    output += description.attackBoost + ' ';
-  }
-  output = appendIfSet(output, description.attackEVs);
-  output = appendIfSet(output, description.attackerItem);
-  output = appendIfSet(output, description.attackerAbility);
-  if (description.isBurned) {
-    output += 'burned ';
-  }
-  output += description.attackerName + ' ';
-  if (description.isHelpingHand) {
-    output += 'Helping Hand ';
-  }
-  output += description.moveName + ' ';
-  if (description.moveBP && description.moveType) {
-    output += '(' + description.moveBP + ' BP ' + description.moveType + ') ';
-  } else if (description.moveBP) {
-    output += '(' + description.moveBP + ' BP) ';
-  } else if (description.moveType) {
-    output += '(' + description.moveType + ') ';
-  }
-  if (description.hits) {
-    output += '(' + description.hits + ' hits) ';
-  }
-  output += 'vs. ';
-  if (description.defenseBoost) {
-    if (description.defenseBoost > 0) {
-      output += '+';
-    }
-    output += description.defenseBoost + ' ';
-  }
-  output = appendIfSet(output, description.HPEVs);
-  if (description.defenseEVs) {
-    output += ' / ' + description.defenseEVs + ' ';
-  }
-  output = appendIfSet(output, description.defenderItem);
-  output = appendIfSet(output, description.defenderAbility);
-  output += description.defenderName;
-  if (description.weather && description.terrain) {
 
-  } else if (description.weather) {
-    output += ' in ' + description.weather;
-  } else if (description.terrain) {
-    output += ' in ' + description.terrain + ' Terrain';
-  }
-  if (description.isReflect) {
-    output += ' through Reflect';
-  } else if (description.isLightScreen) {
-    output += ' through Light Screen';
-  }
-  if (description.isCritical) {
-    output += ' on a critical hit';
-  }
-  return output;
-}
-
-function appendIfSet(str, toAppend) {
-  if (toAppend) {
-    return str + toAppend + ' ';
-  }
-  return str;
-}
-
-function toSmogonStat(stat) {
-  return stat === AT ? 'Atk'
-    : stat === DF ? 'Def'
-      : stat === SA ? 'SpA'
-        : stat === SD ? 'SpD'
-          : stat === SP ? 'Spe'
-            : 'wtf';
-}
+// function appendIfSet(str, toAppend) {
+//   if (toAppend) {
+//     return str + toAppend + ' ';
+//   }
+//   return str;
+// }
 
 function chainMods(mods) {
-  var M = 0x1000;
-  for (var i = 0; i < mods.length; i++) {
+  let M = 0x1000;
+  for (let i = 0; i < mods.length; i++) {
     if (mods[i] !== 0x1000) {
       M = ((M * mods[i]) + 0x800) >> 12;
     }
@@ -803,13 +735,13 @@ function getMoveEffectiveness(move, type, isGhostRevealed, isGravity) {
 }
 
 function getModifiedStat(stat, mod) {
-  return mod > 0 ? Math.floor(stat * (2 + mod) / 2) // eslint-disable-line
+  return mod > 0 ? Math.floor(stat * (2 + mod) / 2)
     : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
       : stat;
 }
 
 function getFinalSpeed(pokemon, weather) {
-  const speed = getModifiedStat(pokemon.rawStats[SP], pokemon.boosts[SP]);
+  let speed = getModifiedStat(pokemon.rawStats[SP], pokemon.boosts[SP]);
   if (pokemon.item === 'Choice Scarf') {
     speed = Math.floor(speed * 1.5);
   } else if (pokemon.item === 'Macho Brace' || pokemon.item === 'Iron Ball') {
@@ -896,184 +828,184 @@ function pokeRound(num) {
 
 
 function getItemBoostType(item) {
-    switch (item) {
-        case 'Draco Plate':
-        case 'Dragon Fang':
-            return 'Dragon';
-        case 'Dread Plate':
-        case 'BlackGlasses':
-        case 'Black Glasses':
-            return 'Dark';
-        case 'Earth Plate':
-        case 'Soft Sand':
-            return 'Ground';
-        case 'Fist Plate':
-        case 'Black Belt':
-            return 'Fighting';
-        case 'Flame Plate':
-        case 'Charcoal':
-            return 'Fire';
-        case 'Icicle Plate':
-        case 'NeverMeltIce':
-        case 'Never-Melt Ice':
-            return 'Ice';
-        case 'Insect Plate':
-        case 'SilverPowder':
-        case 'Silver Powder':
-            return 'Bug';
-        case 'Iron Plate':
-        case 'Metal Coat':
-            return 'Steel';
-        case 'Meadow Plate':
-        case 'Rose Incense':
-        case 'Miracle Seed':
-            return 'Grass';
-        case 'Mind Plate':
-        case 'Odd Incense':
-        case 'TwistedSpoon':
-        case 'Twisted Spoon':
-            return 'Psychic';
-        case 'Pixie Plate':
-            return 'Fairy';
-        case 'Sky Plate':
-        case 'Sharp Beak':
-            return 'Flying';
-        case 'Splash Plate':
-        case 'Sea Incense':
-        case 'Wave Incense':
-        case 'Mystic Water':
-            return 'Water';
-        case 'Spooky Plate':
-        case 'Spell Tag':
-            return 'Ghost';
-        case 'Stone Plate':
-        case 'Rock Incense':
-        case 'Hard Stone':
-            return 'Rock';
-        case 'Toxic Plate':
-        case 'Poison Barb':
-            return 'Poison';
-        case 'Zap Plate':
-        case 'Magnet':
-            return 'Electric';
-        case 'Silk Scarf':
-        case 'Pink Bow':
-        case 'Polkadot Bow':
-            return 'Normal';
-        default:
-            return '';
-    }
+  switch (item) {
+  case 'Draco Plate':
+  case 'Dragon Fang':
+    return 'Dragon';
+  case 'Dread Plate':
+  case 'BlackGlasses':
+  case 'Black Glasses':
+    return 'Dark';
+  case 'Earth Plate':
+  case 'Soft Sand':
+    return 'Ground';
+  case 'Fist Plate':
+  case 'Black Belt':
+    return 'Fighting';
+  case 'Flame Plate':
+  case 'Charcoal':
+    return 'Fire';
+  case 'Icicle Plate':
+  case 'NeverMeltIce':
+  case 'Never-Melt Ice':
+    return 'Ice';
+  case 'Insect Plate':
+  case 'SilverPowder':
+  case 'Silver Powder':
+    return 'Bug';
+  case 'Iron Plate':
+  case 'Metal Coat':
+    return 'Steel';
+  case 'Meadow Plate':
+  case 'Rose Incense':
+  case 'Miracle Seed':
+    return 'Grass';
+  case 'Mind Plate':
+  case 'Odd Incense':
+  case 'TwistedSpoon':
+  case 'Twisted Spoon':
+    return 'Psychic';
+  case 'Pixie Plate':
+    return 'Fairy';
+  case 'Sky Plate':
+  case 'Sharp Beak':
+    return 'Flying';
+  case 'Splash Plate':
+  case 'Sea Incense':
+  case 'Wave Incense':
+  case 'Mystic Water':
+    return 'Water';
+  case 'Spooky Plate':
+  case 'Spell Tag':
+    return 'Ghost';
+  case 'Stone Plate':
+  case 'Rock Incense':
+  case 'Hard Stone':
+    return 'Rock';
+  case 'Toxic Plate':
+  case 'Poison Barb':
+    return 'Poison';
+  case 'Zap Plate':
+  case 'Magnet':
+    return 'Electric';
+  case 'Silk Scarf':
+  case 'Pink Bow':
+  case 'Polkadot Bow':
+    return 'Normal';
+  default:
+    return '';
+  }
 }
 
 function getBerryResistType(berry) {
-    switch (berry) {
-        case 'Chilan Berry':
-            return 'Normal';
-        case 'Occa Berry':
-            return 'Fire';
-        case 'Passho Berry':
-            return 'Water';
-        case 'Wacan Berry':
-            return 'Electric';
-        case 'Rindo Berry':
-            return 'Grass';
-        case 'Yache Berry':
-            return 'Ice';
-        case 'Chople Berry':
-            return 'Fighting';
-        case 'Kebia Berry':
-            return 'Poison';
-        case 'Shuca Berry':
-            return 'Ground';
-        case 'Coba Berry':
-            return 'Flying';
-        case 'Payapa Berry':
-            return 'Psychic';
-        case 'Tanga Berry':
-            return 'Bug';
-        case 'Charti Berry':
-            return 'Rock';
-        case 'Kasib Berry':
-            return 'Ghost';
-        case 'Haban Berry':
-            return 'Dragon';
-        case 'Colbur Berry':
-            return 'Dark';
-        case 'Babiri Berry':
-            return 'Steel';
-        case 'Roseli Berry':
-            return 'Fairy';
-        default:
-            return '';
-    }
+  switch (berry) {
+  case 'Chilan Berry':
+    return 'Normal';
+  case 'Occa Berry':
+    return 'Fire';
+  case 'Passho Berry':
+    return 'Water';
+  case 'Wacan Berry':
+    return 'Electric';
+  case 'Rindo Berry':
+    return 'Grass';
+  case 'Yache Berry':
+    return 'Ice';
+  case 'Chople Berry':
+    return 'Fighting';
+  case 'Kebia Berry':
+    return 'Poison';
+  case 'Shuca Berry':
+    return 'Ground';
+  case 'Coba Berry':
+    return 'Flying';
+  case 'Payapa Berry':
+    return 'Psychic';
+  case 'Tanga Berry':
+    return 'Bug';
+  case 'Charti Berry':
+    return 'Rock';
+  case 'Kasib Berry':
+    return 'Ghost';
+  case 'Haban Berry':
+    return 'Dragon';
+  case 'Colbur Berry':
+    return 'Dark';
+  case 'Babiri Berry':
+    return 'Steel';
+  case 'Roseli Berry':
+    return 'Fairy';
+  default:
+    return '';
+  }
 }
 
 function getFlingPower(item) {
-    return item === 'Iron Ball' ? 130
-        : item === 'Hard Stone' ? 100
-        : item.indexOf('Plate') !== -1 || ['Deep Sea Tooth','Thick Club'].indexOf(item) !== -1 ? 90
-        : ['Assault Vest','Weakness Policy'].indexOf(item) !== -1 ? 80
-        : ['Poison Barb','Dragon Fang'].indexOf(item) !== -1 ? 70
-        : ['Adamant Orb','Lustrous Orb','Macho Brace','Stick'].indexOf(item) !== -1 ? 60
-        : item === 'Sharp Beak' ? 50
-        : item === 'Eviolite' ? 40
-        : ['Black Belt','Black Sludge','Black Glasses','Charcoal','Deep Sea Scale','Flame Orb',"King's Rock",
-            'Life Orb','Light Ball','Magnet','Metal Coat','Miracle Seed','Mystic Water','Never-Melt Ice',
-            'Razor Fang','Soul Dew','Spell Tag','Toxic Orb','Twisted Spoon'].indexOf(item) !== -1 ? 30
-        : 10;
+  return item === 'Iron Ball' ? 130
+    : item === 'Hard Stone' ? 100
+    : item.indexOf('Plate') !== -1 || ['Deep Sea Tooth', 'Thick Club'].indexOf(item) !== -1 ? 90
+    : ['Assault Vest', 'Weakness Policy'].indexOf(item) !== -1 ? 80
+    : ['Poison Barb', 'Dragon Fang'].indexOf(item) !== -1 ? 70
+    : ['Adamant Orb', 'Lustrous Orb', 'Macho Brace', 'Stick'].indexOf(item) !== -1 ? 60
+    : item === 'Sharp Beak' ? 50
+    : item === 'Eviolite' ? 40
+    : ['Black Belt', 'Black Sludge', 'Black Glasses', 'Charcoal', 'Deep Sea Scale', 'Flame Orb', "King's Rock",
+        'Life Orb', 'Light Ball', 'Magnet', 'Metal Coat', 'Miracle Seed', 'Mystic Water', 'Never-Melt Ice',
+        'Razor Fang', 'Soul Dew', 'Spell Tag', 'Toxic Orb', 'Twisted Spoon'].indexOf(item) !== -1 ? 30
+    : 10;
 }
 
 function getNaturalGift(item) {
-    var gift = {
-        'Apicot Berry' : {'t':'Ground','p':100},
-        'Babiri Berry' : {'t':'Steel','p':80},
-        'Belue Berry' : {'t':'Electric','p':100},
-        'Charti Berry' : {'t':'Rock','p':80},
-        'Chesto Berry' : {'t':'Water','p':80},
-        'Chilan Berry' : {'t':'Normal','p':80},
-        'Chople Berry' : {'t':'Fighting','p':80},
-        'Coba Berry' : {'t':'Flying','p':80},
-        'Colbur Berry' : {'t':'Dark','p':80},
-        'Custap Berry' : {'t':'Ghost','p':100},
-        'Durin Berry' : {'t':'Water','p':100},
-        'Enigma Berry' : {'t':'Bug','p':100},
-        'Ganlon Berry' : {'t':'Ice','p':100},
-        'Haban Berry' : {'t':'Dragon','p':80},
-        'Jaboca Berry' : {'t':'Dragon','p':100},
-        'Kasib Berry' : {'t':'Ghost','p':80},
-        'Kebia Berry' : {'t':'Poison','p':80},
-        'Kee Berry' : {'t':'Fairy','p':100},
-        'Lansat Berry' : {'t':'Flying','p':100},
-        'Leppa Berry' : {'t':'Fighting','p':80},
-        'Liechi Berry' : {'t':'Grass','p':100},
-        'Lum Berry' : {'t':'Flying','p':80},
-        'Maranga Berry' : {'t':'Dark','p':100},
-        'Micle Berry' : {'t':'Rock','p':100},
-        'Occa Berry' : {'t':'Fire','p':80},
-        'Oran Berry' : {'t':'Poison','p':80},
-        'Passho Berry' : {'t':'Water','p':80},
-        'Payapa Berry' : {'t':'Psychic','p':80},
-        'Petaya Berry' : {'t':'Poison','p':100},
-        'Rawst Berry' : {'t':'Grass','p':80},
-        'Rindo Berry' : {'t':'Grass','p':80},
-        'Roseli Berry' : {'t':'Fairy','p':80},
-        'Rowap Berry' : {'t':'Dark','p':100},
-        'Salac Berry' : {'t':'Fighting','p':100},
-        'Shuca Berry' : {'t':'Ground','p':80},
-        'Sitrus Berry' : {'t':'Psychic','p':80},
-        'Starf Berry' : {'t':'Psychic','p':100},
-        'Tanga Berry' : {'t':'Bug','p':80},
-        'Wacan Berry' : {'t':'Electric','p':80},
-        'Watmel Berry' : {'t':'Fire','p':100},
-        'Yache Berry' : {'t':'Ice','p':80}
-    }[item];
-    if (gift) {
-        if (gen < 6) {
-            gift.p -= 20;
-        }
-        return gift;
+  const gift = {
+    'Apicot Berry': {'t': 'Ground', 'p': 100},
+    'Babiri Berry': {'t': 'Steel', 'p': 80},
+    'Belue Berry': {'t': 'Electric', 'p': 100},
+    'Charti Berry': {'t': 'Rock', 'p': 80},
+    'Chesto Berry': {'t': 'Water', 'p': 80},
+    'Chilan Berry': {'t': 'Normal', 'p': 80},
+    'Chople Berry': {'t': 'Fighting', 'p': 80},
+    'Coba Berry': {'t': 'Flying', 'p': 80},
+    'Colbur Berry': {'t': 'Dark', 'p': 80},
+    'Custap Berry': {'t': 'Ghost', 'p': 100},
+    'Durin Berry': {'t': 'Water', 'p': 100},
+    'Enigma Berry': {'t': 'Bug', 'p': 100},
+    'Ganlon Berry': {'t': 'Ice', 'p': 100},
+    'Haban Berry': {'t': 'Dragon', 'p': 80},
+    'Jaboca Berry': {'t': 'Dragon', 'p': 100},
+    'Kasib Berry': {'t': 'Ghost', 'p': 80},
+    'Kebia Berry': {'t': 'Poison', 'p': 80},
+    'Kee Berry': {'t': 'Fairy', 'p': 100},
+    'Lansat Berry': {'t': 'Flying', 'p': 100},
+    'Leppa Berry': {'t': 'Fighting', 'p': 80},
+    'Liechi Berry': {'t': 'Grass', 'p': 100},
+    'Lum Berry': {'t': 'Flying', 'p': 80},
+    'Maranga Berry': {'t': 'Dark', 'p': 100},
+    'Micle Berry': {'t': 'Rock', 'p': 100},
+    'Occa Berry': {'t': 'Fire', 'p': 80},
+    'Oran Berry': {'t': 'Poison', 'p': 80},
+    'Passho Berry': {'t': 'Water', 'p': 80},
+    'Payapa Berry': {'t': 'Psychic', 'p': 80},
+    'Petaya Berry': {'t': 'Poison', 'p': 100},
+    'Rawst Berry': {'t': 'Grass', 'p': 80},
+    'Rindo Berry': {'t': 'Grass', 'p': 80},
+    'Roseli Berry': {'t': 'Fairy', 'p': 80},
+    'Rowap Berry': {'t': 'Dark', 'p': 100},
+    'Salac Berry': {'t': 'Fighting', 'p': 100},
+    'Shuca Berry': {'t': 'Ground', 'p': 80},
+    'Sitrus Berry': {'t': 'Psychic', 'p': 80},
+    'Starf Berry': {'t': 'Psychic', 'p': 100},
+    'Tanga Berry': {'t': 'Bug', 'p': 80},
+    'Wacan Berry': {'t': 'Electric', 'p': 80},
+    'Watmel Berry': {'t': 'Fire', 'p': 100},
+    'Yache Berry': {'t': 'Ice', 'p': 80}
+  }[item];
+  if (gift) {
+    if (gen < 6) {
+      gift.p -= 20;
     }
-    return {'t':'Normal','p':1};
+    return gift;
+  }
+  return {'t': 'Normal', 'p': 1 };
 }
 
 const defaultField = {
@@ -1129,3 +1061,4 @@ const defaultField = {
 //     this.isForesight = isForesight;
 //     this.isHelpingHand = isHelpingHand;
 // }
+//

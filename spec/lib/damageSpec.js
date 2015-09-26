@@ -1,4 +1,4 @@
-import Damage from '../../src/lib/damages6';
+import Damage from '../../src/lib/damage';
 // import _ from 'lodash';
 import fakemon from '../helpers/fakemon.json';
 import uturn from '../helpers/uturn.json';
