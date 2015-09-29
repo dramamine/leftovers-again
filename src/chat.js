@@ -8,7 +8,7 @@ class Chat {
     listener.subscribe('updatechallenges', this.acceptChallenges);
 
     const args = process.argv.slice(2);
-    console.log(args);
+    // console.log(args);
 
     if ( !args.find(x => x === '--spawned') ) {
       // only issue challenges in non-spawned copies

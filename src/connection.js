@@ -15,7 +15,7 @@ const battles = {};
 
 class Connection {
   constructor() {
-    console.log('connection constructed.');
+    // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
     ws.on('open', () => {
@@ -56,9 +56,9 @@ class Connection {
   }
 
   respondToChallenge(args) {
-    console.log('responding to challenge.');
+    // console.log('responding to challenge.');
     const [id, str] = args;
-    console.log(id, str);
+    // console.log(id, str);
 
     const requestOptions = {
       hostname: requestUrl.hostname,
@@ -119,7 +119,7 @@ class Connection {
         } catch (err) {
           console.error('error trying to parse data:', err, chunks);
         }
-        console.log('sending turn...');
+        // console.log('sending turn...');
         ws.send('|/trn ' + config.nick + ',0,' + chunks);
       });
     });

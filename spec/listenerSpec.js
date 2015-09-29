@@ -9,7 +9,7 @@ describe('listener', () => {
   it('should listen for and receive a message', () => {
     const spy = jasmine.createSpy('spy');
     listener.subscribe('hello', spy);
-    listener.relay('hello','world');
+    listener.relay('hello', 'world');
     expect(spy).toHaveBeenCalledWith('world');
 
 
@@ -20,7 +20,7 @@ describe('listener', () => {
   it('should not pass along messages of the wrong type', () => {
     const spy = jasmine.createSpy('spy');
     listener.subscribe('hello', spy);
-    listener.relay('goodbye','world');
+    listener.relay('goodbye', 'world');
     expect(spy).not.toHaveBeenCalled();
 
     listener.unsubscribe('hello', spy);
@@ -31,7 +31,7 @@ describe('listener', () => {
     const spy = jasmine.createSpy('spy');
     listener.subscribe('hello', spy);
     listener.unsubscribe('hello', spy);
-    const result = listener.relay('hello','world');
+    listener.relay('hello', 'world');
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -43,5 +43,4 @@ describe('listener', () => {
     result = listener.unsubscribe('fake', () => {});
     expect(result).toBe(false);
   });
-
 });

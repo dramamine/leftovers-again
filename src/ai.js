@@ -2,7 +2,7 @@ class AI {
   constructor() {
   }
 
-  onRequest(state) { // eslint-ignore-line
+  onRequest(state) { // eslint-disable-line
     console.log('You need to implement onRequest in your AI class!');
     return false;
   }

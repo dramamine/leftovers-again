@@ -4,7 +4,7 @@ import connection from './connection';
 class Battle {
   constructor(bid) {
     // battle ID
-    console.log('battle constructed with id', bid);
+    // console.log('battle constructed with id', bid);
     this.bid = bid;
     // what does state look like? WELL. Check out these properties:
     // 'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
@@ -122,7 +122,7 @@ class Battle {
 
     // my own pokemon switched
     if (ident.indexOf(this.ord) === 0) {
-      console.log('nm this is my own pokemon');
+      // console.log('nm this is my own pokemon');
       return false;
     }
 
@@ -137,7 +137,7 @@ class Battle {
     this.opponent[ident] = parsedMon;
 
     this.activeOpponent = parsedMon;
-    console.log('updated opponent to ', this.activeOpponent);
+    // console.log('updated opponent to ', this.activeOpponent);
   }
 
   handleRequest(json) {
