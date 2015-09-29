@@ -1,0 +1,54 @@
+{
+  "ident": "p1: Persian",
+  "details": "Persian, L83, F",
+  "species": "Persian",
+  "condition": "244/244",
+  "hp": 244,
+  "maxhp": 244,
+  "level": 83,
+  "conditions": [],
+  "active": true,
+  "stats": {
+    "atk":164,
+    "def":147,
+    "spa":156,
+    "spd":156,
+    "spe":239
+  },
+  "moves": [
+    "fakeout",
+    "knockoff",
+    "uturn",
+    "return"
+  ],
+  "baseAbility": "technician",
+  "item":" lifeorb",
+  "pokeball": "pokeball",
+  "canMegaEvo": false,
+
+   "num": 53,
+   "types":[
+      "Normal"
+   ],
+   "baseStats": {
+      "hp": 65,
+      "atk": 70,
+      "def": 60,
+      "spa": 65,
+      "spd": 65,
+      "spe": 115
+   },
+   "abilities": {
+      "0":"Limber",
+      "1":"Technician",
+      "H":"Unnerve"
+   },
+   "heightm": 1,
+   "weightkg": 32,
+   "color": "Yellow",
+   "prevo": "meowth",
+   "evoLevel": 28,
+   "eggGroups": [
+      "Field"
+   ]
+}

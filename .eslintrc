@@ -2,6 +2,8 @@
   "extends": "airbnb/base",
   "rules": {
     "comma-dangle": 0,
-    "no-console": 0
+    "no-console": 0,
+    "no-use-before-define": 0,
+    "no-nested-ternary": 0
   }
 }

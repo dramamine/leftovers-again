@@ -180,7 +180,7 @@ class Battle {
 
     try {
       const deets = mon.details.split(', ');
-      mon.type = deets[0];
+      mon.species = deets[0];
       mon.level = parseInt(deets[1].substr(1), 10);
       mon.gender = deets[2] || 'M';
     } catch (e) {
