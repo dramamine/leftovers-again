@@ -9,7 +9,7 @@ class Spawn {
 
   getServer() {
     return new Promise( (resolve, reject) => {
-      const showdown = spawn('node', ['app.js'], {cwd: '../../server'});
+      const showdown = spawn('node', ['app.js'], {cwd: './lib/Pokemon-Showdown'});
       let done = false;
       // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
@@ -42,13 +42,11 @@ class Spawn {
     glob('**/*.js', {cwd: botroot}, (err, files) => {
       console.log(files);
       files.map( (file) => {
-        // TODO: check metadata if you want
-
         // reject self
-        if (file.indexOf(self) === 0) return;
+        if (file === self) return;
         console.log('spawning opponent from file ' + file);
         const botrootForMain = 'bot=' + type + '/' + file;
-        const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: '../src/'});
+        const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: './src/'});
         // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
         op.stdout.on('data', (data) => {
@@ -71,7 +69,7 @@ export default Spawn;
 
 
 const myspawn = new Spawn();
-const self = 'martenbot.js';
+const self = 'stabby.js';
 const type = 'randombattle';
 myspawn.getServer().then( () => {
   console.log('loading challengers...');

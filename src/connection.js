@@ -19,11 +19,11 @@ class Connection {
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
     ws.on('open', () => {
-      console.log('got open message from ');
+      console.log('got open message from websocket');
     });
 
     ws.on('message', (msg) => {
-      console.log('received: %s', msg);
+      // console.log('received: %s', msg);
       const messages = msg.split('\n');
       let bid = null;
       if (messages[0].indexOf('>') === 0) {
@@ -36,9 +36,11 @@ class Connection {
           const messageParts = messages[i].split('|');
           const passThese = messageParts.slice(2);
           if (bid) {
+            // console.log('handling', messageParts[1]);
             battles[bid].handle(messageParts[1], passThese);
             continue;
           }
+          // console.log('relaying ', messageParts[1]);
           listener.relay(messageParts[1], passThese);
         }
       }

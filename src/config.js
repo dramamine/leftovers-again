@@ -1,3 +1,5 @@
+const botroot = './bots/';
+
 const cfg = {
   // bot name. hopefully no collisions, lol WHAT ARE THE CHANCES
   nick: '5nowden' + Math.floor(Math.random() * 10000),
@@ -12,7 +14,7 @@ const cfg = {
 
   actionurl: 'https://play.pokemonshowdown.com/~~localhost:8000/action.php',
 
-  botPath: './bots/randombattle/randumb'
+  botPath: 'randombattle/randumb'
 };
 
 class Config {
@@ -54,7 +56,7 @@ class Config {
   }
 
   get botPath() {
-    return cfg.botPath;
+    return botroot + cfg.botPath;
   }
 
   set botPath(path) {

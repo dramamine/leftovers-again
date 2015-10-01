@@ -6,7 +6,7 @@ Come back in a few months.
 
 ## NOTES
 9/11/2015
-- Now two bots can fight each other to the end! In one terminal, run `babel-node scripts/spawn.js` and run `babel-node src/main.js --bot=randombattle/martenbot.js` in the other.
+- Now two bots can fight each other to the end! In one terminal, run `babel-node scripts/spawn.js` (spawns martenbot by default) and run `babel-node src/main.js --bot=randombattle/stabby.js` in the other.
 
 
 9/1/2015

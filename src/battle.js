@@ -1,6 +1,10 @@
 import config from './config';
 import connection from './connection';
 
+import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
+import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
+import toId from './util';
+
 class Battle {
   constructor(bid) {
     // battle ID
@@ -51,15 +55,25 @@ class Battle {
       player: this.handlePlayer,
       switch: this.handleSwitch,
       request: this.handleRequest,
+      turn: this.handleTurn,
+      start: this.handleStart,
+      win: this.handleWin
     };
+
+    this.hasStarted = false;
 
     this.allmon = {};
 
-    // model of the opponent's 6 pokemon
-    this.opponent = [];
+    // i.e. things we want to preserve when passing state to bots
+    this.nonRequestState = {
+      // model of the opponent's 6 pokemon
+      opponent: [],
+      // opponent's currently active pokemon
+      activeOpponent: null,
 
-    // opponent's currently active pokemon
-    this.activeOpponent = null;
+      activeSelf: null
+    };
+
 
     // ex. p1 or p2. needed for identifying whose pokemon were affected by what
     this.ord = '';
@@ -119,31 +133,47 @@ class Battle {
   handleSwitch(ident, details, condition) {
     // p2a: Slurpuff|Slurpuff, L77, M|100/100
     // const [] = message;
-
-    // my own pokemon switched
-    if (ident.indexOf(this.ord) === 0) {
-      // console.log('nm this is my own pokemon');
-      return false;
-    }
-
+    console.log('handling switch: ', ident, details, condition);
     // create a pokemon object and parse its data
     const parsedMon = this.processMon({
       ident,
       details,
       condition
     });
+    // my own pokemon switched
+    if (ident.indexOf(this.ord) === 0) {
+      console.log('nm this is my own pokemon');
+      this.nonRequestState.activeSelf = parsedMon;
+      return false;
+    }
+
 
     // warning, this might overwrite our opponent
-    this.opponent[ident] = parsedMon;
+    this.nonRequestState.opponent[ident] = parsedMon;
 
-    this.activeOpponent = parsedMon;
-    // console.log('updated opponent to ', this.activeOpponent);
+    this.nonRequestState.activeOpponent = parsedMon;
+    console.log('updated opponent to ', this.nonRequestState.activeOpponent);
   }
 
   handleRequest(json) {
     const data = JSON.parse(json);
     // this.state = data;
-    data.opponent = this.opponent;
+
+
+    console.log(data);
+
+    if (data.active) {
+      data.active.forEach( (moveObj) => {
+        moveObj.moves.forEach( (move) => {
+          if (BattleMovedex[move.id]) {
+            // copy over most properties
+            Object.assign(move, BattleMovedex[move.id]);
+          } else {
+            console.warn('couldnt find my move ', move.id );
+          }
+        });
+      });
+    }
 
     console.dir(data);
 
@@ -165,8 +195,31 @@ class Battle {
 
     // save my current data
     this.state = data;
-    const move = this.myBot().onRequest(data);
-    const msg = `${this.bid}|${move}|${data.rqid}`;
+
+    if (this.hasStarted) {
+      this.decide();
+    }
+  }
+
+  handleStart() {
+    this.hasStarted = true;
+  }
+
+  handleTurn(x) {
+    console.log('handling my turn message', x);
+    if (x === '1') this.decide();
+  }
+
+  handleWin(x) {
+    console.log('WON: ', x);
+  }
+
+  decide() {
+    // merge all non-request state
+    Object.assign(this.state, this.nonRequestState);
+
+    const move = this.myBot().onRequest(this.state);
+    const msg = `${this.bid}|${move}|${this.state.rqid}`;
     connection.send( msg );
   }
 
@@ -209,6 +262,18 @@ class Battle {
       }
     } catch (e) {
       console.error('processMon: error parsing mon.condition', e);
+    }
+
+    // ident fuckery. what could go wrong...
+    mon.ident = mon.ident.replace('p2:', 'p2a:').replace('p1:', 'p1a:');
+
+    const key = toId(mon.species);
+    // look up pokedex info
+    if (BattlePokedex[key]) {
+      // copy over most properties
+      Object.assign(mon, BattlePokedex[key]);
+    } else {
+      console.warn('couldnt find my mon ', key );
     }
 
     // this is the part where we sync up with whatever's in storage.

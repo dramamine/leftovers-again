@@ -12,8 +12,8 @@ class Randumb extends AI {
   }
 
   onRequest(state) {
-
     if (state.forceSwitch) {
+      console.log('forced switch:', state.side.pokemon);
       // our pokemon died :(
       // choose a random one
       const possibleMons = state.side.pokemon.reduce(

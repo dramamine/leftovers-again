@@ -65,12 +65,19 @@ const gen = 6;
 //   return results;
 // }
 
-export default class Damage {
+// DO NOT WANT
+function buildDescription() {
+  return '';
+}
+
+class Damage {
 
   tmpTransformPokemon(mon) {
+    console.log(mon);
     // just adding some stuff to see if we can get this workin'
-    mon.ability = mon.baseAbility;
-    mon.name = mon.species;
+    // mon.ability = mon.baseAbility;
+
+    // mon.species = mon.species;
     mon.status = mon.conditions.join(' '); // string vs array
     mon.weight = mon.weightkg;
     mon.type1 = '';
@@ -83,7 +90,15 @@ export default class Damage {
       ? mon.types[1]
       : '';
     mon.nature = 'jolly';
-    mon.rawStats = mon.stats;
+
+    // this is true...
+    mon.rawStats = mon.baseStats;
+
+    // @TODO this ain't! huge shortcut here.
+    if (!mon.stats) {
+      mon.stats = mon.baseStats;
+    }
+
     mon.boosts = {};
 
     return mon;
@@ -103,7 +118,7 @@ export default class Damage {
     move.isSpread = move.name === 'Spread'; // ??
     move.hits = move.multihit || 1; // lol needs more tests
     move.ignoresDefenseBoosts = move.ignoreDefensive || false;
-    move.makesContact = (move.flags.contact) || false;
+    move.makesContact = (move.flags && move.flags.contact) || false;
     move.hasSecondaryEffect = !!move.secondary;
 
     // isAerilate || isPixilate || isRefrigerate
@@ -162,10 +177,14 @@ export default class Damage {
   //  getWeather() (related: checkForecast)
   // }
   getDamageResult(attacker, defender, move, field = defaultField) {
+    attacker = this.tmpTransformPokemon(attacker);
+    defender = this.tmpTransformPokemon(defender);
+    move = this.transformMove(move);
+
     const description = {
-      'attackerName': attacker.name,
+      'attackerName': attacker.species,
       'moveName': move.name,
-      'defenderName': defender.name
+      'defenderName': defender.species
     };
 
     if (move.bp === 0) {
@@ -175,7 +194,7 @@ export default class Damage {
       };
     }
 
-    let defAbility = defender.ability;
+    let defAbility = defender.ability || '';
     if (['Mold Breaker', 'Teravolt', 'Turboblaze'].indexOf(attacker.ability) !== -1) {
       defAbility = '';
       description.attackerAbility = attacker.ability;
@@ -276,9 +295,9 @@ export default class Damage {
 
     const turnOrder = attacker.stats[SP] > defender.stats[SP] ? 'FIRST' : 'LAST';
 
-    ////////////////////////////////
-    ////////// BASE POWER //////////
-    ////////////////////////////////
+    // //////////////////////////////
+    // //////// BASE POWER //////////
+    // //////////////////////////////
     let basePower;
     switch (move.name) {
     case 'Payback':
@@ -697,12 +716,13 @@ export default class Damage {
       }
       damage.push(dmg);
     }
-    return {
-      damage
-    };
+    console.log('MADE IT.', damage);
+    return damage;
   }
 }
 
+const damage = new Damage();
+export default damage;
 
 // function appendIfSet(str, toAppend) {
 //   if (toAppend) {
@@ -722,6 +742,7 @@ function chainMods(mods) {
 }
 
 function getMoveEffectiveness(move, type, isGhostRevealed, isGravity) {
+  // console.log('getMoveEffectiveness:', move, type, isGhostRevealed, isGravity);
   if (isGhostRevealed && type === 'Ghost' && (move.type === 'Normal' || move.type === 'Fighting')) {
     return 1;
   } else if (isGravity && type === 'Flying' && move.type === 'Ground') {

@@ -5,9 +5,9 @@ import connection from './connection';
 import config from './config';
 
 const argv = require('minimist')(process.argv.slice(2));
-if (argv.botfile) {
-  // console.log('good, loading my bot.');
-  config.botPath(argv.botfile);
+if (argv.bot) {
+  console.log('good, loading my bot.');
+  config.botPath = argv.bot;
 }
 
 // import WebSocket from 'ws';
