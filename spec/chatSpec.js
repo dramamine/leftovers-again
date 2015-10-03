@@ -49,6 +49,7 @@ describe('chat', () => {
     });
     it('should not do anything if the status code isn\'t 1', () => {
       spyOn(connection, 'send');
+      spyOn(console, 'error');
       config.nick = 'myself';
       const result = chat.onUpdateUser(['myself', '0']);
       expect(result).toBe(false);
@@ -56,6 +57,7 @@ describe('chat', () => {
     });
     it('should not do anything if our nickname doesn\'t match', () => {
       spyOn(connection, 'send');
+      spyOn(console, 'error');
       config.nick = 'myself';
       const result = chat.onUpdateUser(['someone-else', '1']);
       expect(result).toBe(false);

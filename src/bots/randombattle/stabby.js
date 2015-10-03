@@ -10,12 +10,12 @@ import Damage from '../../lib/damage';
 
 class Stabby extends AI {
   constructor() {
-    console.log('STABBY: built');
+    // console.log('STABBY: built');
     super();
   }
 
   onRequest(state) {
-    console.log('got my request...', state);
+    // console.log('got my request...', state);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -34,24 +34,24 @@ class Stabby extends AI {
     // check each move
     let maxDamage = 0;
     let bestMove;
-    console.log('my opponent: ' + state.activeOpponent);
+    // console.log('my opponent: ' + state.activeOpponent);
     if (!state.activeOpponent) {
       return null;
     }
     state.active[0].moves.forEach( (move, idx) => {
-      console.log('looking up move ', move);
+      // console.log('looking up move ', move);
       const est = Damage.getDamageResult(
         state.activeSelf,
         state.activeOpponent,
         move
-      )[1];
-      console.log('estimated ' + est + ' for move ' + move.name);
+      );
+      // console.log('estimated ' + est + ' for move ' + move.name);
       if (est > maxDamage) {
         maxDamage = est;
         bestMove = idx;
       }
     });
-    console.log('picked best move', bestMove);
+    // console.log('picked best move', bestMove);
     const myMove = bestMove + 1;
     // const myMove = state.active[0].moves.findIndex(bestMove) + 1; // moves are 1-indexed
 

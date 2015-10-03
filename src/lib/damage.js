@@ -1,4 +1,6 @@
 import typeChart from './typechart';
+import util from '../util';
+
 const AT = 'atk';
 const DF = 'def';
 const SA = 'spa';
@@ -6,84 +8,23 @@ const SD = 'spd';
 const SP = 'spe';
 const gen = 6;
 
-// function CALCULATE_ALL_MOVES_BW(p1, p2, field) {
-//   checkAirLock(p1, field);
-//   checkAirLock(p2, field);
-//   checkForecast(p1, field.getWeather());
-//   checkForecast(p2, field.getWeather());
-//   checkKlutz(p1);
-//   checkKlutz(p2);
-//   p1.stats[DF] = getModifiedStat(p1.rawStats[DF], p1.boosts[DF]);
-//   p1.stats[SD] = getModifiedStat(p1.rawStats[SD], p1.boosts[SD]);
-//   p1.stats[SP] = getFinalSpeed(p1, field.getWeather());
-//   p2.stats[DF] = getModifiedStat(p2.rawStats[DF], p2.boosts[DF]);
-//   p2.stats[SD] = getModifiedStat(p2.rawStats[SD], p2.boosts[SD]);
-//   p2.stats[SP] = getFinalSpeed(p2, field.getWeather());
-//   checkIntimidate(p1, p2);
-//   checkIntimidate(p2, p1);
-//   checkDownload(p1, p2);
-//   checkDownload(p2, p1);
-//   p1.stats[AT] = getModifiedStat(p1.rawStats[AT], p1.boosts[AT]);
-//   p1.stats[SA] = getModifiedStat(p1.rawStats[SA], p1.boosts[SA]);
-//   p2.stats[AT] = getModifiedStat(p2.rawStats[AT], p2.boosts[AT]);
-//   p2.stats[SA] = getModifiedStat(p2.rawStats[SA], p2.boosts[SA]);
-//   var side1 = field.getSide(1);
-//   var side2 = field.getSide(0);
-//   checkInfiltrator(p1, side1);
-//   checkInfiltrator(p2, side2);
-//   var results = [[], []];
-//   for (var i = 0; i < 4; i++) {
-//     results[0][i] = getDamageResult(p1, p2, p1.moves[i], side1);
-//     results[1][i] = getDamageResult(p2, p1, p2.moves[i], side2);
-//   }
-//   return results;
-// }
-
-// function CALCULATE_MOVES_OF_ATTACKER_BW(attacker, defender, field) {
-//   checkAirLock(attacker, field);
-//   checkAirLock(defender, field);
-//   checkForecast(attacker, field.getWeather());
-//   checkForecast(defender, field.getWeather());
-//   checkKlutz(attacker);
-//   checkKlutz(defender);
-//   attacker.stats[SP] = getFinalSpeed(attacker, field.getWeather());
-//   defender.stats[DF] = getModifiedStat(defender.rawStats[DF], defender.boosts[DF]);
-//   defender.stats[SD] = getModifiedStat(defender.rawStats[SD], defender.boosts[SD]);
-//   defender.stats[SP] = getFinalSpeed(defender, field.getWeather());
-//   checkIntimidate(attacker, defender);
-//   checkIntimidate(defender, attacker);
-//   checkDownload(attacker, defender);
-//   attacker.stats[AT] = getModifiedStat(attacker.rawStats[AT], attacker.boosts[AT]);
-//   attacker.stats[SA] = getModifiedStat(attacker.rawStats[SA], attacker.boosts[SA]);
-//   defender.stats[AT] = getModifiedStat(defender.rawStats[AT], defender.boosts[AT]);
-//   var defenderSide = field.getSide(~~(mode === 'one-vs-all'));
-//   checkInfiltrator(attacker, defenderSide);
-//   var results = [];
-//   for (var i = 0; i < 4; i++) {
-//     results[i] = getDamageResult(attacker, defender, attacker.moves[i], defenderSide);
-//   }
-//   return results;
-// }
-
 // DO NOT WANT
 function buildDescription() {
   return '';
 }
 
 class Damage {
-
-  tmpTransformPokemon(mon) {
-    console.log(mon);
+  processPokemon(mon) {
+    // console.log(mon);
     // just adding some stuff to see if we can get this workin'
     // mon.ability = mon.baseAbility;
 
-    // mon.species = mon.species;
-    mon.status = mon.conditions.join(' '); // string vs array
+
     mon.weight = mon.weightkg;
     mon.type1 = '';
     mon.type2 = '';
     if (mon.types.length < 1 || mon.types.length > 2) {
-      console.log('weird type length', mon.types);
+      console.warn('weird type length', mon.types);
     }
     mon.type1 = mon.types[0];
     mon.type2 = (mon.types.length === 2)
@@ -101,16 +42,26 @@ class Damage {
 
     mon.boosts = {};
 
+    this.makeAssumptions(mon);
+
+    // console.log(mon);
     return mon;
   }
 
-
-  transformPokemon(mon) {
-    // better look this guy up
-    return mon;
+  makeAssumptions(mon) {
+    // mon.species = mon.species;
+    mon.status = (mon.conditions)
+      ? mon.conditions.join(' ') // string vs array
+      : '';
+    mon.level = 50;
+    mon.hp = mon.baseStats.hp * 4;
+    mon.maxhp = mon.baseStats.hp * 4;
+    mon.ability = mon.ability || mon.abilities['0'];
+    mon.item = '';
+    mon.gender = 'M';
   }
 
-  transformMove(move) {
+  processMove(move) {
     move.isCrit = false;
     move.bp = move.basePower;
     move.isPulse = move.name === 'Pulse';
@@ -177,15 +128,27 @@ class Damage {
   //  getWeather() (related: checkForecast)
   // }
   getDamageResult(attacker, defender, move, field = defaultField) {
-    attacker = this.tmpTransformPokemon(attacker);
-    defender = this.tmpTransformPokemon(defender);
-    move = this.transformMove(move);
+    if (typeof attacker === 'string') {
+      attacker = util.researchPokemonById(attacker);
+    }
+    if (typeof defender === 'string') {
+      defender = util.researchPokemonById(defender);
+    }
+        if (typeof move === 'string') {
+      move = util.researchMoveById(move);
+    }
+
+    attacker = this.processPokemon(attacker);
+    defender = this.processPokemon(defender);
+    move = this.processMove(move);
 
     const description = {
       'attackerName': attacker.species,
       'moveName': move.name,
       'defenderName': defender.species
     };
+
+    // console.log(description);
 
     if (move.bp === 0) {
       return {
@@ -242,10 +205,7 @@ class Damage {
     let typeEffectiveness = typeEffect1 * typeEffect2;
 
     if (typeEffectiveness === 0) {
-      return {
-        damage: [0],
-        description: buildDescription(description)
-      };
+      return 0;
     }
 
     if ((defAbility === 'Wonder Guard' && typeEffectiveness <= 1) ||
@@ -257,10 +217,7 @@ class Damage {
       (move.isBullet && defAbility === 'Bulletproof') ||
       (move.isSound && defAbility === 'Soundproof')) {
       description.defenderAbility = defAbility;
-      return {
-        'damage': [0, 0],
-        'description': buildDescription(description)
-      };
+      return 0;
     }
     if (field.weather === 'Strong Winds' && (defender.type1 === 'Flying' || defender.type2 === 'Flying') && typeChart[move.type].Flying > 1) {
       typeEffectiveness /= 2;
@@ -268,10 +225,7 @@ class Damage {
     }
     if (move.type === 'Ground' && !field.isGravity && defender.item === 'Air Balloon') {
       description.defenderItem = defender.item;
-      return {
-        'damage': [0, 0],
-        'description': buildDescription(description)
-      };
+      return 0;
     }
 
     // never used, except in output string
@@ -282,10 +236,7 @@ class Damage {
       if (attacker.ability === 'Parental Bond') {
         lv *= 2;
       }
-      return {
-        'damage': [lv],
-        'description': buildDescription(description)
-      };
+      return [lv, lv];
     }
 
     if (move.hits > 1) {
@@ -379,7 +330,7 @@ class Damage {
     default:
       basePower = move.bp;
     }
-    console.log('base power:', basePower);
+    // console.log('base power:', basePower);
 
     const bpMods = [];
     if ((attacker.ability === 'Technician' && basePower <= 60) ||
@@ -484,7 +435,7 @@ class Damage {
     }
 
     basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
-    console.log('with mods:', basePower);
+    // console.log('with mods:', basePower);
 
     // //////////////////////////////
     // //////// (SP)ATTACK //////////
@@ -554,7 +505,7 @@ class Damage {
     }
 
     attack = Math.max(1, pokeRound(attack * chainMods(atMods) / 0x1000));
-
+    // console.log('attack:', attack);
     // //////////////////////////////
     // /////// (SP)DEFENSE //////////
     // //////////////////////////////
@@ -604,7 +555,7 @@ class Damage {
     }
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
-
+    // console.log('defense:', defense);
     // //////////////////////////////
     // ////////// DAMAGE ////////////
     // //////////////////////////////
@@ -619,9 +570,7 @@ class Damage {
       baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
       description.weather = field.weather;
     } else if ((field.weather === 'Harsh Sunshine' && move.type === 'Water') || (field.weather === 'Heavy Rain' && move.type === 'Fire')) {
-      return {
-        damage: [0, 0]
-      };
+      return 0;
     }
     if (field.isGravity || (attacker.type1 !== 'Flying' && attacker.type2 !== 'Flying' &&
       attacker.item !== 'Air Balloon' && attacker.ability !== 'Levitate')) {
@@ -695,29 +644,29 @@ class Damage {
       description.defenderItem = defender.item;
     }
     const finalMod = chainMods(finalMods);
+    // console.log('final mods:', finalMod);
+    // console.log('other things:', baseDamage, stabMod, typeEffectiveness, attacker.ability, move.hits, field.format);
 
     // lots of weird rounding here - didn't want to mess with it in case
     // it has some significance
-    const damage = [];
-    for (let i = 0; i < 16; i += 15) {
-      let dmg = Math.floor(baseDamage * (85 + i) / 100);
-      dmg = pokeRound(dmg * stabMod / 0x1000);
-      dmg = Math.floor(dmg * typeEffectiveness);
-      if (applyBurn) {
-        dmg = Math.floor(dmg / 2);
-      }
-      dmg = Math.max(1, dmg);
-      dmg = pokeRound(dmg * finalMod / 0x1000);
 
-      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
-      if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
-        dmg = Math.floor(dmg * 3 / 2);
-        // description.attackerAbility = attacker.ability;
-      }
-      damage.push(dmg);
+    let dmg = baseDamage;
+    dmg = pokeRound(dmg * stabMod / 0x1000);
+    dmg = Math.floor(dmg * typeEffectiveness);
+    if (applyBurn) {
+      dmg = Math.floor(dmg / 2);
     }
-    console.log('MADE IT.', damage);
-    return damage;
+    dmg = Math.max(1, dmg);
+    dmg = pokeRound(dmg * finalMod / 0x1000);
+
+    // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
+    if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
+      dmg = Math.floor(dmg * 3 / 2);
+      // description.attackerAbility = attacker.ability;
+    }
+
+    // console.log('MADE IT.', dmg);
+    return dmg;
   }
 }
 

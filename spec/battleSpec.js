@@ -192,12 +192,13 @@ describe('battle', () => {
   let spy;
   beforeEach( () => {
     battle = new Battle();
-    console.log('battle created.', battle);
     spy = jasmine.createSpy('spy');
     spyOn(battle, 'myBot').and.returnValue({
       onRequest: spy
     });
     spyOn(connection, 'send');
+    spyOn(console, 'log');
+    spyOn(console, 'error');
   });
   describe('handle', () => {
     it('calls an appropriate function', () => {
@@ -208,17 +209,18 @@ describe('battle', () => {
 
   describe('handleDamage', () => {
     it('should record damage appropriately', () => {
-      battle.allmon['p1: Fakechu'] = {
+      battle.allmon['p1: Pikachu'] = {
         hp: 200,
+        species: 'pikachu',
         condition: '200/200'
       };
-      battle.handleDamage('p1: Fakechu', '150/200', '[from] Attack');
-      expect(battle.allmon['p1: Fakechu'].hp).toEqual(150);
-      expect(battle.allmon['p1: Fakechu'].events[0]).toEqual(jasmine.any(Object));
-      expect(battle.allmon['p1: Fakechu'].events[0].hplost).toEqual(50);
+      battle.handleDamage('p1: Pikachu', '150/200', '[from] Attack');
+      expect(battle.allmon['p1: Pikachu'].hp).toEqual(150);
+      // expect(battle.allmon['p1: Fakechu'].events[0]).toEqual(jasmine.any(Object));
+      // expect(battle.allmon['p1: Fakechu'].events[0].hplost).toEqual(50);
     });
     it('should panic if it can\'t find the right one', () => {
-      battle.allmon['p1: Fakechu'] = {
+      battle.allmon['p1: Pikachu'] = {
         hp: 200,
         condition: '200/200'
       };
@@ -232,10 +234,10 @@ describe('battle', () => {
     it('handles bizness', () => {
       battle.ord = 'p1';
       battle.handleSwitch('p2a: Slurpuff', 'Slurpuff, L77, M', '100/100');
-      expect(battle.activeOpponent).toEqual(jasmine.any(Object));
-      expect(battle.activeOpponent.hp).toEqual(100);
-      expect(battle.activeOpponent.maxhp).toEqual(100);
-      expect(battle.activeOpponent.level).toEqual(77);
+      expect(battle.nonRequestState.activeOpponent).toEqual(jasmine.any(Object));
+      expect(battle.nonRequestState.activeOpponent.hp).toEqual(100);
+      expect(battle.nonRequestState.activeOpponent.maxhp).toEqual(100);
+      expect(battle.nonRequestState.activeOpponent.level).toEqual(77);
     });
     it('skips a pokemon it owns', () => {
       battle.ord = 'p2';
@@ -251,12 +253,21 @@ describe('battle', () => {
   });
 
   describe('handleRequest', () => {
+    beforeEach( () => {
+      battle.hasStarted = true;
+    });
+
+    it('does nothing if the game hasn\'t actually started', () => {
+      battle.hasStarted = false;
+      battle.handleRequest(JSON.stringify(sampleTurn));
+      expect(spy).not.toHaveBeenCalled();
+    });
     it('interprets a mon\'s details', () => {
       battle.handleRequest(JSON.stringify(sampleTurn));
       expect(spy).toHaveBeenCalled();
 
       const out = spy.calls.argsFor(0)[0];
-      expect(out.side.pokemon[0].type).toEqual(jasmine.any(String));
+      expect(out.side.pokemon[0].types).toEqual(jasmine.any(Array));
       expect(out.side.pokemon[0].level).toEqual(jasmine.any(Number));
       expect(out.side.pokemon[0].gender).toEqual(jasmine.any(String));
       expect(out.side.pokemon[0].hp).toEqual(jasmine.any(Number));

@@ -1,24 +1,35 @@
 import Damage from '../../src/lib/damage';
-// import _ from 'lodash';
-import fakemon from '../helpers/fakemon.json';
-import uturn from '../helpers/uturn.json';
-
-const damn = new Damage();
 
 describe('damage calculator', () => {
-  describe('transformPokemon', () => {
-    it('should provide all the fields we need', () => {
-      const res = damn.tmpTransformPokemon(
-        damn.transformPokemon(fakemon)
-      );
+  describe('normal moves', () => {
+    it('should handle some normal moves', () => {
+      // 85 bp
+      const bodyslam = Damage.getDamageResult(
+        'eevee', 'meowth', 'bodyslam');
+      // 120 bp
+      const doubleedge = Damage.getDamageResult(
+        'eevee', 'meowth', 'doubleedge');
 
-      const dmg = damn.getDamageResult(
-        res,
-        res,
-        damn.transformMove(uturn)
-      );
+      expect(bodyslam).toBeLessThan(doubleedge);
+    });
 
-      expect(dmg).toBe(jasmine.any(Object));
+    it('should do less damage to rock & steel', () => {
+      const groundtype = Damage.getDamageResult(
+        'eevee', 'muk', 'bodyslam');
+      const rocktype = Damage.getDamageResult(
+        'eevee', 'geodude', 'bodyslam');
+      const steeltype = Damage.getDamageResult(
+        'eevee', 'klang', 'bodyslam');
+
+      expect(rocktype).toBeLessThan(groundtype);
+      expect(steeltype).toBeLessThan(groundtype);
+    });
+
+    it('should do NO damage to ghost types', () => {
+      const ghosttype = Damage.getDamageResult(
+        'eevee', 'gengar', 'bodyslam');
+
+      expect(ghosttype).toEqual(0);
     });
   });
 });
