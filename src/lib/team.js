@@ -69,7 +69,7 @@ export default class Team {
 
         let numAndLabel;
         let evLabel;
-        evs.forEach( (ev) => { // eslint-disable-line functions in a loop
+        evs.forEach( (ev) => { // eslint-disable-line
           numAndLabel = ev.trim().split(' ');
           evLabel = numAndLabel[1].trim().toLowerCase();
           if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel)) {
@@ -84,7 +84,7 @@ export default class Team {
 
         let numAndLabel;
         let ivLabel;
-        ivs.forEach( (iv) => { // eslint-disable-line functions in a loop
+        ivs.forEach( (iv) => { // eslint-disable-line
           numAndLabel = iv.trim().split(' ');
           ivLabel = numAndLabel[1].trim().toLowerCase();
           if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(ivLabel)) {
@@ -110,13 +110,21 @@ export default class Team {
         }
         if (nameAndGender.indexOf('(M)') > 0) {
           mon.gender = 'M';
-          nameAndGender = nameAndGender.replace('(M)');
+          nameAndGender = nameAndGender.replace('(M)', '');
         } else if (nameAndGender.indexOf('(F)') > 0) {
           mon.gender = 'F';
-          nameAndGender = nameAndGender.replace('(F)');
+          nameAndGender = nameAndGender.replace('(F)', '');
+        }
+        const nicknames = nameAndGender.match(/\((.+)\)/);
+        if (nicknames) {
+          console.log(nicknames);
+          mon.name = nameAndGender.split(' (')[0];
+          mon.species = nicknames[1];
+          console.log(mon);
+        } else {
+          mon.species = nameAndGender.trim();
         }
 
-        mon.species = nameAndGender.trim();
       }
     }
     return mon;

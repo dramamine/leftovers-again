@@ -74,6 +74,12 @@ describe('team', () => {
     const team = new Team([oneMon]);
     expect(team.asUtm()).toEqual(utm);
   });
+  it('should handle nicknames', () => {
+    const mon = Team.interpretOneSmogon('Nickname (Pikachu) (M)');
+    expect(mon.name).toEqual('Nickname');
+    expect(mon.species).toEqual('Pikachu');
+    expect(mon.gender).toEqual('M');
+  });
 });
 
 
