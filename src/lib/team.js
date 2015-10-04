@@ -2,21 +2,22 @@ import util from '../util';
 
 export default class Team {
   constructor(tm) {
-    if (Array.isArray(tm) && _seemsValid(tm)) {
+    if (Array.isArray(tm) && Team._seemsValid(tm)) {
       this.self = tm;
+    } else if (typeof tm === 'string') {
+      const team = Team.interpretSmogon(tm);
+      if (Team._seemsValid(team)) {
+        this.self = team;
+      }
     }
   }
 
   asArray() {
-    return self;
+    return this.self;
   }
 
   asUtm() {
-
-  }
-
-  // probably won't need this ever...
-  asSmogon() {
+    return Team.packTeam(this.self);
   }
 
   /**

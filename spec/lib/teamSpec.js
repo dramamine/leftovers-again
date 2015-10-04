@@ -47,6 +47,9 @@ IVs: 0 Atk
 - Taunt
 `;
 
+const utm = 'Alakazam-Mega||alakazite|magicguard|psychic,hiddenpowerfire,shadowball,taunt|Timid|,,,252,4,252||,0,,,,|||';
+
+
 describe('team', () => {
   it('should validate this one-mon team', () => {
     expect(Team._seemsValid([oneMon])).toBe(true);
@@ -57,11 +60,19 @@ describe('team', () => {
   });
   it('should pack this team like the client does', () => {
     const packed = Team.packTeam([oneMon]);
-    expect(packed).toEqual('Alakazam-Mega||alakazite|magicguard|psychic,hiddenpowerfire,shadowball,taunt|Timid|,,,252,4,252||,0,,,,|||');
+    expect(packed).toEqual(utm);
   });
   it('should read this Smogon team', () => {
     const interpreted = Team.interpretSmogon(smogon);
     expect(_.isEqual(interpreted, [oneMon])).toBe(true);
+  });
+  it('should construct a team with a smogon string', () => {
+    const team = new Team(smogon);
+    expect(team.asUtm()).toEqual(utm);
+  });
+  it('should construct a team with JSON', () => {
+    const team = new Team([oneMon]);
+    expect(team.asUtm()).toEqual(utm);
   });
 });
 
