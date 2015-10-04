@@ -7,7 +7,8 @@ import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
 
 class Util {
   toId(text) {
-    return text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if(text) return text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return '';
   }
 
   researchMoveById(id) {
