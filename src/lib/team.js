@@ -17,7 +17,6 @@ export default class Team {
 
   // probably won't need this ever...
   asSmogon() {
-
   }
 
   /**
@@ -26,11 +25,9 @@ export default class Team {
    * @return bool True if the team seems valid; false otherwise
    */
   static _seemsValid(tm) {
-    console.log(tm);
     let member;
     for (let i = 0; i < tm.length; i++) {
       member = tm[i];
-      console.log(member.name, member.species);
       if (!member.name && !member.species) {
         console.error('a pokemon didn\'t have a name or species!');
         return false;
@@ -47,8 +44,81 @@ export default class Team {
     return true;
   }
 
-  interpretSmogon(smogon) {
+  static interpretSmogon(str) {
+    const mons = str.split('\n\n');
+    const team = [];
+    mons.forEach( (mon) => {
+      team.push( Team.interpretOneSmogon(mon) );
+    });
+    return team;
+  }
+  static interpretOneSmogon(str) {
+    const mon = {
+      moves: []
+    };
+    const lines = str.split('\n');
+    let line;
+    for (let i = 0; i < lines.length; i++) {
+      line = lines[i].trim();
+      if (line.indexOf('Ability:') === 0) {
+        mon.ability = line.replace('Ability:', '').trim();
+      } else if (line.indexOf('EVs:') === 0) {
+        mon.evs = {};
+        const evs = line.replace('EVs:', '').split('/');
 
+        let numAndLabel;
+        let evLabel;
+        evs.forEach( (ev) => { // eslint-disable-line functions in a loop
+          numAndLabel = ev.trim().split(' ');
+          evLabel = numAndLabel[1].trim().toLowerCase();
+          if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel)) {
+            console.error('something weird with ev label', evLabel, line);
+          } else {
+            mon.evs[evLabel] = parseInt(numAndLabel[0].trim(), 10);
+          }
+        });
+      } else if (line.indexOf('IVs:') === 0) {
+        mon.ivs = {};
+        const ivs = line.replace('IVs:', '').split('/');
+
+        let numAndLabel;
+        let ivLabel;
+        ivs.forEach( (iv) => { // eslint-disable-line functions in a loop
+          numAndLabel = iv.trim().split(' ');
+          ivLabel = numAndLabel[1].trim().toLowerCase();
+          if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(ivLabel)) {
+            console.error('something weird with iv label', ivLabel, line);
+          } else {
+            mon.ivs[ivLabel] = parseInt(numAndLabel[0].trim(), 10);
+          }
+        });
+      } else if (line.indexOf('-') === 0) {
+        mon.moves.push(line.replace('-', '').trim());
+      } else if (line.indexOf('Shiny: Y') === 0) {
+        mon.shiny = true;
+      } else if (line.indexOf('Happiness:') === 0) {
+        mon.happiness = parseInt(line.replace('Happiness:', '').trim(), 10);
+      } else if (line.indexOf('Nature') > 0) {
+        mon.nature = line.replace('Nature', '').trim();
+      } else if (line.length > 0 && !mon.species) {
+        let nameAndGender = line;
+        if (line.indexOf('@') > 0) {
+          const splitLine = line.split('@');
+          nameAndGender = splitLine[0].trim();
+          mon.item = splitLine[1].trim();
+        }
+        if (nameAndGender.indexOf('(M)') > 0) {
+          mon.gender = 'M';
+          nameAndGender = nameAndGender.replace('(M)');
+        } else if (nameAndGender.indexOf('(F)') > 0) {
+          mon.gender = 'F';
+          nameAndGender = nameAndGender.replace('(F)');
+        }
+
+        mon.species = nameAndGender.trim();
+      }
+    }
+    return mon;
   }
   /**
    * Code transformed from Pokemon-Showdown tools.js
@@ -68,8 +138,8 @@ export default class Team {
       // name
       buf += (set.name || set.species);
 
-      set.id = util.toId(set.name || set.species);
-      console.log('using id', set.id, set.name, set.species);
+      const id = util.toId(set.name || set.species);
+      // console.log('using id', set.id, set.name, set.species);
 
       // species
       let name = '';
@@ -84,7 +154,7 @@ export default class Team {
       // ability
       const abilities = (set.abilities)
         ? set.abilities
-        : util.researchPokemonById(set.id).abilities;
+        : util.researchPokemonById(id).abilities;
 
       // @TODO
       // suspicious of this. what if we just sent 'id' instead of these 0,1,H shortcuts?
@@ -125,9 +195,8 @@ export default class Team {
         buf += evs;
       }
 
-      console.log('gender: ', set.gender);
       // gender
-      if (set.gender && set.gender !== util.researchPokemonById(set.id).gender) {
+      if (set.gender && set.gender !== util.researchPokemonById(id).gender) {
         buf += '|' + set.gender;
       } else {
         buf += '|';
