@@ -4,14 +4,16 @@
  * it.
  *
  */
-const meta = {
-  battletype: 'randombattle'
-};
 
 import AI from '../../ai';
-class Randumb extends AI {
+class Randuber extends AI {
   constructor() {
-    super(meta);
+    super();
+    this.battletype = 'uber';
+  }
+
+  getTeam() {
+
   }
 
   onRequest(state) {

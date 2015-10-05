@@ -7,11 +7,15 @@
 import AI from '../../ai';
 import Damage from '../../lib/damage';
 
+const meta = {
+  battletype: 'randombattle',
+  author: 'marten'
+};
 
 class Stabby extends AI {
   constructor() {
     // console.log('STABBY: built');
-    super();
+    super(meta);
   }
 
   onRequest(state) {

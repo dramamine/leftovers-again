@@ -1,5 +1,6 @@
 class AI {
-  constructor() {
+  constructor(meta) {
+    this.meta = meta;
   }
 
   onRequest(state) { // eslint-disable-line

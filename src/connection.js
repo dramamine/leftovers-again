@@ -4,7 +4,7 @@ import url from 'url';
 import WebSocket from 'ws';
 // import http from 'http';
 import https from 'https';
-import toId from './util';
+import util from './util';
 import config from './config';
 
 let ws;
@@ -47,6 +47,7 @@ class Connection {
     });
 
     listener.subscribe('challstr', this.respondToChallenge);
+    listener.subscribe('popup', this.relayPopup);
   }
 
   send(message) {
@@ -55,6 +56,10 @@ class Connection {
 
   close(message) {
     ws.close(message);
+  }
+
+  relayPopup(args) {
+    console.log(args);
   }
 
   respondToChallenge(args) {
@@ -71,7 +76,7 @@ class Connection {
     let data = '';
     if (!config.pass) {
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + toId(config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
+      requestOptions.path += '?act=getassertion&userid=' + util.toId(config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
     } else {
       requestOptions.method = 'POST';
       data = 'act=login&name=' + config.nick + '&pass=' + config.pass + '&challengekeyid=' + id + '&challenge=' + str;
@@ -81,12 +86,14 @@ class Connection {
       };
     }
     const req = https.request(requestOptions, (res) => {
+      // console.log('looking at response.');
       res.setEncoding('utf8');
       let chunks = '';
       res.on('data', (chunk) => {
         chunks += chunk;
       });
       res.on('end', () => {
+        // console.log(chunks);
         if (chunks === ';') {
           console.error('failed to log in; nick is registered - invalid or no password given');
           process.exit(-1);

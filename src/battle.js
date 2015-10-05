@@ -52,11 +52,13 @@ class Battle {
     this.handlers = {
       '-damage': this.handleDamage,
       player: this.handlePlayer,
+      teampreview: this.handleTeamPreview,
+      poke: this.handlePoke,
       switch: this.handleSwitch,
       request: this.handleRequest,
       turn: this.handleTurn,
       start: this.handleStart,
-      win: this.handleWin
+      win: this.handleWin,
     };
 
     this.hasStarted = false;
@@ -108,6 +110,25 @@ class Battle {
 
   handlePlayer(ordinal, nick, id) { // eslint-disable-line
     this.ord = ordinal;
+  }
+
+  handlePoke(ordinal, mon) {
+    // if (this.ord = ordinal) return;
+    const nameAndGender = mon.split(', ');
+    this.processMon({
+      ident: ordinal + ': ' + nameAndGender[0],
+      owner: ordinal,
+      species: nameAndGender[0],
+      gender: nameAndGender[1]
+    });
+  }
+
+  handleTeamPreview() {
+    Object.assign(this.state, this.nonRequestState);
+
+    const move = this.myBot().onRequest(this.state);
+    const msg = `${this.bid}|${move}|${this.state.rqid}`;
+    connection.send( msg );
   }
 
   /**
