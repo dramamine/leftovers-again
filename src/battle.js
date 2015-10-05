@@ -1,6 +1,6 @@
 import config from './config';
 import connection from './connection';
-
+import BattleStore from './battlestore';
 
 import util from './util';
 
@@ -59,6 +59,7 @@ class Battle {
       turn: this.handleTurn,
       start: this.handleStart,
       win: this.handleWin,
+      faint: this.handleFaint,
     };
 
     this.hasStarted = false;
@@ -82,6 +83,8 @@ class Battle {
 
     const AI = require(config.botPath);
     this.bot = new AI();
+
+    this.store = new BattleStore();
   }
 
   myBot() {
@@ -93,6 +96,10 @@ class Battle {
     if (this.handlers[type]) {
       this.handlers[type].apply(this, message);
     }
+  }
+
+  handleFaint(ident) {
+    this.store.handleDeath(ident);
   }
 
   // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
@@ -109,6 +116,9 @@ class Battle {
   }
 
   handlePlayer(ordinal, nick, id) { // eslint-disable-line
+    this.store.setPlayerId(ordinal);
+    this.store.setPlayerNick(nick);
+
     this.ord = ordinal;
   }
 
@@ -124,11 +134,7 @@ class Battle {
   }
 
   handleTeamPreview() {
-    Object.assign(this.state, this.nonRequestState);
-
-    const move = this.myBot().onRequest(this.state);
-    const msg = `${this.bid}|${move}|${this.state.rqid}`;
-    connection.send( msg );
+    this.decide();
   }
 
   /**
@@ -140,6 +146,7 @@ class Battle {
    * @return {[type]}         [description]
    */
   handleSwitch(ident, details, condition) {
+    this.store.setActive(ident, details, condition);
     // p2a: Slurpuff|Slurpuff, L77, M|100/100
     // const [] = message;
     // console.log('handling switch: ', ident, details, condition);
@@ -166,6 +173,7 @@ class Battle {
 
   handleRequest(json) {
     const data = JSON.parse(json);
+    this.store.interpretRequest(data);
     // this.state = data;
 
 
@@ -219,10 +227,15 @@ class Battle {
   }
 
   decide() {
+
     // merge all non-request state
     Object.assign(this.state, this.nonRequestState);
+    console.log('BY STATE:', this.state);
+    console.log('STORE STATE:');
 
-    const move = this.myBot().onRequest(this.state);
+    // const move = this.myBot().onRequest(this.state);
+    const move = this.myBot().onRequest(this.store.getState());
+
     const msg = `${this.bid}|${move}|${this.state.rqid}`;
     connection.send( msg );
   }
@@ -235,37 +248,42 @@ class Battle {
       console.error('processMon: weird owner', mon.ident);
     }
 
-    try {
-      const deets = mon.details.split(', ');
-      mon.species = deets[0];
-      mon.level = parseInt(deets[1].substr(1), 10);
-      mon.gender = deets[2] || 'M';
-    } catch (e) {
-      console.error('processMon: error parsing mon.details', e);
+    if (mon.details) {
+      try {
+        const deets = mon.details.split(', ');
+        mon.species = deets[0];
+        mon.level = parseInt(deets[1].substr(1), 10);
+        mon.gender = deets[2] || 'M';
+      } catch (e) {
+        console.error('processMon: error parsing mon.details', e);
+      }
     }
 
-    mon.dead = false;
-    mon.conditions = [];
 
-    try {
-      const hps = mon.condition.split('/');
-      if (hps.length === 2) {
-        mon.hp = parseInt(hps[0], 10);
-        const maxhpAndConditions = hps[1].split(' ');
-        mon.maxhp = parseInt(maxhpAndConditions[0], 10);
+    if (mon.condition) {
+      mon.dead = false;
+      mon.conditions = [];
 
-        if (maxhpAndConditions.length > 1) {
-          mon.conditions = maxhpAndConditions.slice(1);
+      try {
+        const hps = mon.condition.split('/');
+        if (hps.length === 2) {
+          mon.hp = parseInt(hps[0], 10);
+          const maxhpAndConditions = hps[1].split(' ');
+          mon.maxhp = parseInt(maxhpAndConditions[0], 10);
+
+          if (maxhpAndConditions.length > 1) {
+            mon.conditions = maxhpAndConditions.slice(1);
+          }
+        } else if (mon.condition === '0 fnt') {
+          mon.dead = true;
+          mon.hp = 0;
+          mon.maxhp = 0;
+        } else {
+          console.error('weird condition:', mon.condition);
         }
-      } else if (mon.condition === '0 fnt') {
-        mon.dead = true;
-        mon.hp = 0;
-        mon.maxhp = 0;
-      } else {
-        console.error('weird condition:', mon.condition);
+      } catch (e) {
+        console.error('processMon: error parsing mon.condition', e);
       }
-    } catch (e) {
-      console.error('processMon: error parsing mon.condition', e);
     }
 
     // ident fuckery. what could go wrong...

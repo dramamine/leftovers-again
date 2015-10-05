@@ -64,10 +64,11 @@ export default class EliteFour extends AI {
   }
 
   onRequest(state) {
+    console.dir(state);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.side.pokemon.reduce(
+      const possibleMons = state.self.reserve.reduce(
         (prev, current, idx) => {
           if (current.condition !== '0 fnt') {
             prev.push(idx);
