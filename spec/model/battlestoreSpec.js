@@ -48,6 +48,18 @@ fdescribe('BattleStore', () => {
       expect(store.state.opponent.active.indexOf(guy)).toEqual(0);
     });
   });
+  describe('handleDamage', () => {
+    it('should save damage events', () => {
+      store.setPlayerId('p1');
+      store.setTurn(1);
+      const guy = store._getOrCreateMon('p1: Fakechu');
+      guy.useCondition('100/100');
+      store.handleDamage('p1a: Fakechu', '50/100', '[from] sadness');
+      expect(guy.getState().events[0].damage).toEqual(50);
+      expect(guy.getState().events[0].from).toEqual('[from] sadness');
+      expect(guy.getState().events[0].turn).toEqual(1);
+    })
+  })
 
   it('should set a player ID', () => {
     const name = 'p1';

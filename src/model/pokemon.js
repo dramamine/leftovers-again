@@ -4,8 +4,11 @@ import log from '../log';
 
 export default class Pokemon {
   constructor(ident) {
-    this.state = {};
+    this.state = {
+      events: []
+    };
     this.useIdent(ident);
+
   }
 
   getState() {
@@ -27,6 +30,11 @@ export default class Pokemon {
       this.updateInactiveMoveList(obj.moves);
     }
   }
+
+  saveEvent(evt) {
+    this.state.events.push(evt);
+  }
+
   // for inactive moves
   updateInactiveMoveList(moves) {
     const moveList = [];

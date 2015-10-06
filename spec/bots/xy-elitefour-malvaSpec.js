@@ -1,4 +1,4 @@
-import Elite from '../../src/bots/uber/xy-elitefour-malva/xy-elitefour-malva';
+import Elite from '../../src/bots/anythinggoes/xy-elitefour-malva/xy-elitefour-malva';
 // import _ from 'lodash';
 import battle from '../../src/battle';
 import util from '../../src/util';

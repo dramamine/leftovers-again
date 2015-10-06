@@ -104,6 +104,7 @@ class Battle {
 
   // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
   handleDamage(victim, condition, explanation) {
+    this.store.handleDamage(victim, condition, explanation);
     const vic = this.allmon[victim];
     if (vic) {
       vic.condition = condition;

@@ -24,6 +24,14 @@ export default class BattleStore {
     this.allmon = [];
     this.forceSwitch = false;
     this.teamPreview = false;
+
+    // @TODO
+    // this.report = {
+    //   self: this.state.self,
+    //   opponent: this.state.opponent,
+    //   turn: this.turn
+    // };
+
   }
 
   setPlayerId(id) {
@@ -31,6 +39,9 @@ export default class BattleStore {
   }
   setPlayerNick(nick) {
     this.mynick = nick;
+  }
+  setTurn(num) {
+    this.turn = num;
   }
 
   setActive(ident, details, condition) {
@@ -60,6 +71,17 @@ export default class BattleStore {
     // }
     const idx = this.allmon.indexOf(guy);
     this.allmon.splice(idx, 1);
+  }
+
+  handleDamage(ident, condition, explanation) {
+    const mon = this._getOrCreateMon(ident);
+    const oldhp = mon.state.hp;
+    mon.useCondition(condition);
+    mon.saveEvent({
+      turn: this.turn, // @TODO
+      damage: oldhp - mon.state.hp,
+      from: explanation
+    });
   }
 
   interpretRequest(data) {
