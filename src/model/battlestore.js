@@ -1,12 +1,19 @@
 import Pokemon from './pokemon';
-import _ from 'lodash';
+import log from '../log';
+// import _ from 'lodash';
+
+// @TODO lazily leaving this here; now we will validate active state
+// for singles games only. need to actually check the game type and
+// make sure we have the right number. and do this in the getState()
+// function instead!
+const BATTLE_SIZE = 1;
 
 export default class BattleStore {
   constructor() {
     this.state = {
       self: {
         active: [],
-        reserve: [] // @TTODO
+        reserve: [] // @TODO
       },
       opponent: {
         active: [],
@@ -20,7 +27,6 @@ export default class BattleStore {
   }
 
   setPlayerId(id) {
-    console.log('setting player ID to ', id);
     this.myid = id;
   }
   setPlayerNick(nick) {
@@ -32,7 +38,7 @@ export default class BattleStore {
     mon.useDetails(details);
     mon.useCondition(condition);
     // console.log('checking owner', mon.state.owner, this.myid);
-    if (mon.state.owner === this.myid) {
+    if (mon.getState().owner === this.myid) {
       this._setOrUpdateSelfActive(mon);
     } else {
       this._setOrUpdateOpponentActive(mon);
@@ -41,17 +47,19 @@ export default class BattleStore {
 
   handleDeath(ident) {
     const guy = this._findById( this._identToId(ident) );
-    const selfIndex = this.state.self.active.indexOf(guy);
-    if ( selfIndex >= 0 ) {
-      console.log('my guy died, need to remove him');
-      this.state.self.active.splice(selfIndex, 1);
-    }
+    // const selfIndex = this.state.self.active.indexOf(guy);
+    // if ( selfIndex >= 0 ) {
+    //   console.log('my guy died, need to remove him');
+    //   this.state.self.active.splice(selfIndex, 1);
+    // }
 
-    const yourIndex = this.state.opponent.active.indexOf(guy);
-    if (yourIndex >= 0) {
-      console.log('your guy died, need to remove him');
-      this.state.opponent.active.splice(yourIndex, 1);
-    }
+    // const yourIndex = this.state.opponent.active.indexOf(guy);
+    // if (yourIndex >= 0) {
+    //   console.log('your guy died, need to remove him');
+    //   this.state.opponent.active.splice(yourIndex, 1);
+    // }
+    const idx = this.allmon.indexOf(guy);
+    this.allmon.splice(idx, 1);
   }
 
   interpretRequest(data) {
@@ -90,8 +98,8 @@ export default class BattleStore {
     };
     // const output = _.clone(this.state, true);
     const stateGetter = (mon) => { return mon.getState(); };
-    const iamowner = (mon) => { return mon.state.owner === this.myid; };
-    const youareowner = (mon) => { return mon.state.owner !== this.myid; };
+    const iamowner = (mon) => { return mon.getState().owner === this.myid; };
+    const youareowner = (mon) => { return mon.getState().owner !== this.myid; };
 
     // use getState so we can filter out any crap.
     output.self.active = this.state.self.active.map(stateGetter);
@@ -124,17 +132,23 @@ export default class BattleStore {
   }
 
   _setOrUpdateSelfActive(mon) {
-    if (mon.state.active && this.state.self.active.indexOf(mon) === -1) {
-      console.log('found the active one');
+    if (this.state.self.active.indexOf(mon) === -1) {
       this.state.self.active.push(mon);
+    }
+    if (this.state.self.active.length > BATTLE_SIZE) {
+      log.error('BattleStore: self had more than one active pokemon!',
+        this.state.self.active);
     }
   }
 
 
   _setOrUpdateOpponentActive(mon) {
     if (this.state.opponent.active.indexOf(mon) === -1) {
-      console.log('found the active one');
       this.state.opponent.active.push(mon);
+    }
+    if (this.state.opponent.active.length > BATTLE_SIZE) {
+      log.error('BattleStore: opponent had more than one active pokemon!',
+        this.state.opponent.active);
     }
   }
 
@@ -147,7 +161,7 @@ export default class BattleStore {
   }
 
   _findById(id) {
-    return this.allmon.find( (mon) => { return mon.state.id === id; });
+    return this.allmon.find( (mon) => { return mon.getState().id === id; });
   }
 
   _identToId(ident) {

@@ -1,37 +1,37 @@
 import Elite from '../../src/bots/uber/xy-elitefour-malva/xy-elitefour-malva';
-import _ from 'lodash';
+// import _ from 'lodash';
 import battle from '../../src/battle';
 import util from '../../src/util';
 
 const elite = new Elite();
 
 const moves = [
-{ move: 'Hyper Voice', id: 'hypervoice', disabled: false },
-{ move: 'Noble Roar', id: 'nobleroar', disabled: false },
-{ move: 'Flamethrower', id: 'flamethrower', disabled: false },
-{ move: 'Wild Charge', id: 'wildcharge', disabled: false },
+  { move: 'Hyper Voice', id: 'hypervoice', disabled: false },
+  { move: 'Noble Roar', id: 'nobleroar', disabled: false },
+  { move: 'Flamethrower', id: 'flamethrower', disabled: false },
+  { move: 'Wild Charge', id: 'wildcharge', disabled: false },
 ];
 
 moves.forEach( (move) => {
   Object.assign(move, util.researchMoveById(move.id));
 });
 
-const sampleState = {
-  activeOpponent: battle.processMon({
-    ident: 'p2: Blissey',
-    details: 'Blissey, L83, M',
-    condition: '100/100'
-  }),
-  myActive: battle.processMon({
-    ident: 'p1: Pyroar',
-    details: 'Pyroar, L83, M',
-    condition: '100/100',
-    moves
-  })
-};
+// const sampleState = {
+//   activeOpponent: battle.processMon({
+//     ident: 'p2: Blissey',
+//     details: 'Blissey, L83, M',
+//     condition: '100/100'
+//   }),
+//   myActive: battle.processMon({
+//     ident: 'p1: Pyroar',
+//     details: 'Pyroar, L83, M',
+//     condition: '100/100',
+//     moves
+//   })
+// };
 
 
-fdescribe('xy-elitefour-malva', () => {
+xdescribe('xy-elitefour-malva', () => {
   describe('sumFitness', () => {
     it('handles boolean values', () => {
       elite.weights.thing = {

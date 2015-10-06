@@ -13,7 +13,7 @@ class Randuber extends AI {
   }
 
   getTeam() {
-
+    return 'null';
   }
 
   onRequest(state) {
@@ -47,4 +47,4 @@ class Randuber extends AI {
   }
 }
 
-export default Randumb;
+export default Randuber;

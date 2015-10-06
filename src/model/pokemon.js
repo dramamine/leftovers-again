@@ -1,11 +1,10 @@
 
-import util from './util';
-
+import util from '../util';
+import log from '../log';
 
 export default class Pokemon {
   constructor(ident) {
-    this.state = {
-    };
+    this.state = {};
     this.useIdent(ident);
   }
 
@@ -39,7 +38,7 @@ export default class Pokemon {
   // for active moves
   updateMoveList(moves) {
     moves.forEach( (move) => {
-      console.log('any new move data here? ', move);
+      log.debug('any new move data here? ', move);
       Object.assign(move, util.researchMoveById(move.id));
     });
   }
@@ -49,35 +48,46 @@ export default class Pokemon {
     if (this.state.details && this.state.details === details) {
       return;
     }
-    console.log('details changed.', this.state.details, details);
+    if (this.state.details) {
+      log.log('details changed.', this.state.details, details);
+    }
+
     this.state.details = details;
     try {
       const deets = details.split(', ');
-      this.state.species = deets[0];
 
       // if we're just learning this...
-      const key = util.toId(this.state.species);
+      const key = util.toId(deets[0]);
+      this.state.species = key;
       Object.assign(this.state, util.researchPokemonById(key));
 
 
       this.state.level = parseInt(deets[1].substr(1), 10);
       this.state.gender = deets[2] || 'M';
     } catch (e) {
-      console.error('useDetails: error parsing mon.details', e);
+      log.err('useDetails: error parsing mon.details', e);
     }
   }
 
   useIdent(ident) {
+    if (!ident.match(/: /)) {
+      log.error('malformed ident:', ident);
+      return;
+    }
     const id = this._identToId(ident);
     this.state.id = id;
     try {
       this.state.owner = id.split(': ')[0];
     } catch (e) {
-      console.error('useIdent: weird owner', ident);
+      log.err('useIdent: weird owner', ident);
     }
   }
 
   useCondition(condition) {
+    if (!condition.match(/[0-9]+[\/\s]+\w/)) {
+      log.error('malformed condition:', condition);
+      return;
+    }
     this.state.condition = condition;
     this.state.dead = false;
     this.state.conditions = [];
@@ -97,10 +107,10 @@ export default class Pokemon {
         this.state.hp = 0;
         this.state.maxhp = 0;
       } else {
-        console.error('weird condition:', mon.condition);
+        log.err('weird condition:', mon.condition);
       }
     } catch (e) {
-      console.error('useCondition: error parsing mon.condition', e);
+      log.err('useCondition: error parsing mon.condition', e);
     }
   }
 

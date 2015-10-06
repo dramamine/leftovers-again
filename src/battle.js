@@ -1,6 +1,6 @@
 import config from './config';
 import connection from './connection';
-import BattleStore from './battlestore';
+import BattleStore from './model/battlestore';
 
 import util from './util';
 
