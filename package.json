@@ -5,7 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "test": "jasmine",
-    "develop": "nodemon --exec babel-node src/main.js"
+    "develop": "nodemon --exec babel-node src/main.js",
+    "spawn": "babel-node scripts/spawn.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "jasmine-es6": "0.0.17",
     "jsdom": "~3.1.2",
     "lodash": "^3.10.1",
-    "nodemon": "~1.4.1"
+    "nodemon": "~1.4.1",
+    "inquirer": "~0.10.1"
   }
 }

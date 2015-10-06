@@ -1,77 +1,123 @@
 const spawn = require('child_process').spawn;
 import colors from 'colors/safe';
 import glob from 'glob';
+import inquirer from 'inquirer';
 
-class Spawn {
 
-  constructor() {
-  }
+// @TODO need more? import from Pokemon-Showdown/config/formats.js
+// you might want that for singles vs doubles and stuff too
+const supportedFormats = ['ubers', 'ou', 'randombattle', 'anythinggoes'];
+const children = [];
 
-  getServer() {
-    return new Promise( (resolve, reject) => {
-      const showdown = spawn('node', ['app.js'], {cwd: './lib/Pokemon-Showdown'});
-      let done = false;
-      // const showdown = spawn('npm start', [], {cwd: '../../server'});
+function getServer() {
+  return new Promise( (resolve, reject) => {
+    const showdown = spawn('node', ['app.js'], {cwd: './lib/Pokemon-Showdown'});
+    let done = false;
+    // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
-      showdown.stdout.on('data', (data) => {
-        console.log(colors.cyan(data.toString().replace(/\n+$/, '')));
-        if (data.toString().indexOf('now listening on') > 0) {
-          done = true;
-          resolve(true);
-        }
-      });
-
-      showdown.stderr.on('data', (data) => {
-        console.log(colors.cyan.inverse(data));
-
-      });
-
-      showdown.on('close', (code) => {
-        console.log(colors.cyan.underline('server process exited with code ' + code));
-        if(!done) {
-          reject(code);
-        }
-      });
-
+    showdown.stdout.on('data', (data) => {
+      console.log(colors.cyan(data.toString().replace(/\n+$/, '')));
+      if (data.toString().indexOf('Test your server at') === 0) {
+        done = true;
+        resolve(true);
+      }
     });
-  }
 
-  loadMeAndMyChallengers(self, type = '.') {
-    const botroot = __dirname + '/../src/bots/' + type + '/';
-    console.log(botroot);
-    glob('**/*.js', {cwd: botroot}, (err, files) => {
-      console.log(files);
-      files.map( (file) => {
-        // reject self
-        if (file === self) return;
-        console.log('spawning opponent from file ' + file);
-        const botrootForMain = 'bot=' + type + '/' + file;
-        const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: './src/'});
-        // const showdown = spawn('npm start', [], {cwd: '../../server'});
-
-        op.stdout.on('data', (data) => {
-          console.log(colors.red(data.toString().replace(/\n+$/, '')));
-        });
-
-        op.stderr.on('data', (data) => {
-          console.log(colors.red.inverse(data));
-        });
-
-        op.on('close', (code) => {
-          console.log(colors.red.underline('server process exited with code ' + code));
-        });
-      });
+    showdown.stderr.on('data', (data) => {
+      console.log(colors.cyan.inverse(data));
     });
-  }
+
+    showdown.on('close', (code) => {
+      console.log(colors.cyan.underline('server process exited with code ' + code));
+      if (!done) {
+        reject(code);
+      }
+    });
+    children.push(showdown);
+  });
 }
 
-export default Spawn;
+function loadMe(file) {
+  console.log('spawning opponent from file ' + file);
+  const botrootForMain = 'bot=' + file;
+  const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: './src/'});
+  // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
+  op.stdout.on('data', (data) => {
+    console.log(colors.red(data.toString().replace(/\n+$/, '')));
+  });
 
-const myspawn = new Spawn();
-const self = 'stabby.js';
-const type = 'randombattle';
-myspawn.getServer().then( () => {
-  console.log('loading challengers...');
-  myspawn.loadMeAndMyChallengers(self, type);
+  op.stderr.on('data', (data) => {
+    console.log(colors.red.inverse(data));
+  });
+
+  op.on('close', (code) => {
+    console.log(colors.red.underline('server process exited with code ' + code));
+  });
+
+  children.push(op);
+}
+
+getServer().then( () => {
+  const folders = glob.sync('*/', {cwd: __dirname + '/../src/bots/'});
+  // console.log(folders);
+  const validOptions = folders
+    .map( (txt) => { return txt.replace('/', ''); })
+    .filter( (txt) => { return supportedFormats.indexOf(txt) >= 0; });
+
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'format',
+      message: 'Which format would you like to run?',
+      choices: validOptions
+    }], (folder) => {
+      // console.log(folder);
+      const botfiles = glob.sync('**/*.js', {cwd: __dirname + '/../src/bots/' + folder.format});
+      // console.log(botfiles);
+      const choices = botfiles.map( (txt) => { return { name: txt, checked: true }; });
+
+      inquirer.prompt([
+        {
+          type: 'checkbox',
+          name: 'files',
+          message: 'Pick or un-pick any bots to run.',
+          choices
+        }], (bots) => {
+          // console.log(bots.files);
+          bots.files.forEach( (file) => {
+            loadMe(folder.format + '/' + file);
+          });
+        }
+      );
+    }
+  );
 });
+
+
+/**
+ * This is kind of crappy, but this helps out with testing. When you're using
+ * nodemon for 'livereload'-ish functionality, you want to close your connection
+ * before you do anything.
+ *
+ * @param  {[type]} options [description]
+ * @param  {[type]} err     [description]
+ * @return {[type]}         [description]
+ */
+function exitHandler(options, err) {
+  if (err) console.log(err.stack);
+  children.forEach( (child) => {
+    child.stdin.pause();
+    child.kill();
+  });
+  if (options.exit) process.exit();
+}
+
+// do something when app is closing
+process.on('exit', exitHandler.bind(null, {cleanup: true}));
+
+// catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit: true}));
+
+// catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit: true}));
