@@ -38,16 +38,18 @@ describe('Pokemon', () => {
       mon.useCondition(cond);
       expect(mon.state.hp).toEqual(100);
       expect(mon.state.maxhp).toEqual(100);
+      expect(mon.state.hppct).toEqual(100);
       expect(mon.state.condition).toEqual(cond);
       expect(mon.state.conditions.length).toEqual(0);
       expect(mon.state.dead).toBe(false);
     });
 
     it('should parse an unhealthy condition', () => {
-      const cond = '25/100 par poi';
+      const cond = '25/250 par poi';
       mon.useCondition(cond);
       expect(mon.state.hp).toEqual(25);
       expect(mon.state.maxhp).toEqual(100);
+      expect(mon.state.hppct).toEqual(10);
       expect(mon.state.condition).toEqual(cond);
       expect(mon.state.conditions.length).toEqual(2);
       expect(mon.state.dead).toBe(false);

@@ -23,7 +23,7 @@ class Stabby extends AI {
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.side.pokemon.reduce(
+      const possibleMons = state.self.reserve.reduce(
         (prev, current, idx) => {
           if (current.condition !== '0 fnt') {
             prev.push(idx);
@@ -38,15 +38,12 @@ class Stabby extends AI {
     // check each move
     let maxDamage = 0;
     let bestMove;
-    // console.log('my opponent: ' + state.activeOpponent);
-    if (!state.activeOpponent) {
-      return null;
-    }
-    state.active[0].moves.forEach( (move, idx) => {
+
+    state.self.active.moves.forEach( (move, idx) => {
       // console.log('looking up move ', move);
       const est = Damage.getDamageResult(
-        state.activeSelf,
-        state.activeOpponent,
+        state.self.active,
+        state.self.opponent,
         move
       );
       // console.log('estimated ' + est + ' for move ' + move.name);

@@ -98,6 +98,7 @@ export default class Pokemon {
         this.state.hp = parseInt(hps[0], 10);
         const maxhpAndConditions = hps[1].split(' ');
         this.state.maxhp = parseInt(maxhpAndConditions[0], 10);
+        this.state.hppct = Math.round(100 * this.state.hp / this.state.maxhp);
 
         if (maxhpAndConditions.length > 1) {
           this.state.conditions = maxhpAndConditions.slice(1);
@@ -106,6 +107,7 @@ export default class Pokemon {
         this.state.dead = true;
         this.state.hp = 0;
         this.state.maxhp = 0;
+        this.state.hppct = 0;
       } else {
         log.err('weird condition:', mon.condition);
       }
