@@ -1,9 +1,69 @@
 import Battle from '../src/battle';
 import connection from '../src/connection';
+import {MOVE, SWITCH} from '../src/decisions';
 
-import sampleRequest from './helpers/request';
+// import sampleRequest from './helpers/request';
 
-describe('battle', () => {
+fdescribe('battle', () => {
+  let battle;
+  const exampleState = {
+    rqid: 1,
+    self: {
+      active: {
+        moves: [
+          {
+            name: 'niceone'
+          }
+        ]
+      },
+      reserve: [
+        {
+          species: 'fakemon'
+        },
+        {
+          species: 'fakechu'
+        }
+      ]
+    }
+  };
+  beforeEach( () => {
+    battle = new Battle();
+
+    spyOn(battle.store, 'getState').and.returnValue(exampleState);
+  });
+  it('should format an integer-based move', () => {
+    const res = battle._formatMessage(1, new MOVE(0), exampleState);
+    expect(res).toEqual('1|/move 1|1');
+  });
+  it('should format an object-based move', () => {
+    const res = battle._formatMessage(1,
+      new MOVE(exampleState.self.active.moves[0]), exampleState);
+    expect(res).toEqual('1|/move 1|1');
+  });
+  it('should format a name-based move', () => {
+    const res = battle._formatMessage(1,
+      new MOVE('niceone'), exampleState);
+    expect(res).toEqual('1|/move 1|1');
+  });
+  it('should format an integer-based switch', () => {
+    const res = battle._formatMessage(1, new SWITCH(0), exampleState);
+    expect(res).toEqual('1|/switch 1|1');
+  });
+  it('should format an object-based switch', () => {
+    const res = battle._formatMessage(1,
+      new SWITCH(exampleState.self.reserve[0]), exampleState);
+    expect(res).toEqual('1|/switch 1|1');
+  });
+  it('should format a name-based switch', () => {
+    const res = battle._formatMessage(1,
+      new SWITCH('fakemon'), exampleState);
+    expect(res).toEqual('1|/switch 1|1');
+  });
+
+});
+
+
+xdescribe('battle', () => {
   let battle;
   let spy;
   beforeEach( () => {
@@ -23,7 +83,7 @@ describe('battle', () => {
     });
   });
 
-  describe('handleDamage', () => {
+  xdescribe('handleDamage', () => {
     it('should record damage appropriately', () => {
       battle.allmon['p1: Pikachu'] = {
         hp: 200,
@@ -45,7 +105,7 @@ describe('battle', () => {
     });
   });
 
-  describe('handleSwitch', () => {
+  xdescribe('handleSwitch', () => {
     // this is testing processMon pretty hard
     it('handles bizness', () => {
       battle.ord = 'p1';
@@ -61,14 +121,14 @@ describe('battle', () => {
       expect(res).toBe(false);
     });
   });
-  describe('handlePlayer', () => {
+  xdescribe('handlePlayer', () => {
     it('logs the user\'s ord ID', () => {
       battle.handlePlayer('p1', 'x', 'y');
       expect(battle.ord).toEqual('p1');
     });
   });
 
-  describe('handleRequest', () => {
+  xdescribe('handleRequest', () => {
     beforeEach( () => {
       battle.hasStarted = true;
     });

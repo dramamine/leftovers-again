@@ -1,4 +1,5 @@
-class AI {
+
+export default class AI {
   constructor(meta) {
     this.meta = meta;
   }
@@ -12,5 +13,3 @@ class AI {
     return 'null';
   }
 }
-
-export default AI;

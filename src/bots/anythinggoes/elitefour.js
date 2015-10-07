@@ -7,6 +7,8 @@ import AI from '../../ai';
 // import Damage from '../../lib/damage';
 import typechart from '../../lib/typechart';
 
+import {MOVE, SWITCH} from '../../decisions';
+
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end
  * up using flat weight numbers; at higher exponents you will more often favor
@@ -75,12 +77,13 @@ export default class EliteFour extends AI {
           }
           return prev;
         }, []);
-      const myMon = this.pickOne(possibleMons) + 1; // pokemons are 1-indexed
-      return `/switch ${myMon}`;
+      const myMon = this.pickOne(possibleMons);
+      return new SWITCH(myMon);
     }
 
     if (state.teamPreview) {
-      return '/team 1';
+      // always pick the first mon
+      return new SWITCH(0);
     }
 
     const fitness = {};
@@ -144,7 +147,7 @@ export default class EliteFour extends AI {
 
     // pick a move from total fitness
     const myMove = this.pickMoveByFitness(totalFitness);
-    return myMove;
+    return new MOVE(myMove);
   }
 
   sumFitness(obj) {

@@ -4,11 +4,12 @@
  * it.
  *
  */
+import AI from '../../ai';
+import {MOVE, SWITCH} from '../../decisions';
 const meta = {
   battletype: 'randombattle'
 };
 
-import AI from '../../ai';
 class Randumb extends AI {
   constructor() {
     super(meta);
@@ -29,8 +30,8 @@ class Randumb extends AI {
           }
           return prev;
         }, []);
-      const myMon = this.pickOne(possibleMons) + 1; // pokemons are 1-indexed
-      return `/switch ${myMon}`;
+      const myMon = this.pickOne(possibleMons);
+      return new SWITCH(myMon);
     }
     // pick a random move
     const possibleMoves = state.self.active.moves.reduce(
@@ -40,8 +41,8 @@ class Randumb extends AI {
         }
         return prev;
       }, []);
-    const myMove = this.pickOne(possibleMoves) + 1; // moves are 1-indexed
-    return `/move ${myMove}`;
+    const myMove = this.pickOne(possibleMoves);
+    return new MOVE(myMove);
   }
 
   pickOne(arr) {

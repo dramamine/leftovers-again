@@ -3,6 +3,9 @@ import connection from './connection';
 import BattleStore from './model/battlestore';
 
 import util from './util';
+import log from './log';
+import {MOVE, SWITCH} from './decisions';
+
 
 class Battle {
   constructor(bid) {
@@ -228,19 +231,68 @@ class Battle {
   }
 
   decide() {
-
     // merge all non-request state
     Object.assign(this.state, this.nonRequestState);
     console.log('BY STATE:', this.state);
     console.log('STORE STATE:');
 
     // const move = this.myBot().onRequest(this.state);
-    const move = this.myBot().onRequest(this.store.getState());
+    const choice = this.myBot().onRequest(this.store.getState());
 
-    const msg = `${this.bid}|${move}|${this.state.rqid}`;
-    connection.send( msg );
+    const res = this.formatMessage(this.bid, choice, this.state);
+
+    const msg = `${this.bid}|${choice}|${this.state.rqid}`;
+    if(res !== msg) {
+      log.error('battle: new formatMessage fn and old one dont match', res, msg);
+    }
+    connection.send( res );
   }
 
+
+  _formatMessage(bid, choice, state) {
+    let verb;
+    // if (!Array.isArray(choice)) {
+    //   choice = [choice]; // eslint-disable-line
+    // }
+    if (choice instanceof MOVE) {
+      const moveIdx = this.lookupMoveIdx(state.self.active.moves, choice.id);
+      verb = '/move ' + (moveIdx + 1);
+    } else if (choice instanceof SWITCH) {
+      verb = (state.teamPreview)
+        ? '/team '
+        : '/switch ';
+      const monIdx = this.lookupMonIdx(state.self.reserve, choice.id);
+      verb = verb + (monIdx + 1);
+    }
+    return `${bid}|${verb}|${state.rqid}`;
+  }
+
+  lookupMoveIdx(moves, idx) {
+    if (typeof(idx) === 'number') {
+      return idx;
+    } else if (typeof(idx) === 'object') {
+      return moves.indexOf(idx);
+    } else if (typeof(idx) === 'string') {
+      return moves.findIndex( (move) => {
+        return move.name === idx;
+      });
+    }
+  }
+
+  lookupMonIdx(mons, idx) {
+    switch (typeof(idx)) {
+    case 'number':
+      return idx;
+    case 'object':
+      return mons.indexOf(idx);
+    case 'string':
+      return mons.findIndex( (mon) => {
+        return mon.species === idx;
+      });
+    default:
+      throw new Exception('not a valid choice!', idx);
+    }
+  }
 
   processMon(mon) {
     try {

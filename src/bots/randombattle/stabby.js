@@ -7,6 +7,8 @@
 import AI from '../../ai';
 import Damage from '../../lib/damage';
 
+import {MOVE, SWITCH} from '../../decisions';
+
 const meta = {
   battletype: 'randombattle',
   author: 'marten'
@@ -30,8 +32,8 @@ class Stabby extends AI {
           }
           return prev;
         }, []);
-      const myMon = this.pickOne(possibleMons) + 1; // pokemons are 1-indexed
-      return `/switch ${myMon}`;
+      const myMon = this.pickOne(possibleMons); // pokemons are 1-indexed
+      return new SWITCH(myMon);
     }
 
 
@@ -52,11 +54,8 @@ class Stabby extends AI {
         bestMove = idx;
       }
     });
-    // console.log('picked best move', bestMove);
-    const myMove = bestMove + 1;
-    // const myMove = state.active[0].moves.findIndex(bestMove) + 1; // moves are 1-indexed
 
-    return `/move ${myMove}`;
+    return new MOVE(bestMove);
   }
 
   pickOne(arr) {
