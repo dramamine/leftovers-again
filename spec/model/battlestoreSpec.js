@@ -1,6 +1,7 @@
 import BattleStore from '../../src/model/battlestore';
 import util from '../../src/util';
 import Pokemon from '../../src/model/pokemon';
+import fakeRequest from '../helpers/request';
 
 let store;
 fdescribe('BattleStore', () => {
@@ -58,8 +59,20 @@ fdescribe('BattleStore', () => {
       expect(guy.getState().events[0].damage).toEqual(50);
       expect(guy.getState().events[0].from).toEqual('[from] sadness');
       expect(guy.getState().events[0].turn).toEqual(1);
-    })
-  })
+    });
+  });
+  describe('interpretRequest', () => {
+    it('should get one active and six reserve pokemons', () => {
+      store.setPlayerId('p1');
+      store.interpretRequest(fakeRequest);
+      console.log('checkin dis:', store.getState().self.active);
+      expect(store.getState().self.active.species).toEqual('persian');
+      expect(store.getState().self.reserve.length).toBe(6);
+      store.interpretRequest(fakeRequest);
+      expect(store.getState().self.active.species).toEqual('persian');
+      expect(store.getState().self.reserve.length).toBe(6);
+    });
+  });
 
   it('should set a player ID', () => {
     const name = 'p1';

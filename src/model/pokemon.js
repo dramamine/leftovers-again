@@ -65,9 +65,9 @@ export default class Pokemon {
       const deets = details.split(', ');
 
       // if we're just learning this...
-      const key = util.toId(deets[0]);
-      this.state.species = key;
-      Object.assign(this.state, util.researchPokemonById(key));
+      if (!this.state.species) {
+        this.useSpecies(deets[0]);
+      }
 
 
       this.state.level = parseInt(deets[1].substr(1), 10);
@@ -75,6 +75,12 @@ export default class Pokemon {
     } catch (e) {
       log.err('useDetails: error parsing mon.details', e);
     }
+  }
+
+  useSpecies(spec) {
+    const key = util.toId(spec);
+    this.state.species = key;
+    Object.assign(this.state, util.researchPokemonById(key));
   }
 
   useIdent(ident) {
@@ -85,9 +91,11 @@ export default class Pokemon {
     const id = this._identToId(ident);
     this.state.id = id;
     try {
-      this.state.owner = id.split(': ')[0];
+      const split = id.split(': ');
+      this.state.owner = split[0];
+      this.useSpecies(split[1]);
     } catch (e) {
-      log.err('useIdent: weird owner', ident);
+      log.err('useIdent: weird owner', ident, e);
     }
   }
 

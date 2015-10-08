@@ -234,15 +234,14 @@ class Battle {
     // merge all non-request state
     Object.assign(this.state, this.nonRequestState);
     console.log('BY STATE:', this.state);
-    console.log('STORE STATE:');
 
     // const move = this.myBot().onRequest(this.state);
     const choice = this.myBot().onRequest(this.store.getState());
 
-    const res = this.formatMessage(this.bid, choice, this.state);
+    const res = this._formatMessage(this.bid, choice, this.state);
 
     const msg = `${this.bid}|${choice}|${this.state.rqid}`;
-    if(res !== msg) {
+    if (res !== msg) {
       log.error('battle: new formatMessage fn and old one dont match', res, msg);
     }
     connection.send( res );
