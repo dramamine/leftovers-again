@@ -16,7 +16,7 @@ fdescribe('BattleStore', () => {
       const ident = 'p1: Fakechu';
       store._getOrCreateMon('p1: Fakechu');
       expect(store.allmon[0]).toBeDefined();
-      expect(store.allmon[0].getState().id).toEqual(ident);
+      expect(store.allmon[0].id).toEqual(ident);
     });
     it('should return my mon if it already exists', () => {
       const ident = 'p1: Fakechu';
@@ -56,9 +56,9 @@ fdescribe('BattleStore', () => {
       const guy = store._getOrCreateMon('p1: Fakechu');
       guy.useCondition('100/100');
       store.handleDamage('p1a: Fakechu', '50/100', '[from] sadness');
-      expect(guy.getState().events[0].damage).toEqual(50);
-      expect(guy.getState().events[0].from).toEqual('[from] sadness');
-      expect(guy.getState().events[0].turn).toEqual(1);
+      expect(guy.events[0].damage).toEqual(50);
+      expect(guy.events[0].from).toEqual('[from] sadness');
+      expect(guy.events[0].turn).toEqual(1);
     });
   });
   describe('interpretRequest', () => {

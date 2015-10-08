@@ -4,19 +4,27 @@ import log from '../log';
 
 export default class Pokemon {
   constructor(ident) {
-    this.state = {
-      events: []
-    };
+    // this.state = {
+    //   events: []
+    // };
+    this.events = [];
     this.useIdent(ident);
-
   }
 
-  getState() {
-    return this.state;
+  data() {
+    // return only what's necessary
+    const out = {};
+    ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
+    'gender', 'hp', 'maxhp', 'hppct', 'active'].forEach( (field) => {
+      if (this[field]) out[field] = this[field];
+    });
+    return out;
+    // if(this.dead) out.dead = this.dead;
   }
 
   assimilate(obj) {
-    Object.assign(this.state, obj);
+    // lol dangerous
+    Object.assign(this, obj);
 
     if (obj.details) {
       this.useDetails(obj.details);
@@ -32,7 +40,7 @@ export default class Pokemon {
   }
 
   saveEvent(evt) {
-    this.state.events.push(evt);
+    this.events.push(evt);
   }
 
   // for inactive moves
@@ -41,7 +49,7 @@ export default class Pokemon {
     moves.forEach( (move) => {
       moveList.push(util.researchMoveById(move));
     });
-    this.state.moves = moveList;
+    this.moves = moveList;
   }
   // for active moves
   updateMoveList(moves) {
@@ -53,25 +61,25 @@ export default class Pokemon {
 
   useDetails(details) {
     // do these ever change?
-    if (this.state.details && this.state.details === details) {
+    if (this.details && this.details === details) {
       return;
     }
-    if (this.state.details) {
-      log.log('details changed.', this.state.details, details);
+    if (this.details) {
+      log.log('details changed.', this.details, details);
     }
 
-    this.state.details = details;
+    this.details = details;
     try {
       const deets = details.split(', ');
 
       // if we're just learning this...
-      if (!this.state.species) {
+      if (!this.species) {
         this.useSpecies(deets[0]);
       }
 
 
-      this.state.level = parseInt(deets[1].substr(1), 10);
-      this.state.gender = deets[2] || 'M';
+      this.level = parseInt(deets[1].substr(1), 10);
+      this.gender = deets[2] || 'M';
     } catch (e) {
       log.err('useDetails: error parsing mon.details', e);
     }
@@ -79,8 +87,10 @@ export default class Pokemon {
 
   useSpecies(spec) {
     const key = util.toId(spec);
-    this.state.species = key;
-    Object.assign(this.state, util.researchPokemonById(key));
+    this.species = key;
+
+    // lol also dangerous
+    Object.assign(this, util.researchPokemonById(key));
   }
 
   useIdent(ident) {
@@ -89,10 +99,10 @@ export default class Pokemon {
       return;
     }
     const id = this._identToId(ident);
-    this.state.id = id;
+    this.id = id;
     try {
       const split = id.split(': ');
-      this.state.owner = split[0];
+      this.owner = split[0];
       this.useSpecies(split[1]);
     } catch (e) {
       log.err('useIdent: weird owner', ident, e);
@@ -104,26 +114,26 @@ export default class Pokemon {
       log.error('malformed condition:', condition);
       return;
     }
-    this.state.condition = condition;
-    this.state.dead = false;
-    this.state.conditions = [];
+    this.condition = condition;
+    this.dead = false;
+    this.conditions = [];
 
     try {
       const hps = condition.split('/');
       if (hps.length === 2) {
-        this.state.hp = parseInt(hps[0], 10);
+        this.hp = parseInt(hps[0], 10);
         const maxhpAndConditions = hps[1].split(' ');
-        this.state.maxhp = parseInt(maxhpAndConditions[0], 10);
-        this.state.hppct = Math.round(100 * this.state.hp / this.state.maxhp);
+        this.maxhp = parseInt(maxhpAndConditions[0], 10);
+        this.hppct = Math.round(100 * this.hp / this.maxhp);
 
         if (maxhpAndConditions.length > 1) {
-          this.state.conditions = maxhpAndConditions.slice(1);
+          this.conditions = maxhpAndConditions.slice(1);
         }
       } else if (condition === '0 fnt') {
-        this.state.dead = true;
-        this.state.hp = 0;
-        this.state.maxhp = 0;
-        this.state.hppct = 0;
+        this.dead = true;
+        this.hp = 0;
+        this.maxhp = 0;
+        this.hppct = 0;
       } else {
         log.err('weird condition:', mon.condition);
       }

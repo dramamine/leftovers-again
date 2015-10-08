@@ -49,7 +49,7 @@ export default class BattleStore {
     mon.useDetails(details);
     mon.useCondition(condition);
     // console.log('checking owner', mon.state.owner, this.myid);
-    if (mon.getState().owner === this.myid) {
+    if (mon.owner === this.myid) {
       this._setOrUpdateSelfActive(mon);
     } else {
       this._setOrUpdateOpponentActive(mon);
@@ -75,11 +75,11 @@ export default class BattleStore {
 
   handleDamage(ident, condition, explanation) {
     const mon = this._getOrCreateMon(ident);
-    const oldhp = mon.state.hp;
+    const oldhp = mon.hp;
     mon.useCondition(condition);
     mon.saveEvent({
       turn: this.turn, // @TODO
-      damage: oldhp - mon.state.hp,
+      damage: oldhp - mon.hp,
       from: explanation
     });
   }
@@ -91,7 +91,7 @@ export default class BattleStore {
         ref.assimilate(mon);
 
         // @TODO double-checking this, could probs refactor
-        if (ref.state.active) {
+        if (ref.active) {
           this._setOrUpdateSelfActive(ref);
         }
         // console.log('created mon ', ref);
@@ -119,15 +119,15 @@ export default class BattleStore {
       opponent: {}
     };
     // const output = _.clone(this.state, true);
-    const stateGetter = (mon) => { return mon.getState(); };
-    const iamowner = (mon) => { return mon.getState().owner === this.myid; };
-    const youareowner = (mon) => { return mon.getState().owner !== this.myid; };
+    const dataGetter = (mon) => { return mon.data(); };
+    const iamowner = (mon) => { return mon.owner === this.myid; };
+    const youareowner = (mon) => { return mon.owner !== this.myid; };
 
     // use getState so we can filter out any crap.
-    output.self.active = this.state.self.active.map(stateGetter);
-    output.self.reserve = this.allmon.filter(iamowner).map(stateGetter);
-    output.opponent.active = this.state.opponent.active.map(stateGetter);
-    output.opponent.reserve = this.allmon.filter(youareowner).map(stateGetter);
+    output.self.active = this.state.self.active.map(dataGetter);
+    output.self.reserve = this.allmon.filter(iamowner).map(dataGetter);
+    output.opponent.active = this.state.opponent.active.map(dataGetter);
+    output.opponent.reserve = this.allmon.filter(youareowner).map(dataGetter);
 
     // compress arrays to singles
     if (output.self.active.length === 1) {
@@ -158,8 +158,9 @@ export default class BattleStore {
       this.state.self.active.push(mon);
     }
     if (this.state.self.active.length > BATTLE_SIZE) {
-      log.error('BattleStore: self had more than one active pokemon!',
-        this.state.self.active);
+      log.error('BattleStore: self had more than one active pokemon!');
+      console.log(this.state.self.active);
+      console.log(mon);
     }
   }
 
@@ -169,8 +170,9 @@ export default class BattleStore {
       this.state.opponent.active.push(mon);
     }
     if (this.state.opponent.active.length > BATTLE_SIZE) {
-      log.error('BattleStore: opponent had more than one active pokemon!',
-        this.state.opponent.active);
+      log.error('BattleStore: opponent had more than one active pokemon!');
+      log.error(this.state.opponent.active);
+      log.error(mon);
     }
   }
 
@@ -183,7 +185,7 @@ export default class BattleStore {
   }
 
   _findById(id) {
-    return this.allmon.find( (mon) => { return mon.getState().id === id; });
+    return this.allmon.find( (mon) => { return mon.id === id; });
   }
 
   _identToId(ident) {
