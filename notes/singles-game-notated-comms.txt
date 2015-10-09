@@ -1,0 +1,141 @@
+
+# user auth
+|challstr|2|bcdc0034c7a37d6c2db5a4656d79bf1cbf98bfd9ee891798cc6545bf3d6321971a99faa6efa45c7d3ea886a5b8a823c339d1d3f43f9056ac80ddd28bbb3e758d1ea6249985bd34dc0a079c92cdf088796463bcd11bc74b14cee73247926cf370ebf1370f0d58ab78a52a32342170a2bf43f8336c000af553478617110aa49140
+
+# chat room stuff
+<< |init|chat
+|title|Lobby
+|users|1, 5nowden4189
+|:|1444359272
+## users joining the room
+|j| 5nowden4189
+
+## respond to validation challenge
+|/trn qawserdftyghujk,0,bcdc0034c7a37d6c2db5a4656d79bf1cbf98bfd9ee891798cc6545bf3d6321971a99faa6efa45c7d3ea886a5b8a823c339d1d3f43f9056ac80ddd28bbb3e758d1ea6249985bd34dc0a079c92cdf088796463bcd11bc74b14cee73247926cf370ebf1370f0d58ab78a52a32342170a2bf43f8336c000af553478617110aa49140,qawserdftyghujk,1,1444359764,localhost;8721d56f82863f2e4855b285d6ee1e6e3c2ffa638c4434809996c3d7635cf56759a0c09d90a3676d51e266d8fc9cdb6681a8bc8af73e6992c69a62c9e8449aee48c846ab032e164c706fddf3c34eb2fd128a2a542486bb1daec91b13602eaa35e318436d4e08951b13d6025a2c13c3932387ee5a57c612a9a0b2ac2eed5b89fa75d5c6687004e6562e704fc969437126dd1dd6db624be702f5af32618095a2339918da4d8032785e0368e3b1e47244e36b0aea45aff49f67b2ea64d1a23e6d98fd1f4ea24d2fa975c6255bd04edccd2a81f0f0560450322bf250beca1e62e2ff4697dd6062b6d50e6962f8d1057dd1d475be0d86d2b664b164c003e852288e0e991ddb1c416697575ef3ba3bf9cbb06bbd7ab82f28943e893a7842826efebf9d1991a9d09935afd91b2dbfa5b56fb1ad50eca35826f02aafcfe8cded208d2ed3d056e24eb4585b8ef3254ecd4d5f107c5ddefad1f2fd279ec44cb1c82c16e257a0491e5249d24ba77a65a0116cc9fb148bec59364329695778f8ca7238bcb55e115c7a63ca0d5de3c12ce913b7eb70c8e2c264b548e3bac37373ba5496f9df99d968ffcc2c2c82aa9dd8bcaa57a0e5bc5fe81e2a48dd6fed7e6c2b826166db6286384959bd5e1a65e98fc88280ca107671146b3e904fd1fcb780b7b76ea208498aad48f13d6f5f0192f07cf4fc4d2e5cbbe2d1510012dc8e426351b5c083710b
+
+## setting my nickname
+<< |updateuser|qawserdftyghujk|1|170
+## getting some info about dudes in the lobby
+>> |/cmd userdetails 5nowden4189
+<< |queryresponse|userdetails|{"userid":"5nowden4189","avatar":2,"rooms":{"lobby":{}}}
+# I want to join!
+<< |j| qawserdftyghujk
+
+# set my team to null before I issue a challenge
+>> |/utm null
+>> |/challenge 5nowden4189, randombattle
+<< |updatechallenges|{"challengesFrom":{},"challengeTo":{"to":"5nowden4189","format":"randombattle"}}
+
+# battle starts! here's my battle ID
+<< >battle-randombattle-1
+|init|battle
+|title|5nowden4189 vs. qawserdftyghujk
+|join|5nowden4189
+
+<< >battle-randombattle-1
+|join|qawserdftyghujk
+
+<< >battle-randombattle-1
+|title|5nowden4189 vs. qawserdftyghujk
+
+<< |updatechallenges|{"challengesFrom":{},"challengeTo":null}
+<< >battle-randombattle-1
+
+
+|player|p1|5nowden4189|2
+
+## first request. no request ID.
+<< >battle-randombattle-1
+|request|{"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"227/227","active":true,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":false,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]}}
+
+## next request. has a request ID.
+# this doesn't tell us anything about the opponent's pokemon. for that, we
+# have to wait for the upcoming 'switch' message.
+# 'active' data doesn't even tell us about the pokemon that's active!
+<< >battle-randombattle-1
+|request|{"active":[{"moves":[{"move":"Roost","id":"roost","pp":16,"maxpp":16,"target":"self","disabled":false},{"move":"U-turn","id":"uturn","pp":32,"maxpp":32,"target":"normal","disabled":false},{"move":"Stealth Rock","id":"stealthrock","pp":32,"maxpp":32,"target":"foeSide","disabled":false},{"move":"Earthquake","id":"earthquake","pp":16,"maxpp":16,"target":"allAdjacent","disabled":false}]}],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"227/227","active":true,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":false,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":1}
+
+## gettin' some info about the battle.
+<< >battle-randombattle-1
+|player|p2|qawserdftyghujk|170
+|gametype|singles
+|gen|6
+|tier|Random Battle
+|rule|Sleep Clause Mod: Limit one foe put to sleep
+|rule|HP Percentage Mod: HP is shown in percentages
+|
+
+|start
+|switch|p1a: Bibarel|Bibarel, L83, M|100/100
+|switch|p2a: Gligar|Gligar, L77, M|227/227
+
+|turn|1
+
+# my response:
+>> battle-randombattle-1|/choose move 3|1
+
+## next request:
+<< >battle-randombattle-1
+|request|{"active":[{"moves":[{"move":"Roost","id":"roost","pp":16,"maxpp":16,"target":"self","disabled":false},{"move":"U-turn","id":"uturn","pp":32,"maxpp":32,"target":"normal","disabled":false},{"move":"Stealth Rock","id":"stealthrock","pp":31,"maxpp":32,"target":"foeSide","disabled":false},{"move":"Earthquake","id":"earthquake","pp":16,"maxpp":16,"target":"allAdjacent","disabled":false}]}],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"129/227","active":true,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":false,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":2}
+client.js:834 << >battle-randombattle-1
+
+|
+|move|p2a: Gligar|Stealth Rock|p1a: Bibarel
+|-sidestart|p1: 5nowden4189|move: Stealth Rock
+|move|p1a: Bibarel|Waterfall|p2a: Gligar
+|-supereffective|p2a: Gligar
+|-damage|p2a: Gligar|129/227
+
+|
+|turn|2
+## make my move
+>> battle-randombattle-1|/choose move 1|2
+
+
+<< >battle-randombattle-1
+|request|{"active":[{"moves":[{"move":"Roost","id":"roost","pp":15,"maxpp":16,"target":"self","disabled":false},{"move":"U-turn","id":"uturn","pp":32,"maxpp":32,"target":"normal","disabled":false},{"move":"Stealth Rock","id":"stealthrock","pp":31,"maxpp":32,"target":"foeSide","disabled":false},{"move":"Earthquake","id":"earthquake","pp":16,"maxpp":16,"target":"allAdjacent","disabled":false}]}],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"135/227","active":true,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":false,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":3}
+client.js:834 << >battle-randombattle-1
+
+
+|move|p2a: Gligar|Roost|p2a: Gligar
+|-heal|p2a: Gligar|227/227
+
+|move|p1a: Bibarel|Waterfall|p2a: Gligar
+|-supereffective|p2a: Gligar
+|-damage|p2a: Gligar|135/227
+
+|
+|turn|3
+
+>> battle-randombattle-1|/choose move 2|3
+
+## this time, I get a forceSwitch request. no 'turn' message to go with it.
+<< >battle-randombattle-1
+|request|{"forceSwitch":[true],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"135/227","active":true,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":false,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":4,"noCancel":true}
+
+<< >battle-randombattle-1
+|
+|move|p2a: Gligar|U-turn|p1a: Bibarel
+|-damage|p1a: Bibarel|82/100
+
+>> battle-randombattle-1|/choose switch 4|4
+
+<< >battle-randombattle-1
+|request|{"active":[{"moves":[{"move":"Toxic","id":"toxic","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Iron Head","id":"ironhead","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Curse","id":"curse","pp":16,"maxpp":16,"target":"self","disabled":false},{"move":"Rest","id":"rest","pp":16,"maxpp":16,"target":"self","disabled":false}]}],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Registeel","details":"Registeel, L79","condition":"256/256","active":true,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"135/227","active":false,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":5}
+client.js:834 << >battle-randombattle-1
+
+|
+|switch|p2a: Registeel|Registeel, L79|256/256
+
+|move|p1a: Bibarel|Rest|p1a: Bibarel
+|-status|p1a: Bibarel|slp
+|-heal|p1a: Bibarel|100/100 slp|[silent]
+
+|-status|p1a: Bibarel|slp|[from] move: Rest
+|-enditem|p1a: Bibarel|Chesto Berry|[eat]
+|-curestatus|p1a: Bibarel|slp
+|
+|turn|4
+client.js:898 >> battle-randombattle-1|/choose move 2|5
+client.js:834 << >battle-randombattle-1
+|request|{"active":[{"moves":[{"move":"Toxic","id":"toxic","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Iron Head","id":"ironhead","pp":23,"maxpp":24,"target":"normal","disabled":false},{"move":"Curse","id":"curse","pp":16,"maxpp":16,"target":"self","disabled":false},{"move":"Rest","id":"rest","pp":16,"maxpp":16,"target":"self","disabled":false}]}],"side":{"name":"qawserdftyghujk","id":"p2","pokemon":[{"ident":"p2: Registeel","details":"Registeel, L79","condition":"207/256","active":true,"stats":{"atk":164,"def":283,"spa":164,"spd":283,"spe":125},"moves":["toxic","ironhead","curse","rest"],"baseAbility":"clearbody","item":"chestoberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Scolipede","details":"Scolipede, L76, M","condition":"215/215","active":false,"stats":{"atk":197,"def":179,"spa":128,"spd":149,"spe":214},"moves":["earthquake","rockslide","batonpass","poisonjab"],"baseAbility":"speedboost","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Genesect","details":"Genesect, L74","condition":"227/227","active":false,"stats":{"atk":221,"def":184,"spa":221,"spd":184,"spe":190},"moves":["icebeam","thunderbolt","blazekick","ironhead"],"baseAbility":"download","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Gligar","details":"Gligar, L77, M","condition":"135/227","active":false,"stats":{"atk":160,"def":206,"spa":98,"spd":145,"spe":175},"moves":["roost","uturn","stealthrock","earthquake"],"baseAbility":"immunity","item":"eviolite","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Illumise","details":"Illumise, L83, F","condition":"243/243","active":false,"stats":{"atk":126,"def":139,"spa":170,"spd":172,"spe":189},"moves":["bugbuzz","uturn","tailwind","encore"],"baseAbility":"prankster","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Swampert","details":"Swampert, L77, F","condition":"281/281","active":false,"stats":{"atk":214,"def":183,"spa":175,"spd":183,"spe":137},"moves":["earthquake","waterfall","superpower","icepunch"],"baseAbility":"torrent","item":"swampertite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":6}

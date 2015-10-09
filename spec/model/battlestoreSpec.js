@@ -4,7 +4,38 @@ import Pokemon from '../../src/model/pokemon';
 import fakeRequest from '../helpers/request';
 
 let store;
+
 fdescribe('BattleStore', () => {
+  beforeEach( () => {
+    store = new BattleStore();
+    spyOn(util, 'researchPokemonById').and.returnValue({});
+  });
+  describe('_recordIdent', () => {
+    it('should create an inactive pokemon', () => {
+      const ident = 'p1: Fakechu';
+      const mon = store._recordIdent(ident);
+      expect(mon.species).toEqual('fakechu');
+      expect(mon.owner).toEqual('p1');
+      expect(mon.position).toBeFalsy();
+    });
+    it('should create an active pokemon', () => {
+      const ident = 'p1a: Fakechu';
+      const mon = store._recordIdent(ident);
+      expect(mon.species).toEqual('fakechu');
+      expect(mon.owner).toEqual('p1');
+      expect(mon.position).toBe('p1a');
+    });
+    it('should replace an active pokemon', () => {
+      store._recordIdent('p1a: Fakechu');
+      const replacement = store._recordIdent('p1a: Charmando');
+      expect(replacement.species).toEqual('charmando');
+      expect(replacement.owner).toEqual('p1');
+      expect(replacement.position).toBe('p1a');
+    });
+  });
+});
+
+xdescribe('BattleStore', () => {
   beforeEach( () => {
     store = new BattleStore();
     spyOn(util, 'researchPokemonById').and.returnValue({});

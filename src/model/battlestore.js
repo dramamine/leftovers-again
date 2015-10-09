@@ -1,103 +1,59 @@
 import Pokemon from './pokemon';
-import log from '../log';
-// import _ from 'lodash';
+// import log from '../log';
 
-// @TODO lazily leaving this here; now we will validate active state
-// for singles games only. need to actually check the game type and
-// make sure we have the right number. and do this in the getState()
-// function instead!
-const BATTLE_SIZE = 1;
 
 export default class BattleStore {
   constructor() {
-    this.state = {
-      self: {
-        active: [],
-        reserve: [] // @TODO
-      },
-      opponent: {
-        active: [],
-        reserve: [] // @TODO
-      }
-    };
-
     this.allmon = [];
     this.forceSwitch = false;
     this.teamPreview = false;
-
-    // @TODO
-    // this.report = {
-    //   self: this.state.self,
-    //   opponent: this.state.opponent,
-    //   turn: this.turn
-    // };
-
   }
 
-  // setPlayerId(id) {
-  //   console.log('HELLO I AM PLAYER ', id);
-  //   this.myid = id;
-  // }
-  // setPlayerNick(nick) {
-  //   this.mynick = nick;
-  // }
-  setTurn(num) {
-    this.turn = num;
+  handleSwitch(ident) {
+    this._recordIdent(ident);
   }
 
-  setActive(ident, details, condition) {
 
-
-    // const mon = this._getOrCreateMon(ident);
-    // mon.useDetails(details);
-    // mon.useCondition(condition);
-    // console.log('checking owner', mon.owner, this.myid);
-    // if (mon.owner === this.myid) {
-    //   console.log('calling self active for', ident);
-    //   this._setOrUpdateSelfActive(mon);
-    // } else {
-    //   console.log('calling opponent active for', ident);
-    //   this._setOrUpdateOpponentActive(mon);
-    // }
-  }
-
-  handleDeath(ident) {
-    return;
-    const guy = this._findById( this._identToId(ident) );
-    guy.active = false;
-    // const selfIndex = this.state.self.active.indexOf(guy);
-    // if ( selfIndex >= 0 ) {
-    //   console.log('my guy died, need to remove him');
-    //   this.state.self.active.splice(selfIndex, 1);
-    // }
-
-    // const yourIndex = this.state.opponent.active.indexOf(guy);
-    // if (yourIndex >= 0) {
-    //   console.log('your guy died, need to remove him');
-    //   this.state.opponent.active.splice(yourIndex, 1);
-    // }
-    const idx = this.allmon.indexOf(guy);
-    this.allmon.splice(idx, 1);
-
-    // console.log(this.state);
-    // const selfIdx = this.state.self.active.indexOf(guy);
-    // if (selfIdx >= 0) this.state.opponent.active.splice(selfIdx, 1);
-    // @TODO why not just wait for the switch.
-    const oppIdx = this.state.opponent.active.indexOf(guy);
-    if (oppIdx >= 0) this.state.opponent.active.splice(oppIdx, 1);
-  }
-
-  handleDamage(ident, condition, explanation) {
-    const mon = this._getOrCreateMon(ident);
-    const oldhp = mon.hp;
-    mon.useCondition(condition);
-    mon.saveEvent({
-      turn: this.turn, // @TODO
-      damage: oldhp - mon.hp,
-      from: explanation
-    });
-  }
-
+  // what does the request look like? WELL. Check out these properties:
+  // 'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
+  //         These don't match up perfectly with turns bc you may have to swap
+  //         out pokemon if one dies, etc.
+  //  'side':
+  //    'name': your name
+  //    'id': either 'p1' or 'p2'
+  //    'pokemon': [Pokemon]      (6 of them. they're the pokemon on yr side)
+  //  'active':
+  //    'moves': [Move]           (the 4 moves of your active pokemon)
+  //
+  //   Move is an object with these properties:
+  //   'move': the move name (ex.'Fake Out')
+  //   'id': the move ID (ex. 'fakeout')
+  //   'pp': how many PP you currently have
+  //   'maxpp': the max PP for this move
+  //   'target': target in options (ex. 'normal')
+  //   'disabled': boolean for whether this move can be used.
+  //
+  //   Pokemon look like this:
+  //   'ident': ex. 'p1: Wormadam'
+  //   'details': ex. 'Wormadam, L83, F'
+  //   'condition': ex. '255/255'
+  //   'hp': current HP
+  //   'maxhp': maximum HP
+  //   'active': boolean, true if pokemon is currently active
+  //   'stats':
+  //     'atk': attack
+  //     'def': defense
+  //     'spa': special attack
+  //     'spd': special defense
+  //     'spe': speed
+  //   'moves': Array of move IDs
+  //   'baseAbility': the ability of the Pokemon (ex. 'overcoat')
+  //   'item' the Pokemon's held item (ex. 'leftovers')
+  //   'pokeball': what kind of pokeball the Pokemon was caught with
+  //   'canMegaEvo': Boolean for whether this Pokemon can mega-evolve
+  //
+  //
+  // data = {};
   interpretRequest(data) {
     console.log('request:', data);
     if (!this.myid) {
@@ -106,29 +62,16 @@ export default class BattleStore {
     }
     if (data.wait) return;
 
-    this.state.self.active = [];
-    this.state.opponent.active = [];
+    // this.state.self.active = [];
+    // this.state.opponent.active = [];
 
     if (data.side && data.side.pokemon) {
       data.side.pokemon.map( (mon) => {
-        if(mon.dead) {
-          return handleDeath(mon.ident);
-        }
-        const ref = this._getOrCreateMon(mon.ident);
+        // if(mon.dead) {
+        //   return handleDeath(mon.ident);
+        // }
+        const ref = this._recordIdent(mon.ident);
         ref.assimilate(mon);
-
-        // @TODO double-checking this, could probs refactor
-        if (ref.active && ref.condition !== '0 fnt' &&  ref.owner === this.myid) {
-          console.log('intrq setting active mon', ref.ident);
-          this._setOrUpdateSelfActive(ref);
-        }
-        // console.log('created mon ', ref);
-      });
-    }
-    if (data.active) {
-      console.log('ACTIVE:', data.active);
-      data.active.forEach( (moveObj) => {
-        this.state.self.active[0].updateMoveList(moveObj.moves);
       });
     }
 
@@ -143,9 +86,14 @@ export default class BattleStore {
     if (data.rqid) {
       this.rqid = data.rqid;
     }
+
+    // process this later.
+    if (data.active) {
+      this.activeData = data.active;
+    }
   }
 
-  getState() {
+  data() {
     const output = {
       self: {},
       opponent: {}
@@ -154,12 +102,39 @@ export default class BattleStore {
     const dataGetter = (mon) => { return mon.data(); };
     const iamowner = (mon) => { return mon.owner === this.myid; };
     const youareowner = (mon) => { return mon.owner !== this.myid; };
+    const isactive = (mon) => { return !!mon.position || mon.active; };
+    const byPosition = (a, b) => b.position - a.position;
 
     // use getState so we can filter out any crap.
-    output.self.active = this.state.self.active.map(dataGetter);
-    output.self.reserve = this.allmon.filter(iamowner).map(dataGetter);
-    output.opponent.active = this.state.opponent.active.map(dataGetter);
-    output.opponent.reserve = this.allmon.filter(youareowner).map(dataGetter);
+    output.self.active = this.allmon
+      .filter(iamowner)
+      .filter(isactive)
+      .map(dataGetter)
+      .sort(byPosition);
+    output.opponent.active = this.allmon
+      .filter(youareowner)
+      .filter(isactive)
+      .map(dataGetter)
+      .sort(byPosition);
+    output.self.reserve = this.allmon
+      .filter(iamowner)
+      .map(dataGetter);
+    output.opponent.reserve = this.allmon
+      .filter(youareowner)
+      .map(dataGetter);
+
+    if (this.activeData) {
+      for (let i = 0; i < this.activeData.length; i++) {
+        const movesArr = this.activeData[i].moves;
+        for (let j = 0; j < movesArr.length; j++) {
+          console.assert(output.self.active[i].moves[j].id === movesArr[j].id);
+          //   console.error('WARNING: move arrays didnt match up!');
+          //   continue;
+          // }
+          Object.assign(output.self.active[i].moves[j], movesArr[j]);
+        }
+      }
+    }
 
     // compress arrays to singles
     if (output.self.active.length === 1) {
@@ -171,7 +146,7 @@ export default class BattleStore {
 
     // @TODO ew, I don't like this because it's destructive inside a get fn
     if (this.forceSwitch) {
-      console.log('including forceSwitch...');
+      // console.log('including forceSwitch...');
       output.forceSwitch = true;
       this.forceSwitch = false;
     }
@@ -183,39 +158,52 @@ export default class BattleStore {
 
     output.rqid = this.rqid;
 
-    // @TODO reserves
     return output;
   }
 
-  _setOrUpdateSelfActive(mon) {
-    if (this.state.self.active.indexOf(mon) === -1) {
-      this.state.self.active.push(mon);
-    }
-    if (this.state.self.active.length > BATTLE_SIZE) {
-      log.error('BattleStore: self had more than one active pokemon!');
-      console.log(this.state.self.active);
-      console.log(mon);
-    }
-  }
+  // NEW FUNCTION. this is the one I like.
+  _recordIdent(ident) {
+    const owner = ident.substr(0, 2);
+    const posStr = ident.substr(0, ident.indexOf(':'));
+    const position = (posStr.length === 3) ? posStr : null;
+    const species = ident.substr(ident.indexOf(' ') + 1);
+    // console.log(ident, owner, position, species);
 
+    const hello = this.allmon.find( (mon) => {
+      return owner === mon.owner && species === mon.species;
+    });
 
-  _setOrUpdateOpponentActive(mon) {
-    if (this.state.opponent.active.indexOf(mon) === -1) {
-      this.state.opponent.active.push(mon);
-    }
-    if (this.state.opponent.active.length > BATTLE_SIZE) {
-      log.error('BattleStore: opponent had more than one active pokemon!');
-      log.error(this.state.opponent.active);
-      log.error(mon);
-    }
-  }
+    if (hello) {
+      if (position) {
+        // update the guy who got replaced
+        const goodbye = this.allmon.find( (mon) => {
+          return position === mon.position;
+        });
+        if (goodbye) {
+          goodbye.position = null;
+        }
+        // update our new guy
+        hello.position = position;
+      }
+      // this shouldn't happen because this would mean we forgot to deactivate
+      // a pokemon
+      // if (hello.position !== position) {
+      //   console.error('check out this weird shit. ', hello.position, position);
+      // }
 
-  _getOrCreateMon(ident) {
-    const id = this._identToId(ident);
-    if (!this._findById(id)) {
-      this.allmon.push(new Pokemon(id));
+      return hello;
     }
-    return this._findById(id);
+
+    const dude = new Pokemon(species);
+    dude.owner = owner;
+    // for active pokemon only.
+    // this only happens for opponent's pokemon, since our own pokemon are
+    // always created on the first request, before any of them are active.
+    if (position) dude.position = position;
+
+    this.allmon.push(dude);
+
+    return dude;
   }
 
   _findById(id) {

@@ -15,6 +15,9 @@ const battles = {};
 
 class Connection {
   constructor() {
+  }
+
+  connect() {
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 

@@ -3,19 +3,16 @@ import util from '../util';
 import log from '../log';
 
 export default class Pokemon {
-  constructor(ident) {
-    // this.state = {
-    //   events: []
-    // };
+  constructor(species) {
     this.events = [];
-    this.useIdent(ident);
+    this.useSpecies(species);
   }
 
   data() {
     // return only what's necessary
     const out = {};
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
-    'gender', 'hp', 'maxhp', 'hppct', 'active'].forEach( (field) => {
+    'gender', 'hp', 'maxhp', 'hppct', 'active', 'events'].forEach( (field) => {
       if (this[field]) out[field] = this[field];
     });
     return out;
@@ -35,7 +32,7 @@ export default class Pokemon {
 
     // unfortunately, this resets our move list...
     if (obj.moves) {
-      this.updateInactiveMoveList(obj.moves);
+      this.moves = Pokemon.updateMoveList(obj.moves);
     }
   }
 
@@ -43,19 +40,18 @@ export default class Pokemon {
     this.events.push(evt);
   }
 
-  // for inactive moves
-  updateInactiveMoveList(moves) {
-    const moveList = [];
-    moves.forEach( (move) => {
-      moveList.push(util.researchMoveById(move));
-    });
-    this.moves = moveList;
-  }
   // for active moves
-  updateMoveList(moves) {
-    moves.forEach( (move) => {
-      log.debug('any new move data here? ', move);
-      Object.assign(move, util.researchMoveById(move.id));
+  static updateMoveList(moves) {
+    return moves.map( (move) => {
+      // console.log('old:', move);
+      const research = util.researchMoveById(move);
+      const out = {};
+      ['accuracy', 'basePower', 'category', 'id', 'name', 'isViable',
+      'priority', 'flags', 'heal', 'self', 'type'].forEach( (field) => {
+        if (research[field]) out[field] = research[field];
+      });
+      // console.log('returning ', out);
+      return out;
     });
   }
 
@@ -93,22 +89,6 @@ export default class Pokemon {
     Object.assign(this, util.researchPokemonById(key));
   }
 
-  useIdent(ident) {
-    if (!ident.match(/: /)) {
-      log.error('malformed ident:', ident);
-      return;
-    }
-    const id = this._identToId(ident);
-    this.id = id;
-    try {
-      const split = id.split(': ');
-      this.owner = split[0];
-      this.useSpecies(split[1]);
-    } catch (e) {
-      log.err('useIdent: weird owner', ident, e);
-    }
-  }
-
   useCondition(condition) {
     if (!condition.match(/[0-9]+[\/\s]+\w/)) {
       log.error('malformed condition:', condition);
@@ -140,9 +120,5 @@ export default class Pokemon {
     } catch (e) {
       log.err('useCondition: error parsing mon.condition', e);
     }
-  }
-
-  _identToId(ident) {
-    return ident.replace('a: ', ': ');
   }
 }

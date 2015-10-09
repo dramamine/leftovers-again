@@ -1,0 +1,126 @@
+|/trn awsedrfgtyhjnmk,0,1d86f164bfa7c530bdea02bca2cf776ed76aa25c995a8dc005b20af964314a5e79557e1080407aedd5d0e03b79032f09f3cbb81fcbe8dffffb06135d43e506ae4159342b3736e0b027bdf581e4b1d2ec41ed55af065cf5f8dddcf4f4a0017c94ad1487ada7ca769f36987f21e4741194648155a26e2caca4dd56de879377d601,awsedrfgtyhjnmk,1,1444363292,localhost;32c0f8748cec57b558d81716a9974f513353095b9fc569386e97e06c06590a637fc30169fba0b3fb04c4e25372531ce85bf780c8c5ebba4f61e0dd80d9575719c2bd6ab64231bd49df82b7e6e518d0469429e234d2b45184de146de0fbf824bc656acd5f6d4954145931dd4bff91221938f36fc506acb57c49f46ec40dd0da727cad2dca5c1152220a0cbb079f7717e6b09c6e2ed02854ff5728e452e1cd01524be2b30462bebf6a1fe26f59a97b58855e4e7e933cb20a55eb4ad4389408baec2a30a21fbfb87933692430c59b00902cbe3df30da65c879713b3036900c421e35a15e4136b07850ed116698a3b0ca8916760c9f06fd2ae40ce2f778433698ec720ce004a5b85bd85a2e4d90183c2302041e76aac74091989258e1fdac6d35d6b6cf4808d49f88d24ed187f5fb29e9bffc569d0fd1fdd9ee81994f429b242b3fe0affd5a27aa357176de32e80f22db9a679b18d6190a0b0965b0e0c8e1e2690ff6940c6b0a0140e2c810d3905505160ae8fc019f8e165944991fa733d56c602b838f1ce87eb6de90b8c1aea70055bb6aaaef2d9575e28e579b43c842cc32f5b06c1e19866802d11ece4831a1b502baae4f4913e29919b91eaf8180ed09cca90071373f539042ccdf335c23f0e09fc6be02fd0deaa148cc5842d0616218f7c0ada9ad2e9f0a6e525b6992b8cef59b1d1223b91cfbd3fdee8b1d5c8c8f5951ae23f
+client.js:834 << |updateuser|awsedrfgtyhjnmk|1|170
+client.js:834 << |j| awsedrfgtyhjnmk
+|c:|1444362976| qawserdftyghujk|hello
+client.js:834 << |updatechallenges|{"challengesFrom":{"qawserdftyghujk":"randomdoublesbattle"},"challengeTo":null}
+client.js:898 >> |/utm null
+client.js:898 >> |/accept qawserdftyghujk
+client.js:834 << >battle-randomdoublesbattle-5
+|init|battle
+|title|awsedrfgtyhjnmk vs. qawserdftyghujk
+
+client.js:834 << >battle-randomdoublesbattle-5
+
+|join|awsedrfgtyhjnmk
+client.js:834 << >battle-randomdoublesbattle-5
+
+|join|qawserdftyghujk
+client.js:834 << >battle-randomdoublesbattle-5
+|title|awsedrfgtyhjnmk vs. qawserdftyghujk
+client.js:834 << |updatechallenges|{"challengesFrom":{},"challengeTo":null}
+client.js:834 << >battle-randomdoublesbattle-5
+
+|player|p1|awsedrfgtyhjnmk|170
+client.js:834 << >battle-randomdoublesbattle-5
+|request|{"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"278/278","active":true,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"312/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":false,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]}}
+client.js:834 << >battle-randomdoublesbattle-5
+
+## here's my first request with an RQID
+|request|{"active":[{"moves":[{"move":"Dazzling Gleam","id":"dazzlinggleam","pp":16,"maxpp":16,"target":"allAdjacentFoes","disabled":false},{"move":"Thunder","id":"thunder","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Focus Blast","id":"focusblast","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Close Combat","id":"closecombat","pp":8,"maxpp":8,"target":"normal","disabled":false}]},{"moves":[{"move":"Dragon Tail","id":"dragontail","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Icy Wind","id":"icywind","pp":24,"maxpp":24,"target":"allAdjacentFoes","disabled":false},{"move":"Will-O-Wisp","id":"willowisp","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Tailwind","id":"tailwind","pp":24,"maxpp":24,"target":"allySide","disabled":false}]}],"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"278/278","active":true,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"312/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":false,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":1}
+<< >battle-randomdoublesbattle-5
+|player|p2|qawserdftyghujk|170
+|gametype|doubles
+|gen|6
+|tier|Random Doubles Battle
+|rule|HP Percentage Mod: HP is shown in percentages
+|
+|start
+|switch|p1a: Xerneas|Xerneas, L70|278/278
+|switch|p1b: Giratina|Giratina, L70|312/312
+|switch|p2a: Charizard|Charizard, L70, F|100/100
+|switch|p2b: Trevenant|Trevenant, L82, M|100/100
+
+|-ability|p1a: Xerneas|Fairy Aura
+|-ability|p1b: Giratina|Pressure
+|turn|1
+
+## first doubles turn
+client.js:898 >> battle-randomdoublesbattle-5|/choose move 4 2,move 4|1
+client.js:834 << >battle-randomdoublesbattle-5
+|request|{"active":[{"moves":[{"move":"Dazzling Gleam","id":"dazzlinggleam","pp":16,"maxpp":16,"target":"allAdjacentFoes","disabled":false},{"move":"Thunder","id":"thunder","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Focus Blast","id":"focusblast","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Close Combat","id":"closecombat","pp":7,"maxpp":8,"target":"normal","disabled":false}]},{"moves":[{"move":"Dragon Tail","id":"dragontail","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Icy Wind","id":"icywind","pp":24,"maxpp":24,"target":"allAdjacentFoes","disabled":false},{"move":"Will-O-Wisp","id":"willowisp","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Tailwind","id":"tailwind","pp":23,"maxpp":24,"target":"allySide","disabled":false}]}],"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"181/278","active":true,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"217/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":false,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":2}
+
+client.js:834 << >battle-randomdoublesbattle-5
+|move|p2a: Charizard|Heat Wave|p1b: Giratina
+|-damage|p1a: Xerneas|190/278
+|-resisted|p1b: Giratina
+|-damage|p1b: Giratina|279/312
+|move|p1a: Xerneas|Close Combat|p2b: Trevenant
+|-immune|p2b: Trevenant|[msg]
+|move|p1b: Giratina|Tailwind|p1b: Giratina
+|-sidestart|p1: awsedrfgtyhjnmk|move: Tailwind
+|move|p2b: Trevenant|Earthquake|p1b: Giratina
+|-immune|p2a: Charizard|[msg]
+|-damage|p1a: Xerneas|112/278
+|-damage|p1b: Giratina|217/312
+|-enditem|p1a: Xerneas|Sitrus Berry|[eat]
+|-heal|p1a: Xerneas|181/278|[from] item: Sitrus Berry
+|turn|2
+
+## makin' more moves
+>> battle-randomdoublesbattle-5|/choose move 4 2,move 1 2|2
+
+## new request
+<< >battle-randomdoublesbattle-5
+|request|{"active":[{"moves":[{"move":"Dazzling Gleam","id":"dazzlinggleam","pp":16,"maxpp":16,"target":"allAdjacentFoes","disabled":false},{"move":"Thunder","id":"thunder","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Focus Blast","id":"focusblast","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Close Combat","id":"closecombat","pp":6,"maxpp":8,"target":"normal","disabled":false}]},{"moves":[{"move":"Dragon Tail","id":"dragontail","pp":15,"maxpp":16,"target":"normal","disabled":false},{"move":"Icy Wind","id":"icywind","pp":24,"maxpp":24,"target":"allAdjacentFoes","disabled":false},{"move":"Will-O-Wisp","id":"willowisp","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Tailwind","id":"tailwind","pp":23,"maxpp":24,"target":"allySide","disabled":false}]}],"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"51/278","active":true,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"217/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":false,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":3}
+<< >battle-randomdoublesbattle-5
+## here's a switch! hope you remembered Giratina was here.
+|switch|p2b: Sigilyph|Sigilyph, L80, M|100/100
+|move|p1a: Xerneas|Close Combat|p2b: Sigilyph
+|-resisted|p2b: Sigilyph
+|-damage|p2b: Sigilyph|91/100
+
+|-unboost|p1a: Xerneas|def|1
+|-unboost|p1a: Xerneas|spd|1
+|move|p2a: Charizard|Air Slash|p1a: Xerneas
+|-damage|p1a: Xerneas|51/278
+
+|move|p1b: Giratina|Dragon Tail|p2b: Sigilyph
+|-damage|p2b: Sigilyph|69/100
+
+## check out this drag! forcable switch...
+|drag|p2b: Amoonguss|Amoonguss, L83, M|100/100
+
+|
+|turn|3
+client.js:898 >> battle-randomdoublesbattle-5|/choose move 4 2,move 2|3
+
+## here's a forceSwitch for doubles. only one dude needs to switch
+client.js:834 << >battle-randomdoublesbattle-5
+|request|{"forceSwitch":[true,false],"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"0 fnt","active":true,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"217/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":false,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":4,"noCancel":true}
+client.js:834 << >battle-randomdoublesbattle-5
+
+|
+|move|p2b: Amoonguss|Protect|p2b: Amoonguss
+|-singleturn|p2b: Amoonguss|Protect
+|move|p1a: Xerneas|Close Combat|p2b: Amoonguss
+|-activate|p2b: Amoonguss|Protect
+|move|p1b: Giratina|Icy Wind|p2b: Amoonguss
+|-crit|p2a: Charizard
+|-damage|p2a: Charizard|78/100
+
+|-unboost|p2a: Charizard|spe|1
+|-activate|p2b: Amoonguss|Protect
+|move|p2a: Charizard|Air Slash|p1a: Xerneas
+|-damage|p1a: Xerneas|0 fnt
+
+|faint|p1a: Xerneas
+|
+client.js:898 >> battle-randomdoublesbattle-5|/choose switch 3,pass|4
+client.js:834 << >battle-randomdoublesbattle-5
+|request|{"active":[{"moves":[{"move":"Discharge","id":"discharge","pp":24,"maxpp":24,"target":"allAdjacent","disabled":false},{"move":"Stealth Rock","id":"stealthrock","pp":32,"maxpp":32,"target":"foeSide","disabled":false},{"move":"Scald","id":"scald","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Earth Power","id":"earthpower","pp":16,"maxpp":16,"target":"normal","disabled":false}]},{"moves":[{"move":"Dragon Tail","id":"dragontail","pp":15,"maxpp":16,"target":"normal","disabled":false},{"move":"Icy Wind","id":"icywind","pp":23,"maxpp":24,"target":"allAdjacentFoes","disabled":false},{"move":"Will-O-Wisp","id":"willowisp","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Tailwind","id":"tailwind","pp":23,"maxpp":24,"target":"allySide","disabled":false}]}],"side":{"name":"awsedrfgtyhjnmk","id":"p1","pokemon":[{"ident":"p1: Stunfisk","details":"Stunfisk, L82, M","condition":"347/347","active":true,"stats":{"atk":138,"def":168,"spa":214,"spd":193,"spe":82},"moves":["discharge","stealthrock","scald","earthpower"],"baseAbility":"static","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Giratina","details":"Giratina, L70","condition":"217/312","active":true,"stats":{"atk":166,"def":194,"spa":210,"spd":194,"spe":196},"moves":["dragontail","icywind","willowisp","tailwind"],"baseAbility":"pressure","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Xerneas","details":"Xerneas, L70","condition":"0 fnt","active":false,"stats":{"atk":210,"def":159,"spa":254,"spd":163,"spe":209},"moves":["dazzlinggleam","thunder","focusblast","closecombat"],"baseAbility":"fairyaura","item":"","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Miltank","details":"Miltank, L80, F","condition":"267/267","active":false,"stats":{"atk":208,"def":197,"spa":93,"spd":141,"spe":240},"moves":["thunderwave","helpinghand","earthquake","bodyslam"],"baseAbility":"thickfat","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Masquerain","details":"Masquerain, L87, M","condition":"300/300","active":false,"stats":{"atk":136,"def":139,"spa":225,"spd":175,"spe":136},"moves":["protect","substitute","bugbuzz","tailwind"],"baseAbility":"intimidate","item":"chartiberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Alakazam","details":"Alakazam, L70, M","condition":"179/179","active":false,"stats":{"atk":96,"def":89,"spa":259,"spd":159,"spe":238},"moves":["psychic","protect","substitute","shadowball"],"baseAbility":"magicguard","item":"alakazite","pokeball":"pokeball","canMegaEvo":true}]},"rqid":5}
+client.js:834 << >battle-randomdoublesbattle-5
+
+|
+|switch|p1a: Stunfisk|Stunfisk, L82, M|347/347
+
+|turn|4

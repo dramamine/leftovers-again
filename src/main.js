@@ -10,6 +10,9 @@ if (argv.bot) {
   config.botPath = argv.bot;
 }
 
+connection.connect();
+
+
 // import WebSocket from 'ws';
 // import querystring from 'querystring';
 // import http from 'http';
