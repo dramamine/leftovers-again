@@ -32,7 +32,7 @@ class Stabby extends AI {
           }
           return prev;
         }, []);
-      const myMon = this.pickOne(possibleMons); // pokemons are 1-indexed
+      const myMon = this.pickOne(possibleMons);
       return new SWITCH(myMon);
     }
 

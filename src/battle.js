@@ -54,7 +54,7 @@ class Battle {
     // data = {};
     this.handlers = {
       '-damage': this.handleDamage,
-      player: this.handlePlayer,
+      // player: this.handlePlayer,
       teampreview: this.handleTeamPreview,
       poke: this.handlePoke,
       switch: this.handleSwitch,
@@ -119,12 +119,13 @@ class Battle {
     }
   }
 
-  handlePlayer(ordinal, nick, id) { // eslint-disable-line
-    this.store.setPlayerId(ordinal);
-    this.store.setPlayerNick(nick);
+  // handlePlayer(ordinal, nick, id) { // eslint-disable-line
+  //   console.log(ordinal, nick, id);
+  //   this.store.setPlayerId(ordinal);
+  //   this.store.setPlayerNick(nick);
 
-    this.ord = ordinal;
-  }
+  //   this.ord = ordinal;
+  // }
 
   handlePoke(ordinal, mon) {
     // if (this.ord = ordinal) return;
@@ -177,19 +178,19 @@ class Battle {
 
   handleRequest(json) {
     const data = JSON.parse(json);
-    this.store.interpretRequest(data);
+
     // this.state = data;
 
 
     // console.log(data);
 
-    if (data.active) {
-      data.active.forEach( (moveObj) => {
-        moveObj.moves.forEach( (move) => {
-          Object.assign(move, util.researchMoveById(move.id));
-        });
-      });
-    }
+    // if (data.active) {
+    //   data.active.forEach( (moveObj) => {
+    //     moveObj.moves.forEach( (move) => {
+    //       Object.assign(move, util.researchMoveById(move.id));
+    //     });
+    //   });
+    // }
 
     // console.dir(data);
 
@@ -204,17 +205,23 @@ class Battle {
       return false;
     }
 
-    // some cleaner methods
-    data.side.pokemon.map( (mon) => {
-      this.processMon( mon );
-    });
+    this.store.interpretRequest(data);
 
-    // save my current data
-    this.state = data;
-
-    if (this.hasStarted) {
+    if (data.forceSwitch || data.teamPreview) {
       this.decide();
     }
+
+    // some cleaner methods
+    // data.side.pokemon.map( (mon) => {
+    //   this.processMon( mon );
+    // });
+
+    // save my current data
+    // this.state = data;
+
+    // if (this.hasStarted) {
+    //   this.decide();
+    // }
   }
 
   handleStart() {
@@ -222,8 +229,11 @@ class Battle {
   }
 
   handleTurn(x) {
-    console.log('handling my turn message', x);
-    if (x === '1') this.decide();
+    // console.log('handling my turn message', x);
+    // moving this to turn handler instead of 'request'. not sure if this is
+    // a good idea, since now we have to look at request.data to figure out if
+    // we should ask the player for a decision, or wait for the turn message.
+    this.decide();
   }
 
   handleWin(x) {
@@ -232,18 +242,20 @@ class Battle {
 
   decide() {
     // merge all non-request state
-    Object.assign(this.state, this.nonRequestState);
-    console.log('BY STATE:', this.state);
+    // Object.assign(this.state, this.nonRequestState);
+    // console.log('BY STATE:', this.state);
 
+    const currentState = this.store.getState();
     // const move = this.myBot().onRequest(this.state);
-    const choice = this.myBot().onRequest(this.store.getState());
+    const choice = this.myBot().onRequest(currentState);
 
-    const res = this._formatMessage(this.bid, choice, this.state);
-
-    const msg = `${this.bid}|${choice}|${this.state.rqid}`;
-    if (res !== msg) {
-      log.error('battle: new formatMessage fn and old one dont match', res, msg);
-    }
+    const res = this._formatMessage(this.bid, choice, currentState);
+    console.log(res);
+    // const msg = `${this.bid}|${choice}|${currentState.rqid}`;
+    // if (res !== msg) {
+    //   log.error('battle: new formatMessage fn and old one dont match', res, msg);
+    //   console.log(res, msg);
+    // }
     connection.send( res );
   }
 

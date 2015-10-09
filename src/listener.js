@@ -6,6 +6,7 @@ class Listener {
   }
 
   relay(type, params) {
+    // console.log(type, params);
     if (!listeners[type]) return;
     listeners[type].map( (callback) => {
       callback.call(null, params);
