@@ -1,6 +1,6 @@
 // load all the modules we need
-import chat from './chat';
-import listener from './listener';
+require('./chat');
+require('./listener');
 import connection from './connection';
 import config from './config';
 

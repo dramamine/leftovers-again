@@ -24,27 +24,27 @@ class Randumb extends AI {
       // console.log('reserve:', state.self.reserve);
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.reduce(
-        (prev, current, idx) => {
-          if (current.condition !== '0 fnt') {
-            prev.push(idx);
-          }
-          return prev;
-        }, []);
+      const possibleMons = state.self.reserve.filter( (mon) => {
+        if (mon.condition === '0 fnt') return false;
+        if (mon.active) return false;
+        return true;
+      });
       const myMon = this.pickOne(possibleMons);
       // console.log('picking', myMon);
       return new SWITCH(myMon);
     }
     // pick a random move
-    const possibleMoves = state.self.active.moves.reduce(
-      (prev, current, idx) => {
-        if (current.pp > 0 && !current.disabled) {
-          prev.push(idx);
-        }
-        return prev;
-      }, []);
-    const myMove = this.pickOne(possibleMoves);
-    return new MOVE(myMove);
+    try {
+      const possibleMoves = state.self.active.moves.filter( (move) => {
+        return !(move.pp === 0 || move.disabled);
+      })
+      const myMove = this.pickOne(possibleMoves);
+      return new MOVE(myMove);
+    } catch(e) {
+      console.log(e);
+      console.dir(state);
+      return null;
+    }
   }
 
   pickOne(arr) {

@@ -1,4 +1,5 @@
 import Pokemon from './pokemon';
+import util from '../util';
 // import log from '../log';
 
 
@@ -66,13 +67,22 @@ export default class BattleStore {
     // this.state.opponent.active = [];
 
     if (data.side && data.side.pokemon) {
-      data.side.pokemon.map( (mon) => {
+      for (let i = 0; i < data.side.pokemon.length; i++) {
+        const mon = data.side.pokemon[i];
         // if(mon.dead) {
         //   return handleDeath(mon.ident);
         // }
         const ref = this._recordIdent(mon.ident);
+        // force this to update, since it's always true or unset.
+        ref.active = mon.active || false;
         ref.assimilate(mon);
-      });
+
+        // keep our own in the right order
+        if (ref.owner === this.myid) {
+          ref.order = i;
+          console.log('setting order', ref.order, ref.species);
+        }
+      }
     }
 
     if (data.forceSwitch) {
@@ -104,6 +114,8 @@ export default class BattleStore {
     const youareowner = (mon) => { return mon.owner !== this.myid; };
     const isactive = (mon) => { return !!mon.position || mon.active; };
     const byPosition = (a, b) => b.position - a.position;
+    const byOrder = (a, b) => a.order - b.order;
+
 
     // use getState so we can filter out any crap.
     output.self.active = this.allmon
@@ -118,21 +130,51 @@ export default class BattleStore {
       .sort(byPosition);
     output.self.reserve = this.allmon
       .filter(iamowner)
+      .sort(byOrder)
       .map(dataGetter);
     output.opponent.reserve = this.allmon
       .filter(youareowner)
+      .sort(byOrder)
       .map(dataGetter);
+
+    console.log('are these sorted by order?');
+    output.self.reserve.forEach( (mon) => {
+      console.log(mon.id, mon.species, mon.order);
+    });
+
+    if (output.self.active.length > 1) {
+      console.log('stop the presses! too many active pokemon');
+      console.dir(this.allmon
+        .filter(iamowner)
+        .filter(isactive));
+    }
 
     if (this.activeData) {
       for (let i = 0; i < this.activeData.length; i++) {
         const movesArr = this.activeData[i].moves;
-        for (let j = 0; j < movesArr.length; j++) {
-          console.assert(output.self.active[i].moves[j].id === movesArr[j].id);
-          //   console.error('WARNING: move arrays didnt match up!');
-          //   continue;
-          // }
-          Object.assign(output.self.active[i].moves[j], movesArr[j]);
+        const updated = movesArr.map( (move) => { // eslint-disable-line
+          return Object.assign(move, util.researchMoveById(move.id));
+        });
+        try {
+          output.self.active[i].moves = updated;
+        } catch (e) {
+          console.log(e);
+          console.log(output.self.active);
+          console.log(this.activeData);
         }
+
+        // for (let j = 0; j < movesArr.length; j++) {
+        //   if (output.self.active[i].moves[j].id !== movesArr[j].id) {
+        //     console.warn('WARNING: move arrays didnt match up!',
+        //       output.self.active[i].moves[j].id, movesArr[j].id);
+        //     console.warn('rq moves:', output.self.active[i].moves);
+        //     console.warn('active moves:', movesArr);
+        //     // bail and use active moves only;
+        //     output.self.active[i].moves = movesArr;
+        //     break;
+        //   }
+        //   Object.assign(output.self.active[i].moves[j], movesArr[j]);
+        // }
       }
     }
 

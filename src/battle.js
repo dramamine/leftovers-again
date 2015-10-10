@@ -84,6 +84,8 @@ class Battle {
   handleRequest(json) {
     const data = JSON.parse(json);
 
+
+
     // this is not a request, just data.
     if (!data.rqid) {
       return false;
@@ -94,6 +96,9 @@ class Battle {
       return false;
     }
 
+    console.log('REQUEST:');
+    console.log(JSON.stringify(data));
+
     this.store.interpretRequest(data);
 
     if (data.forceSwitch || data.teamPreview) {
@@ -102,11 +107,7 @@ class Battle {
   }
 
   handleTurn(x) {
-    if (x !== this.turn + 1) {
-      log.error('weird turn number ' + x + ' (I thought it would be ' + this.turn + 1);
-    }
     this.turn = x;
-
     this.decide();
   }
 
@@ -116,10 +117,16 @@ class Battle {
 
   decide() {
     const currentState = this.store.data();
+
+    console.log('STATE:');
+    console.log(JSON.stringify(currentState));
+
+    log.save(JSON.stringify(currentState));
     const choice = this.myBot().onRequest(currentState);
 
     const res = Battle._formatMessage(this.bid, choice, currentState);
     console.log(res);
+    log.save(res);
     connection.send( res );
   }
 
@@ -131,12 +138,18 @@ class Battle {
     // }
     if (choice instanceof MOVE) {
       const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
+
+      if (typeof moveIdx !== 'number') {
+        console.warn('[invalid move!!', choice, state, 'invalid move yo]');
+        exit;
+      }
       verb = '/move ' + (moveIdx + 1);
     } else if (choice instanceof SWITCH) {
       verb = (state.teamPreview)
         ? '/team '
         : '/switch ';
       const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
+      console.log('validating choice:', choice, monIdx, state.self.reserve);
       verb = verb + (monIdx + 1);
     }
     return `${bid}|${verb}|${state.rqid}`;
@@ -165,7 +178,7 @@ class Battle {
         return mon.species === idx;
       });
     default:
-      throw new Exception('not a valid choice!', idx);
+      console.log('not a valid choice!', idx, mons);
     }
   }
 

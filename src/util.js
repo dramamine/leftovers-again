@@ -12,17 +12,18 @@ class Util {
   }
 
   researchMoveById(id) {
+    id = id.replace('60', ''); // eslint-disable-line
     if (BattleMovedex[id]) return BattleMovedex[id];
 
     console.warn('couldnt find my move ', id );
-    return {};
+    return {name: id, id: this.toId(id)};
   }
 
   researchPokemonById(id) {
     if (BattlePokedex[id]) return BattlePokedex[id];
 
     console.warn('couldnt find my pokemon ', id );
-    return {};
+    return {name: id, id: this.toId(id)};
   }
 }
 

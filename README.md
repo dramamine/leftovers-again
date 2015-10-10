@@ -5,6 +5,13 @@ Come back in a few months.
 
 
 ## NOTES
+10/9/2015
+Special states:
+- noCancel: this seems ok, you can't cancel yr moves.
+- trapped: I think this means you can't switch out
+
+
+
 10/4/2015
 Really pulling off some shenanigans here. Currently only tested with 'randumb'. Tasks for next week:
 - remove all 'state'ness from the battle class
