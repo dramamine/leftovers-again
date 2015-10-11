@@ -15,8 +15,10 @@ class Report {
     const selfDeadMons = state.self.reserve.filter(deadFilter);
     const opponentDeadMons = state.opponent.reserve.filter(deadFilter);
 
-    const damageDone = 600 - state.opponent.reserve.reduce( (prev, curr) => {
-      return prev + (curr.hppct || 0);
+    // iterating over pokemon we've seen and damaged only. unseen pokemon
+    // are undamaged.
+    const damageDone = state.opponent.reserve.reduce( (prev, curr) => {
+      return prev + 100 - (curr.hppct || 0);
     }, 0);
     const damageTaken = 600 - state.self.reserve.reduce( (prev, curr) => {
       return prev + (curr.hppct || 0);

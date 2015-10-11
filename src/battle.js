@@ -22,6 +22,7 @@ class Battle {
       teampreview: this.handleTeamPreview,
       poke: this.handlePoke,
       switch: this.handleSwitch,
+      drag: this.handleSwitch,
       request: this.handleRequest,
       turn: this.handleTurn,
       // start: this.handleStart,
