@@ -123,12 +123,8 @@ export default class BattleStore {
       }
     }
 
-    if (data.forceSwitch) {
-      this.forceSwitch = true;
-    }
-    if (data.teamPreview) {
-      this.teamPreview = true;
-    }
+    this.forceSwitch = data.forceSwitch || false;
+    this.teamPreview = data.teamPreview || false;
 
     if (data.rqid) {
       this.rqid = data.rqid;
@@ -218,17 +214,9 @@ export default class BattleStore {
       output.opponent.active = output.opponent.active[0];
     }
 
-    // @TODO ew, I don't like this because it's destructive inside a get fn
-    if (this.forceSwitch) {
-      // console.log('including forceSwitch...');
-      output.forceSwitch = true;
-      this.forceSwitch = false;
-    }
+    if (this.forceSwitch) output.forceSwitch = true;
+    if (this.teamPreview) output.teamPreview = true;
 
-    if (this.teamPreview) {
-      output.teamPreview = true;
-      this.teamPreview = false;
-    }
 
     output.rqid = this.rqid;
 
