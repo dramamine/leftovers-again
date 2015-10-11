@@ -89,14 +89,13 @@ export default class EliteFour extends AI {
     state.self.active.moves.forEach( (move) => {
       fitness[move.id] = {};
 
-      console.log(state.opponent.active);
       // favor super-effective moves, disfavor ineffective / weak moves
       fitness[move.id].effectiveness =
         state.opponent.active.types.map( (opponentType) => {
           return typechart[move.type][opponentType];
         }).reduce( (prev, curr) => {
           return Math.max(prev, curr);
-        });
+        }, 0);
 
       fitness[move.id].stabby = !!state.self.active.types.indexOf(move.type);
 
@@ -120,7 +119,7 @@ export default class EliteFour extends AI {
       if (move.secondary && move.id !== this.lastMove) {
         if (!state.opponent.active.conditions ||
           !state.opponent.active.conditions.indexOf(move.secondary.status) >= 0) {
-          fitness[move.id].status = move.secondary.status.chance;
+          fitness[move.id].status = move.secondary.chance;
         }
       }
       // @TODO check volatileStatus for moves like Confuse Ray
@@ -180,12 +179,16 @@ export default class EliteFour extends AI {
     for (const move in weighted) {
       if ({}.hasOwnProperty.call(weighted, move)) {
         accum = accum + weighted[move];
-        console.log(accum, myVal);
         if (accum > myVal) return move;
       }
     }
     // something went wrong
     return false;
+  }
+
+  // random
+  pickOne(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
   }
 
 

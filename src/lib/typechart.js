@@ -17,7 +17,8 @@ export default {
     Ghost: 0,
     Dragon: 1,
     Dark: 1,
-    Steel: 0.5
+    Steel: 0.5,
+    Fairy: 1
   },
   Grass: {
     category: 'Special',
@@ -37,7 +38,8 @@ export default {
     Ghost: 1,
     Dragon: 0.5,
     Dark: 1,
-    Steel: 0.5
+    Steel: 0.5,
+    Fairy: 1
   },
   Fire: {
     category: 'Special',
@@ -57,7 +59,8 @@ export default {
     Ghost: 1,
     Dragon: 0.5,
     Dark: 1,
-    Steel: 2
+    Steel: 2,
+    Fairy: 1
   },
   Water: {
     category: 'Special',
@@ -77,7 +80,8 @@ export default {
     Ghost: 1,
     Dragon: 0.5,
     Dark: 1,
-    Steel: 1
+    Steel: 1,
+    Fairy: 1
   },
   Electric: {
     category: 'Special',
@@ -97,7 +101,8 @@ export default {
     Ghost: 1,
     Dragon: 0.5,
     Dark: 1,
-    Steel: 1
+    Steel: 1,
+    Fairy: 1,
   },
   Ice: {
     category: 'Special',

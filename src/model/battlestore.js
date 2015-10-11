@@ -145,7 +145,7 @@ export default class BattleStore {
     const dataGetter = (mon) => { return mon.data(); };
     const iamowner = (mon) => { return mon.owner === this.myId; };
     const youareowner = (mon) => { return mon.owner !== this.myId; };
-    const isactive = (mon) => { return !!mon.position || mon.active; };
+    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
     const byPosition = (a, b) => b.position - a.position;
     const byOrder = (a, b) => a.order - b.order;
 

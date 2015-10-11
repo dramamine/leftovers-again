@@ -44,7 +44,7 @@ class Challenger {
     const AI = new Bot();
     console.log('checking meta...');
     if (AI.meta.battletype === 'anythinggoes') {
-      const utmString = new Team( AI.getTeam(user) ).asUtm();
+      const utmString = new Team( AI.getTeam(nick) ).asUtm();
       console.log('sending utm...', utmString);
       connection.send('|/utm ' + utmString);
     }

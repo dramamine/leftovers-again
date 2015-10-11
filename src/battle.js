@@ -173,7 +173,7 @@ class Battle {
       return moves.indexOf(idx);
     } else if (typeof(idx) === 'string') {
       return moves.findIndex( (move) => {
-        return move.name === idx;
+        return move.id === idx;
       });
     }
   }
