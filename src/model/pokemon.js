@@ -13,7 +13,9 @@ export default class Pokemon {
     const out = {};
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
-    'ability', 'abilities', 'weightkg', 'nature']
+    'ability', 'abilities', 'weightkg', 'nature',
+    'position', 'owner' // for debugging
+    ]
     .forEach( (field) => {
       if (this[field]) out[field] = this[field];
     });

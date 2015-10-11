@@ -123,6 +123,8 @@ class Battle {
 
     if (results[this.store.opponentNick].length < config.matches) {
       challenger.challenge(this.store.opponentNick);
+    } else {
+      console.log(JSON.stringify(report.data()));
     }
   }
 

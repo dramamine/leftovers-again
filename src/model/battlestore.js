@@ -170,6 +170,12 @@ export default class BattleStore {
       .sort(byOrder)
       .map(dataGetter);
 
+    if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
+      console.log('stop the presses! pokemon with no owner.');
+      console.log(output.opponent.active[0]);
+      exit();
+    }
+
     if (output.self.active.length > 1) {
       console.log('stop the presses! too many active pokemon');
       console.dir(this.allmon
@@ -190,19 +196,6 @@ export default class BattleStore {
           console.log(output.self.active);
           console.log(this.activeData);
         }
-
-        // for (let j = 0; j < movesArr.length; j++) {
-        //   if (output.self.active[i].moves[j].id !== movesArr[j].id) {
-        //     console.warn('WARNING: move arrays didnt match up!',
-        //       output.self.active[i].moves[j].id, movesArr[j].id);
-        //     console.warn('rq moves:', output.self.active[i].moves);
-        //     console.warn('active moves:', movesArr);
-        //     // bail and use active moves only;
-        //     output.self.active[i].moves = movesArr;
-        //     break;
-        //   }
-        //   Object.assign(output.self.active[i].moves[j], movesArr[j]);
-        // }
       }
     }
 
@@ -231,41 +224,30 @@ export default class BattleStore {
     const species = ident.substr(ident.indexOf(' ') + 1);
     // console.log(ident, owner, position, species);
 
-    const hello = this.allmon.find( (mon) => {
+    let hello = this.allmon.find( (mon) => {
       return owner === mon.owner && species === mon.species;
     });
 
-    if (hello) {
-      if (position) {
-        // update the guy who got replaced
-        const goodbye = this.allmon.find( (mon) => {
-          return position === mon.position;
-        });
-        if (goodbye) {
-          goodbye.position = null;
-        }
-        // update our new guy
-        hello.position = position;
-      }
-      // this shouldn't happen because this would mean we forgot to deactivate
-      // a pokemon
-      // if (hello.position !== position) {
-      //   console.error('check out this weird shit. ', hello.position, position);
-      // }
-
-      return hello;
+    if (!hello) {
+      hello = new Pokemon(species);
+      this.allmon.push(hello);
     }
 
-    const dude = new Pokemon(species);
-    dude.owner = owner;
-    // for active pokemon only.
-    // this only happens for opponent's pokemon, since our own pokemon are
-    // always created on the first request, before any of them are active.
-    if (position) dude.position = position;
+    if (position) {
+      // update the guy who got replaced
+      const goodbye = this.allmon.find( (mon) => {
+        return position === mon.position;
+      });
+      if (goodbye) {
+        goodbye.position = null;
+        goodbye.active = false;
+      }
+    }
 
-    this.allmon.push(dude);
-
-    return dude;
+    // update our new guy
+    hello.position = position;
+    hello.owner = owner;
+    return hello;
   }
 
   _findById(id) {

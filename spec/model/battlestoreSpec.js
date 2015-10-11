@@ -33,6 +33,17 @@ fdescribe('BattleStore', () => {
       expect(replacement.position).toBe('p1a');
     });
   });
+
+  describe('_handleSwitch', () => {
+    it('should switch into a pokemon we havent seen', () => {
+      store.myId = 'p2';
+      store._recordIdent('p1a: Fakechu');
+      store.handleSwitch('p1a: Guardechu');
+      const result = store.data();
+      console.log(result.opponent.active);
+      expect(result.opponent.active.species).toEqual('guardechu');
+    });
+  });
 });
 
 xdescribe('BattleStore', () => {

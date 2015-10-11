@@ -47,7 +47,7 @@ class Report {
   }
 
   data() {
-    return opponents;
+    return this.opponents;
   }
 }
 

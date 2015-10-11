@@ -87,6 +87,7 @@ export default class EliteFour extends AI {
     const fitness = {};
     const totalFitness = {};
     state.self.active.moves.forEach( (move) => {
+      if (move.disabled) return;
       fitness[move.id] = {};
 
       // favor super-effective moves, disfavor ineffective / weak moves
