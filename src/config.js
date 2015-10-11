@@ -14,7 +14,9 @@ const cfg = {
 
   actionurl: 'https://play.pokemonshowdown.com/~~localhost:8000/action.php',
 
-  botPath: 'randombattle/randumb'
+  botPath: 'randombattle/randumb',
+
+  matches: 3
 };
 
 class Config {
@@ -61,6 +63,10 @@ class Config {
 
   set botPath(path) {
     cfg.botPath = path;
+  }
+
+  get matches() {
+    return cfg.matches;
   }
 }
 

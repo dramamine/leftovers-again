@@ -1,0 +1,53 @@
+
+
+class Report {
+  constructor() {
+    this.opponents = {};
+  }
+  win(victor, store) {
+    const iwon = (victor === store.myNick);
+    const state = store.data();
+    // console.log(state);
+    const aliveFilter = mon => !mon.dead;
+    const deadFilter = mon => mon.dead;
+    const selfAliveMons = state.self.reserve.filter(aliveFilter);
+    const opponentAliveMons = state.opponent.reserve.filter(aliveFilter);
+    const selfDeadMons = state.self.reserve.filter(deadFilter);
+    const opponentDeadMons = state.opponent.reserve.filter(deadFilter);
+
+    const damageDone = 600 - state.opponent.reserve.reduce( (prev, curr) => {
+      return prev + (curr.hppct || 0);
+    }, 0);
+    const damageTaken = 600 - state.self.reserve.reduce( (prev, curr) => {
+      return prev + (curr.hppct || 0);
+    }, 0);
+
+
+    const result = {
+      won: iwon,
+      damageDone,
+      damageTaken,
+      selfAliveMons,
+      opponentAliveMons,
+      selfDeadMons,
+      opponentDeadMons
+    };
+
+    const opponent = store.opponentNick;
+    if (!this.opponents[opponent]) {
+      this.opponents[opponent] = [];
+    }
+
+    this.opponents[opponent].push(result);
+    console.log(result);
+
+    return this.opponents;
+  }
+
+  data() {
+    return opponents;
+  }
+}
+
+const report = new Report();
+export default report;

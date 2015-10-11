@@ -8,10 +8,46 @@ export default class BattleStore {
     this.allmon = [];
     this.forceSwitch = false;
     this.teamPreview = false;
+
+    this.myId = null;
+    this.myNick = null;
+    this.opponentId = null;
+    this.opponentNick = null;
+
+    // NOT sent to user. temporary storage.
+    this.names = [];
   }
 
   handleSwitch(ident) {
     this._recordIdent(ident);
+  }
+
+  handleDamage(victim, condition, explanation) {
+    const mon = this._recordIdent(victim);
+    // only record this for opponent's pokemon for now
+    if (mon.owner !== this.myId) {
+      mon.useCondition(condition);
+      console.log(mon.data());
+    }
+  }
+
+  handleFaint(ident) {
+    const mon = this._recordIdent(ident);
+    mon.useCondition('0 fnt');
+  }
+
+  recordName(name) {
+    console.log('recordName:', name, this.myNick, this.opponentNick);
+    if (this.opponentNick) return;
+    if (this.myNick && this.myNick !== name) {
+      this.opponentNick = name;
+      console.log('recorded opponent name as ', name);
+    }
+    this.names.push(name);
+  }
+
+  checkNames() {
+    this.names.forEach( name => this.recordName(name) );
   }
 
 
@@ -56,11 +92,14 @@ export default class BattleStore {
   //
   // data = {};
   interpretRequest(data) {
-    console.log('request:', data);
-    if (!this.myid) {
-      this.myid = data.side.id;
-      this.mynick = data.side.nick;
+    // console.log('request:', data);
+    if (!this.myId) {
+      this.myId = data.side.id;
+      this.myNick = data.side.name;
+      // console.log('my nick is ' + this.myNick + '. checking names...', this.names);
+      this.checkNames();
     }
+
     if (data.wait) return;
 
     // this.state.self.active = [];
@@ -78,15 +117,13 @@ export default class BattleStore {
         ref.assimilate(mon);
 
         // keep our own in the right order
-        if (ref.owner === this.myid) {
+        if (ref.owner === this.myId) {
           ref.order = i;
-          console.log('setting order', ref.order, ref.species);
         }
       }
     }
 
     if (data.forceSwitch) {
-      console.log('ok, request had a force switch in there.');
       this.forceSwitch = true;
     }
     if (data.teamPreview) {
@@ -110,8 +147,8 @@ export default class BattleStore {
     };
     // const output = _.clone(this.state, true);
     const dataGetter = (mon) => { return mon.data(); };
-    const iamowner = (mon) => { return mon.owner === this.myid; };
-    const youareowner = (mon) => { return mon.owner !== this.myid; };
+    const iamowner = (mon) => { return mon.owner === this.myId; };
+    const youareowner = (mon) => { return mon.owner !== this.myId; };
     const isactive = (mon) => { return !!mon.position || mon.active; };
     const byPosition = (a, b) => b.position - a.position;
     const byOrder = (a, b) => a.order - b.order;
@@ -136,11 +173,6 @@ export default class BattleStore {
       .filter(youareowner)
       .sort(byOrder)
       .map(dataGetter);
-
-    console.log('are these sorted by order?');
-    output.self.reserve.forEach( (mon) => {
-      console.log(mon.id, mon.species, mon.order);
-    });
 
     if (output.self.active.length > 1) {
       console.log('stop the presses! too many active pokemon');

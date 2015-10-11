@@ -4,6 +4,8 @@ import BattleStore from './model/battlestore';
 
 import log from './log';
 import {MOVE, SWITCH} from './decisions';
+import report from './report';
+import challenger from './challenger';
 
 
 class Battle {
@@ -15,7 +17,7 @@ class Battle {
     this.turn = 0;
 
     this.handlers = {
-      // '-damage': this.handleDamage,
+      '-damage': this.handleDamage,
       // player: this.handlePlayer,
       teampreview: this.handleTeamPreview,
       poke: this.handlePoke,
@@ -24,7 +26,8 @@ class Battle {
       turn: this.handleTurn,
       // start: this.handleStart,
       win: this.handleWin,
-      // faint: this.handleFaint,
+      faint: this.handleFaint,
+      player: this.handlePlayer
     };
 
     const AI = require(config.botPath);
@@ -44,15 +47,19 @@ class Battle {
     }
   }
 
-  // handleFaint(ident) {
-  //   // this.store.handleDeath(ident);
-  // }
+  handleFaint(ident) {
+    this.store.handleFaint(ident);
+  }
 
-  // // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
-  // handleDamage(victim, condition, explanation) {
+  // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
+  handleDamage(victim, condition, explanation) {
+    this.store.handleDamage(victim, condition, explanation);
+  }
 
-  // }
-
+  handlePlayer(id, nick, something) {
+    console.log('handling player msg: ', nick);
+    this.store.recordName(nick);
+  }
 
   handlePoke(ordinal, mon) {
     // if (this.ord = ordinal) return;
@@ -84,8 +91,6 @@ class Battle {
   handleRequest(json) {
     const data = JSON.parse(json);
 
-
-
     // this is not a request, just data.
     if (!data.rqid) {
       return false;
@@ -113,6 +118,11 @@ class Battle {
 
   handleWin(x) {
     console.log('WON: ', x);
+    const results = report.win(x, this.store);
+
+    if (results[this.store.opponentNick].length < config.matches) {
+      challenger.challenge(this.store.opponentNick);
+    }
   }
 
   decide() {
@@ -149,7 +159,7 @@ class Battle {
         ? '/team '
         : '/switch ';
       const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
-      console.log('validating choice:', choice, monIdx, state.self.reserve);
+      // console.log('validating choice:', choice, monIdx, state.self.reserve);
       verb = verb + (monIdx + 1);
     }
     return `${bid}|${verb}|${state.rqid}`;

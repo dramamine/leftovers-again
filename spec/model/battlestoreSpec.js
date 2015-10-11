@@ -105,14 +105,14 @@ xdescribe('BattleStore', () => {
     });
   });
 
-  it('should set a player ID', () => {
-    const name = 'p1';
-    store.setPlayerId(name);
-    expect(store.myid).toEqual(name);
-  });
-  it('should set a player nickname', () => {
-    const name = 'someone';
-    store.setPlayerNick(name);
-    expect(store.mynick).toEqual(name);
-  });
+  // it('should set a player ID', () => {
+  //   const name = 'p1';
+  //   store.setPlayerId(name);
+  //   expect(store.myId).toEqual(name);
+  // });
+  // it('should set a player nickname', () => {
+  //   const name = 'someone';
+  //   store.setPlayerNick(name);
+  //   expect(store.myNick).toEqual(name);
+  // });
 });
