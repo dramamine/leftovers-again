@@ -86,19 +86,19 @@ export default class EliteFour extends AI {
 
     const fitness = {};
     const totalFitness = {};
-    state.myActive.moves.forEach( (move) => {
+    state.self.active.moves.forEach( (move) => {
       fitness[move.id] = {};
 
-      console.log(state.activeOpponent);
+      console.log(state.opponent.active);
       // favor super-effective moves, disfavor ineffective / weak moves
       fitness[move.id].effectiveness =
-        state.activeOpponent.types.map( (opponentType) => {
+        state.opponent.active.types.map( (opponentType) => {
           return typechart[move.type][opponentType];
         }).reduce( (prev, curr) => {
           return Math.max(prev, curr);
         });
 
-      fitness[move.id].stabby = !!state.myActive.types.indexOf(move.type);
+      fitness[move.id].stabby = !!state.self.active.types.indexOf(move.type);
 
       // favor unboosting moves on non-unboosted opponents,
       // as long as we didn't just try this move.
@@ -107,8 +107,8 @@ export default class EliteFour extends AI {
         ['atk', 'spa', 'spd', 'spe', 'def'].forEach( (type) => {
           if (!move.boosts[type]) return;
 
-          if ( state.activeOpponent.boosts && state.activeOpponent.boosts[type] &&
-          state.activeOpponent.boosts[type] < 0 ) return;
+          if ( state.opponent.active.boosts && state.opponent.active.boosts[type] &&
+          state.opponent.active.boosts[type] < 0 ) return;
 
           // OK, we're in the clear here.
           fitness[move.id].unboost = true;
@@ -118,25 +118,25 @@ export default class EliteFour extends AI {
       // favor status moves on non-statused opponents,
       // as long as we didn't just try this move.
       if (move.secondary && move.id !== this.lastMove) {
-        if (!state.activeOpponent.statuses ||
-          !state.activeOpponent.statuses.indexOf(move.secondary.status) >= 0) {
+        if (!state.opponent.active.conditions ||
+          !state.opponent.active.conditions.indexOf(move.secondary.status) >= 0) {
           fitness[move.id].status = move.secondary.status.chance;
         }
       }
       // @TODO check volatileStatus for moves like Confuse Ray
 
       // priority moves
-      if (move.priority > 0 && state.activeOpponent.hp < 25) {
+      if (move.priority > 0 && state.opponent.active.hp < 25) {
         fitness[move.id].prioritykill = true;
       }
 
       // unfavor moves that leave me dead
       // @TODO I don't like that hppct and active opponent's hp are both percent fields
-      if (move.recoil && state.myActive.hppct < 33) {
+      if (move.recoil && state.self.active.hppct < 33) {
         fitness[move.id].recoil = true;
       }
 
-      if (move.id === 'flail' && state.myActive.hppct < 33) {
+      if (move.id === 'flail' && state.self.active.hppct < 33) {
         fitness[move.id].bonus = 20;
       }
 
