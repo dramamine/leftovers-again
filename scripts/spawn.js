@@ -39,8 +39,8 @@ function getServer() {
 
 function loadMe(file) {
   console.log('spawning opponent from file ' + file);
-  const botrootForMain = 'bot=' + file;
-  const op = spawn('babel-node', ['main.js', '--spawned', botrootForMain ], {cwd: './src/'});
+  const botrootForMain = '--bot=' + file;
+  const op = spawn('babel-node', ['main.js', botrootForMain, '--spawned', ], {cwd: './src/'});
   // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
   op.stdout.on('data', (data) => {
