@@ -1,8 +1,69 @@
-## MY SHOWDOWN CLIENT
-If you're reading this, you're WAY too early to the party.
-Come back in a few months.
+## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
+
+Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
+
+2015: Pokemon bots start spontaneously fighting amongst themselves.
+2016: With the knowledge of infinite matches in their memory banks, AIs begin beating tournament-level players.
+20XX: The Pokemon Championships are won by a player using AI insights to crush her human opponents.
+
+## Designed with Simplicity and Accessibility in Mind
+
+Many developers have worked on AI bots before, in multiple languages, always having to start from the beginning - figuring out the Showdown protocol, importing relevant data, translating teams from human-readable text to code.
+
+That work is *already done for you*.
+
+To write a bot, you only need two files:
+- A bot config file, defining your team and your game tier. ([example])
+- A class with your `decide` function. This is where the fun stuff happens! Read the spec (here) to see all the state data you have access to. ([example])
+
+## Get Useful Feedback. Quickly Iterate on Your Design.
+
+Before AI, to test a new team, you'd have to play your team for hours just to get a feel for how it performs. Now, you can get that feedback in MINUTES. With data, not feelings!
+
+With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? 'Trick Room' strategies? You'll know. You'll get [amazing reports like this].
+
+You can also save replays from your bot battles. Even though your battles don't take place on official servers, you can play or upload your replays to the official [Replay Replayer](http://replay.pokemonshowdown.com/).
+
+## Compete Against Other Bots. And Humans.
+
+Every month, bots are pitted against each other in a competition here. Currently, only a few tiers are supported - Uber, OU, and Randombattle.
+
+We're running our own Showdown server named 'Cyberdyne'. There, every bot in this repo is running and responding to all challenge requests. Humans can play against these bots at any time!
+
+The ethics of taking bots onto official servers is questionable. [Watch this video to see what happens.]()
+
+## Writing Your First Bot
+
+### 0. Setting Up Your Environment
+First, clone this project and install dependencies:
+```
+git clone https://github.com/dramamine/leftovers-again
+# these need to be installed globally
+sudo npm install -g karma karma-cli babel-node ...etc
+npm install
+```
+
+### 1. Writing Your Config File
+Lots of sample configs in the cfg/ folder. Say we have a file called `sample.cfg` that looks like this:
+```
+{
+}
+```
 
 
+
+## The Decide() Loop
+
+Your AI bot runs the function decide(state) over and over agin. The `state` object contains all the information you need about the current state of the game - your pokemon, their statuses, moves, and everything you know about your opponent's pokemon. It's up to you 
+
+## Write in Any Language You Want
+
+This project is mainly coded in Javascrpt / ES6, which I recommend for its ease of use. However, you can write code in any language you want.
+
+Languages currently supported:
+- jk nothing yet
+
+If you'd like to implement your favorite language: 
 
 ## NOTES
 10/9/2015
