@@ -1,3 +1,23 @@
+
+// what I'd like:
+{
+  opponents: [
+    {
+      name: "5nowden1615",
+      description: "Sick bot",
+      matches: [
+        {
+          won: false,
+          damageDone: 236,
+          damageTaken: 600,
+        }
+      ]
+    }
+
+  ]
+}
+
+// what I've got:
 {
   "5nowden1615": [
     {

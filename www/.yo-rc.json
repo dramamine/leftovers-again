@@ -1,0 +1,6 @@
+{
+  "generator-react-webpack": {
+    "appName": "results",
+    "style": "css"
+  }
+}
