@@ -8,12 +8,12 @@ class Report {
     const iwon = (victor === store.myNick);
     const state = store.data();
     // console.log(state);
-    const aliveFilter = mon => !mon.dead;
-    const deadFilter = mon => mon.dead;
-    const selfAliveMons = state.self.reserve.filter(aliveFilter);
-    const opponentAliveMons = state.opponent.reserve.filter(aliveFilter);
-    const selfDeadMons = state.self.reserve.filter(deadFilter);
-    const opponentDeadMons = state.opponent.reserve.filter(deadFilter);
+    // const aliveFilter = mon => !mon.dead;
+    // const deadFilter = mon => mon.dead;
+    // const selfAliveMons = state.self.reserve.filter(aliveFilter);
+    // const opponentAliveMons = state.opponent.reserve.filter(aliveFilter);
+    // const selfDeadMons = state.self.reserve.filter(deadFilter);
+    // const opponentDeadMons = state.opponent.reserve.filter(deadFilter);
 
     // iterating over pokemon we've seen and damaged only. unseen pokemon
     // are undamaged.
@@ -29,10 +29,9 @@ class Report {
       won: iwon,
       damageDone,
       damageTaken,
-      selfAliveMons,
-      opponentAliveMons,
-      selfDeadMons,
-      opponentDeadMons
+      mine: state.self.reserve,
+      yours: state.opponent.reserve,
+      events: store.events
     };
 
     const opponent = store.opponentNick;
@@ -41,7 +40,6 @@ class Report {
     }
 
     this.opponents[opponent].push(result);
-    console.log(result);
 
     return this.opponents;
   }

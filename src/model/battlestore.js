@@ -32,6 +32,11 @@ export default class BattleStore {
       move: move,
       to: victim
     };
+
+    this.events.push(Object.assign(this.lastmove, {
+      type: 'move',
+      turn: this.turn
+    }));
   }
 
   handleDamage(victim, condition, explanation) {
@@ -39,16 +44,19 @@ export default class BattleStore {
     const hpold = mon.data().hp;
 
     mon.useCondition(condition);
-    const hpdiff = hpold - mon.data().hp;
+    // const hpdiff = hpold - mon.data().hp;
 
     // if there's no explanation (ex. '[from] psn' or '[from] spikes'),
     // assume this is from the last move.
-    if (!explanation) {
-      this.events.push(Object.assign(this.lastmove, {
-        turn: this.turn,
-        damage: hpdiff
-      }));
-    }
+    // if (!explanation) {
+    //   this.events.push(Object.assign(this.lastmove, {
+    //     type: 'damage',
+    //     turn: this.turn,
+    //     damage: hpdiff,
+    //     hpold: hpold,
+    //     hpnew: mon.data().hp,
+    //   }));
+    // }
   }
 
   handleFaint(ident) {

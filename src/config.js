@@ -16,7 +16,7 @@ const cfg = {
 
   botPath: 'randombattle/randumb',
 
-  matches: 3
+  matches: 1
 };
 
 class Config {
