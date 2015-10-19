@@ -11,6 +11,7 @@ export default class Pokemon extends React.Component {
 
     this.mouseover = this.mouseover.bind(this);
     this.mouseout = this.mouseout.bind(this);
+    this.isRelatedToHoveredPokemon = this.isRelatedToHoveredPokemon.bind(this);
   }
   mouseover() {
     console.log('mouseover called.');
@@ -24,8 +25,8 @@ export default class Pokemon extends React.Component {
 
   isRelatedToHoveredPokemon() {
     const hovered = UserStore.getActiveMon();
-    return this.props.damagedBy.indexOf(hovered) >= 0 ||
-        this.props.data.species === hovered;
+    const related = this.props.events.filter(e => e.from === hovered || e.to === hovered);
+    return !!related;
   }
 
   getImage(species) {
@@ -50,21 +51,76 @@ export default class Pokemon extends React.Component {
       }
     }
 
-    const damagedBy = this.props.events.filter(e => {
-      const id = Util.toId(this.props.data.owner, this.props.data.species);
-      return id === Util.withoutPos(e.to);
-    }).map(e => {
-      return (<li>
-        <div>From: {e.from}</div><br />
-        <div>Damage: {e.damage}</div><br />
-        <div>Move: {e.move}</div>
-        </li>);
+    // const myMoves = this.props.events.filter(e => {
+    //   const id = Util.toId(this.props.data.owner, this.props.data.species);
+    //   return id === Util.withoutPos(e.from);
+    // }).map(e => {
+    //   return (<li key={e.from + e.move + e.to + e.turn + 0}>
+    //     <div>I cast {e.move} on {e.to}</div>
+    //     </li>);
+    // });
+
+
+    // const yourMoves = this.props.events.filter(e => {
+    //   const id = Util.toId(this.props.data.owner, this.props.data.species);
+    //   return id === Util.withoutPos(e.to);
+    // }).map(e => {
+    //   return (<li key={e.from + e.move + e.to + e.turn + 1}>
+    //     <div>{e.from} cast {e.move} on me.</div>
+    //     </li>);
+    // });
+
+    const justcause = this.props.events
+      .filter(e => {
+        const id = Util.toId(this.props.data.owner, this.props.data.species);
+        return id === Util.withoutPos(e.from);
+      })
+      .reduce((previous, current) => {
+        if (!previous[current.move]) previous[current.move] = {count: 0};
+        previous[current.move].turn = current.turn;
+        previous[current.move].count += 1;
+        return previous;
+      }, {});
+    console.log(justcause);
+
+    const causes = Object.keys(justcause).map(key => {
+      const move = justcause[key];
+      return (<ul key={key}>{key} x{move.count}</ul>);
     });
+
+    const happened = this.props.events
+      .filter(e => {
+        const id = Util.toId(this.props.data.owner, this.props.data.species);
+        // happened to me, but exclude moves which I cast on myself
+        return id === Util.withoutPos(e.to) && id !== Util.withoutPos(e.from);
+      })
+      .reduce((previous, current) => {
+        if (!previous[current.move]) previous[current.move] = {count: 0};
+        previous[current.move].turn = current.turn;
+        previous[current.move].count += 1;
+        return previous;
+      }, {});
+    console.log(happened);
+
+    const effects = Object.keys(happened).map(key => {
+      const move = happened[key];
+      return (<ul key={key}>{key} x{move.count}</ul>);
+    });
+
+
 
     return (<div className={c} onMouseOver={this.mouseover} onMouseOut={this.mouseout}>
       <img src={img} />
       <p>Some more details here.</p>
-      <ul>{damagedBy}</ul>
+      <ul>{causes}</ul>
+      <ul>{effects}</ul>
       </div>);
+
+    // return (<div className={c} onMouseOver={this.mouseover} onMouseOut={this.mouseout}>
+    //   <img src={img} />
+    //   <p>Some more details here.</p>
+    //   <ul>{myMoves}</ul>
+    //   <ul>{yourMoves}</ul>
+    //   </div>);
   }
 }

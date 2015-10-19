@@ -18,17 +18,15 @@ export default class Match extends React.Component {
       return id === Util.withoutPos(e.from) || id === Util.withoutPos(e.to);
     });
 
-    return (<Pokemon data={m} events={relevantEvents}/>);
+    return (<Pokemon key={m.owner + m.species} data={m} events={relevantEvents}/>);
   }
 
 
   render() {
     const won = this.props.data.won ? 'YEP' : 'nope';
-    const myPokemon = this.props.data.pokemons
-      .filter(m => m.owner === UserStore.getSelf())
+    const mine = this.props.data.mine
       .map(this.createPokemonElements);
-    const yourPokemon = this.props.data.pokemons
-      .filter(m => m.owner !== UserStore.getSelf())
+    const yours = this.props.data.yours
       .map(this.createPokemonElements);
 
     return (<div>
@@ -36,9 +34,9 @@ export default class Match extends React.Component {
         <h5>Damage done: {this.props.data.damageDone}</h5>
         <h5>Damage taken: {this.props.data.damageTaken}</h5>
         <div className="pokemon-container">
-          {myPokemon}
+          {mine}
           <div className="team-separator">vs.</div>
-          {yourPokemon}
+          {yours}
         </div>
       </div>);
   }

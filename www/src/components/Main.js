@@ -8,12 +8,17 @@ import Opponent from 'components/Opponent';
 const yeomanImage = require('../images/yeoman.png');
 
 class AppComponent extends React.Component {
+
   render() {
+    const opponents = Object.keys(ExampleData.opponents).map(key => {
+      return <Opponent key={key} data={ExampleData.opponents[key]} />;
+    });
+
     return (
       <div className="index">
         <img src={yeomanImage} alt="Yeoman Generator" />
         <div className="notice">
-          <Opponent data={ExampleData.opponents[0]} />
+        {opponents}
         </div>
       </div>
     );

@@ -9,7 +9,7 @@ export default class Opponent extends React.Component {
 
   render() {
     const matches = this.props.data.matches;
-    const matchComponents = matches.map(m => (<Match data={m} />));
+    const matchComponents = matches.map((m, idx) => (<Match key={idx} data={m} />));
 
     return (<div>
         <h4>{this.props.data.name}</h4>

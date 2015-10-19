@@ -2,7 +2,9 @@
 
 class Report {
   constructor() {
-    this.opponents = {};
+    this.mydata = {
+      opponents: {}
+    };
   }
   win(victor, store) {
     const iwon = (victor === store.myNick);
@@ -35,17 +37,21 @@ class Report {
     };
 
     const opponent = store.opponentNick;
-    if (!this.opponents[opponent]) {
-      this.opponents[opponent] = [];
+    if (!this.mydata.opponents[opponent]) {
+      this.mydata.opponents[opponent] = {
+        name: opponent,
+        description: 'Sick bot',
+        matches: []
+      };
     }
 
-    this.opponents[opponent].push(result);
+    this.mydata.opponents[opponent].matches.push(result);
 
-    return this.opponents;
+    return this.mydata;
   }
 
   data() {
-    return this.opponents;
+    return this.mydata;
   }
 }
 
