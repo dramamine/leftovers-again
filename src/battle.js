@@ -21,6 +21,7 @@ class Battle {
       // player: this.handlePlayer,
       teampreview: this.handleTeamPreview,
       poke: this.handlePoke,
+      move: this.handleMove,
       switch: this.handleSwitch,
       drag: this.handleSwitch,
       request: this.handleRequest,
@@ -50,6 +51,10 @@ class Battle {
 
   handleFaint(ident) {
     this.store.handleFaint(ident);
+  }
+
+  handleMove(actor, move, victim) {
+    this.store.handleMove(actor, move, victim);
   }
 
   // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
@@ -114,6 +119,7 @@ class Battle {
 
   handleTurn(x) {
     this.turn = x;
+    this.store.setTurn(x);
     this.decide();
   }
 

@@ -4,7 +4,6 @@ import log from '../log';
 
 export default class Pokemon {
   constructor(species) {
-    this.events = [];
     this.useSpecies(species);
   }
 
@@ -38,10 +37,6 @@ export default class Pokemon {
     if (obj.moves) {
       this.moves = Pokemon.updateMoveList(obj.moves);
     }
-  }
-
-  saveEvent(evt) {
-    this.events.push(evt);
   }
 
   // for active moves

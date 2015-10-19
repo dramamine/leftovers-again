@@ -40,8 +40,42 @@ fdescribe('BattleStore', () => {
       store._recordIdent('p1a: Fakechu');
       store.handleSwitch('p1a: Guardechu');
       const result = store.data();
-      console.log(result.opponent.active);
       expect(result.opponent.active.species).toEqual('guardechu');
+    });
+  });
+
+  describe('event processing', () => {
+    it('should record a move along with its damage', () => {
+      const enemy = 'p2a: Hurtachu';
+      const mon = store._recordIdent(enemy);
+      mon.useCondition('100/100');
+      store.handleMove('p1a: Fakechu', 'Hurricane', enemy);
+      store.handleDamage(enemy, '50/100', null);
+      expect(store.events.length).toBeGreaterThan(0);
+      let lastEvent = store.events[store.events.length - 1];
+      expect(lastEvent.move).toBe('Hurricane');
+      expect(lastEvent.damage).toBe(50);
+
+      // take some poison damage
+      store.handleDamage(enemy, '25/100', '[from] psn');
+      // next move
+      store.handleMove('p1a: Fakechu', 'Rockyoulikea', enemy);
+      store.handleDamage(enemy, '15/100', null);
+      expect(store.events.length).toBeGreaterThan(1);
+      lastEvent = store.events[store.events.length - 1];
+      expect(lastEvent.move).toBe('Rockyoulikea');
+      expect(lastEvent.damage).toBe(10);
+    });
+
+    it('should record a move along with its damage', () => {
+      const enemy = 'p2a: Hurtachu';
+      const mon = store._recordIdent(enemy);
+      mon.useCondition('100/100');
+      store.handleMove('p1a: Fakechu', 'Hurricane', enemy);
+      store.handleDamage(enemy, '50/100', null);
+      expect(store.events.length).toBeGreaterThan(0);
+      expect(store.events[0].move).toBe('Hurricane');
+      expect(store.events[0].damage).toBe(50);
     });
   });
 });

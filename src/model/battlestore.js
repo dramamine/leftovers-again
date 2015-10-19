@@ -14,6 +14,10 @@ export default class BattleStore {
     this.opponentId = null;
     this.opponentNick = null;
 
+    this.lastmove = null;
+    this.events = [];
+    this.turn = 0;
+
     // NOT sent to user. temporary storage.
     this.names = [];
   }
@@ -22,12 +26,28 @@ export default class BattleStore {
     this._recordIdent(ident);
   }
 
+  handleMove(actor, move, victim) {
+    this.lastmove = {
+      from: actor,
+      move: move,
+      to: victim
+    };
+  }
+
   handleDamage(victim, condition, explanation) {
     const mon = this._recordIdent(victim);
-    // only record this for opponent's pokemon for now
-    if (mon.owner !== this.myId) {
-      mon.useCondition(condition);
-      console.log(mon.data());
+    const hpold = mon.data().hp;
+
+    mon.useCondition(condition);
+    const hpdiff = hpold - mon.data().hp;
+
+    // if there's no explanation (ex. '[from] psn' or '[from] spikes'),
+    // assume this is from the last move.
+    if (!explanation) {
+      this.events.push(Object.assign(this.lastmove, {
+        turn: this.turn,
+        damage: hpdiff
+      }));
     }
   }
 
@@ -44,6 +64,10 @@ export default class BattleStore {
       console.log('recorded opponent name as ', name);
     }
     this.names.push(name);
+  }
+
+  setTurn(x) {
+    this.turn = x;
   }
 
   checkNames() {
@@ -222,10 +246,10 @@ export default class BattleStore {
     const posStr = ident.substr(0, ident.indexOf(':'));
     const position = (posStr.length === 3) ? posStr : null;
     const species = ident.substr(ident.indexOf(' ') + 1);
-    // console.log(ident, owner, position, species);
 
     let hello = this.allmon.find( (mon) => {
-      return owner === mon.owner && species === mon.species;
+      // @TODO really shouldn't have to util.toId these things.
+      return owner === mon.owner && util.toId(species) === util.toId(mon.species);
     });
 
     if (!hello) {
@@ -244,7 +268,6 @@ export default class BattleStore {
       }
     }
 
-    // update our new guy
     hello.position = position;
     hello.owner = owner;
     return hello;
