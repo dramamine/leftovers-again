@@ -1,5 +1,4 @@
 import config from './config';
-import connection from './connection';
 import BattleStore from './model/battlestore';
 
 import log from './log';
@@ -9,7 +8,7 @@ import challenger from './challenger';
 
 
 class Battle {
-  constructor(bid) {
+  constructor(bid, connection, botpath) {
     // battle ID
     // console.log('battle constructed with id', bid);
     this.bid = bid;
@@ -32,9 +31,10 @@ class Battle {
       player: this.handlePlayer
     };
 
-    const AI = require(config.botPath);
+    const AI = require(botpath);
     this.bot = new AI();
 
+    this.connection = connection;
     this.store = new BattleStore();
   }
 
@@ -146,7 +146,7 @@ class Battle {
     const res = Battle._formatMessage(this.bid, choice, currentState);
     console.log(res);
     log.save(res);
-    connection.send( res );
+    this.connection.send( res );
   }
 
 
