@@ -18,11 +18,34 @@ export default class BattleStore {
     this.events = [];
     this.turn = 0;
 
+    this.handlers = {
+      '-damage': this.handleDamage,
+      teampreview: this.handleTeamPreview,
+      move: this.handleMove,
+      switch: this.handleSwitch,
+      drag: this.handleSwitch,
+      request: this.handleRequest,
+      turn: this.handleTurn,
+      faint: this.handleFaint,
+      player: this.handlePlayer
+    };
+
     // NOT sent to user. temporary storage.
     this.names = [];
   }
 
-  handleSwitch(ident) {
+  handle(type, message) {
+    if (this.handlers[type]) {
+      this.handlers[type].apply(this, message);
+    }
+  }
+
+  handleRequest(json) {
+    const data = JSON.parse(json);
+    this.interpretRequest(data);
+  }
+
+  handleSwitch(ident, details, condition) {
     this._recordIdent(ident);
   }
 
@@ -41,22 +64,7 @@ export default class BattleStore {
 
   handleDamage(victim, condition, explanation) {
     const mon = this._recordIdent(victim);
-    const hpold = mon.data().hp;
-
     mon.useCondition(condition);
-    // const hpdiff = hpold - mon.data().hp;
-
-    // if there's no explanation (ex. '[from] psn' or '[from] spikes'),
-    // assume this is from the last move.
-    // if (!explanation) {
-    //   this.events.push(Object.assign(this.lastmove, {
-    //     type: 'damage',
-    //     turn: this.turn,
-    //     damage: hpdiff,
-    //     hpold: hpold,
-    //     hpnew: mon.data().hp,
-    //   }));
-    // }
   }
 
   handleFaint(ident) {
@@ -64,8 +72,7 @@ export default class BattleStore {
     mon.useCondition('0 fnt');
   }
 
-  recordName(name) {
-    console.log('recordName:', name, this.myNick, this.opponentNick);
+  handlePlayer(id, name, something) { //eslint-disable-line
     if (this.opponentNick) return;
     if (this.myNick && this.myNick !== name) {
       this.opponentNick = name;
@@ -74,12 +81,12 @@ export default class BattleStore {
     this.names.push(name);
   }
 
-  setTurn(x) {
+  handleTurn(x) {
     this.turn = x;
   }
 
   checkNames() {
-    this.names.forEach( name => this.recordName(name) );
+    this.names.forEach( name => this.handlePlayer(null, name, null) );
   }
 
 
@@ -132,11 +139,6 @@ export default class BattleStore {
       this.checkNames();
     }
 
-    if (data.wait) return;
-
-    // this.state.self.active = [];
-    // this.state.opponent.active = [];
-
     if (data.side && data.side.pokemon) {
       for (let i = 0; i < data.side.pokemon.length; i++) {
         const mon = data.side.pokemon[i];
@@ -162,9 +164,10 @@ export default class BattleStore {
       this.rqid = data.rqid;
     }
 
-    // process this later.
     if (data.active) {
+      // process this later.
       this.activeData = data.active;
+
     }
   }
 

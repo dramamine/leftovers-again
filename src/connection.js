@@ -31,7 +31,7 @@ class Connection {
       let bid = null;
       if (messages[0].indexOf('>') === 0) {
         bid = messages[0].split('>')[1];
-        if (!battles[bid]) battles[bid] = new Battle(bid);
+        if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
       }
 
       for (let i = 0; i < messages.length; i++) {
@@ -41,6 +41,7 @@ class Connection {
           if (bid) {
             // console.log('handling', messageParts[1]);
             battles[bid].handle(messageParts[1], passThese);
+
             continue;
           }
           // console.log('relaying ', messageParts[1]);
@@ -64,6 +65,8 @@ class Connection {
   relayPopup(args) {
     console.log(args);
   }
+
+
 
   respondToChallenge(args) {
     // console.log('responding to challenge.');

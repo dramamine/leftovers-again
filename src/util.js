@@ -2,8 +2,8 @@
  * Utility functions.
  *
  */
-import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
-import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
+import BattleMovedex from '../data/moves';
+import BattlePokedex from '../data/pokedex';
 
 class Util {
   toId(text) {

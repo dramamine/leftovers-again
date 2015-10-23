@@ -66,6 +66,9 @@ Languages currently supported:
 If you'd like to implement your favorite language: 
 
 ## NOTES
+10/18/2015
+npm run develop -- --bot=randombattle/stabby.js
+
 10/9/2015
 Special states:
 - noCancel: this seems ok, you can't cancel yr moves.

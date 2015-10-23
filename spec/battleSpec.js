@@ -14,7 +14,7 @@ fdescribe('battle', () => {
       active: {
         moves: [
           {
-            name: 'niceone'
+            id: 'niceone'
           }
         ]
       },
@@ -42,7 +42,7 @@ fdescribe('battle', () => {
       new MOVE(exampleState.self.active.moves[0]), exampleState);
     expect(res).toEqual('1|/move 1|1');
   });
-  it('should format a name-based move', () => {
+  fit('should format a name-based move', () => {
     const res = Battle._formatMessage(1,
       new MOVE('niceone'), exampleState);
     expect(res).toEqual('1|/move 1|1');
@@ -70,9 +70,9 @@ fdescribe('store integration', () => {
     battle = new Battle();
   });
   it('should process an incoming request', () => {
-    battle.handleRequest(sampleRequest);
+    battle.handle('request', [sampleRequest]);
     // make a pokemon active
-    battle.handleSwitch('p2a: Gligar');
+    battle.handle('switch', ['p2a: Gligar']);
     const state = battle.store.data();
     expect(state.self.active).toEqual(jasmine.any(Object));
     expect(state.self.reserve.length).toBe(6);

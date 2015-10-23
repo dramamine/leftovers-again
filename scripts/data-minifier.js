@@ -32,7 +32,7 @@ function copyMoves() {
     });
   }
 
-  fs.writeFile('../data/moves.json', JSON.stringify(updated));
+  fs.writeFile('data/moves.json', JSON.stringify(updated));
 }
 
 function copyPokes() {
@@ -51,7 +51,7 @@ function copyPokes() {
     });
   }
 
-  fs.writeFile('../data/pokedex.json', JSON.stringify(updated));
+  fs.writeFile('data/pokedex.json', JSON.stringify(updated));
 }
 
 copyMoves();

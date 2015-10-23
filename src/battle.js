@@ -8,27 +8,15 @@ import challenger from './challenger';
 
 
 class Battle {
-  constructor(bid, connection, botpath) {
+  constructor(bid, connection, botpath = config.botPath) {
     // battle ID
-    // console.log('battle constructed with id', bid);
     this.bid = bid;
 
-    this.turn = 0;
-
     this.handlers = {
-      '-damage': this.handleDamage,
-      // player: this.handlePlayer,
       teampreview: this.handleTeamPreview,
-      poke: this.handlePoke,
-      move: this.handleMove,
-      switch: this.handleSwitch,
-      drag: this.handleSwitch,
       request: this.handleRequest,
       turn: this.handleTurn,
-      // start: this.handleStart,
       win: this.handleWin,
-      faint: this.handleFaint,
-      player: this.handlePlayer
     };
 
     const AI = require(botpath);
@@ -44,54 +32,16 @@ class Battle {
 
 
   handle(type, message) {
+    // handle store stuff first!
+    this.store.handle(type, message);
+
     if (this.handlers[type]) {
       this.handlers[type].apply(this, message);
     }
   }
 
-  handleFaint(ident) {
-    this.store.handleFaint(ident);
-  }
-
-  handleMove(actor, move, victim) {
-    this.store.handleMove(actor, move, victim);
-  }
-
-  // |-damage|p2a: Noivern|188/261|[from] item: Life Orb
-  handleDamage(victim, condition, explanation) {
-    this.store.handleDamage(victim, condition, explanation);
-  }
-
-  handlePlayer(id, nick, something) {
-    console.log('handling player msg: ', nick);
-    this.store.recordName(nick);
-  }
-
-  handlePoke(ordinal, mon) {
-    // if (this.ord = ordinal) return;
-    const nameAndGender = mon.split(', ');
-    this.processMon({
-      ident: ordinal + ': ' + nameAndGender[0],
-      owner: ordinal,
-      species: nameAndGender[0],
-      gender: nameAndGender[1]
-    });
-  }
-
   handleTeamPreview() {
     this.decide();
-  }
-
-  /**
-   * Handles 'switch' messages. These are important because the request doesn't
-   * tell us anything about our opponent, so we need to build and maintain a model
-   * of the opponent's pokemon.
-   *
-   * @param  {[type]} message [description]
-   * @return {[type]}         [description]
-   */
-  handleSwitch(ident, details, condition) {
-    this.store._recordIdent(ident);
   }
 
   handleRequest(json) {
@@ -107,19 +57,12 @@ class Battle {
       return false;
     }
 
-    console.log('REQUEST:');
-    console.log(JSON.stringify(data));
-
-    this.store.interpretRequest(data);
-
     if (data.forceSwitch || data.teamPreview) {
       this.decide();
     }
   }
 
   handleTurn(x) {
-    this.turn = x;
-    this.store.setTurn(x);
     this.decide();
   }
 
@@ -152,23 +95,20 @@ class Battle {
 
   static _formatMessage(bid, choice, state) {
     let verb;
-    // if (!Array.isArray(choice)) {
-    //   choice = [choice]; // eslint-disable-line
-    // }
     if (choice instanceof MOVE) {
       const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
 
-      if (typeof moveIdx !== 'number') {
+      if (typeof moveIdx !== 'number' || moveIdx < 0) {
         console.warn('[invalid move!!', choice, state, 'invalid move yo]');
         exit;
       }
+
       verb = '/move ' + (moveIdx + 1);
     } else if (choice instanceof SWITCH) {
       verb = (state.teamPreview)
         ? '/team '
         : '/switch ';
       const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
-      // console.log('validating choice:', choice, monIdx, state.self.reserve);
       verb = verb + (monIdx + 1);
     }
     return `${bid}|${verb}|${state.rqid}`;
