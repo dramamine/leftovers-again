@@ -89,6 +89,9 @@ export default class Pokemon {
   }
 
   useCondition(condition) {
+    // sometimes this is escaped, like when it comes from replay files
+    condition = condition.replace('\\/', '/'); // eslint-disable-line
+
     if (!condition.match(/[0-9]+[\/\s]+\w/)) {
       log.error('malformed condition:', condition);
       return;

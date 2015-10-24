@@ -10,9 +10,6 @@ export default class BattleStore {
     this.teamPreview = false;
 
     this.myId = null;
-    this.myNick = null;
-    this.opponentId = null;
-    this.opponentNick = null;
 
     this.lastmove = null;
     this.events = [];
@@ -31,7 +28,7 @@ export default class BattleStore {
     };
 
     // NOT sent to user. temporary storage.
-    this.names = [];
+    this.names = {};
   }
 
   handle(type, message) {
@@ -46,20 +43,29 @@ export default class BattleStore {
   }
 
   handleSwitch(ident, details, condition) {
-    this._recordIdent(ident);
+    const pos = this._identToPos(ident);
+    const former = this._findByPos(pos);
+    const mon = this._recordIdent(ident);
+
+    this.events.push({
+      type: 'switch',
+      player: this._identToOwner(ident),
+      turn: this.turn,
+      from: former ? former.species : null,
+      to: mon.species,
+      condition: condition.replace('\\/', '/')
+    });
   }
 
   handleMove(actor, move, victim) {
-    this.lastmove = {
+    this.events.push({
+      type: 'move',
+      player: this._identToOwner(actor),
+      turn: this.turn,
       from: actor,
       move: move,
       to: victim
-    };
-
-    this.events.push(Object.assign(this.lastmove, {
-      type: 'move',
-      turn: this.turn
-    }));
+    });
   }
 
   handleDamage(victim, condition, explanation) {
@@ -73,22 +79,12 @@ export default class BattleStore {
   }
 
   handlePlayer(id, name, something) { //eslint-disable-line
-    if (this.opponentNick) return;
-    if (this.myNick && this.myNick !== name) {
-      this.opponentNick = name;
-      console.log('recorded opponent name as ', name);
-    }
-    this.names.push(name);
+    this.names[id] = name;
   }
 
   handleTurn(x) {
     this.turn = x;
   }
-
-  checkNames() {
-    this.names.forEach( name => this.handlePlayer(null, name, null) );
-  }
-
 
   // what does the request look like? WELL. Check out these properties:
   // 'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
@@ -131,12 +127,10 @@ export default class BattleStore {
   //
   // data = {};
   interpretRequest(data) {
-    // console.log('request:', data);
+    // requests are the first place we figure out who we are.
+    // -- plato
     if (!this.myId) {
       this.myId = data.side.id;
-      this.myNick = data.side.name;
-      // console.log('my nick is ' + this.myNick + '. checking names...', this.names);
-      this.checkNames();
     }
 
     if (data.side && data.side.pokemon) {
@@ -157,6 +151,7 @@ export default class BattleStore {
       }
     }
 
+    // need to know these later. update to false to replace stale info.
     this.forceSwitch = data.forceSwitch || false;
     this.teamPreview = data.teamPreview || false;
 
@@ -167,7 +162,6 @@ export default class BattleStore {
     if (data.active) {
       // process this later.
       this.activeData = data.active;
-
     }
   }
 
@@ -253,9 +247,8 @@ export default class BattleStore {
 
   // NEW FUNCTION. this is the one I like.
   _recordIdent(ident) {
-    const owner = ident.substr(0, 2);
-    const posStr = ident.substr(0, ident.indexOf(':'));
-    const position = (posStr.length === 3) ? posStr : null;
+    const owner = this._identToOwner(ident);
+    const position = this._identToPos(ident);
     const species = ident.substr(ident.indexOf(' ') + 1);
 
     let hello = this.allmon.find( (mon) => {
@@ -288,9 +281,28 @@ export default class BattleStore {
     return this.allmon.find( (mon) => { return mon.id === id; });
   }
 
-  _identToId(ident) {
-    return ident.replace('a: ', ': ');
+  _findByPos(pos) {
+    return this.allmon.find( (mon) => { return mon.position === pos; });
+  }
+
+  _identToPos(ident) {
+    const posStr = ident.substr(0, ident.indexOf(':'));
+    const position = (posStr.length === 3) ? posStr : null;
+    return position;
+  }
+
+  _identToOwner(ident) {
+    return ident.substr(0, 2);
+  }
+
+  get myNick() {
+    return this.names[this.myId];
+  }
+
+  get opponentNick() {
+    if (this.myId === 'p1') return this.names.p2;
+    if (this.myId === 'p2') return this.names.p1;
+    return null;
   }
 
 }
-
