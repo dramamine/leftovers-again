@@ -114,7 +114,6 @@ export default class Pokemon {
       } else if (condition === '0 fnt') {
         this.dead = true;
         this.hp = 0;
-        this.maxhp = 0;
         this.hppct = 0;
       } else {
         log.err('weird condition:', mon.condition);

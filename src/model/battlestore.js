@@ -47,6 +47,8 @@ export default class BattleStore {
     const former = this._findByPos(pos);
     const mon = this._recordIdent(ident);
 
+    mon.useCondition(condition);
+
     this.events.push({
       type: 'switch',
       player: this._identToOwner(ident),
@@ -62,15 +64,27 @@ export default class BattleStore {
       type: 'move',
       player: this._identToOwner(actor),
       turn: this.turn,
-      from: actor,
+      from: this._recordIdent(actor).species,
       move: move,
-      to: victim
+      to: this._recordIdent(victim).species
     });
   }
 
   handleDamage(victim, condition, explanation) {
     const mon = this._recordIdent(victim);
+    const lastmove = this.events[this.events.length - 1];
+    lastmove.prevhp = mon.hp;
+    lastmove.prevcondition = mon.condition;
+
     mon.useCondition(condition);
+
+    lastmove.nexthp = mon.hp;
+    lastmove.nextcondition = mon.condition;
+    if (mon.dead) {
+      lastmove.killed = true;
+    }
+    lastmove.damage = lastmove.prevhp - lastmove.nexthp;
+    lastmove.damagepct = Math.round(100 * lastmove.damage / mon.maxhp);
   }
 
   handleFaint(ident) {
