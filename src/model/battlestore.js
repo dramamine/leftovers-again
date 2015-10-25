@@ -24,7 +24,10 @@ export default class BattleStore {
       request: this.handleRequest,
       turn: this.handleTurn,
       faint: this.handleFaint,
-      player: this.handlePlayer
+      player: this.handlePlayer,
+      cant: this.handleCant,
+      '-fail': this.handleFail,
+      '-miss': this.handleMiss
     };
 
     // NOT sent to user. temporary storage.
@@ -59,19 +62,38 @@ export default class BattleStore {
     });
   }
 
-  handleMove(actor, move, victim) {
+  handleMove(actor, move, target) {
     this.events.push({
       type: 'move',
       player: this._identToOwner(actor),
       turn: this.turn,
       from: this._recordIdent(actor).species,
       move: move,
-      to: this._recordIdent(victim).species
+      to: this._recordIdent(target).species
     });
   }
 
-  handleDamage(victim, condition, explanation) {
-    const mon = this._recordIdent(victim);
+  handleCant(target, reason) {
+    this.events.push({
+      type: 'cant',
+      player: this._identToOwner(target),
+      from: this._recordIdent(target).species,
+      reason
+    });
+  }
+
+  handleMiss(actor, target) {
+    const lastmove = this.events[this.events.length - 1];
+    lastmove.miss = true;
+  }
+
+  handleFail(target) {
+    const lastmove = this.events[this.events.length - 1];
+    lastmove.miss = true;
+  }
+
+  handleDamage(target, condition, explanation) {
+    const mon = this._recordIdent(target);
     const lastmove = this.events[this.events.length - 1];
     lastmove.prevhp = mon.hp;
     lastmove.prevcondition = mon.condition;
