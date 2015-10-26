@@ -39,7 +39,10 @@ export default class Timeline extends React.Component {
       thisTurn.push(event);
     });
 
-    const rows = turns.map( (turn, idx) => <Turn key={idx} data={turn} />);
+    const rows = turns.map( (turn, idx) => {
+      const statuses = this.props.statuses.filter(status => status.turn === idx);
+      return <Turn key={idx} data={turn} id={idx} statuses={statuses}/>;
+    });
 
     return <table className="turns">{rows}</table>;
   }

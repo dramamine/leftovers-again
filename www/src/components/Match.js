@@ -34,7 +34,7 @@ export default class Match extends React.Component {
         <h4>Won: {won}</h4>
         <h5>Damage done: {this.props.data.damageDone}</h5>
         <h5>Damage taken: {this.props.data.damageTaken}</h5>
-        <Timeline events={this.props.data.events} />
+        <Timeline events={this.props.data.events} statuses={this.props.data.statuses} />
 
         <div className="pokemon-container">
           {mine}

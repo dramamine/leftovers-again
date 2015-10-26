@@ -20,13 +20,7 @@ export default class PokemonSimple extends React.Component {
 
     return (<div>
       <img src={img} className="simple" />
+      <span>condition: {this.props.condition}</span>
       </div>);
-
-    // return (<div className={c} onMouseOver={this.mouseover} onMouseOut={this.mouseout}>
-    //   <img src={img} />
-    //   <p>Some more details here.</p>
-    //   <ul>{myMoves}</ul>
-    //   <ul>{yourMoves}</ul>
-    //   </div>);
   }
 }

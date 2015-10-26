@@ -13,6 +13,7 @@ export default class BattleStore {
 
     this.lastmove = null;
     this.events = [];
+    this.statuses = [];
     this.turn = 0;
 
     this.handlers = {
@@ -142,7 +143,18 @@ export default class BattleStore {
   }
 
   handleTurn(x) {
-    this.turn = x;
+    this.turn = parseInt(x, 10);
+
+    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
+    this.allmon.filter(isactive).forEach( mon => {
+      this.statuses.push({
+        turn: this.turn,
+        position: mon.position,
+        condition: mon.condition,
+        species: mon.species
+        // boosts: mon.boosts || null
+      });
+    });
   }
 
   // what does the request look like? WELL. Check out these properties:

@@ -33,7 +33,8 @@ class Report {
       damageTaken,
       mine: state.self.reserve,
       yours: state.opponent.reserve,
-      events: store.events
+      events: store.events,
+      statuses: store.statuses
     };
 
     const opponent = store.opponentNick;
