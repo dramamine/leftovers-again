@@ -29,3 +29,8 @@
 .pokemon p {
   display: inline;
 }
+
+img .simple {
+  width: 100px;
+  height: 100px;
+}

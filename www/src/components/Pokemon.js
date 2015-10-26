@@ -72,8 +72,10 @@ export default class Pokemon extends React.Component {
 
     const justcause = this.props.events
       .filter(e => {
-        const id = Util.toId(this.props.data.owner, this.props.data.species);
-        return id === Util.withoutPos(e.from);
+        if (e.type !== 'move') return false;
+        return e.from === this.props.data.species && e.player === this.props.data.owner;
+        // const id = Util.toId(this.props.data.owner, this.props.data.species);
+        // return id === Util.withoutPos(e.from);
       })
       .reduce((previous, current) => {
         if (!previous[current.move]) previous[current.move] = {count: 0};
@@ -90,9 +92,11 @@ export default class Pokemon extends React.Component {
 
     const happened = this.props.events
       .filter(e => {
-        const id = Util.toId(this.props.data.owner, this.props.data.species);
-        // happened to me, but exclude moves which I cast on myself
-        return id === Util.withoutPos(e.to) && id !== Util.withoutPos(e.from);
+        if (e.type !== 'move') return false;
+        return e.to === this.props.data.species && e.player !== this.props.data.owner;
+        // const id = Util.toId(this.props.data.owner, this.props.data.species);
+        // // happened to me, but exclude moves which I cast on myself
+        // return id === Util.withoutPos(e.to) && id !== Util.withoutPos(e.from);
       })
       .reduce((previous, current) => {
         if (!previous[current.move]) previous[current.move] = {count: 0};

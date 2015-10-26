@@ -11,7 +11,9 @@ class AppComponent extends React.Component {
 
   render() {
     const opponents = Object.keys(ExampleData.opponents).map(key => {
-      return <Opponent key={key} data={ExampleData.opponents[key]} />;
+      return (<div>
+        <Opponent key={key} data={ExampleData.opponents[key]} />
+        </div>);
     });
 
     return (

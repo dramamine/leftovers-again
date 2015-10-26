@@ -57,27 +57,36 @@ export default class BattleStore {
       player: this._identToOwner(ident),
       turn: this.turn,
       from: former ? former.species : null,
+      frompos: mon.position,
       to: mon.species,
+      topos: mon.position,
       condition: condition.replace('\\/', '/')
     });
   }
 
   handleMove(actor, move, target) {
+    const actingMon = this._recordIdent(actor);
+    const targetMon = this._recordIdent(target);
     this.events.push({
       type: 'move',
       player: this._identToOwner(actor),
       turn: this.turn,
-      from: this._recordIdent(actor).species,
+      from: actingMon.species,
+      frompos: actingMon.position,
       move: move,
-      to: this._recordIdent(target).species
+      to: targetMon.species,
+      topos: targetMon.position
     });
   }
 
   handleCant(target, reason) {
+    const targetMon = this._recordIdent(target);
     this.events.push({
       type: 'cant',
+      turn: this.turn,
       player: this._identToOwner(target),
-      from: this._recordIdent(target).species,
+      from: targetMon.species,
+      frompos: targetMon.position,
       reason
     });
   }
@@ -94,19 +103,33 @@ export default class BattleStore {
 
   handleDamage(target, condition, explanation) {
     const mon = this._recordIdent(target);
-    const lastmove = this.events[this.events.length - 1];
-    lastmove.prevhp = mon.hp;
-    lastmove.prevcondition = mon.condition;
+
+    let move;
+    // @TODO lazy implementation
+    if (explanation) {
+      move = {
+        type: 'damage',
+        turn: this.turn,
+        from: explanation,
+        topos: mon.position
+      };
+      this.events.push(move);
+    } else {
+      move = this.events[this.events.length - 1];
+    }
+
+    move.prevhp = mon.hp;
+    move.prevcondition = mon.condition;
 
     mon.useCondition(condition);
 
-    lastmove.nexthp = mon.hp;
-    lastmove.nextcondition = mon.condition;
+    move.nexthp = mon.hp;
+    move.nextcondition = mon.condition;
     if (mon.dead) {
-      lastmove.killed = true;
+      move.killed = true;
     }
-    lastmove.damage = lastmove.prevhp - lastmove.nexthp;
-    lastmove.damagepct = Math.round(100 * lastmove.damage / mon.maxhp);
+    move.damage = move.prevhp - move.nexthp;
+    move.damagepct = Math.round(100 * move.damage / mon.maxhp);
   }
 
   handleFaint(ident) {

@@ -1,88 +1,94 @@
 export default {
   "opponents": {
-    "5nowden9003": {
-      "name": "5nowden9003",
+    "Ariete": {
+      "name": "Ariete",
       "description": "Sick bot",
       "matches": [
         {
-          "won": true,
-          "damageDone": 600,
-          "damageTaken": 500,
+          "won": false,
+          "damageDone": 433,
+          "damageTaken": 600,
           "mine": [
             {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Politoed",
-              "moves": [
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "perishsong",
-                  "name": "Perish Song",
-                  "isViable": true,
-                  "flags": {
-                    "sound": 1,
-                    "distance": 1,
-                    "authentic": 1
-                  },
-                  "type": "Normal"
-                },
-                {
-                  "accuracy": 60,
-                  "category": "Status",
-                  "id": "hypnosis",
-                  "name": "Hypnosis",
-                  "flags": {
-                    "protect": 1,
-                    "reflectable": 1,
-                    "mirror": 1
-                  },
-                  "type": "Psychic"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 80,
-                  "category": "Special",
-                  "id": "scald",
-                  "name": "Scald",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1,
-                    "defrost": 1
-                  },
-                  "type": "Water"
-                },
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "protect",
-                  "name": "Protect",
-                  "isViable": true,
-                  "priority": 4,
-                  "flags": {},
-                  "type": "Normal"
-                }
+              "species": "Articuno",
+              "maxhp": 282,
+              "types": [
+                "Ice",
+                "Flying"
               ],
-              "active": true,
+              "baseStats": {
+                "hp": 90,
+                "atk": 85,
+                "def": 100,
+                "spa": 95,
+                "spd": 125,
+                "spe": 85
+              },
+              "weightkg": 55.4,
+              "owner": "p1"
+            },
+            {
+              "dead": true,
+              "condition": "0 fnt",
+              "conditions": [],
+              "species": "Kricketune",
+              "maxhp": 279,
+              "types": [
+                "Bug"
+              ],
+              "baseStats": {
+                "hp": 77,
+                "atk": 85,
+                "def": 51,
+                "spa": 55,
+                "spd": 51,
+                "spe": 65
+              },
+              "weightkg": 25.5,
+              "owner": "p1"
+            },
+            {
+              "dead": true,
+              "condition": "0 fnt",
+              "conditions": [],
+              "species": "Salamence",
+              "maxhp": 256,
+              "types": [
+                "Dragon",
+                "Flying"
+              ],
+              "baseStats": {
+                "hp": 95,
+                "atk": 135,
+                "def": 80,
+                "spa": 110,
+                "spd": 80,
+                "spe": 100
+              },
+              "weightkg": 102.6,
+              "owner": "p1"
+            },
+            {
+              "dead": true,
+              "condition": "0 fnt",
+              "conditions": [],
+              "species": "Simipour",
+              "maxhp": 275,
               "types": [
                 "Water"
               ],
               "baseStats": {
-                "hp": 90,
-                "atk": 75,
-                "def": 75,
-                "spa": 90,
-                "spd": 100,
-                "spe": 70
+                "hp": 75,
+                "atk": 98,
+                "def": 63,
+                "spa": 98,
+                "spd": 63,
+                "spe": 101
               },
-              "abilities": {
-                "0": "Water Absorb",
-                "1": "Damp",
-                "H": "Drizzle"
-              },
-              "weightkg": 33.9,
+              "weightkg": 29,
               "position": "p1a",
               "owner": "p1"
             },
@@ -90,399 +96,41 @@ export default {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Keldeo",
-              "moves": [
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "substitute",
-                  "name": "Substitute",
-                  "isViable": true,
-                  "flags": {
-                    "snatch": 1,
-                    "nonsky": 1
-                  },
-                  "type": "Normal"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 80,
-                  "category": "Special",
-                  "id": "scald",
-                  "name": "Scald",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1,
-                    "defrost": 1
-                  },
-                  "type": "Water"
-                },
-                {
-                  "accuracy": 95,
-                  "basePower": 55,
-                  "category": "Special",
-                  "id": "icywind",
-                  "name": "Icy Wind",
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Ice"
-                },
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "calmmind",
-                  "name": "Calm Mind",
-                  "isViable": true,
-                  "flags": {
-                    "snatch": 1
-                  },
-                  "type": "Psychic"
-                }
-              ],
-              "gender": "N",
+              "species": "Raikou",
+              "maxhp": 268,
               "types": [
-                "Water",
-                "Fighting"
+                "Electric"
               ],
               "baseStats": {
-                "hp": 91,
-                "atk": 72,
-                "def": 90,
-                "spa": 129,
-                "spd": 90,
-                "spe": 108
-              },
-              "abilities": {
-                "0": "Justified"
-              },
-              "weightkg": 48.5,
-              "owner": "p1"
-            },
-            {
-              "condition": "254/254",
-              "conditions": [],
-              "species": "Vanilluxe",
-              "moves": [
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "autotomize",
-                  "name": "Autotomize",
-                  "isViable": true,
-                  "flags": {
-                    "snatch": 1
-                  },
-                  "type": "Steel"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 60,
-                  "category": "Special",
-                  "id": "hiddenpower",
-                  "name": "Hidden Power Ground",
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Ground"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 90,
-                  "category": "Special",
-                  "id": "icebeam",
-                  "name": "Ice Beam",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Ice"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 80,
-                  "category": "Special",
-                  "id": "flashcannon",
-                  "name": "Flash Cannon",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Steel"
-                }
-              ],
-              "hp": 254,
-              "maxhp": 254,
-              "hppct": 100,
-              "types": [
-                "Ice"
-              ],
-              "baseStats": {
-                "hp": 71,
-                "atk": 95,
-                "def": 85,
-                "spa": 110,
-                "spd": 95,
-                "spe": 79
-              },
-              "abilities": {
-                "0": "Ice Body",
-                "H": "Weak Armor"
-              },
-              "weightkg": 57.5,
-              "owner": "p1"
-            },
-            {
-              "dead": true,
-              "condition": "0 fnt",
-              "conditions": [],
-              "species": "Ho-Oh",
-              "moves": [
-                {
-                  "accuracy": 100,
-                  "basePower": 120,
-                  "category": "Physical",
-                  "id": "bravebird",
-                  "name": "Brave Bird",
-                  "isViable": true,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1,
-                    "distance": 1
-                  },
-                  "type": "Flying"
-                },
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "roost",
-                  "name": "Roost",
-                  "isViable": true,
-                  "flags": {
-                    "snatch": 1,
-                    "heal": 1
-                  },
-                  "heal": [
-                    1,
-                    2
-                  ],
-                  "self": {
-                    "volatileStatus": "roost"
-                  },
-                  "type": "Flying"
-                },
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "substitute",
-                  "name": "Substitute",
-                  "isViable": true,
-                  "flags": {
-                    "snatch": 1,
-                    "nonsky": 1
-                  },
-                  "type": "Normal"
-                },
-                {
-                  "accuracy": 90,
-                  "category": "Status",
-                  "id": "toxic",
-                  "name": "Toxic",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "reflectable": 1,
-                    "mirror": 1
-                  },
-                  "type": "Poison"
-                }
-              ],
-              "gender": "N",
-              "types": [
-                "Fire",
-                "Flying"
-              ],
-              "baseStats": {
-                "hp": 106,
-                "atk": 130,
-                "def": 90,
-                "spa": 110,
-                "spd": 154,
-                "spe": 90
-              },
-              "abilities": {
-                "0": "Pressure",
-                "H": "Regenerator"
-              },
-              "weightkg": 199,
-              "owner": "p1"
-            },
-            {
-              "dead": true,
-              "condition": "0 fnt",
-              "conditions": [],
-              "species": "Muk",
-              "moves": [
-                {
-                  "accuracy": 100,
-                  "basePower": 40,
-                  "category": "Physical",
-                  "id": "shadowsneak",
-                  "name": "Shadow Sneak",
-                  "isViable": true,
-                  "priority": 1,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Ghost"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 75,
-                  "category": "Physical",
-                  "id": "icepunch",
-                  "name": "Ice Punch",
-                  "isViable": true,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1,
-                    "punch": 1
-                  },
-                  "type": "Ice"
-                },
-                {
-                  "accuracy": true,
-                  "category": "Status",
-                  "id": "curse",
-                  "name": "Curse",
-                  "flags": {
-                    "authentic": 1
-                  },
-                  "type": "Ghost"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 80,
-                  "category": "Physical",
-                  "id": "poisonjab",
-                  "name": "Poison Jab",
-                  "isViable": true,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Poison"
-                }
-              ],
-              "types": [
-                "Poison"
-              ],
-              "baseStats": {
-                "hp": 105,
-                "atk": 105,
+                "hp": 90,
+                "atk": 85,
                 "def": 75,
-                "spa": 65,
+                "spa": 115,
                 "spd": 100,
-                "spe": 50
+                "spe": 115
               },
-              "abilities": {
-                "0": "Stench",
-                "1": "Sticky Hold",
-                "H": "Poison Touch"
-              },
-              "weightkg": 30,
+              "weightkg": 178,
               "owner": "p1"
             },
             {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Victreebel",
-              "moves": [
-                {
-                  "accuracy": 85,
-                  "basePower": 120,
-                  "category": "Physical",
-                  "id": "powerwhip",
-                  "name": "Power Whip",
-                  "isViable": true,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Grass"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 75,
-                  "category": "Special",
-                  "id": "gigadrain",
-                  "name": "Giga Drain",
-                  "isViable": true,
-                  "flags": {
-                    "protect": 1,
-                    "mirror": 1,
-                    "heal": 1
-                  },
-                  "type": "Grass"
-                },
-                {
-                  "accuracy": 100,
-                  "basePower": 65,
-                  "category": "Physical",
-                  "id": "knockoff",
-                  "name": "Knock Off",
-                  "isViable": true,
-                  "flags": {
-                    "contact": 1,
-                    "protect": 1,
-                    "mirror": 1
-                  },
-                  "type": "Dark"
-                },
-                {
-                  "accuracy": 75,
-                  "category": "Status",
-                  "id": "sleeppowder",
-                  "name": "Sleep Powder",
-                  "isViable": true,
-                  "flags": {
-                    "powder": 1,
-                    "protect": 1,
-                    "reflectable": 1,
-                    "mirror": 1
-                  },
-                  "type": "Grass"
-                }
-              ],
+              "species": "Shiftry",
+              "maxhp": 282,
               "types": [
                 "Grass",
-                "Poison"
+                "Dark"
               ],
               "baseStats": {
-                "hp": 80,
-                "atk": 105,
-                "def": 65,
-                "spa": 100,
-                "spd": 70,
-                "spe": 70
+                "hp": 90,
+                "atk": 100,
+                "def": 60,
+                "spa": 90,
+                "spd": 60,
+                "spe": 80
               },
-              "abilities": {
-                "0": "Chlorophyll",
-                "H": "Gluttony"
-              },
-              "weightkg": 15.5,
+              "weightkg": 59.6,
               "owner": "p1"
             }
           ],
@@ -491,716 +139,1118 @@ export default {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Dusknoir",
+              "species": "Cobalion",
+              "maxhp": 283,
               "types": [
-                "Ghost"
+                "Steel",
+                "Fighting"
               ],
               "baseStats": {
-                "hp": 45,
-                "atk": 100,
-                "def": 135,
-                "spa": 65,
-                "spd": 135,
-                "spe": 45
+                "hp": 91,
+                "atk": 90,
+                "def": 129,
+                "spa": 90,
+                "spd": 72,
+                "spe": 108
               },
-              "abilities": {
-                "0": "Pressure",
-                "H": "Frisk"
-              },
-              "weightkg": 106.6,
+              "weightkg": 250,
               "owner": "p2"
             },
             {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Seismitoad",
+              "species": "Braviary",
+              "maxhp": 298,
               "types": [
-                "Water",
-                "Ground"
+                "Normal",
+                "Flying"
               ],
               "baseStats": {
-                "hp": 105,
-                "atk": 95,
+                "hp": 100,
+                "atk": 123,
                 "def": 75,
-                "spa": 85,
+                "spa": 57,
                 "spd": 75,
-                "spe": 74
+                "spe": 80
               },
-              "abilities": {
-                "0": "Swift Swim",
-                "1": "Poison Touch",
-                "H": "Water Absorb"
-              },
-              "weightkg": 62,
+              "weightkg": 41,
               "owner": "p2"
             },
             {
-              "dead": true,
-              "condition": "0 fnt",
+              "condition": "199/298",
               "conditions": [],
-              "species": "Garchomp",
-              "types": [
-                "Dragon",
-                "Ground"
-              ],
-              "baseStats": {
-                "hp": 108,
-                "atk": 130,
-                "def": 95,
-                "spa": 80,
-                "spd": 85,
-                "spe": 102
-              },
-              "abilities": {
-                "0": "Sand Veil",
-                "H": "Rough Skin"
-              },
-              "weightkg": 95,
-              "owner": "p2"
-            },
-            {
-              "dead": true,
-              "condition": "0 fnt",
-              "conditions": [],
-              "species": "Sunflora",
+              "species": "Tangrowth",
+              "hp": 199,
+              "maxhp": 298,
+              "hppct": 67,
               "types": [
                 "Grass"
               ],
               "baseStats": {
-                "hp": 75,
-                "atk": 75,
-                "def": 55,
-                "spa": 105,
-                "spd": 85,
-                "spe": 30
+                "hp": 100,
+                "atk": 100,
+                "def": 125,
+                "spa": 110,
+                "spd": 50,
+                "spe": 50
               },
-              "abilities": {
-                "0": "Chlorophyll",
-                "1": "Solar Power",
-                "H": "Early Bird"
-              },
-              "weightkg": 8.5,
+              "weightkg": 128.6,
+              "position": "p2a",
               "owner": "p2"
             },
             {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Granbull",
+              "species": "Golem",
+              "maxhp": 284,
               "types": [
-                "Fairy"
+                "Rock",
+                "Ground"
               ],
               "baseStats": {
-                "hp": 90,
+                "hp": 80,
                 "atk": 120,
-                "def": 75,
-                "spa": 60,
-                "spd": 60,
+                "def": 130,
+                "spa": 55,
+                "spd": 65,
                 "spe": 45
               },
-              "abilities": {
-                "0": "Intimidate",
-                "1": "Quick Feet",
-                "H": "Rattled"
-              },
-              "weightkg": 48.7,
+              "weightkg": 300,
               "owner": "p2"
             },
             {
               "dead": true,
               "condition": "0 fnt",
               "conditions": [],
-              "species": "Mantine",
+              "species": "Hoopa",
+              "maxhp": 240,
               "types": [
-                "Water",
+                "Psychic",
+                "Ghost"
+              ],
+              "baseStats": {
+                "hp": 80,
+                "atk": 110,
+                "def": 60,
+                "spa": 150,
+                "spd": 130,
+                "spe": 70
+              },
+              "weightkg": 9,
+              "owner": "p2"
+            },
+            {
+              "condition": "269/269",
+              "conditions": [],
+              "species": "Archeops",
+              "hp": 269,
+              "maxhp": 269,
+              "hppct": 100,
+              "types": [
+                "Rock",
                 "Flying"
               ],
               "baseStats": {
-                "hp": 65,
-                "atk": 40,
-                "def": 70,
-                "spa": 80,
-                "spd": 140,
-                "spe": 70
+                "hp": 75,
+                "atk": 140,
+                "def": 65,
+                "spa": 112,
+                "spd": 65,
+                "spe": 110
               },
-              "abilities": {
-                "0": "Swift Swim",
-                "1": "Water Absorb",
-                "H": "Water Veil"
-              },
-              "weightkg": 220,
-              "position": "p2a",
+              "weightkg": 32,
               "owner": "p2"
             }
           ],
           "events": [
             {
-              "from": "p2a: Dusknoir",
-              "move": "Shadow Sneak",
-              "to": "p1a: Victreebel",
-              "type": "move",
-              "turn": "1"
+              "type": "switch",
+              "player": "p1",
+              "turn": 0,
+              "from": null,
+              "frompos": "p1a",
+              "to": "Articuno",
+              "topos": "p1a",
+              "condition": "282/282"
             },
             {
-              "from": "p1a: Victreebel",
-              "move": "Power Whip",
-              "to": "p2a: Dusknoir",
-              "type": "move",
-              "turn": "1"
+              "type": "switch",
+              "player": "p2",
+              "turn": 0,
+              "from": null,
+              "frompos": "p2a",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "condition": "283/283"
             },
             {
-              "from": "p1a: Victreebel",
-              "move": "Power Whip",
-              "to": "p2a: Dusknoir",
-              "type": "move",
-              "turn": "2"
+              "type": "switch",
+              "player": "p1",
+              "turn": "1",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "to": "Kricketune",
+              "topos": "p1a",
+              "condition": "279/279"
             },
             {
-              "from": "p2a: Seismitoad",
-              "move": "Sludge Wave",
-              "to": "p1a: Victreebel",
               "type": "move",
-              "turn": "3"
+              "player": "p2",
+              "turn": "1",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Stone Edge",
+              "to": "Kricketune",
+              "topos": "p1a",
+              "prevhp": 279,
+              "prevcondition": "279/279",
+              "nexthp": 21,
+              "nextcondition": "21/279",
+              "damage": 258,
+              "damagepct": 92
             },
             {
-              "from": "p1a: Victreebel",
-              "move": "Giga Drain",
-              "to": "p2a: Seismitoad",
-              "type": "move",
-              "turn": "3"
+              "type": "switch",
+              "player": "p2",
+              "turn": "2",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "to": "Braviary",
+              "topos": "p2a",
+              "condition": "298/298"
             },
             {
-              "from": "p2a: Garchomp",
+              "type": "move",
+              "player": "p1",
+              "turn": "2",
+              "from": "Kricketune",
+              "frompos": "p1a",
+              "move": "Endeavor",
+              "to": "Braviary",
+              "topos": "p2a",
+              "prevhp": 298,
+              "prevcondition": "298/298",
+              "nexthp": 38,
+              "nextcondition": "38/298",
+              "damage": 260,
+              "damagepct": 87
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "3",
+              "from": "Braviary",
+              "frompos": "p2a",
+              "move": "Brave Bird",
+              "to": "Kricketune",
+              "topos": "p1a",
+              "prevhp": 20,
+              "prevcondition": "20/298",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 20,
+              "damagepct": 7
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "3",
+              "from": "Braviary",
+              "frompos": "p2a",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "condition": "283/283"
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "3",
+              "from": "Kricketune",
+              "frompos": "p1a",
+              "to": "Salamence",
+              "topos": "p1a",
+              "condition": "256/256"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "4",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Hidden Power",
+              "to": "Salamence",
+              "topos": "p1a",
+              "prevhp": 256,
+              "prevcondition": "256/256",
+              "nexthp": 80,
+              "nextcondition": "80/256",
+              "damage": 176,
+              "damagepct": 69
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "4",
+              "from": "Salamence",
+              "frompos": "p1a",
               "move": "Fire Blast",
-              "to": "p1a: Victreebel",
-              "type": "move",
-              "turn": "4"
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 283,
+              "prevcondition": "283/283",
+              "nexthp": 131,
+              "nextcondition": "131/283",
+              "damage": 152,
+              "damagepct": 54
             },
             {
-              "from": "p1a: Victreebel",
-              "move": "Giga Drain",
-              "to": "p2a: Garchomp",
-              "type": "move",
-              "turn": "4"
+              "type": "switch",
+              "player": "p1",
+              "turn": "5",
+              "from": "Salamence",
+              "frompos": "p1a",
+              "to": "Simipour",
+              "topos": "p1a",
+              "condition": "275/275"
             },
             {
-              "from": "p2a: Garchomp",
-              "move": "Outrage",
-              "to": "p1a: Victreebel",
               "type": "move",
-              "turn": "5"
-            },
-            {
-              "from": "p1a: Keldeo",
-              "move": "Icy Wind",
-              "to": "p2a: Garchomp",
-              "type": "move",
-              "turn": "6"
-            },
-            {
-              "from": "p1a: Keldeo",
-              "move": "Scald",
-              "to": "p2a: Sunflora",
-              "type": "move",
-              "turn": "7"
-            },
-            {
-              "from": "p2a: Sunflora",
-              "move": "Earth Power",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "7"
-            },
-            {
-              "from": "p1a: Keldeo",
-              "move": "Calm Mind",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "8"
-            },
-            {
-              "from": "p2a: Sunflora",
-              "move": "Sunny Day",
-              "to": "p2a: Sunflora",
-              "type": "move",
-              "turn": "8"
-            },
-            {
-              "from": "p1a: Keldeo",
-              "move": "Substitute",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "9"
-            },
-            {
-              "from": "p2a: Sunflora",
+              "player": "p2",
+              "turn": "5",
+              "from": "Cobalion",
+              "frompos": "p2a",
               "move": "Hidden Power",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "9"
+              "to": "Simipour",
+              "topos": "p1a",
+              "prevhp": 275,
+              "prevcondition": "275/275",
+              "nexthp": 250,
+              "nextcondition": "250/275",
+              "damage": 25,
+              "damagepct": 9
             },
             {
-              "from": "p1a: Keldeo",
+              "type": "switch",
+              "player": "p2",
+              "turn": "6",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "to": "Tangrowth",
+              "topos": "p2a",
+              "condition": "298/298"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "6",
+              "from": "Simipour",
+              "frompos": "p1a",
               "move": "Substitute",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "10"
+              "to": "Simipour",
+              "topos": "p1a",
+              "prevhp": 250,
+              "prevcondition": "250/275",
+              "nexthp": 199,
+              "nextcondition": "199/275",
+              "damage": 51,
+              "damagepct": 19
             },
             {
-              "from": "p2a: Sunflora",
-              "move": "Giga Drain",
-              "to": "p1a: Keldeo",
               "type": "move",
-              "turn": "10"
+              "player": "p1",
+              "turn": "7",
+              "from": "Simipour",
+              "frompos": "p1a",
+              "move": "Nasty Plot",
+              "to": "Simipour",
+              "topos": "p1a"
             },
             {
-              "from": "p1a: Keldeo",
+              "type": "move",
+              "player": "p2",
+              "turn": "7",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Power Whip",
+              "to": "Simipour",
+              "topos": "p1a"
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "8",
+              "from": "Simipour",
+              "frompos": "p1a",
+              "to": "Articuno",
+              "topos": "p1a",
+              "condition": "282/282"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "8",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Sleep Powder",
+              "to": "Articuno",
+              "topos": "p1a"
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "9",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "condition": "165/283"
+            },
+            {
+              "type": "cant",
+              "player": "p1",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "reason": "slp"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "10",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Thunder Wave",
+              "to": "Articuno",
+              "topos": "p1a",
+              "miss": true
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "10",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 165,
+              "prevcondition": "165/283",
+              "nexthp": 99,
+              "nextcondition": "99/283",
+              "damage": 66,
+              "damagepct": 23
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "11",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "to": "Raikou",
+              "topos": "p1a",
+              "condition": "268/268"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "11",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Stone Edge",
+              "to": "Raikou",
+              "topos": "p1a",
+              "miss": true
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "12",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "to": "Golem",
+              "topos": "p2a",
+              "condition": "284/284"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "12",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Aura Sphere",
+              "to": "Golem",
+              "topos": "p2a",
+              "prevhp": 268,
+              "prevcondition": "268/268",
+              "nexthp": 242,
+              "nextcondition": "242/268",
+              "damage": 26,
+              "damagepct": 10
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "13",
+              "from": "Golem",
+              "frompos": "p2a",
+              "to": "Hoopa",
+              "topos": "p2a",
+              "condition": "240/240"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "13",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Aura Sphere",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "14",
+              "from": "Raikou",
+              "frompos": "p1a",
               "move": "Calm Mind",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "11"
+              "to": "Raikou",
+              "topos": "p1a"
             },
             {
-              "from": "p2a: Sunflora",
-              "move": "Earth Power",
-              "to": "p1a: Keldeo",
               "type": "move",
-              "turn": "11"
+              "player": "p2",
+              "turn": "14",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Icy Wind",
-              "to": "p2a: Sunflora",
               "type": "move",
-              "turn": "12"
+              "player": "p1",
+              "turn": "15",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Calm Mind",
+              "to": "Raikou",
+              "topos": "p1a"
             },
             {
-              "from": "p2a: Sunflora",
+              "type": "move",
+              "player": "p2",
+              "turn": "15",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "16",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Calm Mind",
+              "to": "Raikou",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "16",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "17",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Calm Mind",
+              "to": "Raikou",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "17",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "18",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Calm Mind",
+              "to": "Raikou",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "18",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "19",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Calm Mind",
+              "to": "Raikou",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "19",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Calm Mind",
+              "to": "Hoopa",
+              "topos": "p2a"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "20",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Thunderbolt",
+              "to": "Hoopa",
+              "topos": "p2a",
+              "prevhp": 242,
+              "prevcondition": "242/268",
+              "nexthp": 216,
+              "nextcondition": "216/268",
+              "damage": 26,
+              "damagepct": 10
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "20",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Psychic",
+              "to": "Raikou",
+              "topos": "p1a",
+              "prevhp": 130,
+              "prevcondition": "130/240",
+              "nexthp": 106,
+              "nextcondition": "106/240",
+              "damage": 24,
+              "damagepct": 10
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "21",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "move": "Thunderbolt",
+              "to": "Hoopa",
+              "topos": "p2a",
+              "prevhp": 83,
+              "prevcondition": "83/268",
+              "nexthp": 57,
+              "nextcondition": "57/268",
+              "damage": 26,
+              "damagepct": 10
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "21",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "move": "Psychic",
+              "to": "Raikou",
+              "topos": "p1a",
+              "prevhp": 3,
+              "prevcondition": "3/240",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 3,
+              "damagepct": 1
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "21",
+              "from": "Hoopa",
+              "frompos": "p2a",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "condition": "133/283"
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "21",
+              "from": "Raikou",
+              "frompos": "p1a",
+              "to": "Salamence",
+              "topos": "p1a",
+              "condition": "80/256"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "22",
+              "from": "Cobalion",
+              "frompos": "p2a",
               "move": "Hidden Power",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "12"
+              "to": "Salamence",
+              "topos": "p1a",
+              "prevhp": 80,
+              "prevcondition": "80/256",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 80,
+              "damagepct": 31
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Icy Wind",
-              "to": "p2a: Sunflora",
-              "type": "move",
-              "turn": "13"
+              "type": "switch",
+              "player": "p1",
+              "turn": "22",
+              "from": "Salamence",
+              "frompos": "p1a",
+              "to": "Articuno",
+              "topos": "p1a",
+              "condition": "282/282"
             },
             {
-              "from": "p1a: Keldeo",
+              "type": "move",
+              "player": "p2",
+              "turn": "23",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Stone Edge",
+              "to": "Articuno",
+              "topos": "p1a",
+              "prevhp": 282,
+              "prevcondition": "282/282",
+              "nexthp": 58,
+              "nextcondition": "58/282",
+              "damage": 224,
+              "damagepct": 79
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "23",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 133,
+              "prevcondition": "133/283",
+              "nexthp": 99,
+              "nextcondition": "99/283",
+              "damage": 34,
+              "damagepct": 12
+            },
+            {
+              "type": "cant",
+              "player": "p2",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "reason": "frz"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "24",
+              "from": "Articuno",
+              "frompos": "p1a",
               "move": "Substitute",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "14"
+              "to": "Articuno",
+              "topos": "p1a",
+              "prevhp": 58,
+              "prevcondition": "58/282",
+              "nexthp": 5,
+              "nextcondition": "5/282",
+              "damage": 53,
+              "damagepct": 19
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "14"
+              "type": "cant",
+              "player": "p2",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "reason": "frz"
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Calm Mind",
-              "to": "p1a: Keldeo",
               "type": "move",
-              "turn": "15"
+              "player": "p1",
+              "turn": "25",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 99,
+              "prevcondition": "99/283",
+              "nexthp": 81,
+              "nextcondition": "81/283 frz",
+              "damage": 18,
+              "damagepct": 6
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "15"
+              "type": "cant",
+              "player": "p2",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "reason": "frz"
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Calm Mind",
-              "to": "p1a: Keldeo",
               "type": "move",
-              "turn": "16"
+              "player": "p1",
+              "turn": "26",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 81,
+              "prevcondition": "81/283 frz",
+              "nexthp": 50,
+              "nextcondition": "50/283 frz",
+              "damage": 31,
+              "damagepct": 11
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "16"
+              "type": "cant",
+              "player": "p2",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "reason": "frz"
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Icy Wind",
-              "to": "p2a: Granbull",
               "type": "move",
-              "turn": "17"
+              "player": "p1",
+              "turn": "27",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 50,
+              "prevcondition": "50/283 frz",
+              "nexthp": 19,
+              "nextcondition": "19/283 frz",
+              "damage": 31,
+              "damagepct": 11
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
               "type": "move",
-              "turn": "17"
+              "player": "p2",
+              "turn": "28",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "move": "Close Combat",
+              "to": "Articuno",
+              "topos": "p1a"
             },
             {
-              "from": "p1a: Keldeo",
-              "move": "Icy Wind",
-              "to": "p2a: Granbull",
               "type": "move",
-              "turn": "18"
+              "player": "p1",
+              "turn": "28",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Cobalion",
+              "topos": "p2a",
+              "prevhp": 19,
+              "prevcondition": "19/283 frz",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 19,
+              "damagepct": 7
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Play Rough",
-              "to": "p1a: Keldeo",
-              "type": "move",
-              "turn": "18"
+              "type": "switch",
+              "player": "p2",
+              "turn": "28",
+              "from": "Cobalion",
+              "frompos": "p2a",
+              "to": "Golem",
+              "topos": "p2a",
+              "condition": "94/284"
             },
             {
-              "from": "p1a: Ho-Oh",
+              "type": "move",
+              "player": "p2",
+              "turn": "29",
+              "from": "Golem",
+              "frompos": "p2a",
+              "move": "Sucker Punch",
+              "to": "Articuno",
+              "topos": "p1a",
+              "prevhp": 5,
+              "prevcondition": "5/282",
+              "nexthp": 27,
+              "nextcondition": "27/282",
+              "damage": -22,
+              "damagepct": -8
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "29",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "move": "Ice Beam",
+              "to": "Golem",
+              "topos": "p2a",
+              "prevhp": 94,
+              "prevcondition": "94/284",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 94,
+              "damagepct": 33
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "29",
+              "from": "Golem",
+              "frompos": "p2a",
+              "to": "Archeops",
+              "topos": "p2a",
+              "condition": "269/269"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "30",
+              "from": "Archeops",
+              "frompos": "p2a",
+              "move": "U-turn",
+              "to": "Articuno",
+              "topos": "p1a",
+              "prevhp": 27,
+              "prevcondition": "27/282",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 27,
+              "damagepct": 10
+            },
+            {
+              "type": "switch",
+              "player": "p2",
+              "turn": "30",
+              "from": "Archeops",
+              "frompos": "p2a",
+              "to": "Tangrowth",
+              "topos": "p2a",
+              "condition": "298/298"
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "30",
+              "from": "Articuno",
+              "frompos": "p1a",
+              "to": "Shiftry",
+              "topos": "p1a",
+              "condition": "282/282"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "31",
+              "from": "Shiftry",
+              "frompos": "p1a",
+              "move": "Swords Dance",
+              "to": "Shiftry",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "31",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Focus Blast",
+              "to": "Shiftry",
+              "topos": "p1a",
+              "prevhp": 282,
+              "prevcondition": "282/282",
+              "nexthp": 64,
+              "nextcondition": "64/282",
+              "damage": 218,
+              "damagepct": 77
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "32",
+              "from": "Shiftry",
+              "frompos": "p1a",
+              "move": "Swords Dance",
+              "to": "Shiftry",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "32",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Focus Blast",
+              "to": "Shiftry",
+              "topos": "p1a",
+              "miss": true
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "33",
+              "from": "Shiftry",
+              "frompos": "p1a",
+              "move": "Swords Dance",
+              "to": "Shiftry",
+              "topos": "p1a"
+            },
+            {
+              "type": "move",
+              "player": "p2",
+              "turn": "33",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Focus Blast",
+              "to": "Shiftry",
+              "topos": "p1a",
+              "prevhp": 64,
+              "prevcondition": "64/282",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 64,
+              "damagepct": 23
+            },
+            {
+              "type": "switch",
+              "player": "p1",
+              "turn": "33",
+              "from": "Shiftry",
+              "frompos": "p1a",
+              "to": "Simipour",
+              "topos": "p1a",
+              "condition": "233/275"
+            },
+            {
+              "type": "move",
+              "player": "p1",
+              "turn": "34",
+              "from": "Simipour",
+              "frompos": "p1a",
               "move": "Substitute",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "19"
+              "to": "Simipour",
+              "topos": "p1a",
+              "prevhp": 233,
+              "prevcondition": "233/275",
+              "nexthp": 165,
+              "nextcondition": "165/275",
+              "damage": 68,
+              "damagepct": 25
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Thunder Wave",
-              "to": "p1a: Ho-Oh",
               "type": "move",
-              "turn": "19"
+              "player": "p2",
+              "turn": "34",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Power Whip",
+              "to": "Simipour",
+              "topos": "p1a"
             },
             {
-              "from": "p1a: Ho-Oh",
-              "move": "Roost",
-              "to": "p1a: Ho-Oh",
               "type": "move",
-              "turn": "20"
+              "player": "p1",
+              "turn": "35",
+              "from": "Simipour",
+              "frompos": "p1a",
+              "move": "Grass Knot",
+              "to": "Tangrowth",
+              "topos": "p2a",
+              "prevhp": 298,
+              "prevcondition": "298/298",
+              "nexthp": 236,
+              "nextcondition": "236/298",
+              "damage": 62,
+              "damagepct": 21
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Thunder Wave",
-              "to": "p1a: Ho-Oh",
               "type": "move",
-              "turn": "20"
+              "player": "p2",
+              "turn": "35",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Power Whip",
+              "to": "Simipour",
+              "topos": "p1a",
+              "miss": true
             },
             {
-              "from": "p1a: Ho-Oh",
-              "move": "Substitute",
-              "to": "p1a: Ho-Oh",
               "type": "move",
-              "turn": "21"
+              "player": "p1",
+              "turn": "36",
+              "from": "Simipour",
+              "frompos": "p1a",
+              "move": "Grass Knot",
+              "to": "Tangrowth",
+              "topos": "p2a",
+              "prevhp": 236,
+              "prevcondition": "236/298",
+              "nexthp": 199,
+              "nextcondition": "199/298",
+              "damage": 37,
+              "damagepct": 12
             },
             {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
               "type": "move",
-              "turn": "21"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Substitute",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "22"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "22"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Substitute",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "23"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "23"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Substitute",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "24"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "24"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Roost",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "25"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "25"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Toxic",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "26"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Play Rough",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "26"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Roost",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "27"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "27"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Roost",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "28"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "28"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Toxic",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "29"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "29"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Toxic",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "30"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Play Rough",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "30"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Brave Bird",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "31"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Heal Bell",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "31"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Toxic",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "32"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Crunch",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "32"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Substitute",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "33"
-            },
-            {
-              "from": "p2a: Granbull",
-              "move": "Play Rough",
-              "to": "p1a: Ho-Oh",
-              "type": "move",
-              "turn": "33"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Brave Bird",
-              "to": "p2a: Granbull",
-              "type": "move",
-              "turn": "34"
-            },
-            {
-              "from": "p1a: Ho-Oh",
-              "move": "Brave Bird",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "35"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Scald",
-              "to": "p1: Ho-Oh",
-              "type": "move",
-              "turn": "35"
-            },
-            {
-              "from": "p1a: Muk",
-              "move": "Shadow Sneak",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "36"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Scald",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "36"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Defog",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "37"
-            },
-            {
-              "from": "p1a: Muk",
-              "move": "Ice Punch",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "37"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Scald",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "38"
-            },
-            {
-              "from": "p1a: Muk",
-              "move": "Curse",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "38"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Defog",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "39"
-            },
-            {
-              "from": "p1a: Muk",
-              "move": "Curse",
-              "to": "p1a: Muk",
-              "type": "move",
-              "turn": "39"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Scald",
-              "to": "p1a: Politoed",
-              "type": "move",
-              "turn": "40"
-            },
-            {
-              "from": "p1a: Politoed",
-              "move": "Perish Song",
-              "to": "p1a: Politoed",
-              "type": "move",
-              "turn": "40"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Air Slash",
-              "to": "p1a: Politoed",
-              "type": "move",
-              "turn": "41"
-            },
-            {
-              "from": "p1a: Politoed",
-              "move": "Scald",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "41"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Toxic",
-              "to": "p1a: Politoed",
-              "type": "move",
-              "turn": "42"
-            },
-            {
-              "from": "p1a: Politoed",
-              "move": "Scald",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "42"
-            },
-            {
-              "from": "p2a: Mantine",
-              "move": "Defog",
-              "to": "p1a: Politoed",
-              "type": "move",
-              "turn": "43"
-            },
-            {
-              "from": "p1a: Politoed",
-              "move": "Scald",
-              "to": "p2a: Mantine",
-              "type": "move",
-              "turn": "43"
+              "player": "p2",
+              "turn": "36",
+              "from": "Tangrowth",
+              "frompos": "p2a",
+              "move": "Power Whip",
+              "to": "Simipour",
+              "topos": "p1a",
+              "prevhp": 165,
+              "prevcondition": "165/275",
+              "nexthp": 0,
+              "nextcondition": "0 fnt",
+              "killed": true,
+              "damage": 165,
+              "damagepct": 60
             }
           ]
         }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Pokemon from 'components/Pokemon';
 import Util from 'components/util';
+import Timeline from 'components/Timeline';
 import UserStore from 'stores/UserStore';
 
 
@@ -14,8 +15,8 @@ export default class Match extends React.Component {
 
   createPokemonElements(m) {
     const relevantEvents = this.props.data.events.filter(e => {
-      const id = Util.toId(m.owner, m.species);
-      return id === Util.withoutPos(e.from) || id === Util.withoutPos(e.to);
+      return (m.owner === e.player && e.from === m.species) ||
+        (m.owner !== e.player && e.to === m.species);
     });
 
     return (<Pokemon key={m.owner + m.species} data={m} events={relevantEvents}/>);
@@ -33,6 +34,8 @@ export default class Match extends React.Component {
         <h4>Won: {won}</h4>
         <h5>Damage done: {this.props.data.damageDone}</h5>
         <h5>Damage taken: {this.props.data.damageTaken}</h5>
+        <Timeline events={this.props.data.events} />
+
         <div className="pokemon-container">
           {mine}
           <div className="team-separator">vs.</div>
