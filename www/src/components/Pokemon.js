@@ -111,8 +111,6 @@ export default class Pokemon extends React.Component {
       return (<ul key={key}>{key} x{move.count}</ul>);
     });
 
-
-
     return (<div className={c} onMouseOver={this.mouseover} onMouseOut={this.mouseout}>
       <img src={img} />
       <p>Some more details here.</p>
