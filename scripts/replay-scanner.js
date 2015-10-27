@@ -1,7 +1,7 @@
 import fs from 'fs';
 import BattleStore from '../src/model/battlestore';
 import Report from '../src/report';
-import {MongoClient, ObjectId} from 'mongodb';
+import {MongoClient} from 'mongodb';
 const mongourl = 'mongodb://localhost:27017/test';
 let mongo;
 
@@ -47,7 +47,6 @@ class ReplayScanner {
       setTimeout(this.handleResults, 1000);
       return;
     }
-    console.log(this.report);
     const justone = this.report[0];
     const dbentry = Object.assign({}, {
       matchid: justone.matchid,
@@ -62,6 +61,21 @@ class ReplayScanner {
 
     mongo.collection('randombattle').insertOne(
       dbentry
+    , (err, result) => {
+      if (err) return console.error(err);
+      // console.log(result.insertedId);
+      this.saveEvents(justone.events, result.insertedId);
+    });
+  }
+
+  saveEvents(events, matchid) {
+    console.log('saving results...');
+    events.forEach( (event) => {
+      event.matchid = matchid;
+    });
+
+    mongo.collection('events').insert(
+      events
     , (err, result) => {
       if (err) return console.error(err);
       console.log(result);
