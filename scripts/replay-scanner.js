@@ -1,4 +1,5 @@
 import fs from 'fs';
+import glob from 'glob';
 import BattleStore from '../src/model/battlestore';
 import Report from '../src/report';
 import {MongoClient} from 'mongodb';
@@ -11,43 +12,34 @@ MongoClient.connect(mongourl, (err, db) => {
   mongo = db;
 });
 
-const replay = process.argv[2];
-
 class ReplayScanner {
-  constructor(filename) {
-    this.filename = filename;
-    this.matchid = replay.split('/').pop();
-    this.report = null;
-
-    this.store = new BattleStore();
-    this.store.myId = 'p1';
-
-    // since it's a callback...
-    this.handleResults = this.handleResults.bind(this);
+  constructor() {
   }
-  processFile(data) {
+  processFile(data, file) {
+    const store = new BattleStore();
+    store.myId = 'p1';
+
     data.split('\n').forEach( line => {
       const splits = line.split('|');
       if (splits.length <= 2) return;
       const type = splits[1];
       const message = splits.slice(2);
-      console.log(type, message);
-      this.store.handle(type, message);
+      store.handle(type, message);
 
       if (type === 'win') {
-        this.report = Report.win(message[0], this.store, this.matchid);
-        this.handleResults();
+        const report = Report.win(message[0], store, file.split('/').pop() );
+        this.handleResults(report);
       }
     });
   }
 
-  handleResults() {
+  handleResults(report) {
     if (!mongo) {
       console.error('db not ready.');
-      setTimeout(this.handleResults, 1000);
+      setTimeout(this.handleResults, 1000, report);
       return;
     }
-    const justone = this.report[0];
+    const justone = report;
     const dbentry = Object.assign({}, {
       matchid: justone.matchid,
       won: justone.won,
@@ -56,7 +48,7 @@ class ReplayScanner {
       me: justone.me,
       you: justone.you,
       mine: justone.mine,
-      yours: justone.yours,
+      yours: justone.yours
     });
 
     mongo.collection('randombattle').insertOne(
@@ -64,30 +56,48 @@ class ReplayScanner {
     , (err, result) => {
       if (err) return console.error(err);
       // console.log(result.insertedId);
-      this.saveEvents(justone.events, result.insertedId);
+      console.log('saved a randombattle result.');
     });
+
+    this.saveEvents(justone.events, justone.matchid);
   }
 
   saveEvents(events, matchid) {
-    console.log('saving results...');
-    events.forEach( (event) => {
+    console.log(matchid + ': saving results');
+
+    const filtered = events.filter( (event) => {
+      return event.type !== 'damage';
+    });
+    const modded = filtered.map( (event) => {
       event.matchid = matchid;
+      return event;
     });
 
     mongo.collection('events').insert(
-      events
+      modded
     , (err, result) => {
-      if (err) return console.error(err);
-      console.log(result);
+      if (err) {
+        return console.error(err, result);
+      }
+      console.log('event inserted:', result);
     });
   }
 }
 
 
-const rs = new ReplayScanner();
-fs.readFile(replay, 'ascii', (err, data) => {
-  if (err) {
-    throw err;
-  }
-  rs.processFile(data);
+const fileReader = (file) => {
+  console.log('gonna read file ', file);
+  const rs = new ReplayScanner(file);
+  fs.readFile(file, 'ascii', (err, data) => {
+    if (err) {
+      throw err;
+    }
+    rs.processFile(data, file);
+    console.log('done reading file ', file);
+  });
+};
+
+const replays = glob.sync('replays/randombattle-*');
+replays.forEach( replay => {
+  setTimeout(fileReader, 1000, replay);
 });
