@@ -39,7 +39,7 @@ class Report {
     };
     this.matches.push(result);
 
-    return this.matches;
+    return result;
   }
 
   data() {
