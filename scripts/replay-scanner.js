@@ -4,12 +4,21 @@ import BattleStore from '../src/model/battlestore';
 import Report from '../src/report';
 import {MongoClient} from 'mongodb';
 const mongourl = 'mongodb://localhost:27017/test';
+const BATCH_SIZE = 1000;
+const BATCH_WAIT = 1000;
+let lastResearched;
+let stack = 0;
+let completed = 0;
 let mongo;
+
+// 18:36 => xx:xx with 1000/1000
 
 MongoClient.connect(mongourl, (err, db) => {
   if (err) return console.error(err);
   console.log('db loaded.');
   mongo = db;
+
+  lookupLastResearched();
 });
 
 class ReplayScanner {
@@ -33,10 +42,10 @@ class ReplayScanner {
     });
   }
 
-  handleResults(report) {
+  handleResults(report, ref = this) {
     if (!mongo) {
       console.error('db not ready.');
-      setTimeout(this.handleResults, 1000, report);
+      setTimeout(ref.handleResults, 1000, report, this);
       return;
     }
     const justone = report;
@@ -56,14 +65,14 @@ class ReplayScanner {
     , (err, result) => {
       if (err) return console.error(err);
       // console.log(result.insertedId);
-      console.log('saved a randombattle result.');
+      // console.log('saved a randombattle result.');
     });
-
-    this.saveEvents(justone.events, justone.matchid);
+    // console.log('using this as ref:', ref);
+    ref.saveEvents(justone.events, justone.matchid);
   }
 
   saveEvents(events, matchid) {
-    console.log(matchid + ': saving results');
+    // console.log(matchid + ': saving results');
 
     const filtered = events.filter( (event) => {
       return event.type !== 'damage';
@@ -79,7 +88,7 @@ class ReplayScanner {
       if (err) {
         return console.error(err, result);
       }
-      console.log('event inserted:', result);
+      // console.log('event inserted:', result);
     });
   }
 }
@@ -93,11 +102,46 @@ const fileReader = (file) => {
       throw err;
     }
     rs.processFile(data, file);
-    console.log('done reading file ', file);
+    // console.log('done reading file ', file);
+    completed++;
+    stack--;
   });
 };
 
-const replays = glob.sync('replays/randombattle-*');
-replays.forEach( replay => {
-  setTimeout(fileReader, 1000, replay);
+const lookupLastResearched = () => {
+  const options = { 'sort': [['matchid', 'desc']] };
+  mongo.collection('randombattle').findOne({}, options, (err, doc) => {
+    lastResearched = doc.matchid;
+  });
+};
+
+glob('replays/replays/randombattle-*', [], (err, replays) => {
+  if (err) return console.log(err);
+  let startWith = 0;
+  if (lastResearched) {
+    startWith = replays.findIndex( (replay) => {
+      return replay.indexOf(lastResearched) > 0;
+    }) + 1; // solves our -1 issue and skips the one we found!
+  }
+
+  const stagger = (idx) => {
+    if (stack > 1500) {
+      // come back later
+      console.log('coming back later.');
+      setTimeout(stagger, BATCH_WAIT, idx);
+      return;
+    }
+
+    console.log('stagger called with ', idx);
+    if (idx >= replays.length) return;
+    for (let i = idx; i < replays.length && i < idx + BATCH_SIZE; i++) {
+      stack++;
+      fileReader(replays[i]);
+    }
+    console.log(`waiting ${BATCH_WAIT}ms with stack ${stack} and idx ${idx} and completed ${completed}`);
+    setTimeout(stagger, BATCH_WAIT, idx + BATCH_SIZE);
+  };
+
+  stagger(startWith);
 });
+
