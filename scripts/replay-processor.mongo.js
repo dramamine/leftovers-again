@@ -1,7 +1,13 @@
-//
+// run with:
+// mongo scripts/replay-processor.mongo.js
+var opts = {
+  allowDiskUse:true,
+  cursor:{}
+};
 
-
-var getFirstMoves = function() {
+// start: 2015-11-17T19:29:28.911-0800
+// end:   2015-11-17T19:33:36.081-0800
+var populateFirstMoves = function() {
   db.firstmoves.drop();
 
   db.events.aggregate([
@@ -16,12 +22,18 @@ var getFirstMoves = function() {
       count: {$sum: 1}
     } },
     { $out: "firstmoves" }
-  ]);
+  ], opts);
 }
 
 var getBigrams = function() {
   // bigrams
+  populateMessyBigrams();
+  populateBigrams();
+}
 
+// start: 2015-11-17T19:42:19.853-0800
+// end:   2015-11-17T19:56:41.281-0800
+var populateMessyBigrams = function() {
   db.messybigrams.drop();
 
   var mapfn = function() {
@@ -60,7 +72,12 @@ var getBigrams = function() {
       out: 'messybigrams'
     }
   );
+}
 
+// start: 2015-11-17T20:01:05.682-0800
+// end:   2015-11-17T20:02:57.226-0800
+// BIGRAMS STUFF LOOKS BROKEN, L@@K INTO THIS
+var populateBigrams = function() {
   db.bigrams.drop();
 
   var bmapfn = function() {
@@ -69,27 +86,27 @@ var getBigrams = function() {
     var key = this.value._id;
     if (key === undefined) return;
     var value = this.value.value;
-    print('map:', key, value);
+    // print('map:', key, value);
 
     emit(key, value);
   };
 
   var breducefn = function(key, values) {
     var merged = [].concat.apply([], values);
-    print('merged:', merged);
+    // print('merged:', merged);
     return {value: merged};
   };
 
   var finalizefn = function(key, reducedVal) {
     var bigramcounts = {};
-    print('finalizing', key, reducedVal);
+    // print('finalizing', key, reducedVal);
     if(reducedVal && reducedVal.length > 0)
     {
-      print('looking at value:', reducedVal);
+      // print('looking at value:', reducedVal);
       reducedVal.forEach( function(bigram) {
         var bstr = bigram.toString();
-        print('using bigram string ', bstr);
-        print(bstr);
+        // print('using bigram string ', bstr);
+        // print(bstr);
 
         if (bigramcounts[bigram]) {
           bigramcounts[bigram] = bigramcounts[bigram] + 1;
@@ -147,7 +164,7 @@ var getMatchupFirstMoves = function() {
   ]);
 }
 
-var getMatchupResults = function() {
+var messyMatchupResults = function() {
   db.messymatchupresults.drop();
 
   // for the first map-reduce function, we're just trying to figure out what
@@ -166,10 +183,7 @@ var getMatchupResults = function() {
       killed: this.killed
     };
 
-    if (this.matchid === 'randombattle-127900697') {
-      print('LOOKING AT THIS BROKEN DATA...');
-      print(this.matchid, this.turn, this.player);
-    }
+    print('gonna emit these:', key, value);
     emit(key, value);
   };
 
@@ -295,14 +309,15 @@ var getMatchupResults = function() {
   db.events.mapReduce(
     mmapfn,
     mreducefn,
-    // { query: {match: 'randombattle-98387915', type: {$in: ['switch', 'move']}},
     { query: {turn: {$gt: 0}, type: {$in: ['switch', 'move']}},
       sort: {matchid: 1, player: 1, turn: 1 },
       out: 'messymatchupresults',
       finalize: mfinalizefn
     }
   );
+}
 
+var matchupResults = function() {
   db.matchupresults.drop();
 
   var smapfn = function() {
@@ -333,8 +348,17 @@ var getMatchupResults = function() {
       out: 'matchupresults'
     }
   );
-
 }
 
 
-getMatchupResults();
+var getMatchupResults = function() {
+  messyMatchupResults();
+  matchupResults();
+}
+
+
+// getMatchupResults();
+
+// populateFirstMoves();
+// populateMessyBigrams();
+populateBigrams();

@@ -50,6 +50,13 @@ function copyPokes() {
       updated[key][keyToCopy] = BattlePokedex[key][keyToCopy];
     });
   }
+  // this is misnamed in replays & causes me errors.
+  if (updated.basculinbluestriped) {
+    updated.basculinbluestripe = updated.basculinbluestriped;
+  }
+  if (updated.floetteeternalflower) {
+    updated.floetteeternalflow = updated.floetteeternalflower;
+  }
 
   fs.writeFile('data/pokedex.json', JSON.stringify(updated));
 }

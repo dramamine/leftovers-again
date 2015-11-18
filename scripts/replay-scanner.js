@@ -95,7 +95,7 @@ class ReplayScanner {
 
 
 const fileReader = (file) => {
-  console.log('gonna read file ', file);
+  // console.log('gonna read file ', file);
   const rs = new ReplayScanner(file);
   fs.readFile(file, 'ascii', (err, data) => {
     if (err) {
@@ -111,37 +111,44 @@ const fileReader = (file) => {
 const lookupLastResearched = () => {
   const options = { 'sort': [['matchid', 'desc']] };
   mongo.collection('randombattle').findOne({}, options, (err, doc) => {
-    lastResearched = doc.matchid;
+    // ex. if collection doesn't exist yet
+    if (doc) {
+      lastResearched = doc.matchid;
+    }
+
+    globForReplays();
   });
 };
 
-glob('replays/replays/randombattle-*', [], (err, replays) => {
-  if (err) return console.log(err);
-  let startWith = 0;
-  if (lastResearched) {
-    startWith = replays.findIndex( (replay) => {
-      return replay.indexOf(lastResearched) > 0;
-    }) + 1; // solves our -1 issue and skips the one we found!
-  }
-
-  const stagger = (idx) => {
-    if (stack > 1500) {
-      // come back later
-      console.log('coming back later.');
-      setTimeout(stagger, BATCH_WAIT, idx);
-      return;
+const globForReplays = () => {
+  glob('replays/replays/randombattle-*', [], (err, replays) => {
+    if (err) return console.log(err);
+    let startWith = 0;
+    if (lastResearched) {
+      startWith = replays.findIndex( (replay) => {
+        return replay.indexOf(lastResearched) > 0;
+      }) + 1; // solves our -1 issue and skips the one we found!
     }
 
-    console.log('stagger called with ', idx);
-    if (idx >= replays.length) return;
-    for (let i = idx; i < replays.length && i < idx + BATCH_SIZE; i++) {
-      stack++;
-      fileReader(replays[i]);
-    }
-    console.log(`waiting ${BATCH_WAIT}ms with stack ${stack} and idx ${idx} and completed ${completed}`);
-    setTimeout(stagger, BATCH_WAIT, idx + BATCH_SIZE);
-  };
+    const stagger = (idx) => {
+      if (stack > 1500) {
+        // come back later
+        console.log('coming back later.');
+        setTimeout(stagger, BATCH_WAIT, idx);
+        return;
+      }
 
-  stagger(startWith);
-});
+      console.log('stagger called with ', idx);
+      if (idx >= replays.length) return;
+      for (let i = idx; i < replays.length && i < idx + BATCH_SIZE; i++) {
+        stack++;
+        fileReader(replays[i]);
+      }
+      console.log(`waiting ${BATCH_WAIT}ms with stack ${stack} and idx ${idx} and completed ${completed}`);
+      setTimeout(stagger, BATCH_WAIT, idx + BATCH_SIZE);
+    };
+
+    stagger(startWith);
+  });
+}
 
