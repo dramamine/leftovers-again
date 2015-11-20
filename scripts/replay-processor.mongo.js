@@ -46,10 +46,15 @@ var populateMessyBigrams = function() {
       move: this.move,
       turn: this.turn
     };
+
     emit(key, value);
   };
 
   var reducefn = function(key, values) {
+    print('reduce called.');
+    // print(key.species);
+    // print(values[0].move);
+
     var bigrams = [];
     // @TODO better sort this by turn for safety.
     for (var i = 1; i < values.length; i++) {
@@ -58,6 +63,8 @@ var populateMessyBigrams = function() {
 
       bigrams.push([values[i-1].move, values[i].move]);
     }
+    print(key.species);
+    print(bigrams);
     return {
       _id: key.species,
       value: bigrams
@@ -74,9 +81,30 @@ var populateMessyBigrams = function() {
   );
 }
 
-// start: 2015-11-17T20:01:05.682-0800
-// end:   2015-11-17T20:02:57.226-0800
-// BIGRAMS STUFF LOOKS BROKEN, L@@K INTO THIS
+// messyBigrams output looks like this:
+//
+// {
+//   "_id": {
+//     "matchid": "randombattle-100002682",
+//     "player": "p2",
+//     "species": "Meganium"
+//   },
+//   "value": {
+//     "_id": "Meganium",
+//     "value": [
+//       ["Light Screen", "Reflect"],
+//       ["Reflect", "Giga Drain"],
+//       ["Giga Drain", "Giga Drain"],
+//       ["Giga Drain", "Giga Drain"],
+//       ["Giga Drain", "Giga Drain"],
+//       ["Giga Drain", "Giga Drain"]
+//     ]
+//   }
+// }
+
+
+// start: 2015-11-19T22:09:56.212-0800
+// end:   2015-11-19T22:11:26.071-0800
 var populateBigrams = function() {
   db.bigrams.drop();
 
@@ -86,36 +114,78 @@ var populateBigrams = function() {
     var key = this.value._id;
     if (key === undefined) return;
     var value = this.value.value;
-    // print('map:', key, value);
+    // print('map:', key);
+    // printjson(value);
 
     emit(key, value);
   };
 
-  var breducefn = function(key, values) {
-    var merged = [].concat.apply([], values);
-    // print('merged:', merged);
-    return {value: merged};
+  var breducefn = function(key, results) {
+    // print('reducing', key, results.length);
+    // printjson(results);
+
+    var _appendPairToTally = function(pair, tally) {
+      var key = pair[0] + '::' + pair[1];
+      // print('looking for key:', key);
+      if(tally[key]) {
+        tally[key] = tally[key] + 1;
+      } else {
+        tally[key] = 1;
+      };
+      return tally;
+    };
+
+    var tally = {};
+    results.forEach( function(result) {
+
+      if(Array.isArray(result)) {
+        // print('DEALING with an array...');
+        result.forEach( function(v) {
+          tally = _appendPairToTally(v, tally);
+        });
+      } else {
+        // print('result sez: wat is this');
+        // printjson(result);
+      }
+
+    });
+
+    // print('output:');
+    // printjson(tally);
+    return tally;
   };
 
   var finalizefn = function(key, reducedVal) {
-    var bigramcounts = {};
-    // print('finalizing', key, reducedVal);
-    if(reducedVal && reducedVal.length > 0)
-    {
-      // print('looking at value:', reducedVal);
-      reducedVal.forEach( function(bigram) {
-        var bstr = bigram.toString();
-        // print('using bigram string ', bstr);
-        // print(bstr);
+    var bigramcounts = reducedVal;
+    // print('finalizing', key);
+    // printjson(reducedVal);
 
-        if (bigramcounts[bigram]) {
-          bigramcounts[bigram] = bigramcounts[bigram] + 1;
-        } else {
-          bigramcounts[bigram] = 1;
-        }
+    var _appendPairToTally = function(pair, tally) {
+      var key = pair[0] + '::' + pair[1];
+      // print('looking for key:', key);
+      if(tally[key]) {
+        tally[key] = tally[key] + 1;
+      } else {
+        tally[key] = 1;
+      };
+      return tally;
+    };
+
+
+    var output;
+    if (Array.isArray(reducedVal)) {
+      var tally = {};
+      reducedVal.forEach( function(result) {
+        // print('caught an array inside finalize');
+        tally = _appendPairToTally(result, tally);
       });
+      output = tally;
+    } else {
+      // print('not an array anyway.');
+      output = reducedVal;
     }
-    return bigramcounts;
+
+    return output;
   };
 
   db.messybigrams.mapReduce(
@@ -124,6 +194,7 @@ var populateBigrams = function() {
     {
       out: 'bigrams',
       finalize: finalizefn
+      // query: {"_id.matchid" : { $lt: "randombattle-100010529"} }
     }
   );
 }
