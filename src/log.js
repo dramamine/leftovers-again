@@ -1,5 +1,4 @@
 import colors from 'colors/safe';
-import fs from 'fs';
 // black
 // red
 // green
@@ -11,20 +10,19 @@ import fs from 'fs';
 // gray
 // grey
 
+let loglevel = 3;
+const argv = require('minimist')(process.argv.slice(2));
+if (argv.loglevel) {
+  loglevel = argv.loglevel;
+}
 
 class Log {
-  debug(msg) { console.log(colors.green(msg)); }
-  info(msg) { console.log(colors.yellow(msg)); }
-  log(msg) { console.log(colors.cyan(msg)); }
-  warn(msg) { console.log(colors.magenta(msg)); }
-  err(msg) { console.log(colors.red(msg)); }
-  error(msg) { console.error(colors.red(msg)); }
-  save(msg) {
-    // const filename = 'everything.log';
-    // fs.appendFile('./log/' + filename, msg + '\n', (err) => {
-    //   if (err) throw err;
-    // });
-  }
+  debug(msg) { if (loglevel >= 5) console.log(colors.green(msg)); }
+  info(msg) { if (loglevel >= 4)console.log(colors.yellow(msg)); }
+  log(msg) { if (loglevel >= 3) console.log(colors.cyan(msg)); }
+  warn(msg) { if (loglevel >= 2) console.log(colors.magenta(msg)); }
+  err(msg) { if (loglevel >= 1) console.log(colors.red(msg)); }
+  error(msg) { if (loglevel >= 1) console.error(colors.red(msg)); }
 }
 const log = new Log();
 export default log;

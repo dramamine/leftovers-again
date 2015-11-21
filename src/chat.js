@@ -43,6 +43,7 @@ class Chat {
       // don't challenge yourself
       if (config.nick !== user) {
             // @TODO this is arranged badly
+        console.log('challengeOnJoin creating AI');
         const Bot = require(config.botPath);
         const AI = new Bot();
         console.log('checking meta...');
@@ -59,6 +60,7 @@ class Chat {
 
   acceptChallenges(args) {
     console.log('acceptChallenges called...');
+    console.log('acceptChallenges creating AI');
     const Bot = require(config.botPath);
     const AI = new Bot();
     const challenges = JSON.parse(args);

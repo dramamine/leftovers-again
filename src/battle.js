@@ -20,6 +20,7 @@ class Battle {
     };
 
     const AI = require(botpath);
+    log.log('crafting new AI');
     this.bot = new AI();
 
     this.connection = connection;
@@ -62,7 +63,12 @@ class Battle {
     }
   }
 
-  handleTurn(x) {
+  /**
+   * On a turn message, we need to make a decision.
+   *
+   * @param that I'm ignoring: the turn number.
+   */
+  handleTurn() {
     this.decide();
   }
 
@@ -77,19 +83,31 @@ class Battle {
     }
   }
 
+  /**
+   *
+   * @return {[type]} [description]
+   */
   decide() {
     const currentState = this.store.data();
 
-    console.log('STATE:');
-    console.log(JSON.stringify(currentState));
+    log.info('STATE:');
+    log.info(JSON.stringify(currentState));
 
-    log.save(JSON.stringify(currentState));
     const choice = this.myBot().onRequest(currentState);
-
-    const res = Battle._formatMessage(this.bid, choice, currentState);
-    console.log(res);
-    log.save(res);
-    this.connection.send( res );
+    if (choice instanceof Promise) {
+      choice.then( (resolved) => {
+        const res = Battle._formatMessage(this.bid, resolved, currentState);
+        log.log(res);
+        this.connection.send( res );
+      }, (err) => {
+        log.err('I think there was an error here.');
+        log.err(err);
+      });
+    } else {
+      const res = Battle._formatMessage(this.bid, choice, currentState);
+      log.log(res);
+      this.connection.send( res );
+    }
   }
 
 
