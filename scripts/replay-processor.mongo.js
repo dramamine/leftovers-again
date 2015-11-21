@@ -223,6 +223,31 @@ var getMatchupMoves = function() {
   ], opts);
 }
 
+// Populates the messymatchupresults table.
+// Requires: 'events'
+//
+// This function uses one turn in a given match as its key; from this, we
+// derive what happened on that turn - did any players die? Did any players
+// switch?
+//
+// Results look like this:
+// {
+//   "_id": {
+//     "matchid": "randombattle-100001529",
+//     "turn": 4
+//   },
+//   "value": {
+//     "matchup": "Dunsparce::Wigglytuff",
+//     "results": { "bkilled" : 1 }
+//   }
+// }
+//
+// The pokemon species matchup and 'what happened' are the two pieces of data
+// we want. We return 'value' here because we want to tally these later (_id will be
+// scrapped)
+//
+// These are inserted into messymatchupresults for processing in the next step.
+//
 var messyMatchupResults = function() {
   db.messymatchupresults.drop();
 
@@ -242,11 +267,9 @@ var messyMatchupResults = function() {
       killed: this.killed
     };
 
-    print('gonna emit these:', key, value);
+    // print('gonna emit these:', key, value);
     emit(key, value);
   };
-
-
 
   // test for the above: should be a move from Klink then a move from Starly
   // whatWeCareAbout([
@@ -305,8 +328,9 @@ var messyMatchupResults = function() {
     }
 
     if(values[0] === null || values[1] === null) {
-      print('BAIL! value is null');
-      print(tojson(key), tojson(values));
+      // I think this happens lots, like if only one player moves/switches
+      // print('BAIL! value is null');
+      // print(tojson(key), tojson(values));
       return null;
     }
 
@@ -365,10 +389,14 @@ var messyMatchupResults = function() {
     };
   };
 
+
   db.events.mapReduce(
     mmapfn,
     mreducefn,
-    { query: {turn: {$gt: 0}, type: {$in: ['switch', 'move']}},
+    { query: {
+      turn: {$gt: 0},
+      type: {$in: ['switch', 'move']}
+    },
       sort: {matchid: 1, player: 1, turn: 1 },
       out: 'messymatchupresults',
       finalize: mfinalizefn
@@ -376,12 +404,32 @@ var messyMatchupResults = function() {
   );
 }
 
+/**
+ * Populates the matchupresults table.
+ * Requires: messymatchupresults
+ *
+ * Tally the list of matchups and results from messymatchups. The results
+ * look like this:
+ *  {
+ *    "_id": "Charizard::Dunsparce",
+ *    "value": {
+ *      "akilled": 0,
+ *      "bkilled": 1,
+ *      "aswitched": 0,
+ *      "bswitched": 0
+ *    }
+ *  }
+ * This tells us the species matchup (by alphabetical order)
+ */
 var matchupResults = function() {
   db.matchupresults.drop();
 
+  //
   var smapfn = function() {
     emit(this.value.matchup, this.value.results);
   }
+
+  // turns a list of match results into a tally
   var sreducefn = function(key, values) {
     var result = {
       akilled: 0,
@@ -396,6 +444,8 @@ var matchupResults = function() {
       if(value.aswitched) result.aswitched++;
       if(value.bswitched) result.bswitched++;
     });
+
+
     return result;
   }
 
@@ -407,6 +457,8 @@ var matchupResults = function() {
       out: 'matchupresults'
     }
   );
+
+
 }
 
 
@@ -421,4 +473,6 @@ var getMatchupResults = function() {
 // populateFirstMoves();
 // populateMessyBigrams();
 // populateBigrams();
-getMatchupMoves();
+// getMatchupMoves();
+// messyMatchupResults();
+// matchupResults();
