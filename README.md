@@ -18,9 +18,9 @@ To write a bot, you only need two files:
 
 ## Get Useful Feedback. Quickly Iterate on Your Design.
 
-Before AI, to test a new team, you'd have to play your team for hours just to get a feel for how it performs. Now, you can get that feedback in MINUTES. With data, not feelings!
+Before AI, to test a new team, you'd have to play your team for hours just to get a feel for how it performs. Now, you can get 100 matches of feedback in MINUTES. Use data, not feelings!
 
-With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? 'Trick Room' strategies? You'll know. You'll get [amazing reports like this].
+With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? Stall teams? Trick Rooms? You'll know your bot's weaknesses and can improve your 
 
 You can also save replays from your bot battles. Even though your battles don't take place on official servers, you can play or upload your replays to the official [Replay Replayer](http://replay.pokemonshowdown.com/).
 
@@ -47,8 +47,15 @@ npm install
 Lots of sample configs in the cfg/ folder. Say we have a file called `sample.cfg` that looks like this:
 ```
 {
+  path: [botpath]
 }
 ```
+
+### 2. Writing Your Bot
+Copy the contents of bot.tmpl to [botpath].js to get started. This will 
+
+
+### 3. Testing Your Bot
 
 
 
