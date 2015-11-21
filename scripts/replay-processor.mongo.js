@@ -1,8 +1,8 @@
 // run with:
 // mongo scripts/replay-processor.mongo.js
 var opts = {
-  allowDiskUse:true,
-  cursor:{}
+  allowDiskUse: true,
+  cursor: {}
 };
 
 // start: 2015-11-17T19:29:28.911-0800
@@ -114,15 +114,11 @@ var populateBigrams = function() {
     var key = this.value._id;
     if (key === undefined) return;
     var value = this.value.value;
-    // print('map:', key);
-    // printjson(value);
 
     emit(key, value);
   };
 
   var breducefn = function(key, results) {
-    // print('reducing', key, results.length);
-    // printjson(results);
 
     var _appendPairToTally = function(pair, tally) {
       var key = pair[0] + '::' + pair[1];
@@ -144,25 +140,19 @@ var populateBigrams = function() {
           tally = _appendPairToTally(v, tally);
         });
       } else {
-        // print('result sez: wat is this');
-        // printjson(result);
+        print('result sez: wat is this');
+        printjson(result);
       }
 
     });
-
-    // print('output:');
-    // printjson(tally);
     return tally;
   };
 
   var finalizefn = function(key, reducedVal) {
     var bigramcounts = reducedVal;
-    // print('finalizing', key);
-    // printjson(reducedVal);
 
     var _appendPairToTally = function(pair, tally) {
       var key = pair[0] + '::' + pair[1];
-      // print('looking for key:', key);
       if(tally[key]) {
         tally[key] = tally[key] + 1;
       } else {
@@ -176,12 +166,10 @@ var populateBigrams = function() {
     if (Array.isArray(reducedVal)) {
       var tally = {};
       reducedVal.forEach( function(result) {
-        // print('caught an array inside finalize');
         tally = _appendPairToTally(result, tally);
       });
       output = tally;
     } else {
-      // print('not an array anyway.');
       output = reducedVal;
     }
 
@@ -199,7 +187,7 @@ var populateBigrams = function() {
   );
 }
 
-var getMatchupFirstMoves = function() {
+var getMatchupMoves = function() {
   // great! now let's get matchup data.
   db.matchupfirstmoves.drop();
 
@@ -218,7 +206,7 @@ var getMatchupFirstMoves = function() {
       count: {$sum: 1}
     } },
     { $out: "matchupfirstmoves" }
-  ]);
+  ], opts);
 
   db.matchupmoves.drop();
 
@@ -232,7 +220,7 @@ var getMatchupFirstMoves = function() {
         count: {$sum: 1}
       } },
     { $out: "matchupmoves" }
-  ]);
+  ], opts);
 }
 
 var messyMatchupResults = function() {
@@ -432,4 +420,5 @@ var getMatchupResults = function() {
 
 // populateFirstMoves();
 // populateMessyBigrams();
-populateBigrams();
+// populateBigrams();
+getMatchupMoves();
