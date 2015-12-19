@@ -50,7 +50,7 @@ class Connection {
       }
     });
 
-    listener.subscribe('challstr', this.respondToChallenge);
+    listener.subscribe('challstr', this._respondToChallenge);
     listener.subscribe('popup', this.relayPopup);
   }
 
@@ -66,9 +66,7 @@ class Connection {
     console.log(args);
   }
 
-
-
-  respondToChallenge(args) {
+  _respondToChallenge(args) {
     // console.log('responding to challenge.');
     const [id, str] = args;
     // console.log(id, str);
