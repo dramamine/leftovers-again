@@ -95,7 +95,7 @@ export default class EliteFour extends AI {
         state.opponent.active.types.map( (opponentType) => {
           return typechart[move.type][opponentType];
         }).reduce( (prev, curr) => {
-          return Math.max(prev, curr);
+          return prev * curr;
         }, 0);
 
       fitness[move.id].stabby = !!state.self.active.types.indexOf(move.type);
