@@ -11,11 +11,15 @@ if (argv.bot) {
   config.botPath = argv.bot;
 }
 
+let myconnection;
+
 if (argv.ajax) {
   console.log('using an ajax connection.');
+  myconnection = ajaxConnection;
   ajaxConnection.connect();
   // sending my own insecure messages
 } else {
+  myconnection = connection;
   connection.connect();
 }
 
@@ -32,7 +36,7 @@ if (argv.ajax) {
 function exitHandler(options, err) {
   if (options.cleanup) console.log('clean');
   if (err) console.log(err.stack);
-  connection.close();
+  myconnection.close();
   if (options.exit) process.exit();
 }
 

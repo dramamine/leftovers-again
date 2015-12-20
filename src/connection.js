@@ -1,13 +1,9 @@
 import listener from './listener';
 import Battle from './battle';
 import url from 'url';
-import WebSocket from 'ws';
-// import http from 'http';
 import https from 'https';
 import util from './util';
 import config from './config';
-
-let ws;
 
 const requestUrl = url.parse(config.actionurl);
 
@@ -18,51 +14,39 @@ class Connection {
   }
 
   connect() {
-    // console.log('connection constructed.');
-    ws = new WebSocket('ws://localhost:8000/showdown/websocket');
+    console.log('please override me.');
+  }
 
-    ws.on('open', () => {
-      console.log('got open message from websocket');
-    });
+  _handleMessage(msg) {
+    // console.log('received: %s', msg);
+    const messages = msg.split('\n');
+    let bid = null;
+    if (messages[0].indexOf('>') === 0) {
+      bid = messages[0].split('>')[1];
+      if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
+    }
 
-    ws.on('message', (msg) => {
-      // console.log('received: %s', msg);
-      const messages = msg.split('\n');
-      let bid = null;
-      if (messages[0].indexOf('>') === 0) {
-        bid = messages[0].split('>')[1];
-        if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
-      }
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].indexOf('|') === 0) {
+        const messageParts = messages[i].split('|');
+        const passThese = messageParts.slice(2);
+        if (bid) {
+          // console.log('handling', messageParts[1]);
+          battles[bid].handle(messageParts[1], passThese);
 
-      for (let i = 0; i < messages.length; i++) {
-        if (messages[i].indexOf('|') === 0) {
-          const messageParts = messages[i].split('|');
-          const passThese = messageParts.slice(2);
-          if (bid) {
-            // console.log('handling', messageParts[1]);
-            battles[bid].handle(messageParts[1], passThese);
-
-            continue;
-          }
-          // console.log('relaying ', messageParts[1]);
-          listener.relay(messageParts[1], passThese);
+          continue;
         }
+        // console.log('relaying ', messageParts[1]);
+        listener.relay(messageParts[1], passThese);
       }
-    });
-
-    listener.subscribe('challstr', this._respondToChallenge);
-    listener.subscribe('popup', this.relayPopup);
+    }
   }
 
-  send(message) {
-    ws.send(message);
-  }
+  send(message) {} // eslint-disable-line
 
-  close(message) {
-    ws.close(message);
-  }
+  close(message) {} // eslint-disable-line
 
-  relayPopup(args) {
+  _relayPopup(args) {
     console.log(args);
   }
 
@@ -133,7 +117,7 @@ class Connection {
           console.error('error trying to parse data:', err, chunks);
         }
         // console.log('sending turn...');
-        ws.send('|/trn ' + config.nick + ',0,' + chunks);
+        this.send('|/trn ' + config.nick + ',0,' + chunks);
       });
     });
 
@@ -147,10 +131,7 @@ class Connection {
     return req.end();
   }
 
-  exit() {
-    ws.close();
-  }
+  exit() {}
 }
 
-const connection = new Connection();
-export default connection;
+export default Connection;

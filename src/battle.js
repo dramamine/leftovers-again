@@ -93,21 +93,32 @@ class Battle {
     log.info('STATE:');
     log.info(JSON.stringify(currentState));
 
-    const choice = this.myBot().onRequest(currentState);
+    const result = this.myBot().onRequest(currentState);
+    const [choice, extra = null] = Battle._maybeWrap(result);
+
     if (choice instanceof Promise) {
       choice.then( (resolved) => {
-        const res = Battle._formatMessage(this.bid, resolved, currentState);
-        log.log(res);
-        this.connection.send( res );
+        const [ch, ex = null] = Battle._maybeWrap(resolved);
+        const res = Battle._formatMessage(this.bid, ch, currentState);
+        log.log('my response:' + res);
+        log.log('my extra:' + ex);
+        this.connection.send( res, ex );
       }, (err) => {
         log.err('I think there was an error here.');
         log.err(err);
       });
     } else {
       const res = Battle._formatMessage(this.bid, choice, currentState);
-      log.log(res);
-      this.connection.send( res );
+      log.log('my response:' + res);
+      log.log('my extra:');
+      console.log(extra);
+      this.connection.send( res, extra );
     }
+  }
+
+  static _maybeWrap(x) {
+    if (Array.isArray(x)) return x;
+    return [x];
   }
 
 

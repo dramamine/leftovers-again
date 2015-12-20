@@ -1,16 +1,14 @@
 import listener from './listener';
-import Battle from './battle';
-// import url from 'url';
 import http from 'http';
-import util from './util';
-import config from './config';
+import Connection from './connection';
 
 const PORT = 1337;
-const battles = {};
 let server;
+let myextra;
 
-class AjaxConnection {
+class AjaxConnection extends Connection {
   constructor() {
+    super();
   }
 
   connect() {
@@ -23,18 +21,32 @@ class AjaxConnection {
       // hopefully we can process it the same way.
 
       let body = '';
-      req.on('data', function (chunk) {
+
+      req.on('data', (chunk) => {
         body += chunk;
       });
-      req.on('end', function () {
-        console.log('POSTed: ' + body);
-        res.writeHead(200);
-        res.write('thx');
-        res.end();
+      req.on('end',  () => {
+        this._handleMessage(body);
+        setTimeout( () => {
+          res.writeHead(200, {
+            'Content-Type': 'application/json'
+          });
+          res.write(JSON.stringify(myextra));
+          res.end();
+        }, 250);
       });
     });
     server.listen(PORT);
   }
+
+  send(message, extra) {
+    myextra = extra;
+  }
+
+  close() {
+    server.close();
+  }
+
 
   // send(message) {
   //   ws.send(message);

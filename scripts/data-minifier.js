@@ -2,6 +2,9 @@
  * The data files from 'Pokemon-Showdown' have a lot of unnecessary data.
  * They're SO BIG that babel complains about 100kb+ file sizes.
  * Hopefully, nobody will miss these fields when they're gone.
+ *
+ * Run with:
+ * babel-node scripts/data-minifier.js
  */
 
 import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
@@ -42,7 +45,8 @@ function copyPokes() {
     'types',
     'baseStats',
     'heightm',
-    'weightkg'
+    'weightkg',
+    'abilities'
   ];
   for (const key in BattlePokedex) { // eslint-disable-line
     updated[key] = {};
@@ -57,7 +61,6 @@ function copyPokes() {
   if (updated.floetteeternalflower) {
     updated.floetteeternalflow = updated.floetteeternalflower;
   }
-
   fs.writeFile('data/pokedex.json', JSON.stringify(updated));
 }
 

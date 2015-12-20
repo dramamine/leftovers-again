@@ -39,28 +39,35 @@ class Stabby extends AI {
     // check each move
     let maxDamage = 0;
     let bestMove = 0;
+    const extra = {
+      moves: {}
+    };
 
     state.self.active.moves.forEach( (move, idx) => {
       if (move.disabled) return;
       let est = -1;
-      try {
+      // try {
         est = Damage.getDamageResult(
           state.self.active,
           state.opponent.active,
           move
         );
-      } catch (e) {
-        console.log(e);
-        console.log(state.self.active, state.opponent.active, move);
-      }
-      // console.log('estimated ' + est + ' for move ' + move.name);
+      // } catch (e) {
+      //   console.log(e);
+        // console.log(state.self.active, state.opponent.active, move);
+      // }
+      console.log('estimated ' + est + ' for move ' + move.name);
       if (est > maxDamage) {
         maxDamage = est;
         bestMove = idx;
       }
+
+      extra.moves[idx] = {
+        damage: est
+      };
     });
 
-    return new MOVE(bestMove);
+    return [new MOVE(bestMove), extra];
   }
 
   pickOne(arr) {
