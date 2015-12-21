@@ -21,7 +21,6 @@ class Stabby extends AI {
   }
 
   onRequest(state) {
-    // console.log('got my request...', state);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -39,35 +38,52 @@ class Stabby extends AI {
     // check each move
     let maxDamage = 0;
     let bestMove = 0;
-    const extra = {
-      moves: {}
-    };
 
     state.self.active.moves.forEach( (move, idx) => {
       if (move.disabled) return;
       let est = -1;
-      // try {
+      try {
         est = Damage.getDamageResult(
           state.self.active,
           state.opponent.active,
           move
         );
-      // } catch (e) {
-      //   console.log(e);
-        // console.log(state.self.active, state.opponent.active, move);
-      // }
+      } catch (e) {
+        console.log(e);
+        console.log(state.self.active, state.opponent.active, move);
+      }
       console.log('estimated ' + est + ' for move ' + move.name);
       if (est > maxDamage) {
         maxDamage = est;
         bestMove = idx;
       }
-
-      extra.moves[idx] = {
-        damage: est
-      };
     });
 
-    return [new MOVE(bestMove), extra];
+    return new MOVE(bestMove);
+  }
+
+  getHelp(state) {
+    const extra = {
+      moves: [],
+      switches: []
+    };
+    state.self.active.moves.forEach( (move) => {
+      if (move.disabled) return;
+      let est = -1;
+      try {
+        est = Damage.getDamageResult(
+          state.self.active,
+          state.opponent.active,
+          move
+        );
+      } catch(e) {}
+
+      extra.moves.push({
+        name: move.name,
+        damage: est
+      });
+    });
+    return extra;
   }
 
   pickOne(arr) {

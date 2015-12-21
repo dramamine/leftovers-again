@@ -1,17 +1,17 @@
-import listener from './listener';
 import http from 'http';
 import Connection from './connection';
+import log from './log';
 
 const PORT = 1337;
 let server;
-let myextra;
 
-class AjaxConnection extends Connection {
+class Ajax extends Connection {
   constructor() {
     super();
   }
 
   connect() {
+    console.log('creating a server.');
     server = http.createServer( (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Request-Method', '*');
@@ -25,45 +25,43 @@ class AjaxConnection extends Connection {
       req.on('data', (chunk) => {
         body += chunk;
       });
+
+      const self = this;
       req.on('end',  () => {
+        console.log('got my body:' + body);
         this._handleMessage(body);
-        setTimeout( () => {
-          res.writeHead(200, {
-            'Content-Type': 'application/json'
-          });
-          res.write(JSON.stringify(myextra));
+        if (body.indexOf('ask4help') > 0) {
+          let bid = null;
+          if (body.indexOf('>') === 0) {
+            bid = body.split('|')[0].replace('>', '');
+          } else {
+            log.error('strange format trying to find bid.' + body);
+          }
+
+          const btl = self._getBattle(bid);
+          if (!btl) {
+            log.error('couldnt find my battle.' + bid);
+            res.writeHead(300);
+            res.end();
+            return;
+          }
+
+          console.log('my battle:');
+          console.log(btl);
+          res.writeHead(200);
+          res.write(JSON.stringify( btl.getHelp() ));
           res.end();
-        }, 250);
+        }
       });
     });
     server.listen(PORT);
   }
-
-  send(message, extra) {
-    myextra = extra;
-  }
+  send() {}
 
   close() {
     server.close();
   }
-
-
-  // send(message) {
-  //   ws.send(message);
-  // }
-
-  // close(message) {
-  //   ws.close(message);
-  // }
-
-  // relayPopup(args) {
-  //   console.log(args);
-  // }
-
-  // exit() {
-  //   ws.close();
-  // }
 }
 
-const ajaxConnection = new AjaxConnection();
-export default ajaxConnection;
+const ajax = new Ajax();
+export default ajax;

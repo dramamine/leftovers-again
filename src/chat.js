@@ -1,5 +1,5 @@
 import listener from './listener';
-import connection from './connection';
+import socket from './socket';
 import config from './config';
 import Team from './lib/team';
 
@@ -30,7 +30,7 @@ class Chat {
       return false;
     }
 
-    connection.send('|/join ' + config.chatroom);
+    socket.send('|/join ' + config.chatroom);
   }
 
   challengeOnJoin(args) {
@@ -50,10 +50,10 @@ class Chat {
         if (AI.meta.battletype === 'anythinggoes') {
           const utmString = new Team( AI.getTeam(user) ).asUtm();
           console.log('sending utm...', utmString);
-          connection.send('|/utm ' + utmString);
+          socket.send('|/utm ' + utmString);
         }
         console.log('sending challenge...', userList[i], AI.meta.battletype);
-        connection.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
+        socket.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
       }
     }
   }
@@ -72,9 +72,9 @@ class Chat {
         // team message is: /utm ('use team')
         const utmString = new Team( AI.getTeam(username) ).asUtm();
         console.log('sending utm...', utmString);
-        connection.send('|/utm ' + utmString);
+        socket.send('|/utm ' + utmString);
 
-        connection.send('|/accept ' + username);
+        socket.send('|/accept ' + username);
       }
     }
   }

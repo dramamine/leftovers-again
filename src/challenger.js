@@ -1,5 +1,5 @@
 // import listener from './listener';
-import connection from './connection';
+import socket from './socket';
 import config from './config';
 import Team from './lib/team';
 
@@ -24,10 +24,10 @@ class Challenger {
         if (AI.meta.battletype === 'anythinggoes') {
           const utmString = new Team( AI.getTeam(user) ).asUtm();
           console.log('sending utm...', utmString);
-          connection.send('|/utm ' + utmString);
+          socket.send('|/utm ' + utmString);
         }
         console.log('sending challenge...', userList[i], AI.meta.battletype);
-        connection.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
+        socket.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
       }
     }
   }
@@ -46,10 +46,10 @@ class Challenger {
     if (AI.meta.battletype === 'anythinggoes') {
       const utmString = new Team( AI.getTeam(nick) ).asUtm();
       console.log('sending utm...', utmString);
-      connection.send('|/utm ' + utmString);
+      socket.send('|/utm ' + utmString);
     }
     console.log('sending challenge...', nick, AI.meta.battletype);
-    connection.send('|/challenge ' + nick + ', ' + AI.meta.battletype);
+    socket.send('|/challenge ' + nick + ', ' + AI.meta.battletype);
   }
 }
 

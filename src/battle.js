@@ -16,7 +16,7 @@ class Battle {
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
       turn: this.handleTurn,
-      win: this.handleWin,
+      win: this.handleWin
     };
 
     const AI = require(botpath);
@@ -29,6 +29,10 @@ class Battle {
 
   myBot() {
     return this.bot;
+  }
+
+  getHelp() {
+    return this.bot.getHelp( this.store.data() );
   }
 
 
@@ -46,6 +50,7 @@ class Battle {
   }
 
   handleRequest(json) {
+    console.log('handleRequest called with ', json);
     const data = JSON.parse(json);
 
     // this is not a request, just data.
@@ -113,6 +118,7 @@ class Battle {
       log.log('my extra:');
       console.log(extra);
       this.connection.send( res, extra );
+      return [res, extra];
     }
   }
 
