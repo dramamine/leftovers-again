@@ -20,7 +20,7 @@ class Battle {
     };
 
     const AI = require(botpath);
-    log.log('crafting new AI');
+    // log.log('crafting new AI');
     this.bot = new AI();
 
     this.connection = connection;
@@ -98,27 +98,20 @@ class Battle {
     log.info('STATE:');
     log.info(JSON.stringify(currentState));
 
-    const result = this.myBot().onRequest(currentState);
-    const [choice, extra = null] = Battle._maybeWrap(result);
-
+    const choice = this.myBot().onRequest(currentState);
     if (choice instanceof Promise) {
       choice.then( (resolved) => {
-        const [ch, ex = null] = Battle._maybeWrap(resolved);
-        const res = Battle._formatMessage(this.bid, ch, currentState);
-        log.log('my response:' + res);
-        log.log('my extra:' + ex);
-        this.connection.send( res, ex );
+        const res = Battle._formatMessage(this.bid, resolved, currentState);
+        log.log(res);
+        this.connection.send( res );
       }, (err) => {
         log.err('I think there was an error here.');
         log.err(err);
       });
     } else {
       const res = Battle._formatMessage(this.bid, choice, currentState);
-      log.log('my response:' + res);
-      log.log('my extra:');
-      console.log(extra);
-      this.connection.send( res, extra );
-      return [res, extra];
+      log.log(res);
+      this.connection.send( res );
     }
   }
 
