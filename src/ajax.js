@@ -52,6 +52,8 @@ class Ajax extends Connection {
           res.write(JSON.stringify( btl.getHelp() ));
           res.end();
         }
+        res.writeHead(200);
+        res.end();
       });
     });
     server.listen(PORT);

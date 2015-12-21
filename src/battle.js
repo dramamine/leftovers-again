@@ -16,7 +16,8 @@ class Battle {
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
       turn: this.handleTurn,
-      win: this.handleWin
+      win: this.handleWin,
+      ask4help: this.getHelp
     };
 
     const AI = require(botpath);
@@ -32,7 +33,7 @@ class Battle {
   }
 
   getHelp() {
-    return this.bot.getHelp( this.store.data() );
+    this.connection.send( JSON.stringify( this.bot.getHelp( this.store.data() ) ) );
   }
 
 

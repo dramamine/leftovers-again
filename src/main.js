@@ -1,8 +1,9 @@
 // load all the modules we need
-require('./chat');
+
 require('./listener');
 import socket from './socket';
 import ajax from './ajax';
+import monkey from './monkey';
 import config from './config';
 
 const argv = require('minimist')(process.argv.slice(2));
@@ -10,14 +11,16 @@ if (argv.bot) {
   console.log('good, loading my bot.');
   config.botPath = argv.bot;
 }
-
+let myconnection;
 if (argv.ajax) {
-  console.log('using an ajax connection.');
-  ajax.connect();
-  // sending my own insecure messages
+  myconnection = ajax;
+} else if (argv.monkey) {
+  myconnection = monkey;
+} else {
+  myconnection = socket;
 }
 
-socket.connect();
+myconnection.connect();
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using
@@ -31,8 +34,7 @@ socket.connect();
 function exitHandler(options, err) {
   if (options.cleanup) console.log('clean');
   if (err) console.log(err.stack);
-  socket.close();
-  ajax.close();
+  myconnection.close();
   if (options.exit) process.exit();
 }
 

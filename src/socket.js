@@ -5,7 +5,8 @@ import Connection from './connection';
 import config from './config';
 import util from './util';
 import https from 'https';
-
+// sorry we're requiring this here :(
+require('./chat');
 
 let ws;
 const requestUrl = url.parse(config.actionurl);
