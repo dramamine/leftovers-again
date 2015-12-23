@@ -62,30 +62,6 @@ class Stabby extends AI {
     return new MOVE(bestMove);
   }
 
-  getHelp(state) {
-    const extra = {
-      moves: [],
-      switches: []
-    };
-    state.self.active.moves.forEach( (move) => {
-      if (move.disabled) return;
-      let est = -1;
-      try {
-        est = Damage.getDamageResult(
-          state.self.active,
-          state.opponent.active,
-          move
-        );
-      } catch(e) {}
-
-      extra.moves.push({
-        name: move.name,
-        damage: est
-      });
-    });
-    return extra;
-  }
-
   pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }

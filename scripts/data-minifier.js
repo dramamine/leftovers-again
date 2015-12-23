@@ -9,6 +9,7 @@
 
 import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
 import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
+import {BattleFormatsData} from '../lib/Pokemon-Showdown/data/formats-data';
 import fs from 'fs';
 
 function copyMoves() {
@@ -64,5 +65,22 @@ function copyPokes() {
   fs.writeFile('data/pokedex.json', JSON.stringify(updated));
 }
 
+function copyFormats() {
+  const updated = {};
+  const keysToCopy = [
+    'randomBattleMoves'
+  ];
+  for (const key in BattleFormatsData) { // eslint-disable-line
+    console.log('looking at ' + key);
+    updated[key] = {};
+    keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
+      updated[key] = BattleFormatsData[key][keyToCopy];
+    });
+  }
+
+  fs.writeFile('data/randommoves.json', JSON.stringify(updated));
+}
+
 copyMoves();
 copyPokes();
+copyFormats();

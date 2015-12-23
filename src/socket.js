@@ -5,8 +5,7 @@ import Connection from './connection';
 import config from './config';
 import util from './util';
 import https from 'https';
-// sorry we're requiring this here :(
-require('./chat');
+import Chat from './chat';
 
 let ws;
 const requestUrl = url.parse(config.actionurl);
@@ -28,6 +27,8 @@ class Socket extends Connection {
 
     listener.subscribe('challstr', this._respondToChallenge.bind(this));
     listener.subscribe('popup', this._relayPopup);
+
+    this.chat = new Chat();
   }
 
   send(message) {
@@ -36,6 +37,8 @@ class Socket extends Connection {
 
   close(message) {
     ws.close(message);
+    this.chat.destroy();
+    this.chat = null;
   }
 
   exit() {

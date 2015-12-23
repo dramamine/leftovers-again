@@ -51,7 +51,6 @@ class Battle {
   }
 
   handleRequest(json) {
-    console.log('handleRequest called with ', json);
     const data = JSON.parse(json);
 
     // this is not a request, just data.

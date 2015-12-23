@@ -19,6 +19,12 @@ class Chat {
     }
   }
 
+  destroy() {
+    listener.unsubscribe('updateuser', this.onUpdateUser);
+    listener.unsubscribe('updatechallenges', this.acceptChallenges);
+    listener.unsubscribe('users', this.challengeOnJoin);
+  }
+
   onUpdateUser(args) {
     // this includes a 3rd parameter, i.e. "mysterycode". who knows.
     const [nick, status] = args;
@@ -81,5 +87,4 @@ class Chat {
   }
 }
 
-const chat = new Chat();
-export default chat;
+export default Chat;
