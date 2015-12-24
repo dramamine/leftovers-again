@@ -4,7 +4,7 @@
  */
 import BattleMovedex from '../data/moves';
 import BattlePokedex from '../data/pokedex';
-import log from '../log';
+import log from './log';
 
 class Util {
   toId(text) {

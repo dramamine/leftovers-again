@@ -66,7 +66,7 @@ class Infodump extends AI {
   }
 
   getHelp(state) {
-    console.log('infodumps help state:: ', state);
+    // console.log('infodumps help state:: ', state);
     const extra = {
       moves: this._moves(state),
       opponent: this._opponent(state),
@@ -151,6 +151,7 @@ class Infodump extends AI {
 
 
       return {
+        species: mon.species,
         maxDamage: oppCalcMoves[0].dmg,
         results: oppCalcMoves,
         strength,

@@ -328,73 +328,83 @@ export default {
         "owner": "p2"
       },
       {
-        "condition": "252/252",
+        "condition": "250/250",
         "conditions": [],
-        "species": "Solrock",
+        "species": "Landorus",
         "moves": [
           {
-            "accuracy": true,
-            "category": "Status",
-            "id": "reflect",
-            "name": "Reflect",
-            "flags": {
-              "snatch": 1
-            },
-            "type": "Psychic"
-          },
-          {
-            "accuracy": true,
-            "category": "Status",
-            "id": "morningsun",
-            "name": "Morning Sun",
-            "flags": {
-              "snatch": 1,
-              "heal": 1
-            },
-            "type": "Normal"
-          },
-          {
-            "accuracy": true,
-            "category": "Status",
-            "id": "lightscreen",
-            "name": "Light Screen",
-            "flags": {
-              "snatch": 1
-            },
-            "type": "Psychic"
-          },
-          {
-            "accuracy": 90,
-            "basePower": 75,
-            "category": "Physical",
-            "id": "rockslide",
-            "name": "Rock Slide",
+            "accuracy": 100,
+            "basePower": 90,
+            "category": "Special",
+            "id": "psychic",
+            "name": "Psychic",
             "flags": {
               "protect": 1,
               "mirror": 1
             },
+            "target": "normal",
+            "type": "Psychic"
+          },
+          {
+            "accuracy": true,
+            "category": "Status",
+            "id": "calmmind",
+            "name": "Calm Mind",
+            "flags": {
+              "snatch": 1
+            },
+            "target": "self",
+            "type": "Psychic"
+          },
+          {
+            "accuracy": 100,
+            "basePower": 90,
+            "category": "Special",
+            "id": "earthpower",
+            "name": "Earth Power",
+            "flags": {
+              "protect": 1,
+              "mirror": 1,
+              "nonsky": 1
+            },
+            "target": "normal",
+            "type": "Ground"
+          },
+          {
+            "accuracy": true,
+            "category": "Status",
+            "id": "rockpolish",
+            "name": "Rock Polish",
+            "flags": {
+              "snatch": 1
+            },
+            "target": "self",
             "type": "Rock"
           }
         ],
-        "hp": 252,
-        "maxhp": 252,
+        "hp": 250,
+        "maxhp": 250,
         "hppct": 100,
+        "active": true,
         "types": [
-          "Rock",
-          "Psychic"
+          "Ground",
+          "Flying"
         ],
         "baseStats": {
-          "hp": 70,
-          "atk": 95,
-          "def": 85,
-          "spa": 55,
-          "spd": 65,
-          "spe": 70
+          "hp": 89,
+          "atk": 125,
+          "def": 90,
+          "spa": 115,
+          "spd": 80,
+          "spe": 101
         },
         "abilities": {
-          "0": "Levitate"
+          "0": "Sand Force",
+          "H": "Sheer Force"
         },
-        "weightkg": 154,
+        "baseAbility": "sheerforce",
+        "weightkg": 68,
+        "position": "p2a",
         "owner": "p2"
       },
       {
