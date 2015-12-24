@@ -16,22 +16,9 @@ moves.forEach( (move) => {
   Object.assign(move, util.researchMoveById(move.id));
 });
 
-// const sampleState = {
-//   activeOpponent: battle.processMon({
-//     ident: 'p2: Blissey',
-//     details: 'Blissey, L83, M',
-//     condition: '100/100'
-//   }),
-//   myActive: battle.processMon({
-//     ident: 'p1: Pyroar',
-//     details: 'Pyroar, L83, M',
-//     condition: '100/100',
-//     moves
-//   })
-// };
 
 
-xdescribe('xy-elitefour-malva', () => {
+describe('xy-elitefour-malva', () => {
   describe('sumFitness', () => {
     it('handles boolean values', () => {
       elite.weights.thing = {
@@ -101,23 +88,4 @@ xdescribe('xy-elitefour-malva', () => {
       expect(elite.pickMoveByFitness(arr)).not.toEqual('whine');
     });
   });
-
-  describe('onRequest', () => {
-    it('should pick some move that is valid', () => {
-      const result = elite.onRequest(sampleState);
-      console.log(result);
-      expect(['hypervoice', 'nobleroar', 'flamethrower', 'wildcharge'].indexOf(result)).toBeGreaterThan(-1);
-    });
-  });
-
-
-  // it('picks moves randomly', () => {
-  //   const state = {
-  //     active: [{
-  //       moves: [{ disabled: false, pp: 99 },
-  //       { disabled: false, pp: 99 },
-  //       { disabled: false, pp: 99 },
-  //       { disabled: false, pp: 99 }]
-  //     }]
-  //   };
 });
