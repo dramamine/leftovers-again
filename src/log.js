@@ -11,6 +11,7 @@ import colors from 'colors/safe';
 // grey
 
 let loglevel = 3;
+// sorry for checking these here.
 const argv = require('minimist')(process.argv.slice(2));
 if (argv.loglevel) {
   loglevel = argv.loglevel;

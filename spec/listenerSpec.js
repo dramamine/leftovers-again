@@ -1,6 +1,5 @@
 import listener from '../src/listener';
 
-
 describe('listener', () => {
   it('should load listener', () => {
     expect(listener).toBeDefined();

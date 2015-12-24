@@ -31,7 +31,7 @@ class Report {
       damageDone,
       damageTaken,
       me: store.myNick,
-      you: store.opponentNick,
+      you: store.yourNick,
       mine: state.self.reserve,
       yours: state.opponent.reserve,
       events: store.events,
