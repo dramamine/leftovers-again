@@ -38,7 +38,7 @@ describe('Pokemon', () => {
       expect(mon.hppct).toEqual(100);
       expect(mon.condition).toEqual(cond);
       expect(mon.conditions.length).toEqual(0);
-      expect(mon.dead).toBe(false);
+      expect(mon.dead).toBe(undefined);
     });
 
     it('should parse an unhealthy condition', () => {
@@ -49,7 +49,7 @@ describe('Pokemon', () => {
       expect(mon.hppct).toEqual(10);
       expect(mon.condition).toEqual(cond);
       expect(mon.conditions.length).toEqual(2);
-      expect(mon.dead).toBe(false);
+      expect(mon.dead).toBe(undefined);
     });
 
     it('should parse death', () => {

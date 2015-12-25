@@ -8,6 +8,35 @@ const SD = 'spd';
 const SP = 'spe';
 const gen = 6;
 
+const NATURES = {
+  'adamant': [AT, SA],
+  'bashful': [null, null],
+  'bold': [DF, AT],
+  'brave': [AT, SP],
+  'calm': [SD, AT],
+  'careful': [SD, SA],
+  'docile': [null, null],
+  'gentle': [SD, DF],
+  'hardy': [null, null],
+  'hasty': [SP, DF],
+  'impish': [DF, SA],
+  'jolly': [SP, SA],
+  'lax': [DF, SD],
+  'lonely': [AT, DF],
+  'mild': [SA, DF],
+  'modest': [SA, AT],
+  'naive': [SP, SD],
+  'naughty': [AT, SD],
+  'quiet': [SA, SP],
+  'quirky': [null, null],
+  'rash': [SA, SD],
+  'relaxed': [DF, SP],
+  'sassy': [SD, SP],
+  'serious': [null, null],
+  'timid': [SP, AT]
+};
+
+
 // DO NOT WANT
 function buildDescription() {
   return '';
@@ -30,7 +59,7 @@ class Damage {
     mon.type2 = (mon.types.length === 2)
       ? mon.types[1]
       : '';
-    mon.nature = 'jolly';
+    mon.nature = 'serious';
 
     // this is true...
     mon.rawStats = mon.baseStats;
@@ -54,8 +83,8 @@ class Damage {
       ? mon.conditions.join(' ') // string vs array
       : '';
     mon.level = 50;
-    mon.hp = mon.baseStats.hp * 4;
-    mon.maxhp = mon.baseStats.hp * 4;
+    mon.hp = mon.stats.hp * 4;
+    mon.maxhp = mon.stats.hp * 4;
     mon.ability = mon.ability || mon.abilities['0'];
     mon.item = '';
     mon.gender = 'M';
@@ -127,6 +156,84 @@ class Damage {
   //  getSide()
   //  getWeather() (related: checkForecast)
   // }
+  //
+  getMinDamageResult(attacker, defender, move, field) {
+
+  }
+  /**
+   * Make assumptions about how awesome this move will be.
+   *
+   * @param  {[type]} attacker [description]
+   * @param  {[type]} defender [description]
+   * @param  {[type]} move     [description]
+   * @param  {[type]} field    [description]
+   * @return {[type]}          [description]
+   */
+  getMaxDamageResult(attacker, defender, move, field) {
+    attacker.stats = attacker.stats || {};
+    attacker.level = attacker.level || 100;
+
+    // (((Base * 2 + IV + EV/4) * Level / 100) + 5)
+    // ex. base 1, IV 31, EV 4 = 39
+    // ex. base 1, IV 31, EV 40 = 48
+
+    [AT, SA].forEach( stat => {
+      _maximizeStat(attacker, stat);
+    });
+    [DF, SD, SP, HP].forEach( stat => {
+      _assumeStat(attacker, stat);
+    });
+
+    [DF, SD, HP].forEach( stat => {
+      _minimizeStat(defender, stat);
+    });
+    [AT, SA, SP].forEach( stat => {
+      _assumeStat(defender, stat);
+    });
+
+    return getDamageResult(attacker, defender, move, field);
+  }
+
+  _maximizeStat(mon, stat) {
+    return _assumeStat(mon, stat, 252, 1.1);
+  }
+
+
+  _minimizeStat(mon, stat) {
+    return _assumeStat(mon, stat, 0, 0.9);
+  }
+
+  _assumeStat(mon, stat, evs = 0, natureMultiplier = 1) {
+    const evBonus = evs / 4;
+    console.log('using evBonus', evs);
+    const addThis = stat === 'hp' ? (mon.level + 10) : 5;
+    if (!mon.stats[stat]) {
+      mon.stats[stat] = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
+        (mon.level / 100) + addThis) *
+        (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : natureMultiplier);
+    }
+  }
+
+  _copyFromRaw(mon, stat) {
+    if (!mon.stats[stat]) {
+      // max IVs, no EVs, boring nature
+      mon.stats[stat] = (mon.baseStats[stat] * 2 + 31) *
+        (mon.level / 100) *
+        (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : 1);
+    }
+  }
+
+  _getNatureMultiplier(nature, stat) {
+    if (!nature) return 1;
+    if (!NATURES[nature]) {
+      console.log('invalid nature! ' + nature);
+      return 1;
+    }
+    if (NATURES[nature][0] === stat) return 1.1;
+    if (NATURES[nature][1] === stat) return 0.9;
+    return 1;
+  }
+
   getDamageResult(attacker, defender, move, field = defaultField) {
     if (typeof attacker === 'string') {
       attacker = util.researchPokemonById(attacker);
