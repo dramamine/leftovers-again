@@ -158,7 +158,26 @@ class Damage {
   // }
   //
   getMinDamageResult(attacker, defender, move, field) {
+    attacker.stats = attacker.stats || {};
+    attacker.level = attacker.level || 100;
+    defender.stats = defender.stats || {};
+    defender.level = defender.level || 100;
 
+    [AT, SA].forEach( stat => {
+      _minimizeStat(attacker, stat);
+    });
+    [DF, SD, SP, HP].forEach( stat => {
+      _assumeStat(attacker, stat);
+    });
+
+    [DF, SD, HP].forEach( stat => {
+      _maximizeStat(defender, stat);
+    });
+    [AT, SA, SP].forEach( stat => {
+      _assumeStat(defender, stat);
+    });
+
+    return getDamageResult(attacker, defender, move, field);
   }
   /**
    * Make assumptions about how awesome this move will be.
@@ -172,10 +191,8 @@ class Damage {
   getMaxDamageResult(attacker, defender, move, field) {
     attacker.stats = attacker.stats || {};
     attacker.level = attacker.level || 100;
-
-    // (((Base * 2 + IV + EV/4) * Level / 100) + 5)
-    // ex. base 1, IV 31, EV 4 = 39
-    // ex. base 1, IV 31, EV 40 = 48
+    defender.stats = defender.stats || {};
+    defender.level = defender.level || 100;
 
     [AT, SA].forEach( stat => {
       _maximizeStat(attacker, stat);
@@ -194,35 +211,76 @@ class Damage {
     return getDamageResult(attacker, defender, move, field);
   }
 
+  /**
+   * Use the maximum value for a stat. This means we'll use 252 EVs and a
+   * strong nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we're assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see _assumeStat
+   */
   _maximizeStat(mon, stat) {
     return _assumeStat(mon, stat, 252, 1.1);
   }
 
-
+  /**
+   * Use the minimum value for a stat. This means we'll use 0 EVs and a weak
+   * nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we're assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see _assumeStat
+   */
   _minimizeStat(mon, stat) {
     return _assumeStat(mon, stat, 0, 0.9);
   }
 
+  /**
+   * Updates a certain stat if it isn't already set.
+   *
+   * Hope these formulas are right!
+   *
+   * HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
+   * Stat = (((Base * 2 + IV + EV/4) * Level / 100) + 5) * Naturemod
+   *
+   * @param  {Object} mon The pokemon object. This is modified directly.
+   * Expects the following properties:
+   * level: {Number} The Pokemon's level
+   * baseStats: {Object} The Pokemon's unmodified (pre-EV and IV) stats
+   * stats: {Object} The Pokemon's modified stats.
+   * nature: {String} (optional) The Pokemon's nature; use natureMultiplier if
+   * this is undefined.
+   * @param  {Enum/String} stat The stat to maybe update.
+   * @param  {Number} evs The EV number, ex. 252.
+   * @param  {Number} natureMultiplier The nature multiplier to use if the
+   *                                   mon doesn't have a nature set. Should
+   *                                   be in [0.9, 1, 1.1].
+   */
   _assumeStat(mon, stat, evs = 0, natureMultiplier = 1) {
-    const evBonus = evs / 4;
-    console.log('using evBonus', evs);
-    const addThis = stat === 'hp' ? (mon.level + 10) : 5;
     if (!mon.stats[stat]) {
+      const evBonus = Math.floor(evs / 4);
+      const addThis = stat === 'hp' ? (mon.level + 10) : 5;
       mon.stats[stat] = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
         (mon.level / 100) + addThis) *
         (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : natureMultiplier);
     }
+    return mon;
   }
 
-  _copyFromRaw(mon, stat) {
-    if (!mon.stats[stat]) {
-      // max IVs, no EVs, boring nature
-      mon.stats[stat] = (mon.baseStats[stat] * 2 + 31) *
-        (mon.level / 100) *
-        (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : 1);
-    }
-  }
-
+  /**
+   * Get the multiplier for a given nature and stat.
+   *
+   * @param  {String/Enum} nature A nature.
+   * @param  {String/Enum} stat   A stat.
+   * @return {Number} A number in [0.9, 1, 1.1]. 1 is returned for undefined
+   * natures.
+   */
   _getNatureMultiplier(nature, stat) {
     if (!nature) return 1;
     if (!NATURES[nature]) {

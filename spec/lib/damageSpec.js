@@ -113,7 +113,6 @@ describe('damage calculator', () => {
       Damage._assumeStat(mon, 'hp', 252);
       expect(mon.stats.hp).toEqual((33 + 63) * 0.5 + 50 + 10);
     });
-
   });
 });
 
