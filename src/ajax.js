@@ -5,6 +5,10 @@ import log from './log';
 const PORT = 1337;
 let server;
 
+/**
+ * 2015/12/28 This class is pretty gross and should probably be deleted.
+ *
+ */
 class Ajax extends Connection {
   constructor() {
     super();

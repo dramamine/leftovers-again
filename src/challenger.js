@@ -3,11 +3,19 @@ import socket from './socket';
 import config from './config';
 import Team from './lib/team';
 
+/**
+ * Used for managing challenges to other users.
+ */
 class Challenger {
   constructor() {
-
   }
 
+  /**
+   * Take a join message and challenge everyone who's in the lobby.
+   * @param  {array?} args An array containing the comma-separated list of
+   * usernames.
+   *
+   */
   challengeOnJoin(args) {
     let user; // user for iterator
     const [usersStr] = args;
@@ -15,7 +23,7 @@ class Challenger {
     // userlist[0] is just the count of users. skip it
     for (let i = 1; i < userList.length; i++) {
       user = userList[i];
-      // don't challenge yourself
+      // don't challenge yourself. (ha)
       if (config.nick !== user) {
             // @TODO this is arranged badly
         const Bot = require(config.botPath);
@@ -32,6 +40,12 @@ class Challenger {
     }
   }
 
+  /**
+   * Consider challenging this user.
+   *
+   * @param  {[type]} nick [description]
+   * @return {[type]}      [description]
+   */
   challenge(nick) {
     console.log('challenge called.', nick);
     const args = process.argv.slice(2);

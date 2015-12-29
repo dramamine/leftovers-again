@@ -49,6 +49,9 @@ function exitHandler(options, err) {
   if (options.exit) process.exit();
 }
 
+/**
+ * Show the help menu.
+ */
 function _displayHelp() {
   console.log(`
 Leftovers Again: interface for Pokemon Showdown bots

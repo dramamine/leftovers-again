@@ -6,12 +6,28 @@ import {MOVE, SWITCH} from './decisions';
 import report from './report';
 import challenger from './challenger';
 
-
+/**
+ * This class manages a single battle. It handles these tasks:
+ * - maintaining battle state via its BattleStore
+ * - managing the AI instance
+ * - translating AI responses into server responses
+ * - handling the end of the match
+ */
 class Battle {
+  /**
+   * Construct a Battle instance.
+   * @param  {string} bid The battle ID; essential for server communication
+   * @param  {Connection} connection The connection instance to use for
+   * sending and receiving messages.
+   * @param  {string} botpath The path to the bot JS file to use. The file it
+   * grabs will be found at leftovers-again/bots/[botpath].js
+   *
+   */
   constructor(bid, connection, botpath = config.botPath) {
     // battle ID
     this.bid = bid;
 
+    // Messages we want to handle, and their handlers.
     this.handlers = {
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
@@ -21,22 +37,37 @@ class Battle {
     };
 
     const AI = require(botpath);
-    // log.log('crafting new AI');
     this.bot = new AI();
 
     this.connection = connection;
     this.store = new BattleStore();
   }
 
+  /**
+   * Getter for my bot instance
+   * @return {object} An AI instance of the file located at the botpath
+   */
   myBot() {
     return this.bot;
   }
 
+  /**
+   * Secret function for getting information, not just decisions, from your AI
+   * instance. It sends a 'help' message to the server.
+   *
+   * This is very undocumented so don't use it.
+   */
   getHelp() {
     this.connection.send( JSON.stringify( this.bot.getHelp( this.store.data() ) ) );
   }
 
 
+  /**
+   * Send all server messages through to your battle store, then handle them
+   * within this class. See this.handlers to see what we're handling.
+   * @param  {string} type    The type of message.
+   * @param  {array} message  The parameters to this message.
+   */
   handle(type, message) {
     // handle store stuff first!
     this.store.handle(type, message);
@@ -46,19 +77,37 @@ class Battle {
     }
   }
 
+  /**
+   * Handles the 'team preview' message. This is the phase of matches where
+   * you see your opponent's team and decide who you want to send out first.
+   * Each bot must handle this message.
+   *
+   * @TODO is this necessary or should we do this in handleRequest?
+   */
   handleTeamPreview() {
     this.decide();
   }
 
+  /**
+   * Handles a request.
+   *
+   * For certain requests, we want to immediately request a decision from our
+   * bot. These situations are:
+   * teamPreview: This is a team preview request
+   * forceSwitch: Due to moves / feinting, we must switch our active mon
+   * @param  {string} json The request JSON
+   */
   handleRequest(json) {
     const data = JSON.parse(json);
 
     // this is not a request, just data.
+    // @TODO probably unnecessary
     if (!data.rqid) {
       return false;
     }
 
     // do what it says.
+    // @TODO probably unnecessary
     if (data.wait) {
       return false;
     }
@@ -89,8 +138,8 @@ class Battle {
   }
 
   /**
+   * Asks the AI to make a decision, then sends it to the server.
    *
-   * @return {[type]} [description]
    */
   decide() {
     const currentState = this.store.data();
@@ -115,12 +164,18 @@ class Battle {
     }
   }
 
-  static _maybeWrap(x) {
-    if (Array.isArray(x)) return x;
-    return [x];
-  }
-
-
+  /**
+   * Formats the message into something we can send to the server.
+   *
+   * @param  {string} bid    The battle ID
+   * @param  {Choice} choice The choice we made. Choice must be an Object of
+   * type MOVE or SWITCH.
+   * @param  {BattleState} state  The current battle state.
+   *
+   * @return {string} The string to send to the server.
+   *
+   * @see __constructor
+   */
   static _formatMessage(bid, choice, state) {
     let verb;
     if (choice instanceof MOVE) {
@@ -131,17 +186,27 @@ class Battle {
         exit;
       }
 
-      verb = '/move ' + (moveIdx + 1);
+      verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
     } else if (choice instanceof SWITCH) {
       verb = (state.teamPreview)
         ? '/team '
         : '/switch ';
       const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
-      verb = verb + (monIdx + 1);
+      verb = verb + (monIdx + 1); // switch indexes for the server are [1..6]
     }
     return `${bid}|${verb}|${state.rqid}`;
   }
 
+  /**
+   * Helper function for translating a move into the move index, which is what
+   * the server needs from the move. Move index is in [0..3].
+   *
+   * @param  {array} moves The array of Move objects from which we're drawing.
+   * @param  {mixed} idx   The 0-indexed numeric index, the Move object, or the
+   * move ID (lowercased, no spaces) of the move we're choosing.
+   *
+   * @return {number} The move index.
+   */
   static _lookupMoveIdx(moves, idx) {
     if (typeof(idx) === 'number') {
       return idx;
@@ -154,6 +219,16 @@ class Battle {
     }
   }
 
+  /**
+   * Helper function for translating a switch into the switch index, which is
+   * what the server needs from the switch. Switch index is in [0..5].
+   *
+   * @param  {array} mons The possible Pokemons.
+   * @param  {mixed} idx  The numeric index, the Pokemon object, or the species
+   * name (lowercased, no spaces) of the Pokemon we want to switch into.
+   *
+   * @return {number} The switch index.
+   */
   static _lookupMonIdx(mons, idx) {
     switch (typeof(idx)) {
     case 'number':
@@ -168,12 +243,6 @@ class Battle {
       console.log('not a valid choice!', idx, mons);
     }
   }
-
-  processMon() {
-    return null;
-  }
-
-
 }
 
 export default Battle;
