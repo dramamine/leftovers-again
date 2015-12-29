@@ -9,25 +9,27 @@ describe('Infodump', () => {
   });
   it('should mention that my water type is weak against opp\'s electric', () => {
     const res = infodump.getHelp(state);
-    const mine = res.switches.find(mon => mon.species === 'Seaking');
+    const seaking = res.switches.find(mon => mon.species === 'Seaking');
 
-    expect(mine.weakness).toBe(true);
-    expect(mine.strength).toBe(false);
+    expect(seaking.weakness).toBe(true);
+    expect(seaking.strength).toBe(false);
+    expect(seaking.yourBest.name).toEqual('thunderbolt');
   });
   it('should mention that my electric type is neutral against opp\'s electric', () => {
     const res = infodump.getHelp(state);
-    const mine = res.switches.find(mon => mon.species === 'Eelektross');
+    const elektross = res.switches.find(mon => mon.species === 'Eelektross');
 
-    expect(mine.weakness).toBe(false);
-    expect(mine.strength).toBe(false);
+    expect(elektross.weakness).toBe(false);
+    expect(elektross.strength).toBe(false);
+
   });
   it('should mention that my ground/flying type is strong & weak against opp\'s electric', () => {
     const res = infodump.getHelp(state);
-    console.log('my switches:');
-    console.log(JSON.stringify(res.switches));
-    const mine = res.switches.find(mon => mon.species === 'Landorus');
+    const landorus = res.switches.find(mon => mon.species === 'Landorus');
 
-    expect(mine.weakness).toBe(true);
-    expect(mine.strength).toBe(true);
+    expect(landorus.weakness).toBe(true);
+    expect(landorus.strength).toBe(true);
+    expect(landorus.myBest.name).toBe('earthpower');
+
   });
 });

@@ -6,7 +6,10 @@ const DF = 'def';
 const SA = 'spa';
 const SD = 'spd';
 const SP = 'spe';
+const HP = 'hp';
 const gen = 6;
+
+const ASSUME_LEVEL = 75;
 
 const NATURES = {
   'adamant': [AT, SA],
@@ -61,19 +64,22 @@ class Damage {
       : '';
     mon.nature = 'serious';
 
+    mon.level = mon.level || ASSUME_LEVEL;
     // this is true...
-    mon.rawStats = mon.baseStats;
+    mon.baseStats;
 
-    // @TODO this ain't! huge shortcut here.
     if (!mon.stats) {
-      mon.stats = mon.baseStats;
+      mon.stats = {};
+      [AT, SA, DF, SD, SP, HP].forEach( stat => {
+        this._assumeStat(mon, stat);
+      });
     }
 
+    // @TODO huge assumption here too!
     mon.boosts = {};
 
     this.makeAssumptions(mon);
 
-    // console.log(mon);
     return mon;
   }
 
@@ -82,9 +88,6 @@ class Damage {
     mon.status = (mon.conditions)
       ? mon.conditions.join(' ') // string vs array
       : '';
-    mon.level = 50;
-    mon.hp = mon.stats.hp * 4;
-    mon.maxhp = mon.stats.hp * 4;
     mon.ability = mon.ability || mon.abilities['0'];
     mon.item = '';
     mon.gender = 'M';
@@ -121,7 +124,7 @@ class Damage {
   //  nature:
   //  status:
   //  stats: (ex. stats[SP])
-  //  rawStats: (stats before boosts)
+  //  baseStats: (stats before boosts)
   //
   //
   // },
@@ -157,27 +160,30 @@ class Damage {
   //  getWeather() (related: checkForecast)
   // }
   //
-  getMinDamageResult(attacker, defender, move, field) {
+  getMinDamageResult(a, d, move, field) {
+    const attacker = Object.assign({}, a);
+    const defender = Object.assign({}, d);
+
     attacker.stats = attacker.stats || {};
-    attacker.level = attacker.level || 100;
+    attacker.level = attacker.level || ASSUME_LEVEL;
     defender.stats = defender.stats || {};
-    defender.level = defender.level || 100;
+    defender.level = defender.level || ASSUME_LEVEL;
 
     [AT, SA].forEach( stat => {
-      _minimizeStat(attacker, stat);
+      this._minimizeStat(attacker, stat);
     });
     [DF, SD, SP, HP].forEach( stat => {
-      _assumeStat(attacker, stat);
+      this._assumeStat(attacker, stat);
     });
 
     [DF, SD, HP].forEach( stat => {
-      _maximizeStat(defender, stat);
+      this._maximizeStat(defender, stat);
     });
     [AT, SA, SP].forEach( stat => {
-      _assumeStat(defender, stat);
+      this._assumeStat(defender, stat);
     });
 
-    return getDamageResult(attacker, defender, move, field);
+    return this.getDamageResult(attacker, defender, move, field);
   }
   /**
    * Make assumptions about how awesome this move will be.
@@ -188,27 +194,29 @@ class Damage {
    * @param  {[type]} field    [description]
    * @return {[type]}          [description]
    */
-  getMaxDamageResult(attacker, defender, move, field) {
+  getMaxDamageResult(a, d, move, field) {
+    const attacker = Object.assign({}, a);
+    const defender = Object.assign({}, d);
     attacker.stats = attacker.stats || {};
-    attacker.level = attacker.level || 100;
+    attacker.level = attacker.level || ASSUME_LEVEL;
     defender.stats = defender.stats || {};
-    defender.level = defender.level || 100;
+    defender.level = defender.level || ASSUME_LEVEL;
 
     [AT, SA].forEach( stat => {
-      _maximizeStat(attacker, stat);
+      this._maximizeStat(attacker, stat);
     });
     [DF, SD, SP, HP].forEach( stat => {
-      _assumeStat(attacker, stat);
+      this._assumeStat(attacker, stat);
     });
 
     [DF, SD, HP].forEach( stat => {
-      _minimizeStat(defender, stat);
+      this._minimizeStat(defender, stat);
     });
     [AT, SA, SP].forEach( stat => {
-      _assumeStat(defender, stat);
+      this._assumeStat(defender, stat);
     });
 
-    return getDamageResult(attacker, defender, move, field);
+    return this.getDamageResult(attacker, defender, move, field);
   }
 
   /**
@@ -223,7 +231,7 @@ class Damage {
    * @see _assumeStat
    */
   _maximizeStat(mon, stat) {
-    return _assumeStat(mon, stat, 252, 1.1);
+    return this._assumeStat(mon, stat, 252, 1.1);
   }
 
   /**
@@ -238,7 +246,7 @@ class Damage {
    * @see _assumeStat
    */
   _minimizeStat(mon, stat) {
-    return _assumeStat(mon, stat, 0, 0.9);
+    return this._assumeStat(mon, stat, 0, 0.9);
   }
 
   /**
@@ -292,6 +300,22 @@ class Damage {
     return 1;
   }
 
+  /**
+   * Helper function to get min/max damage range.
+   *
+   * @param  {[type]} attacker [description]
+   * @param  {[type]} defender [description]
+   * @param  {[type]} move     [description]
+   * @param  {[type]} field    [description]
+   * @return {[type]}          [description]
+   */
+  getDamageRange(attacker, defender, move, field = defaultField) {
+    return [
+      this.getMinDamageResult(attacker, defender, move, field),
+      this.getMaxDamageResult(attacker, defender, move, field)
+    ];
+  }
+
   getDamageResult(attacker, defender, move, field = defaultField) {
     if (typeof attacker === 'string') {
       attacker = util.researchPokemonById(attacker);
@@ -307,6 +331,8 @@ class Damage {
     defender = this.processPokemon(defender);
     move = this.processMove(move);
 
+
+
     const description = {
       'attackerName': attacker.species,
       'moveName': move.name,
@@ -316,10 +342,11 @@ class Damage {
     // console.log(description);
 
     if (move.bp === 0) {
-      return {
-        'damage': [0],
-        'description': buildDescription(description)
-      };
+      return 0;
+    }
+
+    if (['Physical', 'Special'].indexOf(move.category) === -1) {
+      return 0;
     }
 
     let defAbility = defender.ability || '';
@@ -372,7 +399,6 @@ class Damage {
     if (typeEffectiveness === 0) {
       return 0;
     }
-
     if ((defAbility === 'Wonder Guard' && typeEffectiveness <= 1) ||
       (move.type === 'Grass' && defAbility === 'Sap Sipper') ||
       (move.type === 'Fire' && defAbility.indexOf('Flash Fire') !== -1) ||
@@ -401,7 +427,7 @@ class Damage {
       if (attacker.ability === 'Parental Bond') {
         lv *= 2;
       }
-      return [lv, lv];
+      return lv;
     }
 
     if (move.hits > 1) {
@@ -421,7 +447,7 @@ class Damage {
       description.moveBP = basePower;
       break;
     case 'Electro Ball':
-      var r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
+      const r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
       basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
       description.moveBP = basePower;
       break;
@@ -435,7 +461,7 @@ class Damage {
       break;
     case 'Low Kick':
     case 'Grass Knot':
-      var w = defender.weight;
+      const w = defender.weight;
       basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
       description.moveBP = basePower;
       break;
@@ -445,7 +471,7 @@ class Damage {
       break;
     case 'Heavy Slam':
     case 'Heat Crash':
-      var wr = attacker.weight / defender.weight;
+      const wr = attacker.weight / defender.weight;
       basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
       description.moveBP = basePower;
       break;
@@ -598,9 +624,7 @@ class Damage {
         }
       }
     }
-
     basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
-    // console.log('with mods:', basePower);
 
     // //////////////////////////////
     // //////// (SP)ATTACK //////////
@@ -612,9 +636,9 @@ class Damage {
     //   (NATURES[attacker.nature][0] === attackStat ? '+' : NATURES[attacker.nature][1] === attackStat ? '-' : '')
     //   + ' ' + toSmogonStat(attackStat);
     if (attackSource.boosts[attackStat] === 0 || (isCritical && attackSource.boosts[attackStat] < 0)) {
-      attack = attackSource.rawStats[attackStat];
+      attack = attackSource.baseStats[attackStat];
     } else if (defAbility === 'Unaware') {
-      attack = attackSource.rawStats[attackStat];
+      attack = attackSource.baseStats[attackStat];
       description.defenderAbility = defAbility;
     } else {
       attack = attackSource.stats[attackStat];
@@ -681,9 +705,9 @@ class Damage {
     //   (NATURES[defender.nature][0] === defenseStat ? '+' : NATURES[defender.nature][1] === defenseStat ? '-' : '') + ' ' +
     //   toSmogonStat(defenseStat);
     if (defender.boosts[defenseStat] === 0 || (isCritical && defender.boosts[defenseStat] > 0) || move.ignoresDefenseBoosts) {
-      defense = defender.rawStats[defenseStat];
+      defense = defender.baseStats[defenseStat];
     } else if (attacker.ability === 'Unaware') {
-      defense = defender.rawStats[defenseStat];
+      defense = defender.baseStats[defenseStat];
       description.attackerAbility = attacker.ability;
     } else {
       defense = defender.stats[defenseStat];
@@ -720,7 +744,6 @@ class Damage {
     }
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
-    // console.log('defense:', defense);
     // //////////////////////////////
     // ////////// DAMAGE ////////////
     // //////////////////////////////
@@ -876,7 +899,7 @@ function getModifiedStat(stat, mod) {
 }
 
 function getFinalSpeed(pokemon, weather) {
-  let speed = getModifiedStat(pokemon.rawStats[SP], pokemon.boosts[SP]);
+  let speed = getModifiedStat(pokemon.baseStats[SP], pokemon.boosts[SP]);
   if (pokemon.item === 'Choice Scarf') {
     speed = Math.floor(speed * 1.5);
   } else if (pokemon.item === 'Macho Brace' || pokemon.item === 'Iron Ball') {

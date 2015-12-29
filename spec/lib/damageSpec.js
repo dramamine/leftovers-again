@@ -39,6 +39,7 @@ describe('damage calculator', () => {
       expect(Damage._getNatureMultiplier(null, null)).toBe(1);
     });
     it('should return 1 if nature is invalid', () => {
+      spyOn(console, 'log');
       expect(Damage._getNatureMultiplier('dopey', 'atk')).toBe(1);
     });
     it('should give 10% boosts to boosted stats', () => {

@@ -18,7 +18,6 @@ const meta = {
 
 class Infodump extends AI {
   constructor() {
-    // console.log('STABBY: built');
     super(meta);
   }
 
@@ -82,7 +81,7 @@ class Infodump extends AI {
       if (move.disabled) return;
       let est = -1;
       try {
-        est = Damage.getDamageResult(
+        est = Damage.getDamageRange(
           state.self.active,
           state.opponent.active,
           move
@@ -114,23 +113,47 @@ class Infodump extends AI {
           state.opponent.active.species
       };
     }
+    // for each of my pokemons...
     const results = state.self.reserve.map( (mon) => {
-      const oppCalcMoves = oppMoves.map( move => {
+
+      // see how the opponent would fare against this mon of mine.
+      const yourMoves = oppMoves.map( move => {
         // check damage from each of the opponent's moves against this mon.
-        let est = -1;
+        let est = [-1, -1];
         try {
-          est = Damage.getDamageResult(
+          est = Damage.getDamageRange(
             state.opponent.active,
             mon,
             move
           );
+        } catch (e) {
+          console.log(e);
+        }
+        console.log('damage result:', est, move);
+        return {
+          name: move, // this is just the ID of a move
+          dmg: est
+        };
+      }).sort( (a, b) => a.dmg[1] < b.dmg[1] );
+
+      // see how my moves would fare against the opponent's current mon.
+      const myMoves = mon.moves.map( move => {
+        let est = [-1, -1];
+        try {
+          est = Damage.getDamageRange(
+            mon, // my mon
+            state.opponent.active,
+            move // my move
+          );
+          console.log('my ' + mon.species + ' uses ' + move.name + ' against '
+            + state.opponent.active.species + ':', est);
         } catch (e) {}
 
         return {
-          name: move,
+          name: move.id, // this is a move object
           dmg: est
         };
-      }).sort( (a, b) => a.dmg < b.dmg );
+      }).sort( (a, b) => a.dmg[1] < b.dmg[1] );
 
       // also check type advantage of mons in general
       let strength = false;
@@ -152,8 +175,8 @@ class Infodump extends AI {
 
       return {
         species: mon.species,
-        maxDamage: oppCalcMoves[0].dmg,
-        results: oppCalcMoves,
+        yourBest: yourMoves[0],
+        myBest: myMoves[0],
         strength,
         weakness
       };
