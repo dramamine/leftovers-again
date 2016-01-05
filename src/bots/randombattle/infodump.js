@@ -8,6 +8,7 @@ import Typechart from '../../lib/typechart';
 // import Pokedex from '../../../data/pokedex';
 import RandomMoves from '../../../data/randommoves';
 import log from '../../log';
+import util from '../../util';
 
 import {MOVE, SWITCH} from '../../decisions';
 
@@ -77,22 +78,26 @@ class Infodump extends AI {
 
   _moves(state) {
     const extra = [];
-    state.self.active.moves.forEach( (move) => {
-      if (move.disabled) return;
-      let est = -1;
-      try {
-        est = Damage.getDamageRange(
-          state.self.active,
-          state.opponent.active,
-          move
-        );
-      } catch (e) {}
+    // this'll be null during forceSwitch
+    if (state.self.active && state.self.active.moves) {
+      state.self.active.moves.forEach( (move) => {
+        let est = [-1, -1];
+        if (!move.disabled) {
+          try {
+            est = Damage.getDamageRange(
+              state.self.active,
+              state.opponent.active,
+              move
+            );
+          } catch (e) {}
+        }
 
-      extra.push({
-        name: move.name,
-        damage: est
+        extra.push({
+          name: move.name,
+          damage: est
+        });
       });
-    });
+    }
     return extra;
   }
 
@@ -106,7 +111,7 @@ class Infodump extends AI {
     log.log('input:');
     log.log(JSON.stringify(state));
     // query for moves
-    const oppMoves = RandomMoves[state.opponent.active.species.toLowerCase()];
+    const oppMoves = RandomMoves[util.toId(state.opponent.active.species)];
     if (!oppMoves) {
       return {
         error: 'couldnt find species in random moves dictionary: ' +
@@ -115,7 +120,6 @@ class Infodump extends AI {
     }
     // for each of my pokemons...
     const results = state.self.reserve.map( (mon) => {
-
       // see how the opponent would fare against this mon of mine.
       const yourMoves = oppMoves.map( move => {
         // check damage from each of the opponent's moves against this mon.
@@ -172,9 +176,11 @@ class Infodump extends AI {
       if (maxatk > 1) strength = true;
       if (maxdef > 1) weakness = true;
 
+      console.log(mon);
 
       return {
         species: mon.species,
+        active: mon.active,
         yourBest: yourMoves[0],
         myBest: myMoves[0],
         strength,

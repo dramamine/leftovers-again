@@ -37,8 +37,10 @@ class Socket extends Connection {
 
   close(message) {
     ws.close(message);
-    this.chat.destroy();
-    this.chat = null;
+    if (this.chat) {
+      this.chat.destroy();
+      this.chat = null;
+    }
   }
 
   exit() {

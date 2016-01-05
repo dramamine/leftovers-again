@@ -57,7 +57,7 @@ class Report {
     };
     this.matches.push(result);
 
-    return result;
+    return this.matches;
   }
 
   /**

@@ -73,6 +73,10 @@ Languages currently supported:
 If you'd like to implement your favorite language: 
 
 ## NOTES
+1/3/2016
+- need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon
+
+
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
 

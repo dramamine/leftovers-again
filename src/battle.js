@@ -130,7 +130,9 @@ class Battle {
     console.log('WON: ', x);
     const results = report.win(x, this.store);
 
-    if (results.opponents[this.store.yourNick].length < config.matches) {
+
+    if (results.filter(match => match.you === this.store.yourNick).length <
+      config.matches) {
       challenger.challenge(this.store.yourNick);
     } else {
       console.log(JSON.stringify(report.data()));

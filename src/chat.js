@@ -77,9 +77,11 @@ class Chat {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        const utmString = new Team( AI.getTeam(username) ).asUtm();
-        console.log('sending utm...', utmString);
-        socket.send('|/utm ' + utmString);
+        if (AI.getTeam) {
+          const utmString = new Team( AI.getTeam(username) ).asUtm();
+          console.log('sending utm...', utmString);
+          socket.send('|/utm ' + utmString);
+        }
 
         socket.send('|/accept ' + username);
       }
