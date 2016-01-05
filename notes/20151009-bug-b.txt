@@ -1,0 +1,808 @@
+## your indexer inside _lookupMonIdx is not ordered properly!!
+
+REQUEST:
+{
+    "forceSwitch": [
+        true
+    ],
+    "side": {
+        "name": "5nowden1979",
+        "id": "p1",
+        "pokemon": [
+            {
+                "ident": "p1: Articuno",
+                "details": "Articuno, L83",
+                "condition": "0 fnt",
+                "active": true,
+                "stats": {
+                    "atk": 189,
+                    "def": 214,
+                    "spa": 205,
+                    "spd": 255,
+                    "spe": 189
+                },
+                "moves": [
+                    "freezedry",
+                    "substitute",
+                    "toxic",
+                    "hurricane"
+                ],
+                "baseAbility": "pressure",
+                "item": "",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p1: Camerupt",
+                "details": "Camerupt, L79, M",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 204,
+                    "def": 156,
+                    "spa": 211,
+                    "spd": 164,
+                    "spe": 109
+                },
+                "moves": [
+                    "earthpower",
+                    "ancientpower",
+                    "willowisp",
+                    "fireblast"
+                ],
+                "baseAbility": "solidrock",
+                "item": "cameruptite",
+                "pokeball": "pokeball",
+                "canMegaEvo": true
+            },
+            {
+                "ident": "p1: Hydreigon",
+                "details": "Hydreigon, L77, M",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 206,
+                    "def": 183,
+                    "spa": 237,
+                    "spd": 183,
+                    "spe": 195
+                },
+                "moves": [
+                    "uturn",
+                    "roost",
+                    "superpower",
+                    "dragonpulse"
+                ],
+                "baseAbility": "levitate",
+                "item": "lifeorb",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p1: Phione",
+                "details": "Phione, L83",
+                "condition": "29/268",
+                "active": false,
+                "stats": {
+                    "atk": 180,
+                    "def": 180,
+                    "spa": 180,
+                    "spd": 180,
+                    "spe": 180
+                },
+                "moves": [
+                    "scald",
+                    "uturn",
+                    "icebeam",
+                    "rest"
+                ],
+                "baseAbility": "hydration",
+                "item": "",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p1: Raikou",
+                "details": "Raikou, L75",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 171,
+                    "def": 156,
+                    "spa": 216,
+                    "spd": 194,
+                    "spe": 216
+                },
+                "moves": [
+                    "extrasensory",
+                    "aurasphere",
+                    "calmmind",
+                    "thunderbolt"
+                ],
+                "baseAbility": "voltabsorb",
+                "item": "",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p1: Hitmontop",
+                "details": "Hitmontop, L79, M",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 196,
+                    "def": 196,
+                    "spa": 101,
+                    "spd": 219,
+                    "spe": 156
+                },
+                "moves": [
+                    "machpunch",
+                    "closecombat",
+                    "suckerpunch",
+                    "toxic"
+                ],
+                "baseAbility": "intimidate",
+                "item": "lifeorb",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            }
+        ]
+    },
+    "rqid": 39,
+    "noCancel": true
+}
+request: { forceSwitch: [ true ],
+  side: 
+   { name: '5nowden1979',
+     id: 'p1',
+     pokemon: [ [Object], [Object], [Object], [Object], [Object], [Object] ] },
+  rqid: 39,
+  noCancel: true }
+setting order 0 Articuno
+setting order 1 Camerupt
+setting order 2 Hydreigon
+setting order 3 Phione
+setting order 4 Raikou
+setting order 5 Hitmontop
+ok, request had a force switch in there.
+STATE:
+{
+    "self": {
+        "active": {
+            "dead": true,
+            "condition": "0 fnt",
+            "conditions": [],
+            "species": "Articuno",
+            "moves": [
+                {
+                    "move": "Freeze-Dry",
+                    "id": "freezedry",
+                    "pp": 20,
+                    "maxpp": 32,
+                    "target": "normal",
+                    "disabled": false,
+                    "num": 573,
+                    "accuracy": 100,
+                    "basePower": 70,
+                    "category": "Special",
+                    "desc": "Has a 10% chance to freeze the target. This move's type effectiveness against Water is changed to be super effective no matter what this move's type is.",
+                    "shortDesc": "10% chance to freeze. Super effective on Water.",
+                    "isViable": true,
+                    "name": "Freeze-Dry",
+                    "priority": 0,
+                    "flags": {
+                        "protect": 1,
+                        "mirror": 1
+                    },
+                    "secondary": {
+                        "chance": 10,
+                        "status": "frz"
+                    },
+                    "type": "Ice"
+                },
+                {
+                    "move": "Substitute",
+                    "id": "substitute",
+                    "pp": 10,
+                    "maxpp": 16,
+                    "target": "self",
+                    "disabled": false,
+                    "num": 164,
+                    "accuracy": true,
+                    "basePower": 0,
+                    "category": "Status",
+                    "desc": "The user takes 1/4 of its maximum HP, rounded down, and puts it into a substitute to take its place in battle. The substitute is removed once enough damage is inflicted on it, or if the user switches out or faints. Baton Pass can be used to transfer the substitute to an ally, and the substitute will keep its remaining HP. Until the substitute is broken, it receives damage from all attacks made by other Pokemon and shields the user from status effects and stat stage changes caused by other Pokemon. Sound-based moves and Pokemon with the Ability Infiltrator ignore substitutes. The user still takes normal damage from weather and status effects while behind its substitute. If the substitute breaks during a multi-hit attack, the user will take damage from any remaining hits. If a substitute is created while the user is partially trapped, the partial-trapping effect ends immediately. This move fails if the user does not have enough HP remaining to create a substitute, or if it already has a substitute.",
+                    "shortDesc": "User takes 1/4 its max HP to put in a Substitute.",
+                    "isViable": true,
+                    "name": "Substitute",
+                    "priority": 0,
+                    "flags": {
+                        "snatch": 1,
+                        "nonsky": 1
+                    },
+                    "volatileStatus": "Substitute",
+                    "effect": {
+                        "onTryPrimaryHitPriority": -1
+                    },
+                    "secondary": false,
+                    "type": "Normal"
+                },
+                {
+                    "move": "Toxic",
+                    "id": "toxic",
+                    "pp": 10,
+                    "maxpp": 16,
+                    "target": "normal",
+                    "disabled": false,
+                    "num": 92,
+                    "accuracy": 90,
+                    "basePower": 0,
+                    "category": "Status",
+                    "desc": "Badly poisons the target. If a Poison-type Pokemon uses this move, the target cannot avoid the attack, even if the target is in the middle of a two-turn move.",
+                    "shortDesc": "Badly poisons the target.",
+                    "isViable": true,
+                    "name": "Toxic",
+                    "priority": 0,
+                    "flags": {
+                        "protect": 1,
+                        "reflectable": 1,
+                        "mirror": 1
+                    },
+                    "status": "tox",
+                    "secondary": false,
+                    "type": "Poison"
+                },
+                {
+                    "move": "Hurricane",
+                    "id": "hurricane",
+                    "pp": 10,
+                    "maxpp": 16,
+                    "target": "any",
+                    "disabled": false,
+                    "num": 542,
+                    "accuracy": 70,
+                    "basePower": 110,
+                    "category": "Special",
+                    "desc": "Has a 30% chance to confuse the target. This move can hit a target using Bounce, Fly, or Sky Drop. If the weather is Rain Dance, this move does not check accuracy. If the weather is Sunny Day, this move's accuracy is 50%.",
+                    "shortDesc": "30% chance to confuse target. Can't miss in rain.",
+                    "isViable": true,
+                    "name": "Hurricane",
+                    "priority": 0,
+                    "flags": {
+                        "protect": 1,
+                        "mirror": 1,
+                        "distance": 1
+                    },
+                    "secondary": {
+                        "chance": 30,
+                        "volatileStatus": "confusion"
+                    },
+                    "type": "Flying"
+                }
+            ],
+            "gender": "N",
+            "active": true,
+            "events": []
+        },
+        "reserve": [
+            {
+                "dead": true,
+                "condition": "0 fnt",
+                "conditions": [],
+                "species": "Camerupt",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 90,
+                        "category": "Special",
+                        "id": "earthpower",
+                        "name": "Earth Power",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1,
+                            "nonsky": 1
+                        },
+                        "type": "Ground"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 60,
+                        "category": "Special",
+                        "id": "ancientpower",
+                        "name": "Ancient Power",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Rock"
+                    },
+                    {
+                        "accuracy": 85,
+                        "category": "Status",
+                        "id": "willowisp",
+                        "name": "Will-O-Wisp",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "reflectable": 1,
+                            "mirror": 1
+                        },
+                        "type": "Fire"
+                    },
+                    {
+                        "accuracy": 85,
+                        "basePower": 110,
+                        "category": "Special",
+                        "id": "fireblast",
+                        "name": "Fire Blast",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Fire"
+                    }
+                ],
+                "events": []
+            },
+            {
+                "dead": true,
+                "condition": "0 fnt",
+                "conditions": [],
+                "species": "Hydreigon",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 70,
+                        "category": "Physical",
+                        "id": "uturn",
+                        "name": "U-turn",
+                        "isViable": true,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Bug"
+                    },
+                    {
+                        "accuracy": true,
+                        "category": "Status",
+                        "id": "roost",
+                        "name": "Roost",
+                        "isViable": true,
+                        "flags": {
+                            "snatch": 1,
+                            "heal": 1
+                        },
+                        "heal": [
+                            1,
+                            2
+                        ],
+                        "self": {
+                            "volatileStatus": "roost"
+                        },
+                        "type": "Flying"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 120,
+                        "category": "Physical",
+                        "id": "superpower",
+                        "name": "Superpower",
+                        "isViable": true,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "self": {
+                            "boosts": {
+                                "atk": -1,
+                                "def": -1
+                            }
+                        },
+                        "type": "Fighting"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 85,
+                        "category": "Special",
+                        "id": "dragonpulse",
+                        "name": "Dragon Pulse",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "pulse": 1,
+                            "mirror": 1,
+                            "distance": 1
+                        },
+                        "type": "Dragon"
+                    }
+                ],
+                "events": []
+            },
+            {
+                "dead": true,
+                "condition": "0 fnt",
+                "conditions": [],
+                "species": "Hitmontop",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 40,
+                        "category": "Physical",
+                        "id": "machpunch",
+                        "name": "Mach Punch",
+                        "isViable": true,
+                        "priority": 1,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1,
+                            "punch": 1
+                        },
+                        "type": "Fighting"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 120,
+                        "category": "Physical",
+                        "id": "closecombat",
+                        "name": "Close Combat",
+                        "isViable": true,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "self": {
+                            "boosts": {
+                                "def": -1,
+                                "spd": -1
+                            }
+                        },
+                        "type": "Fighting"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 80,
+                        "category": "Physical",
+                        "id": "suckerpunch",
+                        "name": "Sucker Punch",
+                        "isViable": true,
+                        "priority": 1,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Dark"
+                    },
+                    {
+                        "accuracy": 90,
+                        "category": "Status",
+                        "id": "toxic",
+                        "name": "Toxic",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "reflectable": 1,
+                            "mirror": 1
+                        },
+                        "type": "Poison"
+                    }
+                ],
+                "gender": "M",
+                "events": []
+            },
+            {
+                "dead": true,
+                "condition": "0 fnt",
+                "conditions": [],
+                "species": "Articuno",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 70,
+                        "category": "Special",
+                        "id": "freezedry",
+                        "name": "Freeze-Dry",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Ice"
+                    },
+                    {
+                        "accuracy": true,
+                        "category": "Status",
+                        "id": "substitute",
+                        "name": "Substitute",
+                        "isViable": true,
+                        "flags": {
+                            "snatch": 1,
+                            "nonsky": 1
+                        },
+                        "type": "Normal"
+                    },
+                    {
+                        "accuracy": 90,
+                        "category": "Status",
+                        "id": "toxic",
+                        "name": "Toxic",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "reflectable": 1,
+                            "mirror": 1
+                        },
+                        "type": "Poison"
+                    },
+                    {
+                        "accuracy": 70,
+                        "basePower": 110,
+                        "category": "Special",
+                        "id": "hurricane",
+                        "name": "Hurricane",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1,
+                            "distance": 1
+                        },
+                        "type": "Flying"
+                    }
+                ],
+                "gender": "N",
+                "active": true,
+                "events": []
+            },
+            {
+                "condition": "29/268",
+                "conditions": [],
+                "species": "Phione",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 80,
+                        "category": "Special",
+                        "id": "scald",
+                        "name": "Scald",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1,
+                            "defrost": 1
+                        },
+                        "type": "Water"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 70,
+                        "category": "Physical",
+                        "id": "uturn",
+                        "name": "U-turn",
+                        "isViable": true,
+                        "flags": {
+                            "contact": 1,
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Bug"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 90,
+                        "category": "Special",
+                        "id": "icebeam",
+                        "name": "Ice Beam",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Ice"
+                    },
+                    {
+                        "accuracy": true,
+                        "category": "Status",
+                        "id": "rest",
+                        "name": "Rest",
+                        "isViable": true,
+                        "flags": {
+                            "snatch": 1,
+                            "heal": 1
+                        },
+                        "type": "Psychic"
+                    }
+                ],
+                "gender": "N",
+                "hp": 29,
+                "maxhp": 268,
+                "hppct": 11,
+                "events": []
+            },
+            {
+                "dead": true,
+                "condition": "0 fnt",
+                "conditions": [],
+                "species": "Raikou",
+                "moves": [
+                    {
+                        "accuracy": 100,
+                        "basePower": 80,
+                        "category": "Special",
+                        "id": "extrasensory",
+                        "name": "Extrasensory",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Psychic"
+                    },
+                    {
+                        "accuracy": true,
+                        "basePower": 80,
+                        "category": "Special",
+                        "id": "aurasphere",
+                        "name": "Aura Sphere",
+                        "isViable": true,
+                        "flags": {
+                            "bullet": 1,
+                            "protect": 1,
+                            "pulse": 1,
+                            "mirror": 1,
+                            "distance": 1
+                        },
+                        "type": "Fighting"
+                    },
+                    {
+                        "accuracy": true,
+                        "category": "Status",
+                        "id": "calmmind",
+                        "name": "Calm Mind",
+                        "isViable": true,
+                        "flags": {
+                            "snatch": 1
+                        },
+                        "type": "Psychic"
+                    },
+                    {
+                        "accuracy": 100,
+                        "basePower": 90,
+                        "category": "Special",
+                        "id": "thunderbolt",
+                        "name": "Thunderbolt",
+                        "isViable": true,
+                        "flags": {
+                            "protect": 1,
+                            "mirror": 1
+                        },
+                        "type": "Electric"
+                    }
+                ],
+                "gender": "N",
+                "events": []
+            }
+        ]
+    },
+    "opponent": {
+        "active": [
+            {
+                "species": "Tangrowth",
+                "events": []
+            },
+            {
+                "species": "Metagross",
+                "gender": "N",
+                "events": []
+            },
+            {
+                "species": "Cofagrigus",
+                "events": []
+            },
+            {
+                "species": "Weavile",
+                "events": []
+            },
+            {
+                "species": "Watchog",
+                "events": []
+            },
+            {
+                "species": "Bisharp",
+                "events": []
+            }
+        ],
+        "reserve": [
+            {
+                "species": "Tangrowth",
+                "events": []
+            },
+            {
+                "species": "Metagross",
+                "gender": "N",
+                "events": []
+            },
+            {
+                "species": "Cofagrigus",
+                "events": []
+            },
+            {
+                "species": "Weavile",
+                "events": []
+            },
+            {
+                "species": "Watchog",
+                "events": []
+            },
+            {
+                "species": "Bisharp",
+                "events": []
+            }
+        ]
+    },
+    "forceSwitch": true,
+    "rqid": 39
+}
+validating choice: { id: 
+   { condition: '29/268',
+     conditions: [],
+     species: 'Phione',
+     moves: [ [Object], [Object], [Object], [Object] ],
+     gender: 'N',
+     hp: 29,
+     maxhp: 268,
+     hppct: 11,
+     events: [] },
+  target: null } 4 [ { dead: true,
+    condition: '0 fnt',
+    conditions: [],
+    species: 'Camerupt',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    events: [] },
+  { dead: true,
+    condition: '0 fnt',
+    conditions: [],
+    species: 'Hydreigon',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    events: [] },
+  { dead: true,
+    condition: '0 fnt',
+    conditions: [],
+    species: 'Hitmontop',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    gender: 'M',
+    events: [] },
+  { dead: true,
+    condition: '0 fnt',
+    conditions: [],
+    species: 'Articuno',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    gender: 'N',
+    active: true,
+    events: [] },
+  { condition: '29/268',
+    conditions: [],
+    species: 'Phione',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    gender: 'N',
+    hp: 29,
+    maxhp: 268,
+    hppct: 11,
+    events: [] },
+  { dead: true,
+    condition: '0 fnt',
+    conditions: [],
+    species: 'Raikou',
+    moves: [ [Object], [Object], [Object], [Object] ],
+    gender: 'N',
+    events: [] } ]
+battle-randombattle-42|/switch 5|39
+

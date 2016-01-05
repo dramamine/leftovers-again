@@ -1,0 +1,268 @@
+## this bug happened because of DRAG.
+
+REQUEST:
+{
+    "active": [
+        {
+            "moves": [
+                {
+                    "move": "Storm Throw",
+                    "id": "stormthrow",
+                    "pp": 16,
+                    "maxpp": 16,
+                    "target": "normal",
+                    "disabled": false
+                },
+                {
+                    "move": "Knock Off",
+                    "id": "knockoff",
+                    "pp": 32,
+                    "maxpp": 32,
+                    "target": "normal",
+                    "disabled": false
+                },
+                {
+                    "move": "Ice Punch",
+                    "id": "icepunch",
+                    "pp": 24,
+                    "maxpp": 24,
+                    "target": "normal",
+                    "disabled": false
+                },
+                {
+                    "move": "Bulk Up",
+                    "id": "bulkup",
+                    "pp": 32,
+                    "maxpp": 32,
+                    "target": "self",
+                    "disabled": false
+                }
+            ]
+        }
+    ],
+    "side": {
+        "name": "5nowden8747",
+        "id": "p2",
+        "pokemon": [
+            {
+                "ident": "p2: Throh",
+                "details": "Throh, L82, M",
+                "condition": "310/331",
+                "active": true,
+                "stats": {
+                    "atk": 211,
+                    "def": 187,
+                    "spa": 96,
+                    "spd": 187,
+                    "spe": 121
+                },
+                "moves": [
+                    "stormthrow",
+                    "knockoff",
+                    "icepunch",
+                    "bulkup"
+                ],
+                "baseAbility": "moldbreaker",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p2: Breloom",
+                "details": "Breloom, L75, M",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 239,
+                    "def": 164,
+                    "spa": 134,
+                    "spd": 134,
+                    "spe": 149
+                },
+                "moves": [
+                    "rocktomb",
+                    "spore",
+                    "swordsdance",
+                    "bulletseed"
+                ],
+                "baseAbility": "technician",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p2: Aerodactyl",
+                "details": "Aerodactyl, L77, F",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 206,
+                    "def": 145,
+                    "spa": 137,
+                    "spd": 160,
+                    "spe": 245
+                },
+                "moves": [
+                    "roost",
+                    "firefang",
+                    "aerialace",
+                    "aquatail"
+                ],
+                "baseAbility": "unnerve",
+                "item": "aerodactylite",
+                "pokeball": "pokeball",
+                "canMegaEvo": true
+            },
+            {
+                "ident": "p2: Lilligant",
+                "details": "Lilligant, L81, F",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 143,
+                    "def": 168,
+                    "spa": 224,
+                    "spd": 168,
+                    "spe": 192
+                },
+                "moves": [
+                    "sleeppowder",
+                    "healingwish",
+                    "petaldance",
+                    "hiddenpowerfire60"
+                ],
+                "baseAbility": "owntempo",
+                "item": "focussash",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p2: Wormadam-Sandy",
+                "details": "Wormadam-Sandy, L83, F",
+                "condition": "0 fnt",
+                "active": false,
+                "stats": {
+                    "atk": 179,
+                    "def": 222,
+                    "spa": 146,
+                    "spd": 189,
+                    "spe": 107
+                },
+                "moves": [
+                    "stealthrock",
+                    "earthquake",
+                    "protect",
+                    "toxic"
+                ],
+                "baseAbility": "overcoat",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            },
+            {
+                "ident": "p2: Farfetch'd",
+                "details": "Farfetch'd, L83, M",
+                "condition": "222/222",
+                "active": false,
+                "stats": {
+                    "atk": 156,
+                    "def": 139,
+                    "spa": 144,
+                    "spd": 151,
+                    "spe": 147
+                },
+                "moves": [
+                    "leafblade",
+                    "swordsdance",
+                    "nightslash",
+                    "bravebird"
+                ],
+                "baseAbility": "defiant",
+                "item": "stick",
+                "pokeball": "pokeball",
+                "canMegaEvo": false
+            }
+        ]
+    },
+    "rqid": 32
+}
+request: { active: [ { moves: [Object] } ],
+  side: 
+   { name: '5nowden8747',
+     id: 'p2',
+     pokemon: [ [Object], [Object], [Object], [Object], [Object], [Object] ] },
+  rqid: 32 }
+setting order 0 Throh
+setting order 1 Breloom
+setting order 2 Aerodactyl
+setting order 3 Lilligant
+setting order 4 Wormadam-Sandy
+setting order 5 Farfetch'd
+stop the presses! too many active pokemon
+[ { events: [],
+    species: 'Farfetch\'d',
+    num: 83,
+    types: [ 'Normal', 'Flying' ],
+    baseStats: { hp: 52, atk: 65, def: 55, spa: 58, spd: 62, spe: 60 },
+    abilities: { '0': 'Keen Eye', '1': 'Inner Focus', H: 'Defiant' },
+    heightm: 0.8,
+    weightkg: 15,
+    color: 'Brown',
+    eggGroups: [ 'Flying', 'Field' ],
+    owner: 'p2',
+    active: false,
+    ident: 'p2: Farfetch\'d',
+    details: 'Farfetch\'d, L83, M',
+    condition: '222/222',
+    stats: { atk: 156, def: 139, spa: 144, spd: 151, spe: 147 },
+    moves: [ [Object], [Object], [Object], [Object] ],
+    baseAbility: 'defiant',
+    item: 'stick',
+    pokeball: 'pokeball',
+    canMegaEvo: false,
+    dead: false,
+    conditions: [],
+    hp: 222,
+    maxhp: 222,
+    hppct: 100,
+    order: 5,
+    position: 'p2a' },
+  { events: [],
+    species: 'Throh',
+    num: 538,
+    types: [ 'Fighting' ],
+    gender: 'M',
+    baseStats: { hp: 120, atk: 100, def: 85, spa: 30, spd: 85, spe: 45 },
+    abilities: { '0': 'Guts', '1': 'Inner Focus', H: 'Mold Breaker' },
+    heightm: 1.3,
+    weightkg: 55.5,
+    color: 'Red',
+    eggGroups: [ 'Human-Like' ],
+    owner: 'p2',
+    active: true,
+    ident: 'p2: Throh',
+    details: 'Throh, L82, M',
+    condition: '310/331',
+    stats: { atk: 211, def: 187, spa: 96, spd: 187, spe: 121 },
+    moves: [ [Object], [Object], [Object], [Object] ],
+    baseAbility: 'moldbreaker',
+    item: 'leftovers',
+    pokeball: 'pokeball',
+    canMegaEvo: false,
+    dead: false,
+    conditions: [],
+    hp: 310,
+    maxhp: 331,
+    hppct: 94,
+    order: 0 } ]
+STATE:
+{"self":{"active":[{"condition":"222/222","conditions":[],"species":"Farfetch'd","moves":[{"move":"Storm Throw","id":"stormthrow","pp":10,"maxpp":16,"target":"normal","disabled":false,"num":480,"accuracy":100,"basePower":60,"category":"Physical","desc":"This move is always a critical hit unless the target is under the effect of Lucky Chant or has the Abilities Battle Armor or Shell Armor.","shortDesc":"Always results in a critical hit.","isViable":true,"name":"Storm Throw","priority":0,"flags":{"contact":1,"protect":1,"mirror":1},"willCrit":true,"secondary":false,"type":"Fighting"},{"move":"Knock Off","id":"knockoff","pp":20,"maxpp":32,"target":"normal","disabled":false,"num":282,"accuracy":100,"basePower":65,"category":"Physical","desc":"If the target is holding an item that can be removed from it, ignoring the Ability Sticky Hold, this move's power is multiplied by 1.5. If the user has not fainted, the target loses its held item. This move cannot cause Pokemon with the Ability Sticky Hold to lose their held item, cause Pokemon that can Mega Evolve to lose the Mega Stone for their species, or cause a Kyogre, a Groudon, a Giratina, an Arceus, or a Genesect to lose their Blue Orb, Red Orb, Griseous Orb, Plate, or Drive, respectively. Items lost to this move cannot be regained with Recycle or the Ability Harvest.","shortDesc":"1.5x damage if foe holds an item. Removes item.","isViable":true,"name":"Knock Off","priority":0,"flags":{"contact":1,"protect":1,"mirror":1},"onBasePowerPriority":4,"secondary":false,"type":"Dark"},{"move":"Ice Punch","id":"icepunch","pp":15,"maxpp":24,"target":"normal","disabled":false,"num":8,"accuracy":100,"basePower":75,"category":"Physical","desc":"Has a 10% chance to freeze the target.","shortDesc":"10% chance to freeze the target.","isViable":true,"name":"Ice Punch","priority":0,"flags":{"contact":1,"protect":1,"mirror":1,"punch":1},"secondary":{"chance":10,"status":"frz"},"type":"Ice"},{"move":"Bulk Up","id":"bulkup","pp":20,"maxpp":32,"target":"self","disabled":false,"num":339,"accuracy":true,"basePower":0,"category":"Status","desc":"Raises the user's Attack and Defense by 1 stage.","shortDesc":"Raises the user's Attack and Defense by 1.","isViable":true,"name":"Bulk Up","priority":0,"flags":{"snatch":1},"boosts":{"atk":1,"def":1},"secondary":false,"type":"Fighting"}],"hp":222,"maxhp":222,"hppct":100,"events":[]},{"condition":"310/331","conditions":[],"species":"Throh","moves":[{"accuracy":100,"basePower":60,"category":"Physical","id":"stormthrow","name":"Storm Throw","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Fighting"},{"accuracy":100,"basePower":65,"category":"Physical","id":"knockoff","name":"Knock Off","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Dark"},{"accuracy":100,"basePower":75,"category":"Physical","id":"icepunch","name":"Ice Punch","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1,"punch":1},"type":"Ice"},{"accuracy":true,"category":"Status","id":"bulkup","name":"Bulk Up","isViable":true,"flags":{"snatch":1},"type":"Fighting"}],"gender":"M","hp":310,"maxhp":331,"hppct":94,"active":true,"events":[]}],"reserve":[{"dead":true,"condition":"0 fnt","conditions":[],"species":"Lilligant","moves":[{"accuracy":75,"category":"Status","id":"sleeppowder","name":"Sleep Powder","isViable":true,"flags":{"powder":1,"protect":1,"reflectable":1,"mirror":1},"type":"Grass"},{"accuracy":true,"category":"Status","id":"healingwish","name":"Healing Wish","isViable":true,"flags":{"snatch":1,"heal":1},"type":"Psychic"},{"accuracy":100,"basePower":120,"category":"Special","id":"petaldance","name":"Petal Dance","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"self":{"volatileStatus":"lockedmove"},"type":"Grass"},{"accuracy":100,"basePower":60,"category":"Special","id":"hiddenpower","name":"Hidden Power Fire","isViable":true,"flags":{"protect":1,"mirror":1},"type":"Fire"}],"gender":"F","events":[]},{"condition":"222/222","conditions":[],"species":"Farfetch'd","moves":[{"accuracy":100,"basePower":90,"category":"Physical","id":"leafblade","name":"Leaf Blade","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Grass"},{"accuracy":true,"category":"Status","id":"swordsdance","name":"Swords Dance","isViable":true,"flags":{"snatch":1},"type":"Normal"},{"accuracy":100,"basePower":70,"category":"Physical","id":"nightslash","name":"Night Slash","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Dark"},{"accuracy":100,"basePower":120,"category":"Physical","id":"bravebird","name":"Brave Bird","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1,"distance":1},"type":"Flying"}],"hp":222,"maxhp":222,"hppct":100,"events":[]},{"dead":true,"condition":"0 fnt","conditions":[],"species":"Breloom","moves":[{"accuracy":95,"basePower":60,"category":"Physical","id":"rocktomb","name":"Rock Tomb","flags":{"protect":1,"mirror":1},"type":"Rock"},{"accuracy":100,"category":"Status","id":"spore","name":"Spore","isViable":true,"flags":{"powder":1,"protect":1,"reflectable":1,"mirror":1},"type":"Grass"},{"accuracy":true,"category":"Status","id":"swordsdance","name":"Swords Dance","isViable":true,"flags":{"snatch":1},"type":"Normal"},{"accuracy":100,"basePower":25,"category":"Physical","id":"bulletseed","name":"Bullet Seed","isViable":true,"flags":{"bullet":1,"protect":1,"mirror":1},"type":"Grass"}],"events":[]},{"dead":true,"condition":"0 fnt","conditions":[],"species":"Wormadam-Sandy","moves":[{"accuracy":true,"category":"Status","id":"stealthrock","name":"Stealth Rock","isViable":true,"flags":{"reflectable":1},"type":"Rock"},{"accuracy":100,"basePower":100,"category":"Physical","id":"earthquake","name":"Earthquake","isViable":true,"flags":{"protect":1,"mirror":1,"nonsky":1},"type":"Ground"},{"accuracy":true,"category":"Status","id":"protect","name":"Protect","isViable":true,"priority":4,"flags":{},"type":"Normal"},{"accuracy":90,"category":"Status","id":"toxic","name":"Toxic","isViable":true,"flags":{"protect":1,"reflectable":1,"mirror":1},"type":"Poison"}],"gender":"F","events":[]},{"dead":true,"condition":"0 fnt","conditions":[],"species":"Aerodactyl","moves":[{"accuracy":true,"category":"Status","id":"roost","name":"Roost","isViable":true,"flags":{"snatch":1,"heal":1},"heal":[1,2],"self":{"volatileStatus":"roost"},"type":"Flying"},{"accuracy":95,"basePower":65,"category":"Physical","id":"firefang","name":"Fire Fang","isViable":true,"flags":{"bite":1,"contact":1,"protect":1,"mirror":1},"type":"Fire"},{"accuracy":true,"basePower":60,"category":"Physical","id":"aerialace","name":"Aerial Ace","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1,"distance":1},"type":"Flying"},{"accuracy":90,"basePower":90,"category":"Physical","id":"aquatail","name":"Aqua Tail","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Water"}],"events":[]},{"condition":"310/331","conditions":[],"species":"Throh","moves":[{"accuracy":100,"basePower":60,"category":"Physical","id":"stormthrow","name":"Storm Throw","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Fighting"},{"accuracy":100,"basePower":65,"category":"Physical","id":"knockoff","name":"Knock Off","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1},"type":"Dark"},{"accuracy":100,"basePower":75,"category":"Physical","id":"icepunch","name":"Ice Punch","isViable":true,"flags":{"contact":1,"protect":1,"mirror":1,"punch":1},"type":"Ice"},{"accuracy":true,"category":"Status","id":"bulkup","name":"Bulk Up","isViable":true,"flags":{"snatch":1},"type":"Fighting"}],"gender":"M","hp":310,"maxhp":331,"hppct":94,"active":true,"events":[]}]},"opponent":{"active":[{"species":"Emboar","events":[]},{"species":"Serperior","events":[]},{"species":"Cacturne","events":[]},{"species":"Snorlax","events":[]},{"species":"Dustox","events":[]},{"species":"Vaporeon","events":[]}],"reserve":[{"species":"Emboar","events":[]},{"species":"Serperior","events":[]},{"species":"Cacturne","events":[]},{"species":"Snorlax","events":[]},{"species":"Dustox","events":[]},{"species":"Vaporeon","events":[]}]},"rqid":32}
+[TypeError: Cannot call method 'filter' of undefined]
+{ self: 
+   { active: [ [Object], [Object] ],
+     reserve: [ [Object], [Object], [Object], [Object], [Object], [Object] ] },
+  opponent: 
+   { active: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+     reserve: [ [Object], [Object], [Object], [Object], [Object], [Object] ] },
+  rqid: 32 }
+battle-randombattle-38|undefined|32
