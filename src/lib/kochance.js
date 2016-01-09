@@ -147,6 +147,7 @@ class KO {
   }
 
   static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+    const n = damage.length;
     const minDamage = damage[0];
     const maxDamage = damage[damage.length - 1];
     let i;
@@ -156,7 +157,7 @@ class KO {
       }
       for (i = 0; i < n; i++) {
         if (damage[i] >= hp) {
-          return (damage.length - i) / damage.length;
+          return (n - i) / n;
         }
       }
     }
@@ -176,7 +177,7 @@ class KO {
       const c = KO._getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
         hits - 1, maxHP, toxicCounter);
       if (c === 1) {
-        sum += (damage.length - i);
+        sum += (n - i);
         break;
       } else {
         sum += c;
