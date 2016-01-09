@@ -175,23 +175,22 @@ export default class Pokemon {
    * @param  {[type]} details The details, ex. 'Pikachu, L99, F'
    */
   useDetails(details) {
-    // do these ever change?
-    if (this.details && this.details === details) {
-      return;
-    }
-    if (this.details) {
-      log.log('details changed.', this.details, details);
+    // this stuff never changes, so we only need to process once.
+    if (this.level && this.gender) return;
+
+    if (this.details !== details) {
+      log.warn('details changed.', this.details, details);
     }
 
     this.details = details;
     try {
       const deets = details.split(', ');
 
-      // if we're just learning this...
+      // if we're just learning this...that would be weird / impossible.
       if (!this.species) {
+        log.warn('weird, learning about species from deets.');
         this.useSpecies(deets[0]);
       }
-
 
       this.level = parseInt(deets[1].substr(1), 10);
       this.gender = deets[2] || 'M';

@@ -68,6 +68,7 @@ export default class BattleStore {
     const mon = this._recordIdent(ident);
 
     mon.useCondition(condition);
+    mon.useDetails(details);
 
     this.events.push({
       type: 'switch',

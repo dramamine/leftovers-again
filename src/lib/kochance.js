@@ -1,4 +1,5 @@
 import typeChart from './typechart';
+import Damage from './damage';
 
 class KO {
   /**
@@ -26,11 +27,28 @@ class KO {
    */
   static predictKO(damage, defender, field = '', hits = 1, isBadDreams = false) {
     if (isNaN(damage[0])) {
-      return null;
+      return {
+        turns: null,
+        chance: null
+      };
     }
     if (damage[damage.length - 1] === 0) {
-      return null;
+      return {
+        turns: null,
+        chance: null
+      };
     }
+
+    if (!defender.maxhp || defender.maxhp === defender.hppct) {
+      //  HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
+      const evBonus = Math.floor(252 / 4);
+      const addThis = defender.level + 10;
+      defender.maxHP = (defender.baseStats.hp * 2 + 31 + evBonus) *
+        (defender.level / 100) + addThis;
+    } else {
+      defender.maxHP = defender.maxhp;
+    }
+
     if (damage[0] >= defender.maxHP) {
       return {
         turns: 1,
@@ -141,12 +159,17 @@ class KO {
     }
 
     return {
-      turns: 10,
-      chance: 100
+      turns: null,
+      chance: null
     };
   }
 
   static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+    if ( isNaN(hp) || hp < 0 || isNaN(hits) || hits < 0 || isNaN(maxHP) || maxHP < 0) {
+      console.error('bailing out!', damage.length, hp, eot, hits, maxHP, toxicCounter);
+      return 0;
+    }
+    // console.log('_getKOChance called.', damage.length, hp, eot, hits, maxHP, toxicCounter);
     const n = damage.length;
     const minDamage = damage[0];
     const maxDamage = damage[damage.length - 1];

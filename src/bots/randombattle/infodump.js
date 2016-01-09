@@ -4,6 +4,7 @@
  */
 import AI from '../../ai';
 import Damage from '../../lib/damage';
+import KO from '../../lib/kochance';
 import Typechart from '../../lib/typechart';
 // import Pokedex from '../../../data/pokedex';
 import RandomMoves from '../../../data/randommoves';
@@ -91,11 +92,13 @@ class Infodump extends AI {
             );
           } catch (e) {}
         }
-
+        const ko = KO.predictKO(est, state.opponent.active);
         extra.push({
           name: move.name,
           dmgMin: est[0],
           dmgMax: est[est.length - 1],
+          koTurn: ko.turns || null,
+          koChance: ko.chance || null
         });
       });
     }
@@ -124,7 +127,7 @@ class Infodump extends AI {
       // see how the opponent would fare against this mon of mine.
       const yourMoves = oppMoves.map( move => {
         // check damage from each of the opponent's moves against this mon.
-        let est = [-1, -1];
+        let est = [-1];
         try {
           est = Damage.getDamageRange(
             state.opponent.active,
@@ -134,10 +137,10 @@ class Infodump extends AI {
         } catch (e) {
           console.log(e);
         }
-        console.log('damage result:', est, move);
         return {
           name: move, // this is just the ID of a move
-          dmg: est
+          dmg: est,
+          against: mon
         };
       }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
 
@@ -156,7 +159,8 @@ class Infodump extends AI {
 
         return {
           name: move.id, // this is a move object
-          dmg: est
+          dmg: est,
+          against: state.opponent.active
         };
       }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
 
@@ -177,13 +181,35 @@ class Infodump extends AI {
       if (maxatk > 1) strength = true;
       if (maxdef > 1) weakness = true;
 
-      console.log(mon);
+      // console.log(mon);
+
+      const yourBest = yourMoves[0];
+      console.log('predicting KO..', yourBest.dmg, yourBest.against);
+      const yourKO = KO.predictKO(yourBest.dmg, yourBest.against);
+
+
+      const myBest = myMoves[0];
+      console.log('predicting KO..', myBest.dmg, myBest.against);
+      const myKO = KO.predictKO(myBest.dmg, myBest.against);
+
 
       return {
         species: mon.species,
         active: mon.active,
-        yourBest: yourMoves[0],
-        myBest: myMoves[0],
+        yourBest: {
+          name: yourBest.name,
+          dmgMin: yourBest.dmg[0],
+          dmgMax: yourBest.dmg[yourBest.dmg.length - 1],
+          koTurns: yourKO.turns,
+          koChance: yourKO.chance
+        },
+        myBest: {
+          name: myBest.name,
+          dmgMin: myBest.dmg[0],
+          dmgMax: myBest.dmg[myBest.dmg.length - 1],
+          koTurns: myKO.turns,
+          koChance: myKO.chance
+        },
         strength,
         weakness
       };

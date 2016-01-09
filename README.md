@@ -80,6 +80,8 @@ If you'd like to implement your favorite language:
 - take acct of Accuracy in damage est(?)
 - don't think that Explosion is such a great move
 - don't think that Water Spout sux
+- process fields
+- process weather
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
