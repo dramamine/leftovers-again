@@ -81,7 +81,7 @@ class Infodump extends AI {
     // this'll be null during forceSwitch
     if (state.self.active && state.self.active.moves) {
       state.self.active.moves.forEach( (move) => {
-        let est = [-1, -1];
+        let est = [-1];
         if (!move.disabled) {
           try {
             est = Damage.getDamageRange(
@@ -94,7 +94,8 @@ class Infodump extends AI {
 
         extra.push({
           name: move.name,
-          damage: est
+          dmgMin: est[0],
+          dmgMax: est[est.length - 1],
         });
       });
     }
@@ -138,11 +139,11 @@ class Infodump extends AI {
           name: move, // this is just the ID of a move
           dmg: est
         };
-      }).sort( (a, b) => a.dmg[1] < b.dmg[1] );
+      }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
 
       // see how my moves would fare against the opponent's current mon.
       const myMoves = mon.moves.map( move => {
-        let est = [-1, -1];
+        let est = [-1];
         try {
           est = Damage.getDamageRange(
             mon, // my mon
@@ -157,7 +158,7 @@ class Infodump extends AI {
           name: move.id, // this is a move object
           dmg: est
         };
-      }).sort( (a, b) => a.dmg[1] < b.dmg[1] );
+      }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
 
       // also check type advantage of mons in general
       let strength = false;

@@ -10,7 +10,7 @@ describe('damage calculator', () => {
       const doubleedge = Damage.getDamageResult(
         'eevee', 'meowth', 'doubleedge');
 
-      expect(bodyslam).toBeLessThan(doubleedge);
+      expect(bodyslam[0]).toBeLessThan(doubleedge[0]);
     });
 
     it('should do less damage to rock & steel', () => {
@@ -21,15 +21,23 @@ describe('damage calculator', () => {
       const steeltype = Damage.getDamageResult(
         'eevee', 'klang', 'bodyslam');
 
-      expect(rocktype).toBeLessThan(groundtype);
-      expect(steeltype).toBeLessThan(groundtype);
+      expect(rocktype[0]).toBeLessThan(groundtype[0]);
+      expect(steeltype[0]).toBeLessThan(groundtype[0]);
     });
 
     it('should do NO damage to ghost types', () => {
       const ghosttype = Damage.getDamageResult(
         'eevee', 'gengar', 'bodyslam');
 
-      expect(ghosttype).toEqual(0);
+      expect(ghosttype[0]).toEqual(0);
+      expect(ghosttype[ghosttype.length - 1]).toEqual(0);
+    });
+  });
+  describe('getSimplifiedDamageResult', () => {
+    it('should normally return an array of length 8', () => {
+      const res = Damage.getSimplifiedDamageResult('eevee', 'meowth', 'bodyslam');
+      console.log(res);
+      expect(res.length).toBe(8);
     });
   });
   describe('_getNatureMultiplier', () => {

@@ -1,6 +1,6 @@
 import KO from '../../src/lib/kochance';
 
-fdescribe('KO', () => {
+describe('KO', () => {
   describe('predictKO', () => {
     it('should predictably handle False Swipe', () => {
       const kochance = KO.predictKO([40], {

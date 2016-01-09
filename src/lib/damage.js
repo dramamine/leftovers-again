@@ -309,11 +309,46 @@ class Damage {
    * @param  {[type]} field    [description]
    * @return {[type]}          [description]
    */
-  getDamageRange(attacker, defender, move, field = defaultField) {
-    return [
-      this.getMinDamageResult(attacker, defender, move, field),
-      this.getMaxDamageResult(attacker, defender, move, field)
-    ];
+  getDamageRange(a, d, move, field) {
+    const dmg = this.getMinDamageResult(a, d, move, field)
+      .concat(this.getMaxDamageResult(a, d, move, field));
+    const sorted = dmg.sort((x, y) => x - y);
+    return sorted;
+  }
+
+  /**
+   * [getSimplifiedDamageResult description]
+   * @param  {...[type]} props [description]
+   * @return {[type]}          [description]
+   */
+  getSimplifiedDamageResult(attacker, defender, move, field) {
+    if (typeof attacker === 'string') {
+      attacker = util.researchPokemonById(attacker);
+    }
+    if (typeof defender === 'string') {
+      defender = util.researchPokemonById(defender);
+    }
+    if (typeof move === 'string') {
+      move = util.researchMoveById(move);
+    }
+
+    const damage = this.getDamageRange(attacker, defender, move, field);
+    if (damage.length === 32) {
+      return [
+        damage[0],
+        damage[5],
+        damage[10],
+        damage[15],
+        damage[16],
+        damage[21],
+        damage[26],
+        damage[31]
+      ];
+    }
+    if (damage.length !== 2) {
+      console.log('weird damage amt:', damage.length, damage);
+    }
+    return damage;
   }
 
   getDamageResult(attacker, defender, move, field = defaultField) {
@@ -342,11 +377,11 @@ class Damage {
     // console.log(description);
 
     if (move.bp === 0) {
-      return 0;
+      return [0];
     }
 
     if (['Physical', 'Special'].indexOf(move.category) === -1) {
-      return 0;
+      return [0];
     }
 
     let defAbility = defender.ability || '';
@@ -397,7 +432,7 @@ class Damage {
     let typeEffectiveness = typeEffect1 * typeEffect2;
 
     if (typeEffectiveness === 0) {
-      return 0;
+      return [0];
     }
     if ((defAbility === 'Wonder Guard' && typeEffectiveness <= 1) ||
       (move.type === 'Grass' && defAbility === 'Sap Sipper') ||
@@ -408,7 +443,7 @@ class Damage {
       (move.isBullet && defAbility === 'Bulletproof') ||
       (move.isSound && defAbility === 'Soundproof')) {
       description.defenderAbility = defAbility;
-      return 0;
+      return [0];
     }
     if (field.weather === 'Strong Winds' && (defender.type1 === 'Flying' || defender.type2 === 'Flying') && typeChart[move.type].Flying > 1) {
       typeEffectiveness /= 2;
@@ -416,7 +451,7 @@ class Damage {
     }
     if (move.type === 'Ground' && !field.isGravity && defender.item === 'Air Balloon') {
       description.defenderItem = defender.item;
-      return 0;
+      return [0];
     }
 
     // never used, except in output string
@@ -427,7 +462,7 @@ class Damage {
       if (attacker.ability === 'Parental Bond') {
         lv *= 2;
       }
-      return lv;
+      return [lv];
     }
 
     if (move.hits > 1) {
@@ -758,7 +793,7 @@ class Damage {
       baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
       description.weather = field.weather;
     } else if ((field.weather === 'Harsh Sunshine' && move.type === 'Water') || (field.weather === 'Heavy Rain' && move.type === 'Fire')) {
-      return 0;
+      return [0];
     }
     if (field.isGravity || (attacker.type1 !== 'Flying' && attacker.type2 !== 'Flying' &&
       attacker.item !== 'Air Balloon' && attacker.ability !== 'Levitate')) {
@@ -835,26 +870,26 @@ class Damage {
     // console.log('final mods:', finalMod);
     // console.log('other things:', baseDamage, stabMod, typeEffectiveness, attacker.ability, move.hits, field.format);
 
-    // lots of weird rounding here - didn't want to mess with it in case
-    // it has some significance
 
-    let dmg = baseDamage;
-    dmg = pokeRound(dmg * stabMod / 0x1000);
-    dmg = Math.floor(dmg * typeEffectiveness);
-    if (applyBurn) {
-      dmg = Math.floor(dmg / 2);
+    const damage = [];
+    for (let i = 0; i < 16; i++) {
+      damage[i] = Math.floor(baseDamage * (85 + i) / 100);
+      damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
+      damage[i] = Math.floor(damage[i] * typeEffectiveness);
+      if (applyBurn) {
+        damage[i] = Math.floor(damage[i] / 2);
+      }
+      damage[i] = Math.max(1, damage[i]);
+      damage[i] = pokeRound(damage[i] * finalMod / 0x1000);
+
+      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
+      if (attacker.ability === 'Parental Bond' && move.hits === 1 &&
+        (field.format === 'Singles' || !move.isSpread)) {
+        damage[i] = Math.floor(damage[i] * 3 / 2);
+      }
     }
-    dmg = Math.max(1, dmg);
-    dmg = pokeRound(dmg * finalMod / 0x1000);
 
-    // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
-    if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
-      dmg = Math.floor(dmg * 3 / 2);
-      // description.attackerAbility = attacker.ability;
-    }
-
-    // console.log('MADE IT.', dmg);
-    return dmg;
+    return damage;
   }
 }
 
