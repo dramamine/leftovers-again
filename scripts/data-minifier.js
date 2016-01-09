@@ -19,6 +19,7 @@ function copyMoves() {
     'basePower',
     'category',
     'id',
+    'hits',
     'name',
     'priority',
     'flags',
@@ -71,7 +72,6 @@ function copyFormats() {
     'randomBattleMoves'
   ];
   for (const key in BattleFormatsData) { // eslint-disable-line
-    console.log('looking at ' + key);
     updated[key] = {};
     keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
       updated[key] = BattleFormatsData[key][keyToCopy];
