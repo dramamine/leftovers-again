@@ -21,7 +21,6 @@ class Stabby extends AI {
   }
 
   onRequest(state) {
-    // console.log('got my request...', state);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -53,7 +52,7 @@ class Stabby extends AI {
         console.log(e);
         console.log(state.self.active, state.opponent.active, move);
       }
-      // console.log('estimated ' + est + ' for move ' + move.name);
+      console.log('estimated ' + est + ' for move ' + move.name);
       if (est > maxDamage) {
         maxDamage = est;
         bestMove = idx;

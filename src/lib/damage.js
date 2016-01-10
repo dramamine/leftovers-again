@@ -6,7 +6,39 @@ const DF = 'def';
 const SA = 'spa';
 const SD = 'spd';
 const SP = 'spe';
+const HP = 'hp';
 const gen = 6;
+
+const ASSUME_LEVEL = 75;
+
+const NATURES = {
+  'adamant': [AT, SA],
+  'bashful': [null, null],
+  'bold': [DF, AT],
+  'brave': [AT, SP],
+  'calm': [SD, AT],
+  'careful': [SD, SA],
+  'docile': [null, null],
+  'gentle': [SD, DF],
+  'hardy': [null, null],
+  'hasty': [SP, DF],
+  'impish': [DF, SA],
+  'jolly': [SP, SA],
+  'lax': [DF, SD],
+  'lonely': [AT, DF],
+  'mild': [SA, DF],
+  'modest': [SA, AT],
+  'naive': [SP, SD],
+  'naughty': [AT, SD],
+  'quiet': [SA, SP],
+  'quirky': [null, null],
+  'rash': [SA, SD],
+  'relaxed': [DF, SP],
+  'sassy': [SD, SP],
+  'serious': [null, null],
+  'timid': [SP, AT]
+};
+
 
 // DO NOT WANT
 function buildDescription() {
@@ -30,21 +62,24 @@ class Damage {
     mon.type2 = (mon.types.length === 2)
       ? mon.types[1]
       : '';
-    mon.nature = 'jolly';
+    mon.nature = 'serious';
 
+    mon.level = mon.level || ASSUME_LEVEL;
     // this is true...
-    mon.rawStats = mon.baseStats;
+    mon.baseStats;
 
-    // @TODO this ain't! huge shortcut here.
     if (!mon.stats) {
-      mon.stats = mon.baseStats;
+      mon.stats = {};
+      [AT, SA, DF, SD, SP, HP].forEach( stat => {
+        this._assumeStat(mon, stat);
+      });
     }
 
+    // @TODO huge assumption here too!
     mon.boosts = {};
 
     this.makeAssumptions(mon);
 
-    // console.log(mon);
     return mon;
   }
 
@@ -53,9 +88,6 @@ class Damage {
     mon.status = (mon.conditions)
       ? mon.conditions.join(' ') // string vs array
       : '';
-    mon.level = 50;
-    mon.hp = mon.baseStats.hp * 4;
-    mon.maxhp = mon.baseStats.hp * 4;
     mon.ability = mon.ability || mon.abilities['0'];
     mon.item = '';
     mon.gender = 'M';
@@ -92,7 +124,7 @@ class Damage {
   //  nature:
   //  status:
   //  stats: (ex. stats[SP])
-  //  rawStats: (stats before boosts)
+  //  baseStats: (stats before boosts)
   //
   //
   // },
@@ -127,6 +159,198 @@ class Damage {
   //  getSide()
   //  getWeather() (related: checkForecast)
   // }
+  //
+  getMinDamageResult(a, d, move, field) {
+    const attacker = Object.assign({}, a);
+    const defender = Object.assign({}, d);
+
+    attacker.stats = attacker.stats || {};
+    attacker.level = attacker.level || ASSUME_LEVEL;
+    defender.stats = defender.stats || {};
+    defender.level = defender.level || ASSUME_LEVEL;
+
+    [AT, SA].forEach( stat => {
+      this._minimizeStat(attacker, stat);
+    });
+    [DF, SD, SP, HP].forEach( stat => {
+      this._assumeStat(attacker, stat);
+    });
+
+    [DF, SD, HP].forEach( stat => {
+      this._maximizeStat(defender, stat);
+    });
+    [AT, SA, SP].forEach( stat => {
+      this._assumeStat(defender, stat);
+    });
+
+    return this.getDamageResult(attacker, defender, move, field);
+  }
+  /**
+   * Make assumptions about how awesome this move will be.
+   *
+   * @param  {[type]} attacker [description]
+   * @param  {[type]} defender [description]
+   * @param  {[type]} move     [description]
+   * @param  {[type]} field    [description]
+   * @return {[type]}          [description]
+   */
+  getMaxDamageResult(a, d, move, field) {
+    const attacker = Object.assign({}, a);
+    const defender = Object.assign({}, d);
+    attacker.stats = attacker.stats || {};
+    attacker.level = attacker.level || ASSUME_LEVEL;
+    defender.stats = defender.stats || {};
+    defender.level = defender.level || ASSUME_LEVEL;
+
+    [AT, SA].forEach( stat => {
+      this._maximizeStat(attacker, stat);
+    });
+    [DF, SD, SP, HP].forEach( stat => {
+      this._assumeStat(attacker, stat);
+    });
+
+    [DF, SD, HP].forEach( stat => {
+      this._minimizeStat(defender, stat);
+    });
+    [AT, SA, SP].forEach( stat => {
+      this._assumeStat(defender, stat);
+    });
+
+    return this.getDamageResult(attacker, defender, move, field);
+  }
+
+  /**
+   * Use the maximum value for a stat. This means we'll use 252 EVs and a
+   * strong nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we're assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see _assumeStat
+   */
+  _maximizeStat(mon, stat) {
+    return this._assumeStat(mon, stat, 252, 1.1);
+  }
+
+  /**
+   * Use the minimum value for a stat. This means we'll use 0 EVs and a weak
+   * nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we're assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see _assumeStat
+   */
+  _minimizeStat(mon, stat) {
+    return this._assumeStat(mon, stat, 0, 0.9);
+  }
+
+  /**
+   * Updates a certain stat if it isn't already set.
+   *
+   * Hope these formulas are right!
+   *
+   * HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
+   * Stat = (((Base * 2 + IV + EV/4) * Level / 100) + 5) * Naturemod
+   *
+   * @param  {Object} mon The pokemon object. This is modified directly.
+   * Expects the following properties:
+   * level: {Number} The Pokemon's level
+   * baseStats: {Object} The Pokemon's unmodified (pre-EV and IV) stats
+   * stats: {Object} The Pokemon's modified stats.
+   * nature: {String} (optional) The Pokemon's nature; use natureMultiplier if
+   * this is undefined.
+   * @param  {Enum/String} stat The stat to maybe update.
+   * @param  {Number} evs The EV number, ex. 252.
+   * @param  {Number} natureMultiplier The nature multiplier to use if the
+   *                                   mon doesn't have a nature set. Should
+   *                                   be in [0.9, 1, 1.1].
+   */
+  _assumeStat(mon, stat, evs = 0, natureMultiplier = 1) {
+    if (!mon.stats[stat]) {
+      const evBonus = Math.floor(evs / 4);
+      const addThis = stat === 'hp' ? (mon.level + 10) : 5;
+      mon.stats[stat] = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
+        (mon.level / 100) + addThis) *
+        (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : natureMultiplier);
+    }
+    return mon;
+  }
+
+  /**
+   * Get the multiplier for a given nature and stat.
+   *
+   * @param  {String/Enum} nature A nature.
+   * @param  {String/Enum} stat   A stat.
+   * @return {Number} A number in [0.9, 1, 1.1]. 1 is returned for undefined
+   * natures.
+   */
+  _getNatureMultiplier(nature, stat) {
+    if (!nature) return 1;
+    if (!NATURES[nature]) {
+      console.log('invalid nature! ' + nature);
+      return 1;
+    }
+    if (NATURES[nature][0] === stat) return 1.1;
+    if (NATURES[nature][1] === stat) return 0.9;
+    return 1;
+  }
+
+  /**
+   * Helper function to get min/max damage range.
+   *
+   * @param  {[type]} attacker [description]
+   * @param  {[type]} defender [description]
+   * @param  {[type]} move     [description]
+   * @param  {[type]} field    [description]
+   * @return {[type]}          [description]
+   */
+  getDamageRange(a, d, move, field) {
+    const dmg = this.getMinDamageResult(a, d, move, field)
+      .concat(this.getMaxDamageResult(a, d, move, field));
+    const sorted = dmg.sort((x, y) => x - y);
+    return sorted;
+  }
+
+  /**
+   * [getSimplifiedDamageResult description]
+   * @param  {...[type]} props [description]
+   * @return {[type]}          [description]
+   */
+  getSimplifiedDamageResult(attacker, defender, move, field) {
+    if (typeof attacker === 'string') {
+      attacker = util.researchPokemonById(attacker);
+    }
+    if (typeof defender === 'string') {
+      defender = util.researchPokemonById(defender);
+    }
+    if (typeof move === 'string') {
+      move = util.researchMoveById(move);
+    }
+
+    const damage = this.getDamageRange(attacker, defender, move, field);
+    if (damage.length === 32) {
+      return [
+        damage[0],
+        damage[5],
+        damage[10],
+        damage[15],
+        damage[16],
+        damage[21],
+        damage[26],
+        damage[31]
+      ];
+    }
+    if (damage.length !== 2) {
+      console.log('weird damage amt:', damage.length, damage);
+    }
+    return damage;
+  }
+
   getDamageResult(attacker, defender, move, field = defaultField) {
     if (typeof attacker === 'string') {
       attacker = util.researchPokemonById(attacker);
@@ -142,6 +366,8 @@ class Damage {
     defender = this.processPokemon(defender);
     move = this.processMove(move);
 
+
+
     const description = {
       'attackerName': attacker.species,
       'moveName': move.name,
@@ -151,10 +377,11 @@ class Damage {
     // console.log(description);
 
     if (move.bp === 0) {
-      return {
-        'damage': [0],
-        'description': buildDescription(description)
-      };
+      return [0];
+    }
+
+    if (['Physical', 'Special'].indexOf(move.category) === -1) {
+      return [0];
     }
 
     let defAbility = defender.ability || '';
@@ -205,9 +432,8 @@ class Damage {
     let typeEffectiveness = typeEffect1 * typeEffect2;
 
     if (typeEffectiveness === 0) {
-      return 0;
+      return [0];
     }
-
     if ((defAbility === 'Wonder Guard' && typeEffectiveness <= 1) ||
       (move.type === 'Grass' && defAbility === 'Sap Sipper') ||
       (move.type === 'Fire' && defAbility.indexOf('Flash Fire') !== -1) ||
@@ -217,7 +443,7 @@ class Damage {
       (move.isBullet && defAbility === 'Bulletproof') ||
       (move.isSound && defAbility === 'Soundproof')) {
       description.defenderAbility = defAbility;
-      return 0;
+      return [0];
     }
     if (field.weather === 'Strong Winds' && (defender.type1 === 'Flying' || defender.type2 === 'Flying') && typeChart[move.type].Flying > 1) {
       typeEffectiveness /= 2;
@@ -225,7 +451,7 @@ class Damage {
     }
     if (move.type === 'Ground' && !field.isGravity && defender.item === 'Air Balloon') {
       description.defenderItem = defender.item;
-      return 0;
+      return [0];
     }
 
     // never used, except in output string
@@ -236,7 +462,7 @@ class Damage {
       if (attacker.ability === 'Parental Bond') {
         lv *= 2;
       }
-      return [lv, lv];
+      return [lv];
     }
 
     if (move.hits > 1) {
@@ -256,7 +482,7 @@ class Damage {
       description.moveBP = basePower;
       break;
     case 'Electro Ball':
-      var r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
+      const r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
       basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
       description.moveBP = basePower;
       break;
@@ -270,7 +496,7 @@ class Damage {
       break;
     case 'Low Kick':
     case 'Grass Knot':
-      var w = defender.weight;
+      const w = defender.weight;
       basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
       description.moveBP = basePower;
       break;
@@ -280,7 +506,7 @@ class Damage {
       break;
     case 'Heavy Slam':
     case 'Heat Crash':
-      var wr = attacker.weight / defender.weight;
+      const wr = attacker.weight / defender.weight;
       basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
       description.moveBP = basePower;
       break;
@@ -433,9 +659,7 @@ class Damage {
         }
       }
     }
-
     basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
-    // console.log('with mods:', basePower);
 
     // //////////////////////////////
     // //////// (SP)ATTACK //////////
@@ -447,9 +671,9 @@ class Damage {
     //   (NATURES[attacker.nature][0] === attackStat ? '+' : NATURES[attacker.nature][1] === attackStat ? '-' : '')
     //   + ' ' + toSmogonStat(attackStat);
     if (attackSource.boosts[attackStat] === 0 || (isCritical && attackSource.boosts[attackStat] < 0)) {
-      attack = attackSource.rawStats[attackStat];
+      attack = attackSource.baseStats[attackStat];
     } else if (defAbility === 'Unaware') {
-      attack = attackSource.rawStats[attackStat];
+      attack = attackSource.baseStats[attackStat];
       description.defenderAbility = defAbility;
     } else {
       attack = attackSource.stats[attackStat];
@@ -516,9 +740,9 @@ class Damage {
     //   (NATURES[defender.nature][0] === defenseStat ? '+' : NATURES[defender.nature][1] === defenseStat ? '-' : '') + ' ' +
     //   toSmogonStat(defenseStat);
     if (defender.boosts[defenseStat] === 0 || (isCritical && defender.boosts[defenseStat] > 0) || move.ignoresDefenseBoosts) {
-      defense = defender.rawStats[defenseStat];
+      defense = defender.baseStats[defenseStat];
     } else if (attacker.ability === 'Unaware') {
-      defense = defender.rawStats[defenseStat];
+      defense = defender.baseStats[defenseStat];
       description.attackerAbility = attacker.ability;
     } else {
       defense = defender.stats[defenseStat];
@@ -555,7 +779,6 @@ class Damage {
     }
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
-    // console.log('defense:', defense);
     // //////////////////////////////
     // ////////// DAMAGE ////////////
     // //////////////////////////////
@@ -570,7 +793,7 @@ class Damage {
       baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
       description.weather = field.weather;
     } else if ((field.weather === 'Harsh Sunshine' && move.type === 'Water') || (field.weather === 'Heavy Rain' && move.type === 'Fire')) {
-      return 0;
+      return [0];
     }
     if (field.isGravity || (attacker.type1 !== 'Flying' && attacker.type2 !== 'Flying' &&
       attacker.item !== 'Air Balloon' && attacker.ability !== 'Levitate')) {
@@ -647,26 +870,26 @@ class Damage {
     // console.log('final mods:', finalMod);
     // console.log('other things:', baseDamage, stabMod, typeEffectiveness, attacker.ability, move.hits, field.format);
 
-    // lots of weird rounding here - didn't want to mess with it in case
-    // it has some significance
 
-    let dmg = baseDamage;
-    dmg = pokeRound(dmg * stabMod / 0x1000);
-    dmg = Math.floor(dmg * typeEffectiveness);
-    if (applyBurn) {
-      dmg = Math.floor(dmg / 2);
+    const damage = [];
+    for (let i = 0; i < 16; i++) {
+      damage[i] = Math.floor(baseDamage * (85 + i) / 100);
+      damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
+      damage[i] = Math.floor(damage[i] * typeEffectiveness);
+      if (applyBurn) {
+        damage[i] = Math.floor(damage[i] / 2);
+      }
+      damage[i] = Math.max(1, damage[i]);
+      damage[i] = pokeRound(damage[i] * finalMod / 0x1000);
+
+      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
+      if (attacker.ability === 'Parental Bond' && move.hits === 1 &&
+        (field.format === 'Singles' || !move.isSpread)) {
+        damage[i] = Math.floor(damage[i] * 3 / 2);
+      }
     }
-    dmg = Math.max(1, dmg);
-    dmg = pokeRound(dmg * finalMod / 0x1000);
 
-    // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
-    if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
-      dmg = Math.floor(dmg * 3 / 2);
-      // description.attackerAbility = attacker.ability;
-    }
-
-    // console.log('MADE IT.', dmg);
-    return dmg;
+    return damage;
   }
 }
 
@@ -711,7 +934,7 @@ function getModifiedStat(stat, mod) {
 }
 
 function getFinalSpeed(pokemon, weather) {
-  let speed = getModifiedStat(pokemon.rawStats[SP], pokemon.boosts[SP]);
+  let speed = getModifiedStat(pokemon.baseStats[SP], pokemon.boosts[SP]);
   if (pokemon.item === 'Choice Scarf') {
     speed = Math.floor(speed * 1.5);
   } else if (pokemon.item === 'Macho Brace' || pokemon.item === 'Iron Ball') {

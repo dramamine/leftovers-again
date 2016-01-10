@@ -1,5 +1,5 @@
 import listener from './listener';
-import connection from './connection';
+import socket from './socket';
 import config from './config';
 import Team from './lib/team';
 
@@ -19,8 +19,15 @@ class Chat {
     }
   }
 
+  destroy() {
+    listener.unsubscribe('updateuser', this.onUpdateUser);
+    listener.unsubscribe('updatechallenges', this.acceptChallenges);
+    listener.unsubscribe('users', this.challengeOnJoin);
+  }
+
   onUpdateUser(args) {
-    const [nick, status, mysterycode] = args;
+    // this includes a 3rd parameter, i.e. "mysterycode". who knows.
+    const [nick, status] = args;
     if (status !== '1') {
       console.error(`failed to log in, still guest (status code ${status})`);
       return false;
@@ -30,7 +37,7 @@ class Chat {
       return false;
     }
 
-    connection.send('|/join ' + config.chatroom);
+    socket.send('|/join ' + config.chatroom);
   }
 
   challengeOnJoin(args) {
@@ -50,10 +57,10 @@ class Chat {
         if (AI.meta.battletype === 'anythinggoes') {
           const utmString = new Team( AI.getTeam(user) ).asUtm();
           console.log('sending utm...', utmString);
-          connection.send('|/utm ' + utmString);
+          socket.send('|/utm ' + utmString);
         }
         console.log('sending challenge...', userList[i], AI.meta.battletype);
-        connection.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
+        socket.send('|/challenge ' + userList[i] + ', ' + AI.meta.battletype);
       }
     }
   }
@@ -70,15 +77,16 @@ class Chat {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        const utmString = new Team( AI.getTeam(username) ).asUtm();
-        console.log('sending utm...', utmString);
-        connection.send('|/utm ' + utmString);
+        if (AI.getTeam) {
+          const utmString = new Team( AI.getTeam(username) ).asUtm();
+          console.log('sending utm...', utmString);
+          socket.send('|/utm ' + utmString);
+        }
 
-        connection.send('|/accept ' + username);
+        socket.send('|/accept ' + username);
       }
     }
   }
 }
 
-const chat = new Chat();
-export default chat;
+export default Chat;

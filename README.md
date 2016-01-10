@@ -73,6 +73,16 @@ Languages currently supported:
 If you'd like to implement your favorite language: 
 
 ## NOTES
+1/3/2016
+- need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon
+- need to handle Zoroark - see 20160104-bug-too-many-active.txt
+- damage done by Return calculated incorrectly
+- take acct of Accuracy in damage est(?)
+- don't think that Explosion is such a great move
+- don't think that Water Spout sux
+- process fields
+- process weather
+
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
 

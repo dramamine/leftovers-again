@@ -1,21 +1,17 @@
 import colors from 'colors/safe';
-// black
-// red
-// green
-// yellow
-// blue
-// magenta
-// cyan
-// white
-// gray
-// grey
+// black, red, green, yellow, blue, magenta, cyan, white, gray, grey
 
 let loglevel = 3;
+// sorry for checking these here.
 const argv = require('minimist')(process.argv.slice(2));
 if (argv.loglevel) {
   loglevel = argv.loglevel;
 }
 
+/**
+ * Log class; for prettying up your log output and optionally hiding less
+ * important messages.
+ */
 class Log {
   debug(msg) { if (loglevel >= 5) console.log(colors.green(msg)); }
   info(msg) { if (loglevel >= 4)console.log(colors.yellow(msg)); }

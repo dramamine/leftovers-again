@@ -1,158 +1,93 @@
 import listener from './listener';
 import Battle from './battle';
-import url from 'url';
-import WebSocket from 'ws';
-// import http from 'http';
-import https from 'https';
-import util from './util';
 import config from './config';
-
-let ws;
-
-const requestUrl = url.parse(config.actionurl);
+import log from './log';
 
 const battles = {};
 
+/**
+ * Abstract class for managing connections. All connections are responsible
+ * for handling server messages, using listeners to relay messages, and
+ * tracking the battles that use their particular connection.
+ */
 class Connection {
+  /**
+   * Constructor for a Connection
+   */
   constructor() {
   }
 
+  /**
+   * Connect to a thing.
+   */
   connect() {
-    // console.log('connection constructed.');
-    ws = new WebSocket('ws://localhost:8000/showdown/websocket');
-
-    ws.on('open', () => {
-      console.log('got open message from websocket');
-    });
-
-    ws.on('message', (msg) => {
-      // console.log('received: %s', msg);
-      const messages = msg.split('\n');
-      let bid = null;
-      if (messages[0].indexOf('>') === 0) {
-        bid = messages[0].split('>')[1];
-        if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
-      }
-
-      for (let i = 0; i < messages.length; i++) {
-        if (messages[i].indexOf('|') === 0) {
-          const messageParts = messages[i].split('|');
-          const passThese = messageParts.slice(2);
-          if (bid) {
-            // console.log('handling', messageParts[1]);
-            battles[bid].handle(messageParts[1], passThese);
-
-            continue;
-          }
-          // console.log('relaying ', messageParts[1]);
-          listener.relay(messageParts[1], passThese);
-        }
-      }
-    });
-
-    listener.subscribe('challstr', this.respondToChallenge);
-    listener.subscribe('popup', this.relayPopup);
+    log.error('please override me.');
   }
 
-  send(message) {
-    ws.send(message);
-  }
-
-  close(message) {
-    ws.close(message);
-  }
-
-  relayPopup(args) {
-    console.log(args);
-  }
-
-
-
-  respondToChallenge(args) {
-    // console.log('responding to challenge.');
-    const [id, str] = args;
-    // console.log(id, str);
-
-    const requestOptions = {
-      hostname: requestUrl.hostname,
-      port: requestUrl.port,
-      path: requestUrl.pathname,
-      agent: false
-    };
-    let data = '';
-    if (!config.pass) {
-      requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + util.toId(config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
-    } else {
-      requestOptions.method = 'POST';
-      data = 'act=login&name=' + config.nick + '&pass=' + config.pass + '&challengekeyid=' + id + '&challenge=' + str;
-      requestOptions.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': data.length
-      };
+  /**
+   * Handle a server message. These have a particular format which I won't get
+   * into here; check the official repos for more information. If the message
+   * came with a battle ID, make sure that battle has been constructed, and
+   * relay the message to that particular battle only.
+   *
+   * @param  {string} msg The message from the server.
+   */
+  _handleMessage(msg) {
+    // console.log('received: %s', msg);
+    const messages = msg.split('\n');
+    let bid = null;
+    if (messages[0].indexOf('>') === 0) {
+      bid = messages[0].split('>')[1];
+      if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
     }
-    const req = https.request(requestOptions, (res) => {
-      // console.log('looking at response.');
-      res.setEncoding('utf8');
-      let chunks = '';
-      res.on('data', (chunk) => {
-        chunks += chunk;
-      });
-      res.on('end', () => {
-        // console.log(chunks);
-        if (chunks === ';') {
-          console.error('failed to log in; nick is registered - invalid or no password given');
-          process.exit(-1);
-        }
-        if (chunks.length < 50) {
-          console.error('failed to log in: ' + chunks);
-          process.exit(-1);
-        }
-        if (chunks.indexOf('heavy load') !== -1) {
-          console.error('the login server is under heavy load; trying again in one minute');
-          setTimeout((() => {
-            return this.handleMessage(message);
-          }).bind(this), 60 * 1000);
-          return;
-        }
-        if (chunks.substr(0, 16) === '<!DOCTYPE html>') {
-          console.error('Connection error 522; trying agian in one minute');
-          setTimeout((() => {
-            return this.handleMessage(message);
-          }).bind(this), 60 * 1000);
-          return;
-        }
-        // getting desparate here...
-        try {
-          chunks = JSON.parse(chunks.substr(1));
-          if (chunks.actionsuccess) {
-            chunks = chunks.assertion;
-          } else {
-            error('could not log in; action was not successful: ' + JSON.stringify(chunks));
-            process.exit(-1);
+
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].indexOf('|') === 0) {
+        const messageParts = messages[i].split('|');
+        let passThese = messageParts.slice(2);
+        if (bid) {
+          if (messageParts[1] === 'request') {
+            passThese = [passThese.join('')];
           }
-        } catch (err) {
-          console.error('error trying to parse data:', err, chunks);
+          battles[bid].handle(messageParts[1], passThese);
+          continue;
         }
-        // console.log('sending turn...');
-        ws.send('|/trn ' + config.nick + ',0,' + chunks);
-      });
-    });
-
-    req.on('error', (err) => {
-      return console.error('login error: ' + err.stack);
-    });
-
-    if (data) {
-      req.write(data);
+        listener.relay(messageParts[1], passThese);
+      }
     }
-    return req.end();
   }
 
-  exit() {
-    ws.close();
+  /**
+   * Send the message to the server
+   * @param  {string} message The server message.
+   */
+  send(message) {} // eslint-disable-line
+
+  /**
+   * [close description]
+   * @param  {[type]} message [description]
+   * @return {[type]}         [description]
+   */
+  close(message) {} // eslint-disable-line
+
+  /**
+   * Helper function to get a battle by its battle ID.
+   * @param  {string} bid The battle ID, ex. 'randombattle-652742'
+   * @return {Battle} The Battle object you're looking for.
+   */
+  _getBattle(bid) {
+    if (!battles[bid]) {
+      log.error('couldn\'t find a battle with that ID: ' + bid);
+      return null;
+    }
+    return battles[bid];
   }
+
+  /**
+   * [exit description]
+   * @return {[type]} [description]
+   */
+  exit() {}
 }
 
-const connection = new Connection();
-export default connection;
+export default Connection;

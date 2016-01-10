@@ -2,7 +2,7 @@ import Pokemon from '../../src/model/pokemon';
 import util from '../../src/util';
 import log from '../../src/log';
 
-fdescribe('Pokemon', () => {
+describe('Pokemon', () => {
   // it('should figure out the pokemon owner', () => {
   //   const mon = new Pokemon('p1: Fakechu');
   //   expect(mon.owner).toBe('p1');
@@ -38,7 +38,7 @@ fdescribe('Pokemon', () => {
       expect(mon.hppct).toEqual(100);
       expect(mon.condition).toEqual(cond);
       expect(mon.conditions.length).toEqual(0);
-      expect(mon.dead).toBe(false);
+      expect(mon.dead).toBe(undefined);
     });
 
     it('should parse an unhealthy condition', () => {
@@ -49,14 +49,14 @@ fdescribe('Pokemon', () => {
       expect(mon.hppct).toEqual(10);
       expect(mon.condition).toEqual(cond);
       expect(mon.conditions.length).toEqual(2);
-      expect(mon.dead).toBe(false);
+      expect(mon.dead).toBe(undefined);
     });
 
     it('should parse death', () => {
       const cond = '0 fnt';
       mon.useCondition(cond);
       expect(mon.hp).toEqual(0);
-      expect(mon.maxhp).toEqual(0);
+      expect(mon.hppct).toEqual(0);
       expect(mon.dead).toBe(true);
     });
 

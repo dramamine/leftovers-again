@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "jasmine",
-    "develop": "nodemon --exec babel-node src/main.js",
+    "develop": "nodemon --watch src --exec babel-node src/main.js",
     "spawn": "babel-node scripts/spawn.js",
     "server": "node lib/Pokemon-Showdown/app.js",
     "client": "xdg-open lib/Pokemon-Showdown-Client/testclient.html"

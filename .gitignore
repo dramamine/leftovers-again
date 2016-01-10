@@ -1,4 +1,5 @@
 node_modules/
 npm-debug.log
 replays/
-README-private.md
+README-*.md
+

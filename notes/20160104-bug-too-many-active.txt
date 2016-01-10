@@ -1,0 +1,113 @@
+Not sure what happened here. The client thinks Zoroark is out but it looks like Dusknoir
+
+# SERVER CODE
+
+battle-randombattle-639
+update
+|player|p1|5nowden2992|1
+CHILD MESSAGE RECV: "battle-randombattle-639|join|p2|awsedfvgbf|169
+null"
+battle-randombattle-639
+request
+p2
+0
+{"side":{"name":"awsedfvgbf","id":"p2","pokemon":[{"ident":"p2: Zoroark","details":"Zoroark, L78, F","condition":"222/222","active":true,"stats":{"atk":209,"def":139,"spa":232,"spd":139,"spe":209},"moves":["focusblast","nastyplot","flamethrower","suckerpunch"],"baseAbility":"illusion","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Slowking","details":"Slowking, L77, M","condition":"273/273","active":false,"stats":{"atk":160,"def":168,"spa":199,"spd":214,"spe":91},"moves":["psyshock","nastyplot","icebeam","fireblast"],"baseAbility":"regenerator","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Golurk","details":"Golurk, L81","condition":"277/277","active":false,"stats":{"atk":248,"def":176,"spa":136,"spd":176,"spe":136},"moves":["shadowpunch","earthquake","icepunch","stealthrock"],"baseAbility":"ironfist","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Gliscor","details":"Gliscor, L75, F","condition":"236/236","active":false,"stats":{"atk":186,"def":231,"spa":111,"spd":156,"spe":186},"moves":["substitute","toxic","knockoff","earthquake"],"baseAbility":"poisonheal","item":"toxicorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Slurpuff","details":"Slurpuff, L77, M","condition":"253/253","active":false,"stats":{"atk":168,"def":177,"spa":175,"spd":160,"spe":155},"moves":["calmmind","surf","dazzlinggleam","flamethrower"],"baseAbility":"unburden","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Dusknoir","details":"Dusknoir, L83, M","condition":"210/210","active":false,"stats":{"atk":214,"def":272,"spa":156,"spd":272,"spe":122},"moves":["shadowsneak","willowisp","earthquake","icepunch"],"baseAbility":"frisk","item":"leftovers","pokeball":"pokeball","canMegaEvo":false}]}}
+battle-randombattle-639
+request
+p1
+0
+{"side":{"name":"5nowden2992","id":"p1","pokemon":[{"ident":"p1: Mightyena","details":"Mightyena, L83, F","condition":"252/252","active":true,"stats":{"atk":197,"def":164,"spa":147,"spd":147,"spe":164},"moves":["firefang","crunch","suckerpunch","irontail"],"baseAbility":"intimidate","item":"expertbelt","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Quagsire","details":"Quagsire, L81, M","condition":"287/287","active":false,"stats":{"atk":184,"def":184,"spa":152,"spd":152,"spe":103},"moves":["encore","earthquake","scald","recover"],"baseAbility":"waterabsorb","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Cradily","details":"Cradily, L81, F","condition":"272/272","active":false,"stats":{"atk":178,"def":204,"spa":178,"spd":220,"spe":116},"moves":["curse","seedbomb","rockslide","recover"],"baseAbility":"stormdrain","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Lumineon","details":"Lumineon, L83, M","condition":"250/250","active":false,"stats":{"atk":162,"def":174,"spa":162,"spd":190,"spe":199},"moves":["toxic","uturn","icebeam","scald"],"baseAbility":"stormdrain","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Nidoqueen","details":"Nidoqueen, L77, F","condition":"265/265","active":false,"stats":{"atk":186,"def":179,"spa":160,"spd":175,"spe":162},"moves":["icebeam","sludgewave","toxicspikes","stealthrock"],"baseAbility":"sheerforce","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Furret","details":"Furret, L83, F","condition":"277/277","active":false,"stats":{"atk":174,"def":154,"spa":122,"spd":139,"spe":197},"moves":["trick","firepunch","aquatail","doubleedge"],"baseAbility":"frisk","item":"choicescarf","pokeball":"pokeball","canMegaEvo":false}]}}
+battle-randombattle-639
+inactiveside
+-1
+battle-randombattle-639
+request
+p1
+1
+{"active":[{"moves":[{"move":"Fire Fang","id":"firefang","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Crunch","id":"crunch","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Sucker Punch","id":"suckerpunch","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Iron Tail","id":"irontail","pp":24,"maxpp":24,"target":"normal","disabled":false}]}],"side":{"name":"5nowden2992","id":"p1","pokemon":[{"ident":"p1: Mightyena","details":"Mightyena, L83, F","condition":"252/252","active":true,"stats":{"atk":197,"def":164,"spa":147,"spd":147,"spe":164},"moves":["firefang","crunch","suckerpunch","irontail"],"baseAbility":"intimidate","item":"expertbelt","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Quagsire","details":"Quagsire, L81, M","condition":"287/287","active":false,"stats":{"atk":184,"def":184,"spa":152,"spd":152,"spe":103},"moves":["encore","earthquake","scald","recover"],"baseAbility":"waterabsorb","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Cradily","details":"Cradily, L81, F","condition":"272/272","active":false,"stats":{"atk":178,"def":204,"spa":178,"spd":220,"spe":116},"moves":["curse","seedbomb","rockslide","recover"],"baseAbility":"stormdrain","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Lumineon","details":"Lumineon, L83, M","condition":"250/250","active":false,"stats":{"atk":162,"def":174,"spa":162,"spd":190,"spe":199},"moves":["toxic","uturn","icebeam","scald"],"baseAbility":"stormdrain","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Nidoqueen","details":"Nidoqueen, L77, F","condition":"265/265","active":false,"stats":{"atk":186,"def":179,"spa":160,"spd":175,"spe":162},"moves":["icebeam","sludgewave","toxicspikes","stealthrock"],"baseAbility":"sheerforce","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Furret","details":"Furret, L83, F","condition":"277/277","active":false,"stats":{"atk":174,"def":154,"spa":122,"spd":139,"spe":197},"moves":["trick","firepunch","aquatail","doubleedge"],"baseAbility":"frisk","item":"choicescarf","pokeball":"pokeball","canMegaEvo":false}]},"rqid":1}
+battle-randombattle-639
+request
+p2
+1
+{"active":[{"moves":[{"move":"Focus Blast","id":"focusblast","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Nasty Plot","id":"nastyplot","pp":32,"maxpp":32,"target":"self","disabled":false},{"move":"Flamethrower","id":"flamethrower","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Sucker Punch","id":"suckerpunch","pp":8,"maxpp":8,"target":"normal","disabled":false}]}],"side":{"name":"awsedfvgbf","id":"p2","pokemon":[{"ident":"p2: Zoroark","details":"Zoroark, L78, F","condition":"222/222","active":true,"stats":{"atk":209,"def":139,"spa":232,"spd":139,"spe":209},"moves":["focusblast","nastyplot","flamethrower","suckerpunch"],"baseAbility":"illusion","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Slowking","details":"Slowking, L77, M","condition":"273/273","active":false,"stats":{"atk":160,"def":168,"spa":199,"spd":214,"spe":91},"moves":["psyshock","nastyplot","icebeam","fireblast"],"baseAbility":"regenerator","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Golurk","details":"Golurk, L81","condition":"277/277","active":false,"stats":{"atk":248,"def":176,"spa":136,"spd":176,"spe":136},"moves":["shadowpunch","earthquake","icepunch","stealthrock"],"baseAbility":"ironfist","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Gliscor","details":"Gliscor, L75, F","condition":"236/236","active":false,"stats":{"atk":186,"def":231,"spa":111,"spd":156,"spe":186},"moves":["substitute","toxic","knockoff","earthquake"],"baseAbility":"poisonheal","item":"toxicorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Slurpuff","details":"Slurpuff, L77, M","condition":"253/253","active":false,"stats":{"atk":168,"def":177,"spa":175,"spd":160,"spe":155},"moves":["calmmind","surf","dazzlinggleam","flamethrower"],"baseAbility":"unburden","item":"sitrusberry","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Dusknoir","details":"Dusknoir, L83, M","condition":"210/210","active":false,"stats":{"atk":214,"def":272,"spa":156,"spd":272,"spe":122},"moves":["shadowsneak","willowisp","earthquake","icepunch"],"baseAbility":"frisk","item":"leftovers","pokeball":"pokeball","canMegaEvo":false}]},"rqid":1}
+battle-randombattle-639
+update
+|player|p2|awsedfvgbf|169
+|gametype|singles
+|gen|6
+|tier|Random Battle
+|rule|Sleep Clause Mod: Limit one foe put to sleep
+|rule|HP Percentage Mod: HP is shown in percentages
+|
+|start
+|split
+|switch|p1a: Mightyena|Mightyena, L83, F|100/100
+|switch|p1a: Mightyena|Mightyena, L83, F|252/252
+|switch|p1a: Mightyena|Mightyena, L83, F|100/100
+|switch|p1a: Mightyena|Mightyena, L83, F|252/252
+|split
+|switch|p2a: Dusknoir|Dusknoir, L83, M|100/100
+|switch|p2a: Dusknoir|Dusknoir, L83, M|100/100
+|switch|p2a: Dusknoir|Dusknoir, L83, M|222/222
+|switch|p2a: Dusknoir|Dusknoir, L83, M|222/222
+|-ability|p1a: Mightyena|Intimidate
+|-unboost|p2a: Dusknoir|atk|1
+|turn|1
+CHILD MESSAGE RECV: "battle-randombattle-639|choose|p1|move 2|1"
+battle-randombattle-639
+inactiveside
+1
+
+# CLIENT (infodump.js) CODE
+
+[ Pokemon {
+    species: 'Zoroark',
+    types: [ 'Dark' ],
+    baseStats: { hp: 60, atk: 105, def: 60, spa: 120, spd: 60, spe: 105 },
+    heightm: 1.6,
+    weightkg: 81.1,
+    abilities: { '0': 'Illusion' },
+    position: null,
+    owner: 'p2',
+    active: true,
+    ident: 'p2: Zoroark',
+    details: 'Zoroark, L78, F',
+    condition: '222/222',
+    stats: { atk: 209, def: 139, spa: 232, spd: 139, spe: 209 },
+    moves: [ [Object], [Object], [Object], [Object] ],
+    baseAbility: 'illusion',
+    item: 'lifeorb',
+    pokeball: 'pokeball',
+    canMegaEvo: false,
+    conditions: [],
+    hp: 222,
+    maxhp: 222,
+    hppct: 100,
+    order: 0 },
+  Pokemon {
+    species: 'Dusknoir',
+    types: [ 'Ghost' ],
+    baseStats: { hp: 45, atk: 100, def: 135, spa: 65, spd: 135, spe: 45 },
+    heightm: 2.2,
+    weightkg: 106.6,
+    abilities: { '0': 'Pressure', H: 'Frisk' },
+    position: 'p2a',
+    owner: 'p2',
+    active: false,
+    ident: 'p2: Dusknoir',
+    details: 'Dusknoir, L83, M',
+    condition: '222/222',
+    stats: { atk: 214, def: 272, spa: 156, spd: 272, spe: 122 },
+    moves: [ [Object], [Object], [Object], [Object] ],
+    baseAbility: 'frisk',
+    item: 'leftovers',
+    pokeball: 'pokeball',
+    canMegaEvo: false,
+    conditions: [],
+    hp: 222,
+    maxhp: 222,
+    hppct: 100,
+    order: 5 } ]
+infodumps state::  { self: 
+   { active: [ [Object], [Object] ],
+     reserve: [ [Object], [Object], [Object], [Object], [Object], [Object] ] },
