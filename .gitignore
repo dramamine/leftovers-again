@@ -2,5 +2,5 @@ node_modules/
 npm-debug.log
 replays/
 README-*.md
-
+README-clienthax.js
 scripts/clienthax.js
