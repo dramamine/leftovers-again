@@ -92,12 +92,13 @@ class Infodump extends AI {
             );
           } catch (e) {}
         }
+        console.log('predicting ' + move.name + 'against ' + state.opponent.active.species);
         const ko = KO.predictKO(est, state.opponent.active);
         extra.push({
           name: move.name,
           dmgMin: est[0],
           dmgMax: est[est.length - 1],
-          koTurn: ko.turns || null,
+          koTurns: ko.turns || null,
           koChance: ko.chance || null
         });
       });
@@ -184,12 +185,12 @@ class Infodump extends AI {
       // console.log(mon);
 
       const yourBest = yourMoves[0];
-      console.log('predicting KO..', yourBest.dmg, yourBest.against);
+      console.log('predicting KO..', yourBest.name, yourBest.against.species);
       const yourKO = KO.predictKO(yourBest.dmg, yourBest.against);
 
 
       const myBest = myMoves[0];
-      console.log('predicting KO..', myBest.dmg, myBest.against);
+      console.log('predicting KO..', myBest.name, myBest.against.species);
       const myKO = KO.predictKO(myBest.dmg, myBest.against);
 
 

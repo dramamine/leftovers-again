@@ -70,7 +70,7 @@ var callhome = function() {
 var clear = function() {
   console.log('clearing out all lgn\'s');
   $('.lgn').remove();
-}
+};
 
 // listen to Showdown's websocket connection
 var listen = function() {
@@ -112,13 +112,17 @@ var listen = function() {
 
 var _onMoveData = function(moves) {
   for (var i = 0; i < moves.length; i++) {
+    console.log(moves[i]);
     $('.movemenu button[value=' + (i + 1) + '] small')
       .first()
       .after('<small class="lgn damage">' +
-        moves[i].dmgMin + '-' + moves[i].dmgMax +
-        '</small><small class="lgn damage">(' +
-        moves[i].koChance + '% for ' + moves[i].koTurn + 'HKO</small>');
-
+        moves[i].dmgMin + '-' + moves[i].dmgMax + '</small> (' +
+        _getKOString(
+          moves[i].koChance,
+          moves[i].koTurns,
+          'small'
+        ) + ')'
+      );
   }
 };
 
@@ -135,32 +139,67 @@ var _opponentData = function(opponent) {
 var _onSwitchData = function(switches) {
   // value seems to be 0-5
   // but is '[Species or Name],active' for the active mon
+  var myBest, yourBest;
   for (var i = 0; i < switches.length; i++) {
     console.log(switches[i]);
+    myBest = switches[i].myBest;
+    yourBest = switches[i].yourBest;
+
     var searchVal = (switches[i].active)
       ? switches[i].species + ',active'
       : i;
-    var hitsFor = '' + switches[i].myBest.dmgMax + '(' + switches[i].myBest.name + ')';
-    var getsHitFor = '' + switches[i].yourBest.dmgMax + '(' + switches[i].yourBest.name + ')';
+
     var hitsForClass = '';
-    if(switches[i].myBest.dmgMax < 125) hitsForClass = 'bad';
-    else if(switches[i].myBest.dmgMax > 250) hitsForClass = 'good';
+    if(myBest.dmgMax < 125) hitsForClass = 'bad';
+    else if(myBest.dmgMax > 250) hitsForClass = 'good';
 
     var getsHitClass = '';
-    if(switches[i].yourBest.dmgMax < 125) getsHitClass = 'good';
-    else if(switches[i].yourBest.dmgMax > 250) getsHitClass = 'bad';
+    if(yourBest.dmgMax < 125) getsHitClass = 'good';
+    else if(yourBest.dmgMax > 250) getsHitClass = 'bad';
 
-    console.log(hitsFor, getsHitClass);
     $('.switchmenu button[value="' + searchVal + '"] span.hpbar')
-      .before('<p class="lgn smaller ' + hitsForClass + '">Hits for: ' + hitsFor +
-        '</p><p class="lgn smaller">' + switches[i].myBest.koChance +
-        '% for ' + switches[i].myBest.koTurn + 'HKO' +
-        '</p><p class="lgn smaller ' + getsHitClass + '">Gets hit for: ' + getsHitFor + '</p>');
+      .before(
+        _getDmgString(
+          hitsForClass,
+          myBest.dmgMax,
+          myBest.name,
+          'Hits for'
+        ) +
+        _getKOString(
+          myBest.koChance,
+          myBest.koTurns,
+          'p'
+        ) +
+        _getDmgString(
+          getsHitClass,
+          yourBest.dmgMax,
+          yourBest.name,
+          'Hit by'
+        ) +
+        _getKOString(
+          yourBest.koChance,
+          yourBest.koTurns,
+          'p'
+        )
+      );
   }
 };
 
 var _getIcon = function(str, color) {
   return '<small class="lgn icon ' + color + '">' + str + '</small>';
-}
+};
+
+var _getDmgString = function(className, dmg, move, str) {
+  return '<p class="lgn smaller ' + className + '">' + str + ': ' + dmg + '(' + move + ')</p>';
+};
+
+var _getKOString = function(chance, turn, elm) {
+  console.log('_getKOString called w ', chance, turn, elm);
+  if (!turn || turn > 9) return '';
+  if (turn === 1) turn = 'O';
+
+  return '<' + elm + ' class="lgn smaller">' + chance +
+    '% for ' + turn + 'HKO' + '</' + elm + '>';
+};
 
 listen();

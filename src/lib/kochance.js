@@ -148,7 +148,7 @@ class KO {
       damage = damage.map( dmg => dmg * hits ); // eslint-disable-line
     }
 
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 5; i++) {
       const c = KO._getKOChance(damage, defender.maxHP - hazards, eot, i, defender.maxHP, toxicCounter);
       if (c > 0 && c <= 1) {
         return {
