@@ -1,4 +1,6 @@
 node_modules/
 npm-debug.log
 replays/
-README-private.md
+README-*.md
+README-clienthax.js
+scripts/clienthax.js
