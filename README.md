@@ -77,11 +77,13 @@ If you'd like to implement your favorite language:
 - need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon
 - need to handle Zoroark - see 20160104-bug-too-many-active.txt
 - damage done by Return calculated incorrectly
+- damage done by that weight-based move that Onix has is not calculated
 - take acct of Accuracy in damage est(?)
 - don't think that Explosion is such a great move
 - don't think that Water Spout sux
 - process fields
 - process weather
+- see if "Happiness: 200" is parsed by team declarer
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
