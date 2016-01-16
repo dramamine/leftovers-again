@@ -1,6 +1,7 @@
 import Damage from '../../src/lib/damage';
+import util from '../../src/util';
 
-describe('damage calculator', () => {
+fdescribe('damage calculator', () => {
   describe('normal moves', () => {
     it('should handle some normal moves', () => {
       // 85 bp
@@ -31,6 +32,64 @@ describe('damage calculator', () => {
 
       expect(ghosttype[0]).toEqual(0);
       expect(ghosttype[ghosttype.length - 1]).toEqual(0);
+    });
+  });
+  describe('boosts', () => {
+    it('should handle +1 boosted attack', () => {
+      const attacker = util.researchPokemonById('eevee');
+
+      const boosted = Object.assign({}, attacker);
+      boosted.stats = {};
+      boosted.level = 75;
+      Damage._assumeStat(boosted, 'atk');
+      boosted.boosts = {atk: 1};
+
+      const raw = Object.assign({}, attacker);
+      raw.stats = {};
+      raw.level = 75;
+      Damage._assumeStat(raw, 'atk');
+      raw.stats.atk = raw.stats.atk * 1.5;
+      const boostedDmg = Damage.getDamageResult(boosted, 'geodude', 'bodyslam');
+      const rawDmg = Damage.getDamageResult(raw, 'geodude', 'bodyslam');
+      expect(boostedDmg).toEqual(rawDmg);
+    });
+
+    it('should handle +2 boosted attack', () => {
+      const attacker = util.researchPokemonById('eevee');
+
+      const boosted = Object.assign({}, attacker);
+      boosted.stats = {};
+      boosted.level = 75;
+      Damage._assumeStat(boosted, 'atk');
+      boosted.boosts = {atk: 2};
+      console.log('boosted atk:', boosted.stats.atk);
+
+      const raw = Object.assign({}, attacker);
+      raw.stats = {};
+      raw.level = 75;
+      Damage._assumeStat(raw, 'atk');
+      raw.stats.atk = raw.stats.atk * 2;
+      const boostedDmg = Damage.getDamageResult(boosted, 'geodude', 'bodyslam');
+      const rawDmg = Damage.getDamageResult(raw, 'geodude', 'bodyslam');
+      expect(boostedDmg).toEqual(rawDmg);
+    });
+    it('should handle +2 boosted defense', () => {
+      const defender = util.researchPokemonById('eevee');
+
+      const boosted = Object.assign({}, defender);
+      boosted.stats = {};
+      boosted.level = 75;
+      Damage._assumeStat(boosted, 'def');
+      boosted.boosts = {def: 2};
+
+      const raw = Object.assign({}, defender);
+      raw.stats = {};
+      raw.level = 75;
+      Damage._assumeStat(raw, 'def');
+      raw.stats.def = raw.stats.def * 2;
+      const boostedDmg = Damage.getDamageResult('eevee', boosted, 'bodyslam');
+      const rawDmg = Damage.getDamageResult('eevee', raw, 'bodyslam');
+      expect(boostedDmg).toEqual(rawDmg);
     });
   });
   describe('getSimplifiedDamageResult', () => {

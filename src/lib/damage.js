@@ -9,6 +9,8 @@ const SP = 'spe';
 const HP = 'hp';
 const gen = 6;
 
+const STATS = [AT, DF, SA, SD, SP, HP];
+
 const ASSUME_LEVEL = 75;
 
 const NATURES = {
@@ -66,19 +68,22 @@ class Damage {
 
     mon.level = mon.level || ASSUME_LEVEL;
     // this is true...
-    mon.baseStats;
+    // mon.baseStats;
+    this.makeAssumptions(mon);
 
     if (!mon.stats) {
       mon.stats = {};
-      [AT, SA, DF, SD, SP, HP].forEach( stat => {
-        this._assumeStat(mon, stat);
-      });
     }
+    [AT, SA, DF, SD, SP, HP].forEach( stat => {
+      if (!mon.stats[stat]) {
+        this._assumeStat(mon, stat);
+      }
+    });
 
-    // @TODO huge assumption here too!
-    mon.boosts = {};
-
-    this.makeAssumptions(mon);
+    [AT, SA, DF, SD, SP].forEach( stat => {
+      mon.stats[stat] = getModifiedStat(
+        mon.stats[stat], mon.boosts[stat]);
+    });
 
     return mon;
   }
@@ -91,6 +96,14 @@ class Damage {
     mon.ability = mon.ability || mon.abilities['0'];
     mon.item = '';
     mon.gender = 'M';
+
+    mon.boosts = Object.assign({
+      [AT]: 0,
+      [DF]: 0,
+      [SA]: 0,
+      [SD]: 0,
+      [SP]: 0
+    }, mon.boosts);
   }
 
   processMove(move) {
@@ -351,22 +364,23 @@ class Damage {
     return damage;
   }
 
-  getDamageResult(attacker, defender, move, field = defaultField) {
-    if (typeof attacker === 'string') {
-      attacker = util.researchPokemonById(attacker);
+  getDamageResult(a, d, move, field = defaultField) {
+    if (typeof a === 'string') {
+      a = util.researchPokemonById(a);
     }
-    if (typeof defender === 'string') {
-      defender = util.researchPokemonById(defender);
+    if (typeof d === 'string') {
+      d = util.researchPokemonById(d);
     }
-        if (typeof move === 'string') {
+    if (typeof move === 'string') {
       move = util.researchMoveById(move);
     }
+
+    let attacker = Object.assign({}, a);
+    let defender = Object.assign({}, d);
 
     attacker = this.processPokemon(attacker);
     defender = this.processPokemon(defender);
     move = this.processMove(move);
-
-
 
     const description = {
       'attackerName': attacker.species,
@@ -670,15 +684,19 @@ class Damage {
     // description.attackEVs = attacker.evs[attackStat] +
     //   (NATURES[attacker.nature][0] === attackStat ? '+' : NATURES[attacker.nature][1] === attackStat ? '-' : '')
     //   + ' ' + toSmogonStat(attackStat);
-    if (attackSource.boosts[attackStat] === 0 || (isCritical && attackSource.boosts[attackStat] < 0)) {
-      attack = attackSource.baseStats[attackStat];
-    } else if (defAbility === 'Unaware') {
-      attack = attackSource.baseStats[attackStat];
-      description.defenderAbility = defAbility;
-    } else {
-      attack = attackSource.stats[attackStat];
-      description.attackBoost = attackSource.boosts[attackStat];
-    }
+
+    // if (attackSource.boosts[attackStat] === 0 || (isCritical && attackSource.boosts[attackStat] < 0)) {
+    //   attack = attackSource.rawStats[attackStat];
+    // } else if (defAbility === 'Unaware') {
+    //   attack = attackSource.rawStats[attackStat];
+    //   description.defenderAbility = defAbility;
+    // } else {
+    //   attack = attackSource.stats[attackStat];
+    //   description.attackBoost = attackSource.boosts[attackStat];
+    // }
+    // @TODO I caused a lot of fuckery here - the original code is using raw
+    // stats a lot here, for some reason.
+    attack = attackSource.stats[attackStat];
 
     // unlike all other attack modifiers, Hustle gets applied directly
     if (attacker.ability === 'Hustle' && move.category === 'Physical') {
@@ -739,15 +757,17 @@ class Damage {
     // description.defenseEVs = defender.evs[defenseStat] +
     //   (NATURES[defender.nature][0] === defenseStat ? '+' : NATURES[defender.nature][1] === defenseStat ? '-' : '') + ' ' +
     //   toSmogonStat(defenseStat);
-    if (defender.boosts[defenseStat] === 0 || (isCritical && defender.boosts[defenseStat] > 0) || move.ignoresDefenseBoosts) {
-      defense = defender.baseStats[defenseStat];
-    } else if (attacker.ability === 'Unaware') {
-      defense = defender.baseStats[defenseStat];
-      description.attackerAbility = attacker.ability;
-    } else {
-      defense = defender.stats[defenseStat];
-      description.defenseBoost = defender.boosts[defenseStat];
-    }
+
+    // if (defender.boosts[defenseStat] === 0 || (isCritical && defender.boosts[defenseStat] > 0) || move.ignoresDefenseBoosts) {
+    //   defense = defender.baseStats[defenseStat];
+    // } else if (attacker.ability === 'Unaware') {
+    //   defense = defender.baseStats[defenseStat];
+    //   description.attackerAbility = attacker.ability;
+    // } else {
+    //   defense = defender.stats[defenseStat];
+    //   description.defenseBoost = defender.boosts[defenseStat];
+    // }
+    defense = defender.stats[defenseStat];
 
     // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
     if (field.weather === 'Sand' && (defender.type1 === 'Rock' || defender.type2 === 'Rock') && !hitsPhysical) {
