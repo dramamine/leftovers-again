@@ -16,12 +16,7 @@ class Randumb extends AI {
   }
 
   onRequest(state) {
-    // console.log('my state:');
-    // console.dir(state);
-
     if (state.forceSwitch) {
-      // console.log('Im switching OK!!');
-      // console.log('reserve:', state.self.reserve);
       // our pokemon died :(
       // choose a random one
       const possibleMons = state.self.reserve.filter( (mon) => {
@@ -30,14 +25,13 @@ class Randumb extends AI {
         return true;
       });
       const myMon = this.pickOne(possibleMons);
-      // console.log('picking', myMon);
       return new SWITCH(myMon);
     }
     // pick a random move
     try {
       const possibleMoves = state.self.active.moves.filter( (move) => {
         return !(move.pp === 0 || move.disabled);
-      })
+      });
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
     } catch(e) {

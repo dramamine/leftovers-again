@@ -16,7 +16,6 @@ const meta = {
 
 class Stabby extends AI {
   constructor() {
-    // console.log('STABBY: built');
     super(meta);
   }
 
@@ -24,7 +23,6 @@ class Stabby extends AI {
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
-      //
       const possibleMons = state.self.reserve.filter( (mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
@@ -34,14 +32,13 @@ class Stabby extends AI {
       return new SWITCH(myMon);
     }
 
-
     // check each move
     let maxDamage = 0;
     let bestMove = 0;
 
     state.self.active.moves.forEach( (move, idx) => {
       if (move.disabled) return;
-      let est = -1;
+      let est = [];
       try {
         est = Damage.getDamageResult(
           state.self.active,
@@ -53,8 +50,8 @@ class Stabby extends AI {
         console.log(state.self.active, state.opponent.active, move);
       }
       console.log('estimated ' + est + ' for move ' + move.name);
-      if (est > maxDamage) {
-        maxDamage = est;
+      if (est[0] > maxDamage) {
+        maxDamage = est[0];
         bestMove = idx;
       }
     });
