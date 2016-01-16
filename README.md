@@ -83,6 +83,7 @@ If you'd like to implement your favorite language:
 - don't think that Water Spout sux
 - process fields
 - process weather
+- see if "Happiness: 200" is parsed by team declarer
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
