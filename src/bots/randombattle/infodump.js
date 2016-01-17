@@ -7,7 +7,7 @@ import Damage from '../../lib/damage';
 import KO from '../../lib/kochance';
 import Typechart from '../../lib/typechart';
 // import Pokedex from '../../../data/pokedex';
-import RandomMoves from '../../../data/randommoves';
+import Formats from '../../../data/formats';
 import log from '../../log';
 import util from '../../util';
 
@@ -115,8 +115,9 @@ class Infodump extends AI {
     log.log('input:');
     log.log(JSON.stringify(state));
     // query for moves
-    const oppMoves = RandomMoves[util.toId(state.opponent.active.species)];
-    if (!oppMoves) {
+    const formatData = Formats[util.toId(state.opponent.active.species)];
+    const possibleMoves = formatData.randomBattleMoves;
+    if (!possibleMoves) {
       return {
         error: 'couldnt find species in random moves dictionary: ' +
           state.opponent.active.species
@@ -125,7 +126,7 @@ class Infodump extends AI {
     // for each of my pokemons...
     const results = state.self.reserve.map( (mon) => {
       // see how the opponent would fare against this mon of mine.
-      const yourMoves = oppMoves.map( move => {
+      const yourMoves = possibleMoves.map( move => {
         // check damage from each of the opponent's moves against this mon.
         let est = [-1];
         try {

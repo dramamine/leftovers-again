@@ -53,7 +53,10 @@ function copyPokes() {
   for (const key in BattlePokedex) { // eslint-disable-line
     updated[key] = {};
     keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
-      updated[key][keyToCopy] = BattlePokedex[key][keyToCopy];
+      let targetKey = keyToCopy;
+      if (keyToCopy === 'heightm') targetKey = 'height';
+      if (keyToCopy === 'weightkg') targetKey = 'weight';
+      updated[key][targetKey] = BattlePokedex[key][keyToCopy];
     });
   }
   // this is misnamed in replays & causes me errors.
@@ -69,16 +72,17 @@ function copyPokes() {
 function copyFormats() {
   const updated = {};
   const keysToCopy = [
-    'randomBattleMoves'
+    'randomBattleMoves',
+    'requiredItem'
   ];
   for (const key in BattleFormatsData) { // eslint-disable-line
     updated[key] = {};
     keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
-      updated[key] = BattleFormatsData[key][keyToCopy];
+      updated[key][keyToCopy] = BattleFormatsData[key][keyToCopy];
     });
   }
 
-  fs.writeFile('data/randommoves.json', JSON.stringify(updated));
+  fs.writeFile('data/formats.json', JSON.stringify(updated));
 }
 
 copyMoves();

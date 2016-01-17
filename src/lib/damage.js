@@ -380,7 +380,7 @@ class Damage {
 
     attacker = this.processPokemon(attacker);
     defender = this.processPokemon(defender);
-    move = this.processMove(move);
+    move = this.processMove(move, attacker, defender, field);
 
     const description = {
       'attackerName': attacker.species,
@@ -515,7 +515,8 @@ class Damage {
       description.moveBP = basePower;
       break;
     case 'Hex':
-      basePower = move.bp * (defender.status !== 'Healthy' ? 2 : 1);
+      // this used to check for 'Healthy', but this str will be empty for our system
+      basePower = move.bp * (defender.status !== '' ? 2 : 1);
       description.moveBP = basePower;
       break;
     case 'Heavy Slam':
@@ -567,6 +568,8 @@ class Damage {
       basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
       description.moveBP = basePower;
       break;
+    case 'Return':
+      basePower = 102; // assume max happiness
     default:
       basePower = move.bp;
     }
@@ -1020,7 +1023,7 @@ function checkInfiltrator(attacker, affectedSide) {
     affectedSide.isLightScreen = false;
   }
 }
-
+// @TODO check to see if this works for our boosts object
 function countBoosts(boosts) {
   let sum = 0;
   for (let i = 0; i < STATS.length; i++) {

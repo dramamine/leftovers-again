@@ -1,7 +1,7 @@
 import Damage from '../../src/lib/damage';
 import util from '../../src/util';
 
-fdescribe('damage calculator', () => {
+describe('damage calculator', () => {
   describe('normal moves', () => {
     it('should handle some normal moves', () => {
       // 85 bp
@@ -183,4 +183,3 @@ fdescribe('damage calculator', () => {
     });
   });
 });
-
