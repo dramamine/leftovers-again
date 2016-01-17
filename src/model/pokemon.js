@@ -60,7 +60,7 @@ export default class Pokemon {
     const out = {};
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
-    'ability', 'abilities', 'baseAbility', 'weightkg', 'nature',
+    'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
     'position', 'owner' // for debugging
     ]
     .forEach( (field) => {

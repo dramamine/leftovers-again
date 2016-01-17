@@ -181,5 +181,28 @@ describe('damage calculator', () => {
       Damage._assumeStat(mon, 'hp', 252);
       expect(mon.stats.hp).toEqual((33 + 63) * 0.5 + 50 + 10);
     });
+    it('should match this poliwrath math I\'m doing' , () => {
+      mon.level = 81;
+      mon.baseStats = {
+        'hp': 90,
+        'atk': 95,
+        'def': 95,
+        'spa': 70,
+        'spd': 90,
+        'spe': 70,
+      }
+      Damage._assumeStat(mon, 'hp', 85);
+      Damage._assumeStat(mon, 'atk', 85);
+      Damage._assumeStat(mon, 'def', 85);
+      Damage._assumeStat(mon, 'spa', 85);
+      Damage._assumeStat(mon, 'spd', 85);
+      Damage._assumeStat(mon, 'spe', 85);
+      expect(mon.stats.hp).toBeCloseTo(278);
+      expect(mon.stats.atk).toBeCloseTo(201);
+      expect(mon.stats.def).toBeCloseTo(201);
+      expect(mon.stats.spa).toBeCloseTo(160);
+      expect(mon.stats.spd).toBeCloseTo(192);
+      expect(mon.stats.spe).toBeCloseTo(160);
+    });
   });
 });

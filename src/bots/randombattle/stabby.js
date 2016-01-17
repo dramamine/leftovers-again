@@ -16,11 +16,11 @@ const meta = {
 
 class Stabby extends AI {
   constructor() {
-    // console.log('STABBY: built');
     super(meta);
   }
 
   onRequest(state) {
+    console.log(JSON.stringify(state));
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
