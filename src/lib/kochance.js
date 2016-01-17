@@ -1,10 +1,14 @@
 import typeChart from './typechart';
 import Damage from './damage';
+// import Gaussian from './gaussian';
 
 class KO {
   /**
    * Predicts the number of turns it will take to KO a Pokemon, if we
    * continuously use the same move on said Pokemon.
+   *
+   * This uses current HP, not maximum HP as you usually see on the official
+   * damage calculator.
    *
    * @param  {[number]} damage An array of possible damage amounts, from low
    * to high.
@@ -39,17 +43,11 @@ class KO {
       };
     }
 
-    if (!defender.maxhp || defender.maxhp === defender.hppct) {
-      //  HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
-      const evBonus = Math.floor(252 / 4);
-      const addThis = defender.level + 10;
-      defender.maxHP = (defender.baseStats.hp * 2 + 31 + evBonus) *
-        (defender.level / 100) + addThis;
-    } else {
-      defender.maxHP = defender.maxhp;
+    if(!defender.hp || !defender.maxhp) {
+      defender = Damage.assumeStats(defender);
     }
 
-    if (damage[0] >= defender.maxHP) {
+    if (damage[0] >= defender.hp) {
       return {
         turns: 1,
         chance: 100
@@ -59,17 +57,17 @@ class KO {
     let hazards = 0;
     if (field.isSR && defender.ability !== 'Magic Guard') {
       const effectiveness = typeChart.Rock[defender.type1] * (defender.type2 ? typeChart.Rock[defender.type2] : 1);
-      hazards += Math.floor(effectiveness * defender.maxHP / 8);
+      hazards += Math.floor(effectiveness * defender.maxhp / 8);
     }
     if ([defender.type1, defender.type2].indexOf('Flying') === -1 &&
       ['Magic Guard', 'Levitate'].indexOf(defender.ability) === -1 &&
       defender.item !== 'Air Balloon') {
       if (field.spikes === 1) {
-        hazards += Math.floor(defender.maxHP / 8);
+        hazards += Math.floor(defender.maxhp / 8);
       } else if (field.spikes === 2) {
-        hazards += Math.floor(defender.maxHP / 6);
+        hazards += Math.floor(defender.maxhp / 6);
       } else if (field.spikes === 3) {
-        hazards += Math.floor(defender.maxHP / 4);
+        hazards += Math.floor(defender.maxhp / 4);
       }
     }
     if (isNaN(hazards)) {
@@ -79,66 +77,66 @@ class KO {
     let eot = 0;
     if (field.weather === 'Sun') {
       if (defender.ability === 'Dry Skin' || defender.ability === 'Solar Power') {
-        eot -= Math.floor(defender.maxHP / 8);
+        eot -= Math.floor(defender.maxhp / 8);
       }
     } else if (field.weather === 'Rain') {
       if (defender.ability === 'Dry Skin') {
-        eot += Math.floor(defender.maxHP / 8);
+        eot += Math.floor(defender.maxhp / 8);
       } else if (defender.ability === 'Rain Dish') {
-        eot += Math.floor(defender.maxHP / 16);
+        eot += Math.floor(defender.maxhp / 16);
       }
     } else if (field.weather === 'Sand') {
       if (['Rock', 'Ground', 'Steel'].indexOf(defender.type1) === -1 &&
             ['Rock', 'Ground', 'Steel'].indexOf(defender.type2) === -1 &&
             ['Magic Guard', 'Overcoat', 'Sand Force', 'Sand Rush', 'Sand Veil'].indexOf(defender.ability) === -1 &&
             defender.item !== 'Safety Goggles') {
-        eot -= Math.floor(defender.maxHP / 16);
+        eot -= Math.floor(defender.maxhp / 16);
       }
     } else if (field.weather === 'Hail') {
       if (defender.ability === 'Ice Body') {
-        eot += Math.floor(defender.maxHP / 16);
+        eot += Math.floor(defender.maxhp / 16);
       } else if (defender.type1 !== 'Ice' && defender.type2 !== 'Ice' &&
             ['Magic Guard', 'Overcoat', 'Snow Cloak'].indexOf(defender.ability) === -1 &&
             defender.item !== 'Safety Goggles') {
-        eot -= Math.floor(defender.maxHP / 16);
+        eot -= Math.floor(defender.maxhp / 16);
       }
     }
     if (defender.item === 'Leftovers') {
-      eot += Math.floor(defender.maxHP / 16);
+      eot += Math.floor(defender.maxhp / 16);
     } else if (defender.item === 'Black Sludge') {
       if (defender.type1 === 'Poison' || defender.type2 === 'Poison') {
-        eot += Math.floor(defender.maxHP / 16);
+        eot += Math.floor(defender.maxhp / 16);
       } else if (defender.ability !== 'Magic Guard' && defender.ability !== 'Klutz') {
-        eot -= Math.floor(defender.maxHP / 8);
+        eot -= Math.floor(defender.maxhp / 8);
       }
     }
     if (field.terrain === 'Grassy') {
       if (field.isGravity || (defender.type1 !== 'Flying' && defender.type2 !== 'Flying' &&
           defender.item !== 'Air Balloon' && defender.ability !== 'Levitate')) {
-        eot += Math.floor(defender.maxHP / 16);
+        eot += Math.floor(defender.maxhp / 16);
       }
     }
     let toxicCounter = 0;
     if (defender.status === 'Poisoned') {
       if (defender.ability === 'Poison Heal') {
-        eot += Math.floor(defender.maxHP / 8);
+        eot += Math.floor(defender.maxhp / 8);
       } else if (defender.ability !== 'Magic Guard') {
-        eot -= Math.floor(defender.maxHP / 8);
+        eot -= Math.floor(defender.maxhp / 8);
       }
     } else if (defender.status === 'Badly Poisoned') {
       if (defender.ability === 'Poison Heal') {
-        eot += Math.floor(defender.maxHP / 8);
+        eot += Math.floor(defender.maxhp / 8);
       } else if (defender.ability !== 'Magic Guard' && defender.toxicCounter) {
         toxicCounter = defender.toxicCounter;
       }
     } else if (defender.status === 'Burned') {
       if (defender.ability === 'Heatproof') {
-        eot -= Math.floor(defender.maxHP / 16);
+        eot -= Math.floor(defender.maxhp / 16);
       } else if (defender.ability !== 'Magic Guard') {
-        eot -= Math.floor(defender.maxHP / 8);
+        eot -= Math.floor(defender.maxhp / 8);
       }
     } else if (defender.status === 'Asleep' && isBadDreams && defender.ability !== 'Magic Guard') {
-      eot -= Math.floor(defender.maxHP / 8);
+      eot -= Math.floor(defender.maxhp / 8);
     }
 
     // multi-hit moves have too many possibilities for brute-forcing to work,
@@ -148,8 +146,9 @@ class KO {
       damage = damage.map( dmg => dmg * hits ); // eslint-disable-line
     }
 
-    for (let i = 1; i <= 9; i++) {
-      const c = KO._getKOChance(damage, defender.maxHP - hazards, eot, i, defender.maxHP, toxicCounter);
+    for (let i = 1; i <= 5; i++) {
+      // console.log('using hits counter ' + i);
+      const c = KO._getKOChance(damage, defender.hp - hazards, eot, i, defender.maxhp, toxicCounter);
       if (c > 0 && c <= 1) {
         return {
           turns: i,
@@ -164,7 +163,81 @@ class KO {
     };
   }
 
+  // static _simpleGetKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+
+  //   // find index of the smallest amount of damage that will consistently kill.
+  //   // idx is set to damage.length because that will mean chance = 0 and the
+  //   // while loop won't get hit.
+  //   // let idx = damage.length;
+  //   // let i = damage.length - 1;
+  //   // while ( (damage[i] + eot) * hits >= hp) {
+  //   //   idx = i;
+  //   //   i--;
+  //   // }
+  //   // console.log(idx, damage, hits, hp);
+  //   const dmgTarget = hp - (eot * hits);
+  //   // confirm it's in the range
+  //   if (dmgTarget <= damage[0] * hits) {
+  //     return 1;
+  //   }
+  //   if (dmgTarget >= damage[damage.length - 1] * hits) {
+  //     return 0;
+  //   }
+
+  //   // say we have damage arrays like this:
+  //   // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+  //   // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+  //   // and the opponent has 10 hp.
+  //   // idx = 4
+  //   // The formula for doing 10 dmg is not simply (3/4)*(3/4), since that
+  //   // ignores combinations such as (7+1) and (3+9). so we need to look at the
+  //   // distributions of sums.
+  //   // There are 16^2 possibilities. The sums and the # of possibilities are
+  //   // as such: {2: 1, 3: 2, 4: 3, ..., 16: 15, 17: 16, 18: 15, ... 31: 2, 32: 1}
+  //   if (hits === 1) {
+  //     let idx = damage.length;
+  //     let i = damage.length - 1;
+  //     while ( damage[i] * hits >= dmgTarget) {
+  //       idx = i;
+  //       i--;
+  //     }
+  //     return (damage.length - idx) / damage.length;
+  //   }
+
+  //   // for now
+  //   // return 0.5;
+
+  //   const dmgMin = damage[0] * hits;
+  //   const dmgMax = damage[damage.length - 1] * hits;
+  //   // ex. if we need to do 10 dmg, (10 - 2) / (32 - 2) = 8/30 = .26666
+  //   const dmgPct = (dmgTarget - dmgMin) / (dmgMax - dmgMin);
+  //   console.log('calculations:', dmgMin, dmgMax, dmgTarget, dmgPct);
+  //   return this._normalize(dmgPct);
+
+  //   // find the chance that 'idx' or greater will occur
+  //   // const chance = (damage.length - idx) / damage.length;
+  //   // console.log('returning result ' + Math.pow(chance, hits) + 'from chance ' + chance);
+  //   // return Math.pow(chance, hits);
+  // }
+
+  // static _normalize(dmgPct) {
+  //   // const mean = min + (max - min) / 2;
+  //   // let variance = 5.8333;
+  //   // switch (hits) {
+  //   // case 2:
+  //   //   variance = 5.8333;
+  //   // }
+  //   // console.log(mean, variance, target);
+  //   // const distribution = new Gaussian(mean, variance);
+  //   // return distribution.cdf(target);
+  //   //
+  //   const distribution = new Gaussian(0.5, 0.05);
+  //   return distribution.cdf(dmgPct);
+  // }
+
+
   static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+    // console.log('_getKOChance:', damage, hp, eot, hits, maxHP, toxicCounter);
     if ( isNaN(hp) || hp < 0 || isNaN(hits) || hits < 0 || isNaN(maxHP) || maxHP < 0) {
       console.error('bailing out!', damage.length, hp, eot, hits, maxHP, toxicCounter);
       return 0;
@@ -197,6 +270,7 @@ class KO {
     }
     let sum = 0;
     for (i = 0; i < n; i++) {
+
       const c = KO._getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
         hits - 1, maxHP, toxicCounter);
       if (c === 1) {
@@ -206,6 +280,7 @@ class KO {
         sum += c;
       }
     }
+    // console.log('returning ', sum / n);
     return sum / n;
   }
 

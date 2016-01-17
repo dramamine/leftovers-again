@@ -92,13 +92,6 @@ describe('damage calculator', () => {
       expect(boostedDmg).toEqual(rawDmg);
     });
   });
-  describe('getSimplifiedDamageResult', () => {
-    it('should normally return an array of length 8', () => {
-      const res = Damage.getSimplifiedDamageResult('eevee', 'meowth', 'bodyslam');
-      console.log(res);
-      expect(res.length).toBe(8);
-    });
-  });
   describe('_getNatureMultiplier', () => {
     it('should return 1 if nature is falsy', () => {
       expect(Damage._getNatureMultiplier(false, 'atk')).toBe(1);
@@ -153,20 +146,20 @@ describe('damage calculator', () => {
     it('should get correct results for 252 EVs assuming good nature', () => {
       mon.nature = 'brave';
       Damage._assumeStat(mon, 'atk', 252);
-      expect(mon.stats.atk).toEqual((38 + 63) * 1.1);
+      expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 1.1));
     });
     it('should get correct results for 252 EVs with good nature', () => {
       Damage._assumeStat(mon, 'atk', 252, 1.1);
-      expect(mon.stats.atk).toEqual((38 + 63) * 1.1);
+      expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 1.1));
     });
     it('should get correct results for 252 EVs assuming bad nature', () => {
       mon.nature = 'calm';
       Damage._assumeStat(mon, 'atk', 252);
-      expect(mon.stats.atk).toEqual((38 + 63) * 0.9);
+      expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 0.9));
     });
     it('should get correct results for 252 EVs with bad nature', () => {
       Damage._assumeStat(mon, 'atk', 252, 0.9);
-      expect(mon.stats.atk).toEqual((38 + 63) * 0.9);
+      expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 0.9));
     });
     it('should get base HP for 0 EVs', () => {
       Damage._assumeStat(mon, 'hp', 0);

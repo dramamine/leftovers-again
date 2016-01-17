@@ -1,0 +1,55 @@
+# Crawdaunt + Zoroark was active, infodump crashed about it
+
+
+battle-randombattle-9
+update
+|player|p1|5nowden8847|2
+CHILD MESSAGE RECV: "battle-randombattle-9|join|p2|aserdgftvfdc|1
+null"
+battle-randombattle-9
+request
+p2
+0
+{"side":{"name":"aserdgftvfdc","id":"p2","pokemon":[{"ident":"p2: Zoroark","details":"Zoroark, L78, M","condition":"222/222","active":true,"stats":{"atk":209,"def":139,"spa":232,"spd":139,"spe":209},"moves":["darkpulse","knockoff","focusblast","flamethrower"],"baseAbility":"illusion","item":"expertbelt","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Altaria","details":"Altaria, L75, M","condition":"236/236","active":false,"stats":{"atk":149,"def":179,"spa":149,"spd":201,"spe":164},"moves":["return","dragondance","earthquake","dracometeor"],"baseAbility":"naturalcure","item":"altarianite","pokeball":"pokeball","canMegaEvo":true},{"ident":"p2: Hoopa","details":"Hoopa, L77","condition":"250/250","active":false,"stats":{"atk":214,"def":137,"spa":276,"spd":245,"spe":152},"moves":["psyshock","focusblast","nastyplot","shadowball"],"baseAbility":"magician","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Victini","details":"Victini, L76","condition":"277/277","active":false,"stats":{"atk":196,"def":196,"spa":196,"spd":196,"spe":196},"moves":["focusblast","vcreate","boltstrike","blueflare"],"baseAbility":"victorystar","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Xerneas","details":"Xerneas, L71","condition":"296/296","active":false,"stats":{"atk":227,"def":176,"spa":227,"spd":181,"spe":182},"moves":["moonblast","geomancy","thunderbolt","focusblast"],"baseAbility":"fairyaura","item":"powerherb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Crawdaunt","details":"Crawdaunt, L76, M","condition":"221/221","active":false,"stats":{"atk":226,"def":173,"spa":181,"spd":128,"spe":128},"moves":["superpower","knockoff","dragondance","crabhammer"],"baseAbility":"adaptability","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false}]}}
+battle-randombattle-9
+request
+p1
+0
+{"side":{"name":"5nowden8847","id":"p1","pokemon":[{"ident":"p1: Relicanth","details":"Relicanth, L83, F","condition":"302/302","active":true,"stats":{"atk":197,"def":263,"spa":122,"spd":156,"spe":139},"moves":["doubleedge","waterfall","headsmash","earthquake"],"baseAbility":"rockhead","item":"choiceband","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Vivillon","details":"Vivillon, L81, F","condition":"261/261","active":false,"stats":{"atk":131,"def":128,"spa":193,"spd":128,"spe":191},"moves":["sleeppowder","bugbuzz","hurricane","substitute"],"baseAbility":"compoundeyes","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Diancie","details":"Diancie, L75","condition":"199/199","active":false,"stats":{"atk":194,"def":269,"spa":194,"spd":269,"spe":119},"moves":["calmmind","moonblast","earthpower","psyshock"],"baseAbility":"clearbody","item":"diancite","pokeball":"pokeball","canMegaEvo":true},{"ident":"p1: Breloom","details":"Breloom, L75, M","condition":"214/214","active":false,"stats":{"atk":239,"def":164,"spa":134,"spd":134,"spe":149},"moves":["swordsdance","rocktomb","spore","bulletseed"],"baseAbility":"technician","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Electrode","details":"Electrode, L83","condition":"235/235","active":false,"stats":{"atk":131,"def":164,"spa":180,"spd":180,"spe":280},"moves":["thunderbolt","foulplay","voltswitch","taunt"],"baseAbility":"aftermath","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Lilligant","details":"Lilligant, L81, F","condition":"246/246","active":false,"stats":{"atk":143,"def":168,"spa":224,"spd":168,"spe":192},"moves":["sleeppowder","healingwish","petaldance","hiddenpowerfire60"],"baseAbility":"owntempo","item":"leftovers","pokeball":"pokeball","canMegaEvo":false}]}}
+battle-randombattle-9
+inactiveside
+-1
+battle-randombattle-9
+request
+p1
+1
+{"active":[{"moves":[{"move":"Double-Edge","id":"doubleedge","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Waterfall","id":"waterfall","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Head Smash","id":"headsmash","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Earthquake","id":"earthquake","pp":16,"maxpp":16,"target":"allAdjacent","disabled":false}]}],"side":{"name":"5nowden8847","id":"p1","pokemon":[{"ident":"p1: Relicanth","details":"Relicanth, L83, F","condition":"302/302","active":true,"stats":{"atk":197,"def":263,"spa":122,"spd":156,"spe":139},"moves":["doubleedge","waterfall","headsmash","earthquake"],"baseAbility":"rockhead","item":"choiceband","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Vivillon","details":"Vivillon, L81, F","condition":"261/261","active":false,"stats":{"atk":131,"def":128,"spa":193,"spd":128,"spe":191},"moves":["sleeppowder","bugbuzz","hurricane","substitute"],"baseAbility":"compoundeyes","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Diancie","details":"Diancie, L75","condition":"199/199","active":false,"stats":{"atk":194,"def":269,"spa":194,"spd":269,"spe":119},"moves":["calmmind","moonblast","earthpower","psyshock"],"baseAbility":"clearbody","item":"diancite","pokeball":"pokeball","canMegaEvo":true},{"ident":"p1: Breloom","details":"Breloom, L75, M","condition":"214/214","active":false,"stats":{"atk":239,"def":164,"spa":134,"spd":134,"spe":149},"moves":["swordsdance","rocktomb","spore","bulletseed"],"baseAbility":"technician","item":"leftovers","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Electrode","details":"Electrode, L83","condition":"235/235","active":false,"stats":{"atk":131,"def":164,"spa":180,"spd":180,"spe":280},"moves":["thunderbolt","foulplay","voltswitch","taunt"],"baseAbility":"aftermath","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p1: Lilligant","details":"Lilligant, L81, F","condition":"246/246","active":false,"stats":{"atk":143,"def":168,"spa":224,"spd":168,"spe":192},"moves":["sleeppowder","healingwish","petaldance","hiddenpowerfire60"],"baseAbility":"owntempo","item":"leftovers","pokeball":"pokeball","canMegaEvo":false}]},"rqid":1}
+battle-randombattle-9
+request
+p2
+1
+{"active":[{"moves":[{"move":"Dark Pulse","id":"darkpulse","pp":24,"maxpp":24,"target":"any","disabled":false},{"move":"Knock Off","id":"knockoff","pp":32,"maxpp":32,"target":"normal","disabled":false},{"move":"Focus Blast","id":"focusblast","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Flamethrower","id":"flamethrower","pp":24,"maxpp":24,"target":"normal","disabled":false}]}],"side":{"name":"aserdgftvfdc","id":"p2","pokemon":[{"ident":"p2: Zoroark","details":"Zoroark, L78, M","condition":"222/222","active":true,"stats":{"atk":209,"def":139,"spa":232,"spd":139,"spe":209},"moves":["darkpulse","knockoff","focusblast","flamethrower"],"baseAbility":"illusion","item":"expertbelt","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Altaria","details":"Altaria, L75, M","condition":"236/236","active":false,"stats":{"atk":149,"def":179,"spa":149,"spd":201,"spe":164},"moves":["return","dragondance","earthquake","dracometeor"],"baseAbility":"naturalcure","item":"altarianite","pokeball":"pokeball","canMegaEvo":true},{"ident":"p2: Hoopa","details":"Hoopa, L77","condition":"250/250","active":false,"stats":{"atk":214,"def":137,"spa":276,"spd":245,"spe":152},"moves":["psyshock","focusblast","nastyplot","shadowball"],"baseAbility":"magician","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Victini","details":"Victini, L76","condition":"277/277","active":false,"stats":{"atk":196,"def":196,"spa":196,"spd":196,"spe":196},"moves":["focusblast","vcreate","boltstrike","blueflare"],"baseAbility":"victorystar","item":"assaultvest","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Xerneas","details":"Xerneas, L71","condition":"296/296","active":false,"stats":{"atk":227,"def":176,"spa":227,"spd":181,"spe":182},"moves":["moonblast","geomancy","thunderbolt","focusblast"],"baseAbility":"fairyaura","item":"powerherb","pokeball":"pokeball","canMegaEvo":false},{"ident":"p2: Crawdaunt","details":"Crawdaunt, L76, M","condition":"221/221","active":false,"stats":{"atk":226,"def":173,"spa":181,"spd":128,"spe":128},"moves":["superpower","knockoff","dragondance","crabhammer"],"baseAbility":"adaptability","item":"lifeorb","pokeball":"pokeball","canMegaEvo":false}]},"rqid":1}
+battle-randombattle-9
+update
+|player|p2|aserdgftvfdc|1
+|gametype|singles
+|gen|6
+|tier|Random Battle
+|rule|Sleep Clause Mod: Limit one foe put to sleep
+|rule|HP Percentage Mod: HP is shown in percentages
+|
+|start
+|split
+|switch|p1a: Relicanth|Relicanth, L83, F|100/100
+|switch|p1a: Relicanth|Relicanth, L83, F|302/302
+|switch|p1a: Relicanth|Relicanth, L83, F|100/100
+|switch|p1a: Relicanth|Relicanth, L83, F|302/302
+|split
+|switch|p2a: Crawdaunt|Crawdaunt, L76, M|100/100
+|switch|p2a: Crawdaunt|Crawdaunt, L76, M|100/100
+|switch|p2a: Crawdaunt|Crawdaunt, L76, M|222/222
+|switch|p2a: Crawdaunt|Crawdaunt, L76, M|222/222
+|turn|1
+CHILD MESSAGE RECV: "battle-randombattle-9|choose|p1|move 1|1"
+battle-randombattle-9
+inactiveside

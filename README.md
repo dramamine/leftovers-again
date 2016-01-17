@@ -89,6 +89,9 @@ If you'd like to implement your favorite language:
 - Kyurem vs Kyurem-White (causes a crash)
 - maybe return nothing instead of crashing out
 - make sure pokemon properties include 'level'
+- move a bunch of functions from lib/damage.js to damageWrapper.js (or something)
+- better handling of stat guessing & damage ranges
+-koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
