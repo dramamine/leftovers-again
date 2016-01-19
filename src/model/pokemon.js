@@ -61,7 +61,7 @@ export default class Pokemon {
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner' // for debugging
+    'position', 'owner', 'item' // for debugging
     ]
     .forEach( (field) => {
       if (this[field]) out[field] = this[field];
@@ -160,7 +160,7 @@ export default class Pokemon {
       const research = util.researchMoveById(move);
       const out = {};
       ['accuracy', 'basePower', 'category', 'id', 'name', 'volatileStatus',
-      'priority', 'flags', 'heal', 'self', 'target', 'type'].forEach( (field) => {
+      'priority', 'flags', 'heal', 'self', 'target', 'type', 'pp', 'maxpp'].forEach( (field) => {
         if (research[field]) out[field] = research[field];
       });
       // console.log('returning ', out);
@@ -251,5 +251,9 @@ export default class Pokemon {
     } catch (e) {
       log.err('useCondition: error parsing mon.condition', e);
     }
+  }
+
+  setItem(item) {
+    this.item = util.toId(item);
   }
 }

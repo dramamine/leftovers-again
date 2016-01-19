@@ -72,7 +72,7 @@ export default class Team {
         evs.forEach( (ev) => { // eslint-disable-line
           numAndLabel = ev.trim().split(' ');
           evLabel = numAndLabel[1].trim().toLowerCase();
-          if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel)) {
+          if (['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel) === -1) {
             console.error('something weird with ev label', evLabel, line);
           } else {
             mon.evs[evLabel] = parseInt(numAndLabel[0].trim(), 10);

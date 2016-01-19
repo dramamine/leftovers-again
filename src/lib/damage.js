@@ -84,7 +84,6 @@ class Damage {
       mon.stats[stat] = getModifiedStat(
         mon.stats[stat], mon.boosts[stat]);
     });
-
     return mon;
   }
 
@@ -168,7 +167,7 @@ class Damage {
    *                                   mon doesn't have a nature set. Should
    *                                   be in [0.9, 1, 1.1].
    */
-  _assumeStat(mon, stat, evs = 0, natureMultiplier = 1) {
+  _assumeStat(mon, stat, evs = 85, natureMultiplier = 1) {
     if (!mon.stats[stat]) {
       mon.stats[stat] = this._calculateStat(mon, stat, evs, natureMultiplier);
     }
@@ -243,7 +242,7 @@ class Damage {
     });
 
     // assume HP if we can
-    if(mon.hppct && mon.stats.hp) {
+    if (mon.hppct && mon.stats.hp) {
       mon.maxhp = mon.stats.hp;
       mon.hp = mon.stats.hp * mon.hppct / 100;
     }
@@ -455,10 +454,10 @@ class Damage {
       break;
     case 'Return':
       basePower = 102; // assume max happiness
+      break;
     default:
       basePower = move.bp;
     }
-    // console.log('base power:', basePower);
 
     const bpMods = [];
     if ((attacker.ability === 'Technician' && basePower <= 60) ||
@@ -635,7 +634,6 @@ class Damage {
     }
 
     attack = Math.max(1, pokeRound(attack * chainMods(atMods) / 0x1000));
-    // console.log('attack:', attack);
     // //////////////////////////////
     // /////// (SP)DEFENSE //////////
     // //////////////////////////////
