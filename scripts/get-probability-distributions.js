@@ -7,11 +7,12 @@ const DAMAGE = [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 
 console.log('export default [');
 for (let i = 1; i < 10; i++) {
-  dumpStatsWithAndWithoutNatureAndCrits(i);
+  dumpStatsWithAndWithoutNature(i);
+  dumpStatsWithAndWithoutCrits(i);
 }
 console.log('];');
 
-function dumpStatsWithAndWithoutNatureAndCrits(hits) {
+function dumpStatsWithAndWithoutNature(hits) {
   let results = {};
 
   // round one. FIGHT
@@ -36,22 +37,38 @@ function dumpStatsWithAndWithoutNatureAndCrits(hits) {
   stats.nature = true;
   console.log(stats);
   console.log(',');
+}
 
-  const crits = critVariance(results);
-  stats = toNormalDist(crits);
+function dumpStatsWithAndWithoutCrits(hits) {
+  let results = {};
+
+  // round one. FIGHT
+  DAMAGE.map(dmg => {
+    results[dmg] = 1 / 16;
+  });
+
+  results = critVariance(results);
+
+  // raw damage
+  for (let i = 1; i < hits; i++) {
+    results = addAnotherRoundOfCritDamage(results);
+  }
+
+  let stats = toNormalDist(results);
   stats.hits = hits;
   stats.crits = true;
   console.log(stats);
   console.log(',');
 
-  const nattycrits = critVariance(natural);
-  stats = toNormalDist(nattycrits);
+  const natural = natureVariance(results);
+  stats = toNormalDist(natural);
   stats.hits = hits;
   stats.nature = true;
   stats.crits = true;
   console.log(stats);
   console.log(',');
 }
+
 
 function addAnotherRoundOfDamage(data) {
   const intermediate = [];
@@ -69,6 +86,29 @@ function addAnotherRoundOfDamage(data) {
   confirmSum(out);
   return out;
 }
+
+
+function addAnotherRoundOfCritDamage(data, critChance = 0.0625, critDamage = 1.5) {
+  const intermediate = [];
+  Object.keys(data).forEach(dmgKey => { // eslint-disable-line
+    DAMAGE.forEach(dmg => {
+      intermediate.push([
+        parseFloat(dmgKey) + dmg,
+        data[dmgKey] * 1 / 16 * (1 - critChance)
+      ]);
+      intermediate.push([
+        parseFloat(dmgKey) + dmg * critDamage,
+        data[dmgKey] * 1 / 16 * critChance
+      ]);
+    });
+  });
+
+  const out = dmgChanceArrayToObject(intermediate);
+  // confirm the sum
+  confirmSum(out);
+  return out;
+}
+
 
 function toNormalDist(data) {
   // probability * value
