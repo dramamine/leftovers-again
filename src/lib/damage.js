@@ -248,7 +248,7 @@ class Damage {
     }
   }
 
-  getDamageResult(a, d, move, field = defaultField) {
+  getDamageResult(a, d, move, field = defaultField, maxOnly = false) {
     if (typeof a === 'string') {
       a = util.researchPokemonById(a);
     }
@@ -778,7 +778,9 @@ class Damage {
 
 
     const damage = [];
-    for (let i = 0; i < 16; i++) {
+    let i = 0;
+    if (maxOnly) i = 15;
+    for (; i < 16; i++) {
       damage[i] = Math.floor(baseDamage * (85 + i) / 100);
       damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
       damage[i] = Math.floor(damage[i] * typeEffectiveness);

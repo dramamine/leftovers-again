@@ -1,6 +1,5 @@
 import typeChart from './typechart';
 import Damage from './damage';
-// import Gaussian from './gaussian';
 
 class KO {
   /**
@@ -43,7 +42,7 @@ class KO {
       };
     }
 
-    if(!defender.hp || !defender.maxhp) {
+    if (!defender.hp || !defender.maxhp) {
       defender = Damage.assumeStats(defender);
     }
 
@@ -156,85 +155,11 @@ class KO {
         };
       }
     }
-
     return {
       turns: null,
       chance: null
     };
   }
-
-  // static _simpleGetKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
-
-  //   // find index of the smallest amount of damage that will consistently kill.
-  //   // idx is set to damage.length because that will mean chance = 0 and the
-  //   // while loop won't get hit.
-  //   // let idx = damage.length;
-  //   // let i = damage.length - 1;
-  //   // while ( (damage[i] + eot) * hits >= hp) {
-  //   //   idx = i;
-  //   //   i--;
-  //   // }
-  //   // console.log(idx, damage, hits, hp);
-  //   const dmgTarget = hp - (eot * hits);
-  //   // confirm it's in the range
-  //   if (dmgTarget <= damage[0] * hits) {
-  //     return 1;
-  //   }
-  //   if (dmgTarget >= damage[damage.length - 1] * hits) {
-  //     return 0;
-  //   }
-
-  //   // say we have damage arrays like this:
-  //   // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-  //   // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-  //   // and the opponent has 10 hp.
-  //   // idx = 4
-  //   // The formula for doing 10 dmg is not simply (3/4)*(3/4), since that
-  //   // ignores combinations such as (7+1) and (3+9). so we need to look at the
-  //   // distributions of sums.
-  //   // There are 16^2 possibilities. The sums and the # of possibilities are
-  //   // as such: {2: 1, 3: 2, 4: 3, ..., 16: 15, 17: 16, 18: 15, ... 31: 2, 32: 1}
-  //   if (hits === 1) {
-  //     let idx = damage.length;
-  //     let i = damage.length - 1;
-  //     while ( damage[i] * hits >= dmgTarget) {
-  //       idx = i;
-  //       i--;
-  //     }
-  //     return (damage.length - idx) / damage.length;
-  //   }
-
-  //   // for now
-  //   // return 0.5;
-
-  //   const dmgMin = damage[0] * hits;
-  //   const dmgMax = damage[damage.length - 1] * hits;
-  //   // ex. if we need to do 10 dmg, (10 - 2) / (32 - 2) = 8/30 = .26666
-  //   const dmgPct = (dmgTarget - dmgMin) / (dmgMax - dmgMin);
-  //   console.log('calculations:', dmgMin, dmgMax, dmgTarget, dmgPct);
-  //   return this._normalize(dmgPct);
-
-  //   // find the chance that 'idx' or greater will occur
-  //   // const chance = (damage.length - idx) / damage.length;
-  //   // console.log('returning result ' + Math.pow(chance, hits) + 'from chance ' + chance);
-  //   // return Math.pow(chance, hits);
-  // }
-
-  // static _normalize(dmgPct) {
-  //   // const mean = min + (max - min) / 2;
-  //   // let variance = 5.8333;
-  //   // switch (hits) {
-  //   // case 2:
-  //   //   variance = 5.8333;
-  //   // }
-  //   // console.log(mean, variance, target);
-  //   // const distribution = new Gaussian(mean, variance);
-  //   // return distribution.cdf(target);
-  //   //
-  //   const distribution = new Gaussian(0.5, 0.05);
-  //   return distribution.cdf(dmgPct);
-  // }
-
 
   static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
     // console.log('_getKOChance:', damage, hp, eot, hits, maxHP, toxicCounter);
@@ -270,7 +195,6 @@ class KO {
     }
     let sum = 0;
     for (i = 0; i < n; i++) {
-
       const c = KO._getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
         hits - 1, maxHP, toxicCounter);
       if (c === 1) {

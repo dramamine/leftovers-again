@@ -136,7 +136,7 @@ describe('damage calculator', () => {
       mon.stats = {}; // don't know why I have to do this, but I do
     });
     it('should get correct results for 0 EVs', () => {
-      Damage._assumeStat(mon, 'atk');
+      Damage._assumeStat(mon, 'atk', 0);
       expect(mon.stats.atk).toEqual(38);
     });
     it('should get correct results for 252 EVs', () => {

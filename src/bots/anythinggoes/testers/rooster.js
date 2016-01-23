@@ -22,7 +22,7 @@ export default class Rooster extends AI {
     return `
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
@@ -32,7 +32,7 @@ Serious Nature
 
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
@@ -42,7 +42,7 @@ Serious Nature
 
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
@@ -52,7 +52,7 @@ Serious Nature
 
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
@@ -62,7 +62,7 @@ Serious Nature
 
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
@@ -72,7 +72,7 @@ Serious Nature
 
 Talonflame
 Ability: Gale Wings
-Level: 81
+Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
 - Acrobatics
