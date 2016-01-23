@@ -37,6 +37,31 @@ class KOModded extends KO {
       && !distro.crits);
   }
 
+  static _softCritCalc(dmgPct, hits, mean, variance) {
+    const distribution = new Gaussian(mean, variance);
+    // ex. if dmgPct = 100, we can do 66
+    //     if dmgPct = 150, we can do 100
+    // but for hits = 2...
+    //     if dmgPct = 200, we can do ~160
+    //     ex. 80 normal, 80->120 crit
+    //     ex. 85 normal, 75->112 crit, wouldn't work but 75% is unlikely.
+    // for hits = 3
+    //     if dmgPct = 300, we can do 8/9*300 = 266
+    //     and the chance of at least one crit is 1 - (1 - .0625)^3
+
+    // this is the dmgPct target if we know we are going to get at least 1 crit
+    const dmgPctWithCrit = dmgPct * (hits * 3 - 1) / (hits * 3);
+
+    // this is the percent of hits that fall within the range where getting
+    // at least 1 crit would be the marginal difference btwn killing and not.
+    const hitsWithinRange = distribution.cdf(dmgPct) - distribution.cdf(dmgPctWithCrit);
+
+    // percent chance of getting at least one crit
+    const critChance = 1 - Math.pow(15 / 16, hits);
+    console.log('_softCritCalc debug:', dmgPctWithCrit, hitsWithinRange, critChance);
+    return hitsWithinRange * critChance;
+  }
+
   static _normalize(dmgPct, mean, variance) {
     // const mean = min + (max - min) / 2;
     // let variance = 5.8333;

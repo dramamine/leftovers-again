@@ -49,6 +49,31 @@ describe('KOModded', () => {
       console.log('komodded chance:', res);
       expect(res).toBeGreaterThan(0.5);
     });
+  });
+  describe('_softCritCalc', () => {
+    it('should return something reasonable for 1 hit', () => {
+      let res = KO._softCritCalc(92.5, 1, 92.5, 21.25);
+      expect(res).toBeGreaterThan(0.01);
+      expect(res).toBeLessThan(0.05);
 
+      res = KO._softCritCalc(85, 1, 92.5, 21.25);
+      expect(res).toBeGreaterThan(0);
+      expect(res).toBeLessThan(0.02);
+
+      // 95% of hits are within the range 66-100 for this one
+      res = KO._softCritCalc(100, 1, 92.5, 21.25);
+      expect(res).toBeGreaterThan(0.05);
+      expect(res).toBeLessThan(0.0625);
+    });
+
+    it('should return something reasonable for 5 hits', () => {
+      let res = KO._softCritCalc(462.5, 1, 462.5, 106.25);
+      expect(res).toBeGreaterThan(0.02);
+      expect(res).toBeLessThan(0.04);
+
+      res = KO._softCritCalc(390, 1, 462.5, 106.25);
+      expect(res).toBeGreaterThan(0);
+      expect(res).toBeLessThan(0.01);
+    });
   });
 });
