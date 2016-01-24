@@ -4,3 +4,6 @@ replays/
 README-*.md
 README-clienthax.js
 scripts/clienthax.js
+lib/honko-damagecalc/
+error.log
+log/

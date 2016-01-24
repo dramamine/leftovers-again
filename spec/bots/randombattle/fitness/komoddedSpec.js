@@ -22,30 +22,30 @@ describe('KOModded', () => {
     });
   });
 
-  describe('_simpleGetKOChance', () => {
+  describe('_getKOChance', () => {
     it('should report 0 chance to do too much damage', () => {
-      let res = KO._simpleGetKOChance(50, 2, 125);
+      let res = KO._getKOChance(50, 2, 125);
       expect(res).toEqual(0);
 
-      res = KO._simpleGetKOChance(100, 3, 400);
+      res = KO._getKOChance(100, 3, 400);
       expect(res).toEqual(0);
     });
     it('should report 100 chance to do little damage', () => {
-      let res = KO._simpleGetKOChance(50, 2, 70);
+      let res = KO._getKOChance(50, 2, 70);
       expect(res).toEqual(1);
 
-      res = KO._simpleGetKOChance(100, 3, 200);
+      res = KO._getKOChance(100, 3, 200);
       expect(res).toEqual(1);
     });
     it('should find a 50% chance if the mean is 200', () => {
       spyOn(KO, '_getDistribution').and.returnValue({mean: 200, variance: 200});
-      const res = KO._simpleGetKOChance(100, 2, 200);
+      const res = KO._getKOChance(100, 2, 200);
       console.log('komodded chance:', res);
       expect(res).toBeCloseTo(0.5, 4);
     });
     it('should have more than a 50% chance if the damage is higher', () => {
       spyOn(KO, '_getDistribution').and.returnValue({mean: 200, variance: 200});
-      const res = KO._simpleGetKOChance(105, 2, 200);
+      const res = KO._getKOChance(105, 2, 200);
       console.log('komodded chance:', res);
       expect(res).toBeGreaterThan(0.5);
     });
@@ -76,4 +76,15 @@ describe('KOModded', () => {
       expect(res).toBeLessThan(0.01);
     });
   });
+
+  describe('predictKO', () => {
+    it('should return a reasonable number of turns', () => {
+      const kochance = KO.predictKO(44, {
+        hp: 200,
+        maxhp: 200
+      });
+      // console.log('komodded prediction:', kochance);
+      expect(kochance.turns).toBeGreaterThan(4);
+    });
+  })
 });

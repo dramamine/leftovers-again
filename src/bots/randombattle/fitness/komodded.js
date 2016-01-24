@@ -1,14 +1,133 @@
 // import typeChart from './typechart';
 // import Damage from './damage';
-import KO from '../../../lib/kochance';
 import Gaussian from '../../../lib/gaussian';
 
 import distributions from './probability-distributions';
 
-class KOModded extends KO {
-  static _simpleGetKOChance(damage, hits, hp, eot = 0, maxHP = 400,
+class KOModded {
+  static predictKO(damage, defender, field = '', hits = 1, isBadDreams = false) {
+    if (isNaN(damage)) {
+      return {
+        turns: null,
+        chance: null
+      };
+    }
+
+    if (!defender.hp || !defender.maxhp) {
+      defender = Damage.assumeStats(defender); // eslint-disable-line
+    }
+
+    let hazards = 0;
+    if (field.isSR && defender.ability !== 'Magic Guard') {
+      const effectiveness = typeChart.Rock[defender.type1] * (defender.type2 ? typeChart.Rock[defender.type2] : 1);
+      hazards += Math.floor(effectiveness * defender.maxhp / 8);
+    }
+    if ([defender.type1, defender.type2].indexOf('Flying') === -1 &&
+      ['Magic Guard', 'Levitate'].indexOf(defender.ability) === -1 &&
+      defender.item !== 'Air Balloon') {
+      if (field.spikes === 1) {
+        hazards += Math.floor(defender.maxhp / 8);
+      } else if (field.spikes === 2) {
+        hazards += Math.floor(defender.maxhp / 6);
+      } else if (field.spikes === 3) {
+        hazards += Math.floor(defender.maxhp / 4);
+      }
+    }
+    if (isNaN(hazards)) {
+      hazards = 0;
+    }
+
+    let eot = 0;
+    if (field.weather === 'Sun') {
+      if (defender.ability === 'Dry Skin' || defender.ability === 'Solar Power') {
+        eot -= Math.floor(defender.maxhp / 8);
+      }
+    } else if (field.weather === 'Rain') {
+      if (defender.ability === 'Dry Skin') {
+        eot += Math.floor(defender.maxhp / 8);
+      } else if (defender.ability === 'Rain Dish') {
+        eot += Math.floor(defender.maxhp / 16);
+      }
+    } else if (field.weather === 'Sand') {
+      if (['Rock', 'Ground', 'Steel'].indexOf(defender.type1) === -1 &&
+            ['Rock', 'Ground', 'Steel'].indexOf(defender.type2) === -1 &&
+            ['Magic Guard', 'Overcoat', 'Sand Force', 'Sand Rush', 'Sand Veil'].indexOf(defender.ability) === -1 &&
+            defender.item !== 'Safety Goggles') {
+        eot -= Math.floor(defender.maxhp / 16);
+      }
+    } else if (field.weather === 'Hail') {
+      if (defender.ability === 'Ice Body') {
+        eot += Math.floor(defender.maxhp / 16);
+      } else if (defender.type1 !== 'Ice' && defender.type2 !== 'Ice' &&
+            ['Magic Guard', 'Overcoat', 'Snow Cloak'].indexOf(defender.ability) === -1 &&
+            defender.item !== 'Safety Goggles') {
+        eot -= Math.floor(defender.maxhp / 16);
+      }
+    }
+    if (defender.item === 'Leftovers') {
+      eot += Math.floor(defender.maxhp / 16);
+    } else if (defender.item === 'Black Sludge') {
+      if (defender.type1 === 'Poison' || defender.type2 === 'Poison') {
+        eot += Math.floor(defender.maxhp / 16);
+      } else if (defender.ability !== 'Magic Guard' && defender.ability !== 'Klutz') {
+        eot -= Math.floor(defender.maxhp / 8);
+      }
+    }
+    if (field.terrain === 'Grassy') {
+      if (field.isGravity || (defender.type1 !== 'Flying' && defender.type2 !== 'Flying' &&
+          defender.item !== 'Air Balloon' && defender.ability !== 'Levitate')) {
+        eot += Math.floor(defender.maxhp / 16);
+      }
+    }
+    let toxicCounter = 0;
+    if (defender.status === 'Poisoned') {
+      if (defender.ability === 'Poison Heal') {
+        eot += Math.floor(defender.maxhp / 8);
+      } else if (defender.ability !== 'Magic Guard') {
+        eot -= Math.floor(defender.maxhp / 8);
+      }
+    } else if (defender.status === 'Badly Poisoned') {
+      if (defender.ability === 'Poison Heal') {
+        eot += Math.floor(defender.maxhp / 8);
+      } else if (defender.ability !== 'Magic Guard' && defender.toxicCounter) {
+        toxicCounter = defender.toxicCounter;
+      }
+    } else if (defender.status === 'Burned') {
+      if (defender.ability === 'Heatproof') {
+        eot -= Math.floor(defender.maxhp / 16);
+      } else if (defender.ability !== 'Magic Guard') {
+        eot -= Math.floor(defender.maxhp / 8);
+      }
+    } else if (defender.status === 'Asleep' && isBadDreams && defender.ability !== 'Magic Guard') {
+      eot -= Math.floor(defender.maxhp / 8);
+    }
+
+    // multi-hit moves have too many possibilities for brute-forcing to work,
+    // so reduce it to an approximate distribution
+    if (hits > 1) {
+      // this WAS squashMultihit, but let's just approximate hard
+      damage = damage.map( dmg => dmg * hits ); // eslint-disable-line
+    }
+
+    for (let i = 1; i <= 9; i++) {
+      const c = KOModded._getKOChance(damage, i, defender.hp - hazards, eot, defender.maxhp, toxicCounter);
+      if (c > 0.05 && c <= 1) {
+        return {
+          turns: i,
+          chance: c
+        };
+      }
+    }
+    return {
+      turns: null,
+      chance: null
+    };
+  }
+
+  static _getKOChance(damage, hits, hp, eot = 0, maxHP = 400,
     toxicCounter = 0, isNatureKnown = false) {
-    //
+    console.log(damage, hits, hp, eot, maxHP, toxicCounter, isNatureKnown);
+
     const dmgTarget = hp - (eot * hits);
     // confirm it's in the range
     // if it's under bad nature * 85%
