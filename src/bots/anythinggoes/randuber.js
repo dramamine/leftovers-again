@@ -5,7 +5,7 @@
  *
  */
 
-import AI from '../../ai';
+import AI from 'ai';
 class Randuber extends AI {
   constructor() {
     super();

@@ -1,7 +1,7 @@
-import listener from './listener';
-import socket from './socket';
-import config from './config';
-import Team from './lib/team';
+import listener from 'listener';
+import socket from 'socket';
+import config from 'config';
+import Team from 'lib/team';
 
 class Chat {
   constructor() {

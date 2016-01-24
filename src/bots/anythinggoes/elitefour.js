@@ -3,11 +3,10 @@
  *
  */
 
-import AI from '../../ai';
-// import Damage from '../../lib/damage';
-import typechart from '../../lib/typechart';
+import AI from 'ai';
+import typechart from 'lib/typechart';
 
-import {MOVE, SWITCH} from '../../decisions';
+import {MOVE, SWITCH} from 'decisions';
 
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end

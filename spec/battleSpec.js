@@ -1,6 +1,6 @@
-import Battle from '../src/battle';
-import {MOVE, SWITCH} from '../src/decisions';
-import util from '../src/util';
+import Battle from 'battle';
+import {MOVE, SWITCH} from 'decisions';
+import util from 'pokeutil';
 
 // import sampleRequest from './helpers/request';
 import sampleRequest from './helpers/requestb';

@@ -1,6 +1,4 @@
-// import typeChart from './typechart';
-// import Damage from './damage';
-import Gaussian from '../../../lib/gaussian';
+import Gaussian from './gaussian';
 
 import distributions from './probability-distributions';
 

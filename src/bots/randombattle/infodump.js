@@ -2,16 +2,15 @@
  * Get some helpful info about pokemon & their moves
  *
  */
-import AI from '../../ai';
-import Damage from '../../lib/damage';
-import KO from '../../lib/kochance';
-import Typechart from '../../lib/typechart';
-// import Pokedex from '../../../data/pokedex';
-import Formats from '../../../data/formats';
-import log from '../../log';
-import util from '../../util';
+import AI from 'ai';
+import Damage from 'lib/damage';
+import KO from 'lib/kochance';
+import Typechart from 'lib/typechart';
+import Formats from 'data/formats';
+import log from 'log';
+import util from 'pokeutil';
 
-import {MOVE, SWITCH} from '../../decisions';
+import {MOVE, SWITCH} from 'decisions';
 
 const meta = {
   battletype: 'randombattle',

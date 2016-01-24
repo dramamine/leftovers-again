@@ -1,12 +1,11 @@
 // @TODO not sure if we really need to require this
 require('./listener');
 
-import config from './config';
+import config from 'config';
 
 // @TODO move these to 'connection' and maybe don't load them all
-import socket from './socket';
-import ajax from './ajax';
-import monkey from './monkey';
+import socket from 'socket';
+import monkey from 'monkey';
 
 // process cmdline args
 const argv = require('minimist')(process.argv.slice(2));
@@ -20,9 +19,7 @@ if (argv.bot) {
   config.botPath = argv.bot;
 }
 let myconnection;
-if (argv.ajax) {
-  myconnection = ajax;
-} else if (argv.monkey) {
+if (argv.monkey) {
   myconnection = monkey;
 } else {
   myconnection = socket;

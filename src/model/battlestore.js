@@ -1,6 +1,6 @@
-import Pokemon from './pokemon';
-import util from '../util';
-import Log from '../log';
+import Pokemon from 'model/pokemon';
+import util from 'pokeutil';
+import Log from 'log';
 
 /**
  * Store for tracking the status of the battle.
@@ -378,19 +378,15 @@ export default class BattleStore {
         .filter(isactive));
     }
 
-    if (this.activeData) {
+    // this was causing some errors before. could use some more research...
+    // @TODO why aren't we clearing out activeData?
+    if (this.activeData && output.self.active.length === this.activeData.length) {
       for (let i = 0; i < this.activeData.length; i++) {
         const movesArr = this.activeData[i].moves;
         const updated = movesArr.map( (move) => { // eslint-disable-line
           return Object.assign(move, util.researchMoveById(move.id));
         });
-        try {
-          output.self.active[i].moves = updated;
-        } catch (e) {
-          console.log(e);
-          console.log(output.self.active);
-          console.log(this.activeData);
-        }
+        output.self.active[i].moves = updated;
       }
     }
 

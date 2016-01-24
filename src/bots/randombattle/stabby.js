@@ -4,10 +4,10 @@
  *
  */
 
-import AI from '../../ai';
-import Damage from '../../lib/damage';
+import AI from 'ai';
+import Damage from 'lib/damage';
 
-import {MOVE, SWITCH} from '../../decisions';
+import {MOVE, SWITCH} from 'decisions';
 
 const meta = {
   battletype: 'randombattle',
@@ -16,6 +16,7 @@ const meta = {
 
 class Stabby extends AI {
   constructor() {
+    console.log('stabby created.');
     super(meta);
   }
 

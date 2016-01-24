@@ -1,4 +1,4 @@
-import Items from '../../src/lib/items';
+import Items from 'lib/items';
 
 describe('Items', () => {
   describe('hasRequiredItem', () => {

@@ -2,16 +2,7 @@
  * Get some helpful info about pokemon & their moves
  *
  */
-import Damage from '../../../lib/damage';
-// import KO from '../../lib/kochance';
-// import Typechart from '../../lib/typechart';
-// // import Pokedex from '../../../data/pokedex';
-// import RandomMoves from '../../../data/randommoves';
-// import log from '../../log';
-// import util from '../../util';
-
-// import {MOVE, SWITCH} from '../../decisions';
-
+import Damage from 'lib/damage';
 
 export default class Fitness {
 

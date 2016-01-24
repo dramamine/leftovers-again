@@ -1,4 +1,4 @@
-import listener from '../src/listener';
+import listener from 'listener';
 
 describe('listener', () => {
   it('should load listener', () => {

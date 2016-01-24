@@ -1,7 +1,7 @@
 // import listener from './listener';
-import socket from './socket';
-import config from './config';
-import Team from './lib/team';
+import socket from 'socket';
+import config from 'config';
+import Team from 'lib/team';
 
 /**
  * Used for managing challenges to other users.

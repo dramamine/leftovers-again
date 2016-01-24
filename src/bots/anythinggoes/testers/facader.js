@@ -19,10 +19,10 @@
  */
 
 
-import AI from '../../../ai';
-import {MOVE, SWITCH} from '../../../decisions';
-import Damage from '../../../lib/damage';
-import Log from '../../../log';
+import AI from 'ai';
+import {MOVE, SWITCH} from 'decisions';
+import Damage from 'lib/damage';
+import Log from 'log';
 const meta = {
   battletype: 'anythinggoes'
 };

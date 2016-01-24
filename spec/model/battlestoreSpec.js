@@ -1,7 +1,7 @@
-import BattleStore from '../../src/model/battlestore';
-import util from '../../src/util';
-import Pokemon from '../../src/model/pokemon';
-import fakeRequest from '../helpers/request';
+import BattleStore from 'model/battlestore';
+import util from 'pokeutil';
+import Pokemon from 'model/pokemon';
+import fakeRequest from 'helpers/request';
 
 let store;
 

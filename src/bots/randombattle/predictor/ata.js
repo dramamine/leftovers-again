@@ -4,13 +4,13 @@
  *
  */
 
-import AI from '../../../ai';
-import Damage from '../../../lib/damage';
+import AI from 'ai';
+import Damage from 'lib/damage';
 
-import {MOVE, SWITCH} from '../../../decisions';
+import {MOVE, SWITCH} from 'decisions';
 
 import {MongoClient} from 'mongodb';
-import log from '../../../log';
+import log from 'log';
 
 const mongourl = 'mongodb://localhost:27017/test';
 

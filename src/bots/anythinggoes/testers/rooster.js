@@ -5,8 +5,8 @@
  */
 
 
-import AI from '../../../ai';
-import {MOVE, SWITCH} from '../../../decisions';
+import AI from 'ai';
+import {MOVE, SWITCH} from 'decisions';
 const meta = {
   battletype: 'anythinggoes'
 };

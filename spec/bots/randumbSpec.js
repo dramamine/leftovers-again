@@ -1,5 +1,5 @@
-import Randumb from '../../src/bots/randombattle/randumb';
-import {MOVE, SWITCH} from '../../src/decisions';
+import Randumb from 'bots/randombattle/randumb';
+import {MOVE, SWITCH} from 'decisions';
 const randumb = new Randumb();
 
 describe('Randumb', () => {

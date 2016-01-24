@@ -1,4 +1,4 @@
-import KO from '../../../../src/bots/randombattle/fitness/komodded';
+import KO from 'bots/randombattle/fitness/komodded';
 
 describe('KOModded', () => {
   describe('_getDistribution', () => {

@@ -1,5 +1,5 @@
-import Damage from '../../src/lib/damage';
-import util from '../../src/util';
+import Damage from 'lib/damage';
+import util from 'pokeutil';
 
 describe('damage calculator', () => {
   describe('normal moves', () => {

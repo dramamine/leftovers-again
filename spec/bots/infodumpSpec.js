@@ -1,5 +1,5 @@
-import state from '../helpers/randomstate';
-import Infodump from '../../src/bots/randombattle/infodump';
+import state from 'helpers/randomstate';
+import Infodump from 'bots/randombattle/infodump';
 const infodump = new Infodump();
 
 describe('Infodump', () => {

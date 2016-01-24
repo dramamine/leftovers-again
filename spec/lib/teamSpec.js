@@ -1,6 +1,6 @@
-import Team from '../../src/lib/team';
+import Team from 'lib/team';
+// @TODO do we need lodash?
 import _ from 'lodash';
-
 
 const oneMon = {
   // required fields

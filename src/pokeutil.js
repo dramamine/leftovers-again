@@ -2,11 +2,11 @@
  * Utility functions.
  *
  */
-import BattleMovedex from '../data/moves';
-import BattlePokedex from '../data/pokedex';
-import log from './log';
+import BattleMovedex from 'data/moves';
+import BattlePokedex from 'data/pokedex';
+import log from 'log';
 
-class Util {
+class PokeUtil {
   toId(text) {
     let name = '';
     if (text) {
@@ -38,5 +38,5 @@ class Util {
   }
 }
 
-const util = new Util();
+const util = new PokeUtil();
 export default util;

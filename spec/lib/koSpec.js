@@ -1,4 +1,4 @@
-import KO from '../../src/lib/kochance';
+import KO from 'lib/kochance';
 
 describe('KO', () => {
   describe('predictKO', () => {

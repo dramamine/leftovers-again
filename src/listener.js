@@ -1,4 +1,5 @@
 
+// keeper of our listeners
 let listeners;
 /**
  * Listener class, for when you want to get server messages.

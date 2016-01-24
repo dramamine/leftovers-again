@@ -4,8 +4,8 @@
  * it.
  *
  */
-import AI from '../../ai';
-import {MOVE, SWITCH} from '../../decisions';
+import AI from 'ai';
+import {MOVE, SWITCH} from 'decisions';
 const meta = {
   battletype: 'randombattle'
 };
@@ -35,7 +35,7 @@ class Randumb extends AI {
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
     } catch(e) {
-      console.log(e);
+      console.log('checking possible moves:', e);
       console.dir(state);
       return null;
     }

@@ -1,11 +1,12 @@
-import listener from './listener';
+import listener from 'listener';
 import WebSocket from 'ws';
 import url from 'url';
-import Connection from './connection';
-import config from './config';
-import util from './util';
+import Connection from 'connection';
+import config from 'config';
+import util from 'pokeutil';
 import https from 'https';
-import Chat from './chat';
+import Chat from 'chat';
+import Log from 'log';
 
 let ws;
 const requestUrl = url.parse(config.actionurl);
@@ -130,6 +131,11 @@ class Socket extends Connection {
       req.write(data);
     }
     return req.end();
+  }
+
+  _relayPopup(args) {
+    Log.warn('Got a popup:');
+    Log.warn(args);
   }
 
 }

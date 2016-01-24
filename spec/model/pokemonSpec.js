@@ -1,6 +1,6 @@
-import Pokemon from '../../src/model/pokemon';
-import util from '../../src/util';
-import log from '../../src/log';
+import Pokemon from 'model/pokemon';
+import util from 'pokeutil';
+import log from 'log';
 
 describe('Pokemon', () => {
   // it('should figure out the pokemon owner', () => {

@@ -1,4 +1,4 @@
-import util from '../util';
+import util from 'pokeutil';
 
 export default class Team {
   constructor(tm) {

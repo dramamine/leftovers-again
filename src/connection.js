@@ -1,7 +1,7 @@
-import listener from './listener';
-import Battle from './battle';
-import config from './config';
-import log from './log';
+import listener from 'listener';
+import Battle from 'battle';
+import config from 'config';
+import log from 'log';
 
 const battles = {};
 

@@ -1,5 +1,5 @@
-import typeChart from './typechart';
-import Damage from './damage';
+import typeChart from 'lib/typechart';
+import Damage from 'lib/damage';
 
 class KO {
   /**

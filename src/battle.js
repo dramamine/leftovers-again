@@ -1,10 +1,10 @@
-import config from './config';
-import BattleStore from './model/battlestore';
+import config from 'config';
+import BattleStore from 'model/battlestore';
 
-import log from './log';
-import {MOVE, SWITCH} from './decisions';
-import report from './report';
-import challenger from './challenger';
+import log from 'log';
+import {MOVE, SWITCH} from 'decisions';
+import report from 'report';
+import challenger from 'challenger';
 
 /**
  * This class manages a single battle. It handles these tasks:

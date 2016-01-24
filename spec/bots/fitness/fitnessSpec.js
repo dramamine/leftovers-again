@@ -1,8 +1,8 @@
-import Fitness from '../../../src/bots/randombattle/fitness/fitness';
+import Fitness from 'bots/randombattle/fitness/fitness';
 const fitness = new Fitness();
 
-fdescribe('Fitness', () => {
-  fdescribe('_getHitsEndured', () => {
+describe('Fitness', () => {
+  describe('_getHitsEndured', () => {
     let attacker;
     let defender;
     beforeEach( () => {

@@ -1,3 +1,7 @@
+/**
+ * Type chart, in the format [Attacker][Defender] = attack multiplier.
+ * Derived from the official Gen 6 charts.
+ */
 export default {
   Normal: {
     category: 'Physical',

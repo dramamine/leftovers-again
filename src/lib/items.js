@@ -1,4 +1,4 @@
-import Formats from '../../data/formats';
+import Formats from 'data/formats';
 
 class Items {
   static hasRequiredItem(id) {
