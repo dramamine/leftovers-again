@@ -76,14 +76,22 @@ If you'd like to implement your favorite language:
 1/3/2016
 - need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon
 - need to handle Zoroark - see 20160104-bug-too-many-active.txt
-- damage done by Return calculated incorrectly
-- damage done by that weight-based move that Onix has is not calculated
++ damage done by Return calculated incorrectly
++ damage done by that weight-based move that Onix has is not calculated
 - take acct of Accuracy in damage est(?)
 - don't think that Explosion is such a great move
 - don't think that Water Spout sux
 - process fields
 - process weather
 - see if "Happiness: 200" is parsed by team declarer
+- 'clear' doesn't clear out the parentheses
+- 'Seismic Toss' calculates incorrectly
+- Kyurem vs Kyurem-White (causes a crash)
+- maybe return nothing instead of crashing out
+- make sure pokemon properties include 'level'
+- move a bunch of functions from lib/damage.js to damageWrapper.js (or something)
+- better handling of stat guessing & damage ranges
+-koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js

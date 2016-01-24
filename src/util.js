@@ -8,8 +8,18 @@ import log from './log';
 
 class Util {
   toId(text) {
-    if (text) return text.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return '';
+    let name = '';
+    if (text) {
+      // most lines copied from server code..
+      name = ('' + text).replace(/[\|\s\[\]\,]+/g, '').toLowerCase().trim();
+
+      // these two are not! but I needed them.
+      name = name.replace('-','');
+      name = name.replace(' ','');
+
+      if (name.length > 18) name = name.substr(0, 18).trim();
+    }
+    return name;
   }
 
   researchMoveById(id) {

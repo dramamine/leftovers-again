@@ -7,7 +7,7 @@ import Damage from '../../lib/damage';
 import KO from '../../lib/kochance';
 import Typechart from '../../lib/typechart';
 // import Pokedex from '../../../data/pokedex';
-import RandomMoves from '../../../data/randommoves';
+import Formats from '../../../data/formats';
 import log from '../../log';
 import util from '../../util';
 
@@ -25,6 +25,7 @@ class Infodump extends AI {
 
   onRequest(state) {
     console.log('infodumps state:: ', state);
+    Damage.assumeStats(state.opponent.active);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -68,11 +69,28 @@ class Infodump extends AI {
 
   getHelp(state) {
     // console.log('infodumps help state:: ', state);
-    const extra = {
-      moves: this._moves(state),
-      opponent: this._opponent(state),
-      switches: this._switches(state),
-    };
+    Damage.assumeStats(state.opponent.active);
+
+    const extra = {};
+
+    try {
+      extra.moves = this._moves(state);
+    } catch (e) {
+      console.log(e);
+      console.log(JSON.stringify(state));
+    }
+    try {
+      extra.opponent = this._opponent(state);
+    } catch (e) {
+      console.log(e);
+      console.log(JSON.stringify(state));
+    }
+    try {
+      extra.switches = this._switches(state);
+    } catch (e) {
+      console.log(e);
+      console.log(JSON.stringify(state));
+    }
 
     return extra;
   }
@@ -85,7 +103,7 @@ class Infodump extends AI {
         let est = [-1];
         if (!move.disabled) {
           try {
-            est = Damage.getDamageRange(
+            est = Damage.getDamageResult(
               state.self.active,
               state.opponent.active,
               move
@@ -115,8 +133,9 @@ class Infodump extends AI {
     log.log('input:');
     log.log(JSON.stringify(state));
     // query for moves
-    const oppMoves = RandomMoves[util.toId(state.opponent.active.species)];
-    if (!oppMoves) {
+    const formatData = Formats[util.toId(state.opponent.active.species)];
+    const possibleMoves = formatData.randomBattleMoves;
+    if (!possibleMoves) {
       return {
         error: 'couldnt find species in random moves dictionary: ' +
           state.opponent.active.species
@@ -125,11 +144,11 @@ class Infodump extends AI {
     // for each of my pokemons...
     const results = state.self.reserve.map( (mon) => {
       // see how the opponent would fare against this mon of mine.
-      const yourMoves = oppMoves.map( move => {
+      const yourMoves = possibleMoves.map( move => {
         // check damage from each of the opponent's moves against this mon.
         let est = [-1];
         try {
-          est = Damage.getDamageRange(
+          est = Damage.getDamageResult(
             state.opponent.active,
             mon,
             move
@@ -148,7 +167,7 @@ class Infodump extends AI {
       const myMoves = mon.moves.map( move => {
         let est = [-1];
         try {
-          est = Damage.getDamageRange(
+          est = Damage.getDamageResult(
             mon, // my mon
             state.opponent.active,
             move // my move

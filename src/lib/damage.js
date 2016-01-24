@@ -84,7 +84,6 @@ class Damage {
       mon.stats[stat] = getModifiedStat(
         mon.stats[stat], mon.boosts[stat]);
     });
-
     return mon;
   }
 
@@ -121,116 +120,6 @@ class Damage {
     return move;
   }
 
-  // important properties here:
-  // attacker: {
-  //  name:
-  //  ability:
-  //  item:
-  //  curHP:
-  //  maxHP:
-  //  status: (ex. Healthy, Asleep)
-  //  weight:
-  //  boosts:
-  //  type1:
-  //  type2:
-  //  evs: (ex. evs[attackStat])
-  //  nature:
-  //  status:
-  //  stats: (ex. stats[SP])
-  //  baseStats: (stats before boosts)
-  //
-  //
-  // },
-  // defender: (same),
-  //  HPEVs: what's up with this??
-  // move: {
-  //  name:
-  //  type:
-  //  hits: (ex. 1, more)
-  //  bp:
-  //  isCrit: (? maybe related to criticalRatio / alwaysCrit)
-  //  isPulse:
-  //  isBite:
-  //  dealsPhysicalDamage:
-  //  isSpread:
-  //  ignoresBurn:
-  //  type:
-  //  category: (Physical, Special)
-  //  ignoresDefenseBoosts:
-  //
-  // }
-  // field: {
-  //  weather: (ex. Sand, Hail)
-  //  terrain: (ex. Electric, Grassy, Misty)
-  //  isForesight:
-  //  isGravity:
-  //  isHelpingHand:
-  //  isReflect:
-  //  isLightScreen:
-  //  format: 'Singles'
-  //  clearWeather() (uh oh)
-  //  getSide()
-  //  getWeather() (related: checkForecast)
-  // }
-  //
-  getMinDamageResult(a, d, move, field) {
-    const attacker = Object.assign({}, a);
-    const defender = Object.assign({}, d);
-
-    attacker.stats = attacker.stats || {};
-    attacker.level = attacker.level || ASSUME_LEVEL;
-    defender.stats = defender.stats || {};
-    defender.level = defender.level || ASSUME_LEVEL;
-
-    [AT, SA].forEach( stat => {
-      this._minimizeStat(attacker, stat);
-    });
-    [DF, SD, SP, HP].forEach( stat => {
-      this._assumeStat(attacker, stat);
-    });
-
-    [DF, SD, HP].forEach( stat => {
-      this._maximizeStat(defender, stat);
-    });
-    [AT, SA, SP].forEach( stat => {
-      this._assumeStat(defender, stat);
-    });
-
-    return this.getDamageResult(attacker, defender, move, field);
-  }
-  /**
-   * Make assumptions about how awesome this move will be.
-   *
-   * @param  {[type]} attacker [description]
-   * @param  {[type]} defender [description]
-   * @param  {[type]} move     [description]
-   * @param  {[type]} field    [description]
-   * @return {[type]}          [description]
-   */
-  getMaxDamageResult(a, d, move, field) {
-    const attacker = Object.assign({}, a);
-    const defender = Object.assign({}, d);
-    attacker.stats = attacker.stats || {};
-    attacker.level = attacker.level || ASSUME_LEVEL;
-    defender.stats = defender.stats || {};
-    defender.level = defender.level || ASSUME_LEVEL;
-
-    [AT, SA].forEach( stat => {
-      this._maximizeStat(attacker, stat);
-    });
-    [DF, SD, SP, HP].forEach( stat => {
-      this._assumeStat(attacker, stat);
-    });
-
-    [DF, SD, HP].forEach( stat => {
-      this._minimizeStat(defender, stat);
-    });
-    [AT, SA, SP].forEach( stat => {
-      this._assumeStat(defender, stat);
-    });
-
-    return this.getDamageResult(attacker, defender, move, field);
-  }
 
   /**
    * Use the maximum value for a stat. This means we'll use 252 EVs and a
@@ -264,8 +153,30 @@ class Damage {
 
   /**
    * Updates a certain stat if it isn't already set.
-   *
-   * Hope these formulas are right!
+
+   * @param  {Object} mon The pokemon object. This is modified directly.
+   * Expects the following properties:
+   * level: {Number} The Pokemon's level
+   * baseStats: {Object} The Pokemon's unmodified (pre-EV and IV) stats
+   * stats: {Object} The Pokemon's modified stats.
+   * nature: {String} (optional) The Pokemon's nature; use natureMultiplier if
+   * this is undefined.
+   * @param  {Enum/String} stat The stat to maybe update.
+   * @param  {Number} evs The EV number, ex. 252.
+   * @param  {Number} natureMultiplier The nature multiplier to use if the
+   *                                   mon doesn't have a nature set. Should
+   *                                   be in [0.9, 1, 1.1].
+   */
+  _assumeStat(mon, stat, evs = 85, natureMultiplier = 1) {
+    if (!mon.stats[stat]) {
+      mon.stats[stat] = this._calculateStat(mon, stat, evs, natureMultiplier);
+    }
+    return mon;
+  }
+
+
+  /**
+   * Calculates a certain stat.
    *
    * HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
    * Stat = (((Base * 2 + IV + EV/4) * Level / 100) + 5) * Naturemod
@@ -283,15 +194,17 @@ class Damage {
    *                                   mon doesn't have a nature set. Should
    *                                   be in [0.9, 1, 1.1].
    */
-  _assumeStat(mon, stat, evs = 0, natureMultiplier = 1) {
-    if (!mon.stats[stat]) {
-      const evBonus = Math.floor(evs / 4);
-      const addThis = stat === 'hp' ? (mon.level + 10) : 5;
-      mon.stats[stat] = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
-        (mon.level / 100) + addThis) *
-        (mon.nature ? this._getNatureMultiplier(mon.nature, stat) : natureMultiplier);
-    }
-    return mon;
+  _calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
+    const evBonus = Math.floor(evs / 4);
+    const addThis = stat === 'hp' ? (mon.level + 10) : 5;
+    const calculated = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
+      (mon.level / 100) + addThis);
+
+    const nature = (mon.nature
+        ? this._getNatureMultiplier(mon.nature, stat)
+        : natureMultiplier);
+
+    return Math.floor(calculated * nature);
   }
 
   /**
@@ -314,57 +227,28 @@ class Damage {
   }
 
   /**
-   * Helper function to get min/max damage range.
+   * Helper function to give a pokemon its stats. This is based on logic for
+   * randombattles. Check the client code data/scripts.js::randomSet. There
+   * are lots of exceptions that I didn't include here, read the client code
+   * for more details.
    *
-   * @param  {[type]} attacker [description]
-   * @param  {[type]} defender [description]
-   * @param  {[type]} move     [description]
-   * @param  {[type]} field    [description]
-   * @return {[type]}          [description]
    */
-  getDamageRange(a, d, move, field) {
-    const dmg = this.getMinDamageResult(a, d, move, field)
-      .concat(this.getMaxDamageResult(a, d, move, field));
-    const sorted = dmg.sort((x, y) => x - y);
-    return sorted;
+  assumeStats(mon) {
+    if (!mon.stats) mon.stats = {};
+    [AT, SA, DF, SD, SP, HP].forEach( stat => {
+      if (!mon.stats[stat]) {
+        mon.stats[stat] = this._calculateStat(mon, stat, 85, 1);
+      }
+    });
+
+    // assume HP if we can
+    if (mon.hppct && mon.stats.hp) {
+      mon.maxhp = mon.stats.hp;
+      mon.hp = mon.stats.hp * mon.hppct / 100;
+    }
   }
 
-  /**
-   * [getSimplifiedDamageResult description]
-   * @param  {...[type]} props [description]
-   * @return {[type]}          [description]
-   */
-  getSimplifiedDamageResult(attacker, defender, move, field) {
-    if (typeof attacker === 'string') {
-      attacker = util.researchPokemonById(attacker);
-    }
-    if (typeof defender === 'string') {
-      defender = util.researchPokemonById(defender);
-    }
-    if (typeof move === 'string') {
-      move = util.researchMoveById(move);
-    }
-
-    const damage = this.getDamageRange(attacker, defender, move, field);
-    if (damage.length === 32) {
-      return [
-        damage[0],
-        damage[5],
-        damage[10],
-        damage[15],
-        damage[16],
-        damage[21],
-        damage[26],
-        damage[31]
-      ];
-    }
-    if (damage.length !== 2) {
-      console.log('weird damage amt:', damage.length, damage);
-    }
-    return damage;
-  }
-
-  getDamageResult(a, d, move, field = defaultField) {
+  getDamageResult(a, d, move, field = defaultField, maxOnly = false) {
     if (typeof a === 'string') {
       a = util.researchPokemonById(a);
     }
@@ -515,7 +399,8 @@ class Damage {
       description.moveBP = basePower;
       break;
     case 'Hex':
-      basePower = move.bp * (defender.status !== 'Healthy' ? 2 : 1);
+      // this used to check for 'Healthy', but this str will be empty for our system
+      basePower = move.bp * (defender.status !== '' ? 2 : 1);
       description.moveBP = basePower;
       break;
     case 'Heavy Slam':
@@ -567,10 +452,12 @@ class Damage {
       basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
       description.moveBP = basePower;
       break;
+    case 'Return':
+      basePower = 102; // assume max happiness
+      break;
     default:
       basePower = move.bp;
     }
-    // console.log('base power:', basePower);
 
     const bpMods = [];
     if ((attacker.ability === 'Technician' && basePower <= 60) ||
@@ -747,7 +634,6 @@ class Damage {
     }
 
     attack = Math.max(1, pokeRound(attack * chainMods(atMods) / 0x1000));
-    // console.log('attack:', attack);
     // //////////////////////////////
     // /////// (SP)DEFENSE //////////
     // //////////////////////////////
@@ -892,7 +778,9 @@ class Damage {
 
 
     const damage = [];
-    for (let i = 0; i < 16; i++) {
+    let i = 0;
+    if (maxOnly) i = 15;
+    for (; i < 16; i++) {
       damage[i] = Math.floor(baseDamage * (85 + i) / 100);
       damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
       damage[i] = Math.floor(damage[i] * typeEffectiveness);
@@ -1020,7 +908,7 @@ function checkInfiltrator(attacker, affectedSide) {
     affectedSide.isLightScreen = false;
   }
 }
-
+// @TODO check to see if this works for our boosts object
 function countBoosts(boosts) {
   let sum = 0;
   for (let i = 0; i < STATS.length; i++) {

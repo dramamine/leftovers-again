@@ -1,41 +1,12 @@
-import typeChart from './typechart';
-import Damage from './damage';
+// import typeChart from './typechart';
+// import Damage from './damage';
+import Gaussian from '../../../lib/gaussian';
 
-class KO {
-  /**
-   * Predicts the number of turns it will take to KO a Pokemon, if we
-   * continuously use the same move on said Pokemon.
-   *
-   * This uses current HP, not maximum HP as you usually see on the official
-   * damage calculator.
-   *
-   * @param  {[number]} damage An array of possible damage amounts, from low
-   * to high.
-   * @param  {Pokemon} defender The targer Pokemon. Should have the following
-   * properties:
-   *   maxHP (required): the mon's maximum HP
-   *   type1: the mon's primary type
-   *   type2: the mon's secondary type
-   *   item: the defender's item
-   *   ability: the defender's ability
-   *   toxicCounter: the number of times this mon has taken poison damage
-   * @param  {string} field The field
-   * @param  {number} hits The number of hits done by this move
-   * @param  {booleam} isBadDreams True if the move is bad dreams(?)
-   *
-   * @return {object} An object with the following properties:
-   * turns: the number of turns it will take to possibly KO the opponent
-   * chance: the chance the opponent will be KO'ed after that many turns, as
-   * a percentage (1-100)
-   */
+import distributions from './probability-distributions';
+
+class KOModded {
   static predictKO(damage, defender, field = '', hits = 1, isBadDreams = false) {
-    if (isNaN(damage[0])) {
-      return {
-        turns: null,
-        chance: null
-      };
-    }
-    if (damage[damage.length - 1] === 0) {
+    if (isNaN(damage)) {
       return {
         turns: null,
         chance: null
@@ -43,14 +14,7 @@ class KO {
     }
 
     if (!defender.hp || !defender.maxhp) {
-      defender = Damage.assumeStats(defender);
-    }
-
-    if (damage[0] >= defender.hp) {
-      return {
-        turns: 1,
-        chance: 100
-      };
+      defender = Damage.assumeStats(defender); // eslint-disable-line
     }
 
     let hazards = 0;
@@ -145,13 +109,12 @@ class KO {
       damage = damage.map( dmg => dmg * hits ); // eslint-disable-line
     }
 
-    for (let i = 1; i <= 5; i++) {
-      // console.log('using hits counter ' + i);
-      const c = KO._getKOChance(damage, defender.hp - hazards, eot, i, defender.maxhp, toxicCounter);
-      if (c > 0 && c <= 1) {
+    for (let i = 1; i <= 9; i++) {
+      const c = KOModded._getKOChance(damage, i, defender.hp - hazards, eot, defender.maxhp, toxicCounter);
+      if (c > 0.05 && c <= 1) {
         return {
           turns: i,
-          chance: Math.round(c * 1000) / 10
+          chance: c
         };
       }
     }
@@ -161,61 +124,76 @@ class KO {
     };
   }
 
-  static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
-    // console.log('_getKOChance:', damage, hp, eot, hits, maxHP, toxicCounter);
-    if ( isNaN(hp) || hp < 0 || isNaN(hits) || hits < 0 || isNaN(maxHP) || maxHP < 0) {
-      console.error('bailing out!', damage.length, hp, eot, hits, maxHP, toxicCounter);
-      return 0;
-    }
-    // console.log('_getKOChance called.', damage.length, hp, eot, hits, maxHP, toxicCounter);
-    const n = damage.length;
-    const minDamage = damage[0];
-    const maxDamage = damage[damage.length - 1];
-    let i;
-    if (hits === 1) {
-      if (maxDamage < hp) {
-        return 0;
-      }
-      for (i = 0; i < n; i++) {
-        if (damage[i] >= hp) {
-          return (n - i) / n;
-        }
-      }
-    }
-    if (KO._predictTotal(maxDamage, eot, hits, toxicCounter, maxHP) < hp) {
-      return 0;
-    } else if (KO._predictTotal(minDamage, eot, hits, toxicCounter, maxHP) >= hp) {
+  static _getKOChance(damage, hits, hp, eot = 0, maxHP = 400,
+    toxicCounter = 0, isNatureKnown = false) {
+    console.log(damage, hits, hp, eot, maxHP, toxicCounter, isNatureKnown);
+
+    const dmgTarget = hp - (eot * hits);
+    // confirm it's in the range
+    // if it's under bad nature * 85%
+    if (dmgTarget <= damage * 0.702479339 * hits) {
       return 1;
     }
+    if (dmgTarget >= damage * 1.21 * hits) {
+      return 0;
+    }
 
-    let toxicDamage = 0;
-    if (toxicCounter > 0) {
-      toxicDamage = Math.floor(toxicCounter * maxHP / 16);
-      toxicCounter++; // eslint-disable-line
-    }
-    let sum = 0;
-    for (i = 0; i < n; i++) {
-      const c = KO._getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
-        hits - 1, maxHP, toxicCounter);
-      if (c === 1) {
-        sum += (n - i);
-        break;
-      } else {
-        sum += c;
-      }
-    }
-    // console.log('returning ', sum / n);
-    return sum / n;
+    // normalized: how many of this 100% max damage must we do to kill?
+    const dmgPct = 100 * hp / damage;
+    console.log('calculations:', damage, hp, dmgTarget, dmgPct);
+    const {mean, variance} = this._getDistribution(hits, isNatureKnown);
+    return this._normalize(dmgPct, mean, variance);
+
+    // find the chance that 'idx' or greater will occur
+    // const chance = (damage.length - idx) / damage.length;
+    // console.log('returning result ' + Math.pow(chance, hits) + 'from chance ' + chance);
+    // return Math.pow(chance, hits);
   }
 
-  static _predictTotal(damage, eot, hits, toxicCounter, maxHP) {
-    let toxicDamage = 0;
-    if (toxicCounter > 0) {
-      for (let i = 0; i < hits - 1; i++) {
-        toxicDamage += Math.floor((toxicCounter + i) * maxHP / 16);
-      }
-    }
-    return (damage * hits) - (eot * (hits - 1)) + toxicDamage;
+  static _getDistribution(hits, isNatureKnown) {
+    return distributions.find(distro => distro.hits === hits
+      && !!distro.nature === isNatureKnown
+      && !distro.crits);
+  }
+
+  static _softCritCalc(dmgPct, hits, mean, variance) {
+    const distribution = new Gaussian(mean, variance);
+    // ex. if dmgPct = 100, we can do 66
+    //     if dmgPct = 150, we can do 100
+    // but for hits = 2...
+    //     if dmgPct = 200, we can do ~160
+    //     ex. 80 normal, 80->120 crit
+    //     ex. 85 normal, 75->112 crit, wouldn't work but 75% is unlikely.
+    // for hits = 3
+    //     if dmgPct = 300, we can do 8/9*300 = 266
+    //     and the chance of at least one crit is 1 - (1 - .0625)^3
+
+    // this is the dmgPct target if we know we are going to get at least 1 crit
+    const dmgPctWithCrit = dmgPct * (hits * 3 - 1) / (hits * 3);
+
+    // this is the percent of hits that fall within the range where getting
+    // at least 1 crit would be the marginal difference btwn killing and not.
+    const hitsWithinRange = distribution.cdf(dmgPct) - distribution.cdf(dmgPctWithCrit);
+
+    // percent chance of getting at least one crit
+    const critChance = 1 - Math.pow(15 / 16, hits);
+    console.log('_softCritCalc debug:', dmgPctWithCrit, hitsWithinRange, critChance);
+    return hitsWithinRange * critChance;
+  }
+
+  static _normalize(dmgPct, mean, variance) {
+    // const mean = min + (max - min) / 2;
+    // let variance = 5.8333;
+    // switch (hits) {
+    // case 2:
+    //   variance = 5.8333;
+    // }
+    // console.log(mean, variance, target);
+    // const distribution = new Gaussian(mean, variance);
+    // return distribution.cdf(target);
+    //
+    const distribution = new Gaussian(mean, variance);
+    return 1 - distribution.cdf(dmgPct);
   }
 }
-export default KO;
+export default KOModded;

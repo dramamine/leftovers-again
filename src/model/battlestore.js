@@ -1,6 +1,6 @@
 import Pokemon from './pokemon';
 import util from '../util';
-// import log from '../log';
+import Log from '../log';
 
 /**
  * Store for tracking the status of the battle.
@@ -29,6 +29,7 @@ export default class BattleStore {
       request: this.handleRequest,
       turn: this.handleTurn,
       faint: this.handleFaint,
+      heal: this.handleHeal,
       player: this.handlePlayer,
       cant: this.handleCant,
       '-fail': this.handleFail,
@@ -162,11 +163,32 @@ export default class BattleStore {
     }
     move.damage = move.prevhp - move.nexthp;
     move.damagepct = Math.round(100 * move.damage / mon.maxhp);
+
+    if (mon.maxhp !== 100 && move.damage > 20) {
+      // console.log(move.damage, target, condition, explanation);
+      Log.toFile('damagerangetest', move.damage);
+    }
+
+    if (explanation && explanation.indexOf('[from] item:') >= 0) {
+      const item = explanation.replace('[from] item: ', '');
+      mon.setItem(item);
+    }
   }
 
   handleFaint(ident) {
     const mon = this._recordIdent(ident);
     mon.useCondition('0 fnt');
+  }
+
+  // @TODO this is pretty much thte same as the damage function
+  handleHeal(target, condition, explanation) {
+    const mon = this._recordIdent(target);
+    mon.useCondition(condition);
+    if (!mon.item && explanation &&
+      explanation.indexOf('[from] item:') >= 0) {
+      const item = explanation.replace('[from] item: ', '');
+      mon.setItem(item);
+    }
   }
 
   handlePlayer(id, name, something) { //eslint-disable-line

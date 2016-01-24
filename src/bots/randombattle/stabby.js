@@ -20,6 +20,7 @@ class Stabby extends AI {
   }
 
   onRequest(state) {
+    console.log(JSON.stringify(state));
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
