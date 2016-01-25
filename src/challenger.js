@@ -64,7 +64,7 @@ class Challenger {
    */
   onUserJoin([user]) {
     const trimmed = user.trim();
-    if (!this.users[trimmed]) {
+    if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
       this.users[trimmed] = Statuses.ACTIVE;
       if (this.timer) clearTimeout(this.timer);
       this.timer = setTimeout(this._challengeNext, 1000);
@@ -91,6 +91,10 @@ class Challenger {
     this.users[nick] = Statuses.SELF;
   }
 
+  /**
+   * Find the next active opponent and issue a challenge.
+   *
+   */
   _challengeNext() {
     let opponent = '';
     Object.keys(this.users).some(user => {
