@@ -26,7 +26,7 @@ if (argv.monkey) {
 }
 
 // connect to a server, or create one and start listening.
-myconnection.connect();
+myconnection.connect(argv);
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using

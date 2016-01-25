@@ -2,6 +2,7 @@ import listener from 'listener';
 import WebSocket from 'ws';
 import url from 'url';
 import Connection from 'connection';
+import Challenger from 'challenger';
 import config from 'config';
 import util from 'pokeutil';
 import https from 'https';
@@ -16,7 +17,8 @@ class Socket extends Connection {
     super();
   }
 
-  connect() {
+  connect({server = 'localhost', port = 8000, scrappy}) {
+    console.log('connect has scrappy set to', scrappy);
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
@@ -26,10 +28,11 @@ class Socket extends Connection {
 
     ws.on('message', this._handleMessage);
 
-    listener.subscribe('challstr', this._respondToChallenge.bind(this));
+    listener.subscribe('challstr', this._login.bind(this));
     listener.subscribe('popup', this._relayPopup);
 
     this.chat = new Chat();
+    this.challenger = new Challenger(scrappy);
   }
 
   send(message) {
@@ -48,7 +51,7 @@ class Socket extends Connection {
     ws.close();
   }
 
-  _respondToChallenge(args) {
+  _login(args) {
     // console.log('responding to challenge.');
     const [id, str] = args;
     // console.log(id, str);

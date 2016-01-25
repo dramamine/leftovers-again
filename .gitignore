@@ -7,3 +7,4 @@ scripts/clienthax.js
 lib/honko-damagecalc/
 error.log
 log/
+src/bots/randombattle/predictor/matchups.json

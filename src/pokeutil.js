@@ -15,6 +15,7 @@ class PokeUtil {
 
       // these two are not! but I needed them.
       name = name.replace('-','');
+      name = name.replace('.','');
       name = name.replace(' ','');
 
       if (name.length > 18) name = name.substr(0, 18).trim();

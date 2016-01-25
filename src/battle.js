@@ -4,7 +4,7 @@ import BattleStore from 'model/battlestore';
 import log from 'log';
 import {MOVE, SWITCH} from 'decisions';
 import report from 'report';
-import challenger from 'challenger';
+import listener from 'listener';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -29,10 +29,13 @@ class Battle {
 
     // Messages we want to handle, and their handlers.
     this.handlers = {
+      // from the normal server
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
       turn: this.handleTurn,
       win: this.handleWin,
+
+      // special function for auditing yrself.
       ask4help: this.getHelp
     };
 
@@ -126,14 +129,20 @@ class Battle {
     this.decide();
   }
 
-  handleWin(x) {
-    console.log('WON: ', x);
-    const results = report.win(x, this.store);
+  handleWin(winner) {
+    console.log('WON: ', winner);
+    const results = report.win(winner, this.store);
 
+    listener.relay('battlereport', {
+      results,
+      winner,
+      opponent: this.store.yourNick});
 
     if (results.filter(match => match.you === this.store.yourNick).length <
       config.matches) {
-      challenger.challenge(this.store.yourNick);
+      console.error('@TODO: re-challenging people is probably broken!');
+      //challenger.challenge(this.store.yourNick);
+
     } else {
       console.log(JSON.stringify(report.data()));
     }
