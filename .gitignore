@@ -8,3 +8,5 @@ lib/honko-damagecalc/
 error.log
 log/
 src/bots/randombattle/predictor/matchups.json
+coverage/
+docs/
