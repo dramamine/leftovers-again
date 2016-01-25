@@ -137,15 +137,6 @@ class Battle {
       results,
       winner,
       opponent: this.store.yourNick});
-
-    if (results.filter(match => match.you === this.store.yourNick).length <
-      config.matches) {
-      console.error('@TODO: re-challenging people is probably broken!');
-      //challenger.challenge(this.store.yourNick);
-
-    } else {
-      console.log(JSON.stringify(report.data()));
-    }
   }
 
   /**
