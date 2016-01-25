@@ -1,5 +1,6 @@
 {
   "source": "./src",
-  "destination": "./docs"
+  "destination": "./docs",
+  "undocumentIdentifier": false
 }
 

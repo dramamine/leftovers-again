@@ -125,7 +125,7 @@ class Battle {
    *
    * @param that I'm ignoring: the turn number.
    */
-  handleTurn() {
+  handleTurn(turn) { // eslint-disable-line
     this.decide();
   }
 

@@ -17,7 +17,6 @@ class Report {
    * @param  {BattleStore} store   The final battle state.
    * @param  {string} matchid An ID to identify this match.
    *
-   *
    * @return {ReportObj} A report object.
    * @property {string} matchid  The ID of the match
    * @property {boolean} won  true if we won the match; false otherwise.
@@ -25,10 +24,10 @@ class Report {
    * @property {number} damageTaken  The total damage we took, out of 600 (percent).
    * @property {string} me  your nickname
    * @property {string} you  your opponent's nickname
-   * @property {Array} mine  an array of your Pokemon
-   * @property {array} yours  an array of your opponent's Pokemon
-   * @property {array} events  an array of events(?)
-   * @property {array} statuses  an array of statuses(?)
+   * @property {Array<Pokemon>} mine  an array of your Pokemon
+   * @property {Array<Pokemon>} yours  an array of your opponent's Pokemon
+   * @property {Array} events  an array of events(?)
+   * @property {Array} statuses  an array of statuses(?)
    *
    * @see Pokemon
    * @see class/src/model/pokemon.js

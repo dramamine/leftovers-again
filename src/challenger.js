@@ -20,7 +20,7 @@ const Statuses = {
 class Challenger {
   /**
    * Constructor.
-   * @param  {[type]} scrappy Set to true if we want this user to challenge
+   * @param  {boolean} scrappy Set to true if we want this user to challenge
    * everyone in the lobby and everyone who joins the lobby later.
    *
    * @return Constructor
@@ -60,7 +60,7 @@ class Challenger {
   /**
    * Updates the user state to reflect that the user joined.
    *
-   * @param  {String} user The user who joined.
+   * @param  {string} user The user who joined.
    */
   onUserJoin([user]) {
     const trimmed = user.trim();
@@ -74,7 +74,7 @@ class Challenger {
   /**
    * Updates the user state to reflect that this user left.
    *
-   * @param  {String} user The nickname of the user who left.
+   * @param  {string} user The nickname of the user who left.
    */
   onUserLeave([user]) {
     this.users[user.trim()] = Statuses.INACTIVE;
@@ -106,7 +106,13 @@ class Challenger {
     }
   }
 
-
+/**
+ * [onBattleReport description]
+ * @param  {[type]} options.report   [description]
+ * @param  {[type]} options.winner   [description]
+ * @param  {[type]} options.opponent [description]
+ * @return {[type]}                  [description]
+ */
   onBattleReport({report, winner, opponent}) {
     console.log('onBattleReport called.');
     console.log(winner, opponent);

@@ -1,5 +1,7 @@
 ## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
 
+Full code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+
 Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
 
 2015: Pokemon bots start spontaneously fighting amongst themselves.
