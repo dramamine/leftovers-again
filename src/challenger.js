@@ -25,7 +25,9 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(scrappy) {
+  constructor(bot, scrappy) {
+    this.bot = bot;
+
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
     listener.subscribe('battlereport', this.onBattleReport);
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
@@ -166,18 +168,17 @@ class Challenger {
     console.log('onUpdateChallenges::', challengesFrom, challengeTo);
     // if (!challengesFrom) return;
 
-    const Bot = require(config.botPath);
-    const AI = new Bot();
-
     Object.keys(challengesFrom).forEach( (opponent) => {
       console.log('checking out this key:', opponent, AI.meta.battletype);
       // only accept battles of the type we're designed for
-      if (challengesFrom[opponent] === AI.meta.battletype) {
+
+      if (this._acceptable(challengesFrom[opponent], bot.accepts)) {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        if (AI.getTeam) {
-          const utmString = new Team( AI.getTeam(opponent) ).asUtm();
+        const team = bot.getTeam(opponent);
+        if (team) {
+          const utmString = new Team(team).asUtm();
           Log.info('sending team msg...', utmString);
           socket.send('|/utm ' + utmString);
         }
@@ -188,6 +189,17 @@ class Challenger {
   }
 
   /**
+   * [_acceptable description]
+   * @param  {String} challenge The match type we were challenged to
+   * @param  {String} accepts  A comma-separated list of match types(?)
+   * @return {Boolean} True if the bot will accept this challenge, false otherwise.
+   */
+  static _acceptable(challenge, accepts) {
+    if (accepts === 'ALL') return true;
+    return accepts.includes(challenge);
+  }
+
+  /**
    * Send a challenge to this user; maybe load your bot to find its team.
    *
    * @param {String} The nickname to challenge.
@@ -195,11 +207,9 @@ class Challenger {
   _challenge(nick) {
     console.log('challenge called.', nick);
 
-    const Bot = require(config.botPath);
-    const AI = new Bot();
-    console.log('checking meta...');
-    if (AI.meta.battletype === 'anythinggoes') {
-      const utmString = new Team( AI.getTeam(nick) ).asUtm();
+    const team = bot.getTeam(opponent);
+    if (team) {
+      const utmString = new Team(team).asUtm();
       console.log('sending utm...', utmString);
       socket.send('|/utm ' + utmString);
     }

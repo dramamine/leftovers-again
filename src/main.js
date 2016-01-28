@@ -1,8 +1,6 @@
 // @TODO not sure if we really need to require this
 require('./listener');
 
-import config from 'config';
-
 // @TODO move these to 'connection' and maybe don't load them all
 import socket from 'socket';
 import monkey from 'monkey';
@@ -14,10 +12,7 @@ if (argv.help || argv.h) {
   _displayHelp();
   process.exit();
 }
-if (argv.bot) {
-  console.log('good, loading my bot.');
-  config.botPath = argv.bot;
-}
+
 let myconnection;
 if (argv.monkey) {
   myconnection = monkey;

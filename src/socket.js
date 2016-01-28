@@ -8,6 +8,7 @@ import util from 'pokeutil';
 import https from 'https';
 import Chat from 'chat';
 import Log from 'log';
+import Bot from 'bot';
 
 let ws;
 const requestUrl = url.parse(config.actionurl);
@@ -17,8 +18,8 @@ class Socket extends Connection {
     super();
   }
 
-  connect({server = 'localhost', port = 8000, scrappy}) {
-    console.log('connect has scrappy set to', scrappy);
+  connect({server = 'localhost', port = 8000, bot, scrappy}) {
+    console.log('connect::,', server, port, bot, scrappy);
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
@@ -31,8 +32,10 @@ class Socket extends Connection {
     listener.subscribe('challstr', this._login.bind(this));
     listener.subscribe('popup', this._relayPopup);
 
+
     this.chat = new Chat();
-    this.challenger = new Challenger(scrappy);
+    this.bot = new Bot(bot);
+    this.challenger = new Challenger(this.bot, scrappy);
   }
 
   send(message) {
