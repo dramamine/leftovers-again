@@ -10,6 +10,11 @@ class Listener {
    */
   constructor() {
     listeners = {};
+    this.battlemanager = null;
+  }
+
+  use(mgr) {
+    this.battlemanager = mgr;
   }
 
   /**
@@ -19,7 +24,11 @@ class Listener {
    * @param  {String} type   The message type.
    * @param  {Array} params  The parameters that came with this message.
    */
-  relay(type, params) {
+  relay(type, params, battleid = null) {
+    if (battleid) {
+      this.battlemanager.find(battleid).handle(type, params);
+    }
+
     if (!listeners[type]) return;
     listeners[type].map( (callback) => {
       callback.call(null, params);

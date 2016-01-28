@@ -8,7 +8,8 @@ import util from 'pokeutil';
 import https from 'https';
 import Chat from 'chat';
 import Log from 'log';
-import Bot from 'bot';
+import BotInfo from 'botinfo';
+import BattleManager from 'battlemanager';
 
 let ws;
 const requestUrl = url.parse(config.actionurl);
@@ -31,13 +32,30 @@ class Socket extends Connection {
 
     listener.subscribe('challstr', this._login.bind(this));
     listener.subscribe('popup', this._relayPopup);
+    // defined message type for calling from battles, etc.
+    listener.subscribe('_send', this.send);
 
 
     this.chat = new Chat();
-    this.bot = new Bot(bot);
-    this.challenger = new Challenger(this.bot, scrappy);
+
+    this.challenger = new Challenger(new BotInfo(bot), scrappy);
+
+    // battlemanager is going to create new battles as we learn about them.
+    // for each one, it creates a new instance of a battle and of our AI class.
+    // listener needs to know about the BattleManager to properly relay battle
+    // messages to the right battle instance.
+    this.battlemanager = new BattleManager(bot);
+    listener.use(this.battlemanager);
   }
 
+  /**
+   * this function will relay ANYTHING to the server, hope your message is
+   * formatted right!
+   *
+   * @link https://github.com/Zarel/Pokemon-Showdown
+   *
+   * @param  {String} message [description]
+   */
   send(message) {
     ws.send(message);
   }

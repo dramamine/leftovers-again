@@ -1,9 +1,5 @@
 import listener from 'listener';
-import Battle from 'battle';
-import config from 'config';
 import log from 'log';
-
-const battles = {};
 
 /**
  * Abstract class for managing connections. All connections are responsible
@@ -38,7 +34,6 @@ class Connection {
     let bid = null;
     if (messages[0].indexOf('>') === 0) {
       bid = messages[0].split('>')[1];
-      if (!battles[bid]) battles[bid] = new Battle(bid, this, config.botPath);
     }
 
     for (let i = 0; i < messages.length; i++) {
@@ -49,10 +44,10 @@ class Connection {
           if (messageParts[1] === 'request') {
             passThese = [passThese.join('')];
           }
-          battles[bid].handle(messageParts[1], passThese);
-          continue;
+          listener.relay(messageParts[1], passThese, bid);
+        } else {
+          listener.relay(messageParts[1], passThese);
         }
-        listener.relay(messageParts[1], passThese);
       }
     }
   }
@@ -69,19 +64,6 @@ class Connection {
    * @return {[type]}         [description]
    */
   close(message) {} // eslint-disable-line
-
-  /**
-   * Helper function to get a battle by its battle ID.
-   * @param  {string} bid The battle ID, ex. 'randombattle-652742'
-   * @return {Battle} The Battle object you're looking for.
-   */
-  _getBattle(bid) {
-    if (!battles[bid]) {
-      log.error('couldn\'t find a battle with that ID: ' + bid);
-      return null;
-    }
-    return battles[bid];
-  }
 
   /**
    * [exit description]

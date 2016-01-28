@@ -7,7 +7,7 @@
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "test": "NODE_PATH='src:bots:spec' jasmine",
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
-    "develop": "NODE_PATH='src:bots' nodemon --watch src --exec babel-node src/main.js",
+    "develop": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js",
     "spawn": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
     "server": "node lib/Pokemon-Showdown/app.js",
     "client": "xdg-open lib/Pokemon-Showdown-Client/testclient.html"

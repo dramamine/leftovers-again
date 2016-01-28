@@ -91,6 +91,9 @@ $ ENGINE WORK
 - maybe return nothing instead of crashing out (from getHelp function)
 + make sure pokemon properties include 'level'. (I am pretty sure I checked this. turns out lots of modes like ou/uber don't report level. );
 - move a bunch of functions from lib/damage.js to damageWrapper.js (or something)
+- create a set of tests for a "generic bot testing script"
+- setup the script for said tests
+- shell commands for running bots
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

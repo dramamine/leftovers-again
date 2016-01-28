@@ -1,4 +1,3 @@
-import config from 'config';
 import BattleStore from 'model/battlestore';
 
 import log from 'log';
@@ -23,7 +22,7 @@ class Battle {
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, connection, botpath = config.botPath) {
+  constructor(bid, bot) {
     // battle ID
     this.bid = bid;
 
@@ -39,10 +38,7 @@ class Battle {
       ask4help: this.getHelp
     };
 
-    const AI = require(botpath);
-    this.bot = new AI();
-
-    this.connection = connection;
+    this.bot = bot;
     this.store = new BattleStore();
   }
 
@@ -58,10 +54,11 @@ class Battle {
    * Secret function for getting information, not just decisions, from your AI
    * instance. It sends a 'help' message to the server.
    *
-   * This is very undocumented so don't use it.
+   * This is very undocumented (and lazy!) so don't use it.
    */
   getHelp() {
-    this.connection.send( JSON.stringify( this.bot.getHelp( this.store.data() ) ) );
+    listener.relay('_send', this.bid + '|' +
+      JSON.stringify( this.bot.getHelp( this.store.data() ) ));
   }
 
 
@@ -151,18 +148,20 @@ class Battle {
 
     const choice = this.myBot().onRequest(currentState);
     if (choice instanceof Promise) {
+      // wait for promises to resolve
       choice.then( (resolved) => {
         const res = Battle._formatMessage(this.bid, resolved, currentState);
         log.log(res);
-        this.connection.send( res );
+        listener.relay('_send', res);
       }, (err) => {
         log.err('I think there was an error here.');
         log.err(err);
       });
     } else {
+      // message is ready to go
       const res = Battle._formatMessage(this.bid, choice, currentState);
       log.log(res);
-      this.connection.send( res );
+      listener.relay('_send', res);
     }
   }
 

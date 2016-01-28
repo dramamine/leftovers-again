@@ -1,6 +1,5 @@
 // import listener from './listener';
 import socket from 'socket';
-import config from 'config';
 import Team from 'lib/team';
 import Log from 'log';
 import listener from 'listener';
@@ -25,8 +24,8 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(bot, scrappy) {
-    this.bot = bot;
+  constructor(botinfo, scrappy) {
+    this.botinfo = botinfo;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
     listener.subscribe('battlereport', this.onBattleReport);
@@ -169,14 +168,12 @@ class Challenger {
     // if (!challengesFrom) return;
 
     Object.keys(challengesFrom).forEach( (opponent) => {
-      console.log('checking out this key:', opponent, AI.meta.battletype);
       // only accept battles of the type we're designed for
-
-      if (this._acceptable(challengesFrom[opponent], bot.accepts)) {
+      if (Challenger._acceptable(challengesFrom[opponent], this.botinfo.accepts)) {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        const team = bot.getTeam(opponent);
+        const team = this.botinfo.getTeam(opponent);
         if (team) {
           const utmString = new Team(team).asUtm();
           Log.info('sending team msg...', utmString);
@@ -202,19 +199,22 @@ class Challenger {
   /**
    * Send a challenge to this user; maybe load your bot to find its team.
    *
+   * @TODO combine this with onUpdateChallenges functionality? ex. the logic
+   * for utm is the same.
+   *
    * @param {String} The nickname to challenge.
    */
   _challenge(nick) {
     console.log('challenge called.', nick);
 
-    const team = bot.getTeam(opponent);
+    const team = this.botinfo.getTeam(nick);
     if (team) {
       const utmString = new Team(team).asUtm();
-      console.log('sending utm...', utmString);
+      Log.info('sending utm...', utmString);
       socket.send('|/utm ' + utmString);
     }
-    console.log('sending challenge...', nick, AI.meta.battletype);
-    socket.send('|/challenge ' + nick + ', ' + AI.meta.battletype);
+    Log.info('sending challenge...', nick, this.botinfo.format);
+    socket.send('|/challenge ' + nick + ', ' + this.botinfo.format);
   }
 
 }
