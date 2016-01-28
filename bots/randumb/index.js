@@ -6,13 +6,18 @@
  */
 import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
-const meta = {
-  battletype: 'randombattle'
-};
+
 
 class Randumb extends AI {
   constructor() {
-    super(meta);
+    super();
+    this.meta = {
+      battletype: 'randombattle',
+      version: 'alpha',
+      accepts: 'randombattle',
+      format: 'randombattle',
+      team: null
+    };
   }
 
   onRequest(state) {

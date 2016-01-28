@@ -1,4 +1,4 @@
-import Randumb from 'bots/randombattle/randumb';
+import Randumb from 'randumb';
 import {MOVE, SWITCH} from 'decisions';
 const randumb = new Randumb();
 
