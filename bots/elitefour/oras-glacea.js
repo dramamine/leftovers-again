@@ -1,16 +1,17 @@
-import EliteFour from '../elitefour';
-
-const meta = {
-  battletype: 'anythinggoes'
-};
+import EliteFour from './elitefour';
 
 export default class Diantha extends EliteFour {
   constructor() {
-    super(meta);
+    super();
+    this.meta = meta;
   }
+}
 
-  getTeam() {
-    return `
+const meta = {
+  battletype: 'anythinggoes',
+  accepts: 'ALL',
+  format: 'anythinggoes',
+  team: `
 Abomasnow
 - Blizzard
 - Wood Hammer
@@ -46,7 +47,5 @@ Glalie @ Glalitite
 - Ice Shard
 - Hail
 - Freeze-Dry
-`;
-  }
-
-}
+`
+};

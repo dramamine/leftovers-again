@@ -1,0 +1,105 @@
+STATE:
+{"self":{"active":{"condition":"119/255","conditions":[],"species":"Klefki","moves":[{"move":"Spikes","id":"spikes","pp":32,"maxpp":32,"target":"foeSide","disabled":false,"accuracy":true,"basePower":0,"category":"Status","name":"Spikes","priority":0,"flags":{"reflectable":1,"nonsky":1},"secondary":false,"type":"Ground"},{"move":"Torment","id":"torment","pp":24,"maxpp":24,"target":"normal","disabled":false,"accuracy":100,"basePower":0,"category":"Status","name":"Torment","priority":0,"flags":{"protect":1,"reflectable":1,"mirror":1,"authentic":1},"secondary":false,"type":"Dark","volatileStatus":"torment"},{"move":"Dazzling Gleam","id":"dazzlinggleam","pp":16,"maxpp":16,"target":"allAdjacentFoes","disabled":false,"accuracy":100,"basePower":80,"category":"Special","name":"Dazzling Gleam","priority":0,"flags":{"protect":1,"mirror":1},"secondary":false,"type":"Fairy"},{"move":"Flash Cannon","id":"flashcannon","pp":13,"maxpp":16,"target":"normal","disabled":false,"accuracy":100,"basePower":80,"category":"Special","name":"Flash Cannon","priority":0,"flags":{"protect":1,"mirror":1},"secondary":{"chance":10,"boosts":{"spd":-1}},"type":"Steel"}],"gender":"M","hp":119,"maxhp":255,"hppct":47,"types":["Steel","Fairy"],"baseStats":{"hp":57,"atk":80,"def":91,"spa":80,"spd":87,"spe":75},"abilities":{"0":"Prankster","H":"Magician"},"baseAbility":"prankster","stats":{"atk":196,"def":218,"spa":196,"spd":210,"spe":186},"position":"p1a","owner":"p1"},"reserve":[{"condition":"119/255","conditions":[],"species":"Klefki","moves":[{"accuracy":true,"category":"Status","id":"spikes","name":"Spikes","flags":{"reflectable":1,"nonsky":1},"target":"foeSide","type":"Ground"},{"accuracy":100,"category":"Status","id":"torment","name":"Torment","volatileStatus":"torment","flags":{"protect":1,"reflectable":1,"mirror":1,"authentic":1},"target":"normal","type":"Dark"},{"accuracy":100,"basePower":80,"category":"Special","id":"dazzlinggleam","name":"Dazzling Gleam","flags":{"protect":1,"mirror":1},"target":"allAdjacentFoes","type":"Fairy"},{"accuracy":100,"basePower":80,"category":"Special","id":"flashcannon","name":"Flash Cannon","flags":{"protect":1,"mirror":1},"target":"normal","type":"Steel"}],"gender":"M","hp":119,"maxhp":255,"hppct":47,"types":["Steel","Fairy"],"baseStats":{"hp":57,"atk":80,"def":91,"spa":80,"spd":87,"spe":75},"abilities":{"0":"Prankster","H":"Magician"},"baseAbility":"prankster","stats":{"atk":196,"def":218,"spa":196,"spd":210,"spe":186},"position":"p1a","owner":"p1"},{"condition":"261/261","conditions":[],"species":"Probopass","moves":[{"accuracy":100,"basePower":80,"category":"Special","id":"powergem","name":"Power Gem","flags":{"protect":1,"mirror":1},"target":"normal","type":"Rock"},{"accuracy":100,"basePower":90,"category":"Special","id":"earthpower","name":"Earth Power","flags":{"protect":1,"mirror":1,"nonsky":1},"target":"normal","type":"Ground"},{"accuracy":100,"basePower":80,"category":"Special","id":"flashcannon","name":"Flash Cannon","flags":{"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":80,"category":"Special","id":"discharge","name":"Discharge","flags":{"protect":1,"mirror":1},"target":"allAdjacent","type":"Electric"}],"gender":"M","hp":261,"maxhp":261,"hppct":100,"types":["Rock","Steel"],"baseStats":{"hp":60,"atk":55,"def":145,"spa":75,"spd":150,"spe":40},"abilities":{"0":"Sturdy","1":"Magnet Pull","H":"Sand Force"},"baseAbility":"sturdy","stats":{"atk":146,"def":326,"spa":186,"spd":336,"spe":116},"owner":"p1"},{"condition":"281/281","conditions":[],"species":"Scizor","moves":[{"accuracy":100,"basePower":80,"category":"Physical","id":"xscissor","name":"X-Scissor","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Bug"},{"accuracy":100,"basePower":80,"category":"Physical","id":"ironhead","name":"Iron Head","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":40,"category":"Physical","id":"bulletpunch","name":"Bullet Punch","priority":1,"flags":{"contact":1,"protect":1,"mirror":1,"punch":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":70,"category":"Physical","id":"nightslash","name":"Night Slash","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Dark"}],"gender":"M","hp":281,"maxhp":281,"hppct":100,"types":["Bug","Steel"],"baseStats":{"hp":70,"atk":130,"def":100,"spa":55,"spd":80,"spe":65},"abilities":{"0":"Swarm","1":"Technician","H":"Light Metal"},"baseAbility":"technician","stats":{"atk":296,"def":236,"spa":146,"spd":196,"spe":166},"owner":"p1"},{"condition":"261/261","conditions":[],"species":"Aegislash","moves":[{"accuracy":100,"basePower":90,"category":"Physical","id":"sacredsword","name":"Sacred Sword","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Fighting"},{"accuracy":100,"basePower":80,"category":"Physical","id":"ironhead","name":"Iron Head","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":true,"category":"Status","id":"kingsshield","name":"King's Shield","volatileStatus":"kingsshield","priority":4,"flags":{},"target":"self","type":"Steel"},{"accuracy":100,"basePower":70,"category":"Physical","id":"shadowclaw","name":"Shadow Claw","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Ghost"}],"gender":"M","hp":261,"maxhp":261,"hppct":100,"types":["Steel","Ghost"],"baseStats":{"hp":60,"atk":50,"def":150,"spa":50,"spd":150,"spe":60},"abilities":{"0":"Stance Change"},"baseAbility":"stancechange","stats":{"atk":136,"def":336,"spa":136,"spd":336,"spe":156},"owner":"p1"}]},"opponent":{"active":{"condition":"5/100","conditions":[],"species":"Talonflame","level":81,"gender":"M","hp":5,"maxhp":100,"hppct":5,"types":["Fire","Flying"],"baseStats":{"hp":78,"atk":81,"def":71,"spa":74,"spd":69,"spe":126},"abilities":{"0":"Flame Body","H":"Gale Wings"},"position":"p2a","owner":"p2"},"reserve":[{"condition":"5/100","conditions":[],"species":"Talonflame","level":81,"gender":"M","hp":5,"maxhp":100,"hppct":5,"types":["Fire","Flying"],"baseStats":{"hp":78,"atk":81,"def":71,"spa":74,"spd":69,"spe":126},"abilities":{"0":"Flame Body","H":"Gale Wings"},"position":"p2a","owner":"p2"}]},"rqid":5}
+{ self: 
+   { active: 
+      { condition: '119/255',
+        conditions: [],
+        species: 'Klefki',
+        moves: [Object],
+        gender: 'M',
+        hp: 119,
+        maxhp: 255,
+        hppct: 47,
+        types: [Object],
+        baseStats: [Object],
+        abilities: [Object],
+        baseAbility: 'prankster',
+        stats: [Object],
+        position: 'p1a',
+        owner: 'p1' },
+     reserve: [ [Object], [Object], [Object], [Object] ] },
+  opponent: 
+   { active: 
+      { condition: '5/100',
+        conditions: [],
+        species: 'Talonflame',
+        level: 81,
+        gender: 'M',
+        hp: 5,
+        maxhp: 100,
+        hppct: 5,
+        types: [Object],
+        baseStats: [Object],
+        abilities: [Object],
+        position: 'p2a',
+        owner: 'p2' },
+     reserve: [ [Object] ] },
+  rqid: 5 }
+battle-anythinggoes-1|/move 4|5
+
+STATE:
+{"self":{"active":{"condition":"71/255","conditions":[],"species":"Klefki","moves":[{"move":"Spikes","id":"spikes","pp":32,"maxpp":32,"target":"foeSide","disabled":false,"accuracy":true,"basePower":0,"category":"Status","name":"Spikes","priority":0,"flags":{"reflectable":1,"nonsky":1},"secondary":false,"type":"Ground"},{"move":"Torment","id":"torment","pp":24,"maxpp":24,"target":"normal","disabled":false,"accuracy":100,"basePower":0,"category":"Status","name":"Torment","priority":0,"flags":{"protect":1,"reflectable":1,"mirror":1,"authentic":1},"secondary":false,"type":"Dark","volatileStatus":"torment"},{"move":"Dazzling Gleam","id":"dazzlinggleam","pp":16,"maxpp":16,"target":"allAdjacentFoes","disabled":false,"accuracy":100,"basePower":80,"category":"Special","name":"Dazzling Gleam","priority":0,"flags":{"protect":1,"mirror":1},"secondary":false,"type":"Fairy"},{"move":"Flash Cannon","id":"flashcannon","pp":12,"maxpp":16,"target":"normal","disabled":false,"accuracy":100,"basePower":80,"category":"Special","name":"Flash Cannon","priority":0,"flags":{"protect":1,"mirror":1},"secondary":{"chance":10,"boosts":{"spd":-1}},"type":"Steel"}],"gender":"M","hp":71,"maxhp":255,"hppct":28,"active":true,"types":["Steel","Fairy"],"baseStats":{"hp":57,"atk":80,"def":91,"spa":80,"spd":87,"spe":75},"abilities":{"0":"Prankster","H":"Magician"},"baseAbility":"prankster","stats":{"atk":196,"def":218,"spa":196,"spd":210,"spe":186},"owner":"p1"},"reserve":[{"condition":"71/255","conditions":[],"species":"Klefki","moves":[{"accuracy":true,"category":"Status","id":"spikes","name":"Spikes","flags":{"reflectable":1,"nonsky":1},"target":"foeSide","type":"Ground"},{"accuracy":100,"category":"Status","id":"torment","name":"Torment","volatileStatus":"torment","flags":{"protect":1,"reflectable":1,"mirror":1,"authentic":1},"target":"normal","type":"Dark"},{"accuracy":100,"basePower":80,"category":"Special","id":"dazzlinggleam","name":"Dazzling Gleam","flags":{"protect":1,"mirror":1},"target":"allAdjacentFoes","type":"Fairy"},{"accuracy":100,"basePower":80,"category":"Special","id":"flashcannon","name":"Flash Cannon","flags":{"protect":1,"mirror":1},"target":"normal","type":"Steel"}],"gender":"M","hp":71,"maxhp":255,"hppct":28,"active":true,"types":["Steel","Fairy"],"baseStats":{"hp":57,"atk":80,"def":91,"spa":80,"spd":87,"spe":75},"abilities":{"0":"Prankster","H":"Magician"},"baseAbility":"prankster","stats":{"atk":196,"def":218,"spa":196,"spd":210,"spe":186},"owner":"p1"},{"condition":"261/261","conditions":[],"species":"Probopass","moves":[{"accuracy":100,"basePower":80,"category":"Special","id":"powergem","name":"Power Gem","flags":{"protect":1,"mirror":1},"target":"normal","type":"Rock"},{"accuracy":100,"basePower":90,"category":"Special","id":"earthpower","name":"Earth Power","flags":{"protect":1,"mirror":1,"nonsky":1},"target":"normal","type":"Ground"},{"accuracy":100,"basePower":80,"category":"Special","id":"flashcannon","name":"Flash Cannon","flags":{"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":80,"category":"Special","id":"discharge","name":"Discharge","flags":{"protect":1,"mirror":1},"target":"allAdjacent","type":"Electric"}],"gender":"M","hp":261,"maxhp":261,"hppct":100,"types":["Rock","Steel"],"baseStats":{"hp":60,"atk":55,"def":145,"spa":75,"spd":150,"spe":40},"abilities":{"0":"Sturdy","1":"Magnet Pull","H":"Sand Force"},"baseAbility":"sturdy","stats":{"atk":146,"def":326,"spa":186,"spd":336,"spe":116},"owner":"p1"},{"condition":"281/281","conditions":[],"species":"Scizor","moves":[{"accuracy":100,"basePower":80,"category":"Physical","id":"xscissor","name":"X-Scissor","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Bug"},{"accuracy":100,"basePower":80,"category":"Physical","id":"ironhead","name":"Iron Head","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":40,"category":"Physical","id":"bulletpunch","name":"Bullet Punch","priority":1,"flags":{"contact":1,"protect":1,"mirror":1,"punch":1},"target":"normal","type":"Steel"},{"accuracy":100,"basePower":70,"category":"Physical","id":"nightslash","name":"Night Slash","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Dark"}],"gender":"M","hp":281,"maxhp":281,"hppct":100,"types":["Bug","Steel"],"baseStats":{"hp":70,"atk":130,"def":100,"spa":55,"spd":80,"spe":65},"abilities":{"0":"Swarm","1":"Technician","H":"Light Metal"},"baseAbility":"technician","stats":{"atk":296,"def":236,"spa":146,"spd":196,"spe":166},"owner":"p1"},{"condition":"261/261","conditions":[],"species":"Aegislash","moves":[{"accuracy":100,"basePower":90,"category":"Physical","id":"sacredsword","name":"Sacred Sword","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Fighting"},{"accuracy":100,"basePower":80,"category":"Physical","id":"ironhead","name":"Iron Head","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Steel"},{"accuracy":true,"category":"Status","id":"kingsshield","name":"King's Shield","volatileStatus":"kingsshield","priority":4,"flags":{},"target":"self","type":"Steel"},{"accuracy":100,"basePower":70,"category":"Physical","id":"shadowclaw","name":"Shadow Claw","flags":{"contact":1,"protect":1,"mirror":1},"target":"normal","type":"Ghost"}],"gender":"M","hp":261,"maxhp":261,"hppct":100,"types":["Steel","Ghost"],"baseStats":{"hp":60,"atk":50,"def":150,"spa":50,"spd":150,"spe":60},"abilities":{"0":"Stance Change"},"baseAbility":"stancechange","stats":{"atk":136,"def":336,"spa":136,"spd":336,"spe":156},"owner":"p1"}]},"opponent":{"active":[],"reserve":[{"dead":true,"condition":"100/100","conditions":[],"species":"Talonflame","level":81,"gender":"M","hp":100,"maxhp":100,"hppct":100,"types":["Fire","Flying"],"baseStats":{"hp":78,"atk":81,"def":71,"spa":74,"spd":69,"spe":126},"abilities":{"0":"Flame Body","H":"Gale Wings"},"position":"p2a","owner":"p2"}]},"rqid":7}
+{ self: 
+   { active: 
+      { condition: '71/255',
+        conditions: [],
+        species: 'Klefki',
+        moves: [Object],
+        gender: 'M',
+        hp: 71,
+        maxhp: 255,
+        hppct: 28,
+        active: true,
+        types: [Object],
+        baseStats: [Object],
+        abilities: [Object],
+        baseAbility: 'prankster',
+        stats: [Object],
+        owner: 'p1' },
+     reserve: [ [Object], [Object], [Object], [Object] ] },
+  opponent: { active: [], reserve: [ [Object] ] },
+  rqid: 7 }
+TypeError: Cannot read property 'map' of undefined
+    at /media/marten/PERPETUAL_GAZE/leftovers-again/bots/elitefour/elitefour.js:94:36
+    at Array.forEach (native)
+    at Wikstrom.onRequest (/media/marten/PERPETUAL_GAZE/leftovers-again/bots/elitefour/elitefour.js:88:29)
+    at Battle.decide (/media/marten/PERPETUAL_GAZE/leftovers-again/src/battle.js:149:33)
+    at Battle.handleTurn (/media/marten/PERPETUAL_GAZE/leftovers-again/src/battle.js:126:10)
+    at Battle.handle (/media/marten/PERPETUAL_GAZE/leftovers-again/src/battle.js:76:27)
+    at Listener.relay (/media/marten/PERPETUAL_GAZE/leftovers-again/src/listener.js:29:41)
+    at WebSocket._handleMessage (/media/marten/PERPETUAL_GAZE/leftovers-again/src/connection.js:47:20)
+    at emitTwo (events.js:87:13)
+    at WebSocket.emit (events.js:172:7)
+clean
+exception in nodemon killing node
+Error: read ECONNRESET
+    at exports._errnoException (util.js:874:11)
+    at Pipe.onread (net.js:544:26)
+
+----------------------------------------------------------
+If appropriate, please file an error with the output from:
+$ /usr/local/bin/node /usr/local/bin/nodemon --watch src --watch bots --exec babel-node src/main.js --bot=elitefour/xy-wikstrom.js --loglevel=4 --dump
+At http://github.com/remy/nodemon/issues/new
+----------------------------------------------------------
+
+
+npm ERR! Linux 3.13.0-61-generic
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "develop" "--" "--bot=elitefour/xy-wikstrom.js" "--loglevel=4"
+npm ERR! node v4.2.1
+npm ERR! npm  v3.3.8
+npm ERR! code ELIFECYCLE
+npm ERR! leftovers-again@0.2.0 develop: `NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js "--bot=elitefour/xy-wikstrom.js" "--loglevel=4"`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the leftovers-again@0.2.0 develop script 'NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js "--bot=elitefour/xy-wikstrom.js" "--loglevel=4"'.
+npm ERR! This is most likely a problem with the leftovers-again package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js "--bot=elitefour/xy-wikstrom.js" "--loglevel=4"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls leftovers-again
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /media/marten/PERPETUAL_GAZE/leftovers-again/bots/elitefour/npm-debug.log
+

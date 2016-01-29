@@ -1,24 +1,17 @@
-/**
- *
- *
- */
-
-import EliteFour from '../elitefour';
-
-const meta = {
-  battletype: 'anythinggoes'
-};
+import EliteFour from './elitefour';
 
 export default class Malva extends EliteFour {
   constructor() {
-    super(meta);
+    super();
+    this.meta = meta;
   }
+}
 
-  getTeam() {
-    // NOTES:
-    // 'curse' is weird, might want to check target's ghost-ness.
-    // 'earthquake': def. use if the opponent used Dig
-    return `
+const meta = {
+  battletype: 'anythinggoes',
+  accepts: 'ALL',
+  format: 'anythinggoes',
+  team: `
 Pyroar
 Ability: Rivalry
 - Hyper Voice
@@ -46,7 +39,5 @@ Ability: Flame Body
 - Brave Bird
 - Flare Blitz
 - Flail
-`;
-  }
-
-}
+`
+};

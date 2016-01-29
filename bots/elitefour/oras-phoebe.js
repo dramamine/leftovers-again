@@ -1,16 +1,16 @@
-import EliteFour from '../elitefour';
-
-const meta = {
-  battletype: 'anythinggoes'
-};
+import EliteFour from './elitefour';
 
 export default class Phoebe extends EliteFour {
   constructor() {
-    super(meta);
+    super();
+    this.meta = meta;
   }
-
-  getTeam() {
-    return `
+}
+const meta = {
+  battletype: 'anythinggoes',
+  accepts: 'ALL',
+  format: 'anythinggoes',
+  team: `
 Banette
 - Shadow Ball
 - Grudge
@@ -46,6 +46,5 @@ Sableye @ Sablenite
 - Foul Play
 - Power Gem
 - Fake Out
-`;
-  }
-}
+`
+};

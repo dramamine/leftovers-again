@@ -1,6 +1,4 @@
-import Elite from 'bots/anythinggoes/xy-elitefour-malva/xy-elitefour-malva';
-// import _ from 'lodash';
-import battle from 'battle';
+import Elite from 'elitefour/xy-malva';
 import util from 'pokeutil';
 
 const elite = new Elite();
@@ -15,8 +13,6 @@ const moves = [
 moves.forEach( (move) => {
   Object.assign(move, util.researchMoveById(move.id));
 });
-
-
 
 describe('xy-elitefour-malva', () => {
   describe('sumFitness', () => {

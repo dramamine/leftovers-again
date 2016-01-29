@@ -1,16 +1,17 @@
-import EliteFour from '../elitefour';
-
-const meta = {
-  battletype: 'anythinggoes'
-};
+import EliteFour from './elitefour';
 
 export default class Steven extends EliteFour {
   constructor() {
-    super(meta);
+    super();
+    this.meta = meta;
   }
+}
 
-  getTeam() {
-    return `
+const meta = {
+  battletype: 'anythinggoes',
+  accepts: 'ALL',
+  format: 'anythinggoes',
+  team: `
 Skarmory
 - Toxic
 - Aerial Ace
@@ -46,7 +47,5 @@ Metagross @ Metagrossite
 - Zen Headbutt
 - Meteor Mash
 - Giga Impact
-`;
-  }
-
-}
+`
+};
