@@ -24,7 +24,8 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(botinfo, scrappy) {
+  constructor(connection, botinfo, scrappy) {
+    this.connection = connection;
     this.botinfo = botinfo;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
@@ -35,13 +36,13 @@ class Challenger {
       // only issue challenges in non-spawned copies
       // the main dude issues all challenges; spawns just sit back and relax.
       // otherwise, spawns would all challenge each other and overheat and die
-      console.log('subscribing to users message.');
       listener.subscribe('users', this.gunzBlazing.bind(this));
       listener.subscribe('j', this.onUserJoin.bind(this));
       listener.subscribe('l', this.onUserLeave.bind(this));
     }
     this._challengeNext = this._challengeNext.bind(this);
     this.onUpdateUser = this.onUpdateUser.bind(this);
+    this.onUpdateChallenges = this.onUpdateChallenges.bind(this);
 
     // all the users we've seen
     this.users = {};
@@ -64,6 +65,7 @@ class Challenger {
    * @param  {string} user The user who joined.
    */
   onUserJoin([user]) {
+    console.log('user action!');
     const trimmed = user.trim();
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
       this.users[trimmed] = Statuses.ACTIVE;
@@ -78,6 +80,7 @@ class Challenger {
    * @param  {string} user The nickname of the user who left.
    */
   onUserLeave([user]) {
+    console.log('user action!');
     this.users[user.trim()] = Statuses.INACTIVE;
   }
 
@@ -106,7 +109,6 @@ class Challenger {
     if (opponent) {
       this._challenge(opponent);
       this.users[opponent] = Statuses.CHALLENGED;
-      console.log('_challengeNext:', this.users);
       this.timer = setTimeout(this._challengeNext, 1000);
     }
   }
@@ -136,7 +138,6 @@ class Challenger {
       opponent = userList[i].trim();
       // don't challenge yourself. (ha)
       if (this.users[opponent] !== Statuses.SELF) {
-        console.log('updating to active: ', opponent);
         this.users[opponent] = Statuses.ACTIVE;
         if (this.timer) clearTimeout(this.timer);
         this.timer = setTimeout(this._challengeNext, 1000);
@@ -159,17 +160,13 @@ class Challenger {
    */
   onUpdateChallenges(msg) {
     const {challengesFrom, challengeTo} = JSON.parse(msg);
-
-    // double-verify challengeTo
-    // const users = Object.keys(this.users).filter(user =>
-    //   this.users[user] === Statuses.CHALLENGED);
-
-    console.log('onUpdateChallenges::', challengesFrom, challengeTo);
-    // if (!challengesFrom) return;
-
+    console.log(challengesFrom);
+    console.log(this.botinfo.accepts);
+    console.log(this.botinfo.format);
     Object.keys(challengesFrom).forEach( (opponent) => {
+      const challengeType = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(challengesFrom[opponent], this.botinfo.accepts)) {
+      if (Challenger._acceptable(challengeType, this.botinfo.accepts)) {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
@@ -177,10 +174,10 @@ class Challenger {
         if (team) {
           const utmString = new Team(team).asUtm();
           Log.info('sending team msg...', utmString);
-          socket.send('|/utm ' + utmString);
+          this.connection.send('|/utm ' + utmString);
         }
 
-        socket.send('|/accept ' + opponent);
+        this.connection.send('|/accept ' + opponent);
       }
     });
   }
@@ -193,6 +190,7 @@ class Challenger {
    */
   static _acceptable(challenge, accepts) {
     if (accepts === 'ALL') return true;
+    console.log('checkin out ', accepts, challenge);
     return accepts.includes(challenge);
   }
 
@@ -205,16 +203,16 @@ class Challenger {
    * @param {String} The nickname to challenge.
    */
   _challenge(nick) {
-    console.log('challenge called.', nick);
+    Log.info('challenge called.', nick);
 
     const team = this.botinfo.getTeam(nick);
     if (team) {
       const utmString = new Team(team).asUtm();
       Log.info('sending utm...', utmString);
-      socket.send('|/utm ' + utmString);
+      this.connection.send('|/utm ' + utmString);
     }
     Log.info('sending challenge...', nick, this.botinfo.format);
-    socket.send('|/challenge ' + nick + ', ' + this.botinfo.format);
+    this.connection.send('|/challenge ' + nick + ', ' + this.botinfo.format);
   }
 
 }

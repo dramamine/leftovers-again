@@ -14,9 +14,9 @@ class PokeUtil {
       name = ('' + text).replace(/[\|\s\[\]\,]+/g, '').toLowerCase().trim();
 
       // these two are not! but I needed them.
-      name = name.replace('-','');
-      name = name.replace('.','');
-      name = name.replace(' ','');
+      name = name.replace('-', '');
+      name = name.replace('.', '');
+      name = name.replace(' ', '');
 
       if (name.length > 18) name = name.substr(0, 18).trim();
     }
@@ -24,7 +24,7 @@ class PokeUtil {
   }
 
   researchMoveById(id) {
-    id = id.replace('60', ''); // eslint-disable-line
+    id = this.toId(id).replace('60', ''); // eslint-disable-line
     if (BattleMovedex[id]) return BattleMovedex[id];
 
     log.warn('couldn\'t find my move ' + id );
@@ -32,10 +32,11 @@ class PokeUtil {
   }
 
   researchPokemonById(id) {
+    id = this.toId(id); // eslint-disable-line
     if (BattlePokedex[id]) return BattlePokedex[id];
 
     log.warn('couldn\'t find my pokemon ' + id );
-    return {name: id, id: this.toId(id)};
+    return {name: id, id};
   }
 }
 

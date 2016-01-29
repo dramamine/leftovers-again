@@ -1,6 +1,7 @@
 
 class BotInfo {
   constructor(path) {
+    console.log('botinfo instantiated', path);
     this.path = path;
     this.metadata = {};
 
@@ -12,10 +13,8 @@ class BotInfo {
       // nested try-catch, u mad brah?
       try {
         // just load the bot and hope it has all these metadata functions
-        console.log('trying to load this:', path);
-        const it = require(path);
-        this.metadata = new it().meta;
-        console.log('saving metadata:', this.metadata);
+        const It = require(path);
+        this.metadata = new It().meta;
       } catch(x) {
         console.error('No metadata found! Expected to find the file in node_path '
          + path);

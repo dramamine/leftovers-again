@@ -1,27 +1,44 @@
-// @TODO not sure if we really need to require this
-require('./listener');
-
 // @TODO move these to 'connection' and maybe don't load them all
 import socket from 'socket';
 import monkey from 'monkey';
+import listener from 'listener';
+import Challenger from 'challenger';
+import Chat from 'chat';
+import config from 'config';
+import BotInfo from 'botinfo';
+import BattleManager from 'battlemanager';
 
 // process cmdline args
-const argv = require('minimist')(process.argv.slice(2));
+const args = require('minimist')(process.argv.slice(2));
 
-if (argv.help || argv.h) {
+if (args.help || args.h) {
   _displayHelp();
   process.exit();
 }
 
 let myconnection;
-if (argv.monkey) {
+if (args.monkey) {
   myconnection = monkey;
 } else {
   myconnection = socket;
 }
 
 // connect to a server, or create one and start listening.
-myconnection.connect(argv);
+myconnection.connect(args);
+
+const botpath = args.bot || config.bot;
+const scrappy = args.scrappy || config.scrappy;
+
+const chat = new Chat();
+
+const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy);
+
+// battlemanager is going to create new battles as we learn about them.
+// for each one, it creates a new instance of a battle and of our AI class.
+// listener needs to know about the BattleManager to properly relay battle
+// messages to the right battle instance.
+const battlemanager = new BattleManager(botpath);
+listener.use(battlemanager);
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using

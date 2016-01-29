@@ -796,7 +796,7 @@ class Damage {
         damage[i] = Math.floor(damage[i] * 3 / 2);
       }
     }
-
+    // console.log('returning result:', damage);
     return damage;
   }
 }

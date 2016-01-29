@@ -1,6 +1,7 @@
 import Connection from './connection';
 import log from './log';
 import WebSocket from 'ws';
+import listener from 'listener';
 
 const PORT = 7331;
 
@@ -31,6 +32,8 @@ class Monkey extends Connection {
       this.ws = ws;
       ws.on('message', this._handleMessage);
     });
+
+    listener.subscribe('_send', this.send.bind(this));
   }
 
   /**

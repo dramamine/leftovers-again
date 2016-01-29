@@ -12,11 +12,10 @@ class Randumb extends AI {
   constructor() {
     super();
     this.meta = {
-      battletype: 'randombattle',
-      version: 'alpha',
       accepts: 'randombattle',
       format: 'randombattle',
-      team: null
+      team: null,
+      version: 'alpha'
     };
   }
 

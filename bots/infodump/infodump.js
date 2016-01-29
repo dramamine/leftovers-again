@@ -7,7 +7,7 @@ import Damage from 'lib/damage';
 import KO from 'lib/kochance';
 import Typechart from 'lib/typechart';
 import Formats from 'data/formats';
-import log from 'log';
+import Log from 'log';
 import util from 'pokeutil';
 
 import {MOVE, SWITCH} from 'decisions';
@@ -23,7 +23,7 @@ class Infodump extends AI {
   }
 
   onRequest(state) {
-    console.log('infodumps state:: ', state);
+    Log.info('infodumps state:: ', state);
     Damage.assumeStats(state.opponent.active);
     if (state.forceSwitch) {
       // our pokemon died :(
@@ -45,6 +45,7 @@ class Infodump extends AI {
 
     state.self.active.moves.forEach( (move, idx) => {
       if (move.disabled) return;
+      if (move.pp === 0) return;
       let est = -1;
       try {
         est = Damage.getDamageResult(
@@ -53,10 +54,10 @@ class Infodump extends AI {
           move
         );
       } catch (e) {
-        console.log(e);
-        console.log(state.self.active, state.opponent.active, move);
+        Log.error(e);
+        Log.error(state.self.active, state.opponent.active, move);
       }
-      console.log('estimated ' + est + ' for move ' + move.name);
+      Log.info('estimated ' + est + ' for move ' + move.name);
       if (est > maxDamage) {
         maxDamage = est;
         bestMove = idx;
@@ -75,20 +76,14 @@ class Infodump extends AI {
     try {
       extra.moves = this._moves(state);
     } catch (e) {
-      console.log(e);
-      console.log(JSON.stringify(state));
-    }
-    try {
-      extra.opponent = this._opponent(state);
-    } catch (e) {
-      console.log(e);
-      console.log(JSON.stringify(state));
+      Log.error(e);
+      Log.error(JSON.stringify(state));
     }
     try {
       extra.switches = this._switches(state);
     } catch (e) {
-      console.log(e);
-      console.log(JSON.stringify(state));
+      Log.error(e);
+      Log.error(JSON.stringify(state));
     }
 
     return extra;
@@ -107,7 +102,9 @@ class Infodump extends AI {
               state.opponent.active,
               move
             );
-          } catch (e) {}
+          } catch (e) {
+            Log.error(e);
+          }
         }
         const ko = KO.predictKO(est, state.opponent.active);
         extra.push({
@@ -122,15 +119,9 @@ class Infodump extends AI {
     return extra;
   }
 
-  _opponent(state) {
-    // query for moves
-    // run each through damage calculator
-    return null;
-  }
-
   _switches(state) {
-    log.log('input:');
-    log.log(JSON.stringify(state));
+    Log.log('input:');
+    Log.log(JSON.stringify(state));
     // query for moves
     const formatData = Formats[util.toId(state.opponent.active.species)];
     const possibleMoves = formatData.randomBattleMoves;
@@ -153,7 +144,7 @@ class Infodump extends AI {
             move
           );
         } catch (e) {
-          console.log(e);
+          Log.error(e, state.opponent.active, mon, move);
         }
         return {
           name: move, // this is just the ID of a move
@@ -171,9 +162,11 @@ class Infodump extends AI {
             state.opponent.active,
             move // my move
           );
-          console.log('my ' + mon.species + ' uses ' + move.name + ' against '
+          Log.info('my ' + mon.species + ' uses ' + move.name + ' against '
             + state.opponent.active.species + ':', est);
-        } catch (e) {}
+        } catch (e) {
+          Log.error(e);
+        }
 
         return {
           name: move.id, // this is a move object
@@ -202,12 +195,12 @@ class Infodump extends AI {
       // console.log(mon);
 
       const yourBest = yourMoves[0];
-      console.log('predicting KO..', yourBest.dmg, yourBest.against);
+      Log.info('predicting KO..', yourBest.dmg, yourBest.against);
       const yourKO = KO.predictKO(yourBest.dmg, yourBest.against);
 
 
       const myBest = myMoves[0];
-      console.log('predicting KO..', myBest.dmg, myBest.against);
+      Log.info('predicting KO..', myBest.dmg, myBest.against);
       const myKO = KO.predictKO(myBest.dmg, myBest.against);
 
 
@@ -232,8 +225,8 @@ class Infodump extends AI {
         weakness
       };
     });
-    log.log('output:');
-    log.log(results);
+    Log.log('output:');
+    Log.log(results);
     return results;
   }
 
