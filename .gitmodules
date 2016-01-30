@@ -1,0 +1,3 @@
+[submodule "bots/la-fitness"]
+	path = bots/la-fitness
+	url = git@github.com:dramamine/la-fitness.git
