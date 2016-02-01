@@ -13,7 +13,12 @@ const meta = {
 
 export default class Rooster extends AI {
   constructor() {
-    super(meta);
+    super();
+    this.meta = {
+      accepts: 'anythinggoes',
+      format: 'anythinggoes',
+      team: this.getTeam()
+    };
 
     this.ctr = -1;
   }

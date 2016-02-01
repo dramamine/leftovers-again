@@ -23,13 +23,15 @@ import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
 import Damage from 'lib/damage';
 import Log from 'log';
-const meta = {
-  battletype: 'anythinggoes'
-};
 
 export default class Facader extends AI {
   constructor() {
-    super(meta);
+    super();
+    this.meta = {
+      accepts: 'anythinggoes',
+      format: 'anythinggoes',
+      team: this.getTeam()
+    };
     this.ctr = -1;
     this.hasLogged = false;
   }
