@@ -4,6 +4,7 @@ import log from 'log';
 import {MOVE, SWITCH} from 'decisions';
 import report from 'report';
 import listener from 'listener';
+import Reporter from 'reporters/main';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -145,6 +146,8 @@ class Battle {
 
     log.debug('STATE:');
     log.debug(JSON.stringify(currentState));
+
+    Reporter.report(currentState);
 
     log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(currentState) + '\n');
 

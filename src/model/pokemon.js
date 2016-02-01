@@ -188,8 +188,8 @@ export default class Pokemon {
     // this stuff never changes, so we only need to process once.
     if (this.level && this.gender) return;
 
-    if (this.details !== details) {
-      log.warn('details changed.', this.details, details);
+    if (this.details && this.details !== details) {
+      log.warn(`details changed. ${this.details}, ${details}`);
     }
 
     this.details = details;

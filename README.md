@@ -97,6 +97,7 @@ $ ENGINE WORK
 - better logging: write the last request and state to a file somewhere
 - have bots ping for challenge updates
 - set 'disabled' on moves with 0 HP
+- if your opponent cures a status, do you notice?
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

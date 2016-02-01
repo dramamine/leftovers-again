@@ -8,15 +8,15 @@ const MY_BACKGROUND = chalk.bgYellow;
 const YOUR_BACKGROUND = chalk.bgCyan;
 const MY_TEXT = chalk.bold.black;
 const YOUR_TEXT = chalk.bold.black;
-
+const EMPTY = '           ';
 class Reporter {
   report(state) {
     const myr = this.myReserve(state.self.reserve);
     const yor = this.yourReserve(state.opponent.reserve);
     const mys = this.myStatuses(state.self.active.conditions);
     const yos = this.myStatuses(state.opponent.active.conditions);
-    const myHp = this.hp(state.self.active.hppct);
-    const yourHp = this.hp(state.opponent.active.hppct);
+    const myHp = this.hp(state.self.active.hppct || EMPTY);
+    const yourHp = this.hp(state.opponent.active.hppct || EMPTY);
     const mySpecies = this.padLeft(state.self.active.species, 10);
     const yourSpecies = this.padRight(state.opponent.active.species, 10);
     const stuff = `${myr} ${mys} ${mySpecies} ${myHp} | ${yourHp} ${yourSpecies} ${yos} ${yor}`;
@@ -35,7 +35,7 @@ class Reporter {
     return this.padRight(this.statusString(conditions), 10);
   }
   statusString(statuses) {
-    if (!statuses || statuses.length === 0) return '          ';
+    if (!statuses || statuses.length === 0) return EMPTY;
     if (statuses.length <= 2) {
       return '[' + statuses.join(' ') + ']';
     }
@@ -69,11 +69,11 @@ class Reporter {
     return stuff;
   }
 
-  padLeft(nr, n, str) {
+  padLeft(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
     return Array(n-String(nr).length+1).join(str||' ')+nr;
   }
-  padRight(nr, n, str) {
+  padRight(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
     return nr + Array(n-String(nr).length+1).join(str||' ');
   }
