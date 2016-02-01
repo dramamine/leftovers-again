@@ -39,7 +39,7 @@ class Randumb extends AI {
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
     } catch(e) {
-      console.log('checking possible moves:', e);
+      console.log('broke when checking possible moves:', e);
       console.dir(state);
       return null;
     }

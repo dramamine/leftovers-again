@@ -24,7 +24,10 @@ class PokeUtil {
   }
 
   researchMoveById(id) {
-    id = this.toId(id).replace('60', ''); // eslint-disable-line
+    // hidden power moves end with '60'. hidden power ground comes out as
+    // hiddenpowerground6 due to the 18-character limit. it's kept as
+    // hiddenpowerground in our data.
+    id = this.toId(id).replace(/6[0]?$/,''); // eslint-disable-line
     if (BattleMovedex[id]) return BattleMovedex[id];
 
     log.warn('couldn\'t find my move ' + id );

@@ -17,7 +17,6 @@ class Socket extends Connection {
   }
 
   connect({server = 'localhost', port = 8000, bot, scrappy}) {
-    console.log('connect::,', server, port, bot, scrappy);
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
@@ -88,7 +87,6 @@ class Socket extends Connection {
         chunks += chunk;
       });
       res.on('end', () => {
-        // console.log(chunks);
         if (chunks === ';') {
           console.error('failed to log in; nick is registered - invalid or no password given');
           process.exit(-1);

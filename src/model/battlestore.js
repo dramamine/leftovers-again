@@ -166,7 +166,7 @@ export default class BattleStore {
 
     if (mon.maxhp !== 100 && move.damage > 20) {
       // console.log(move.damage, target, condition, explanation);
-      Log.toFile('damagerangetest', move.damage);
+      Log.toFile('damagerangetest', move.damage + ',');
     }
 
     if (explanation && explanation.indexOf('[from] item:') >= 0) {

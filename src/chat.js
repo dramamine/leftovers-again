@@ -19,7 +19,7 @@ class Chat {
     // this includes a 3rd parameter, i.e. "mysterycode". who knows.
     const [nick, status] = args;
     if (status !== '1') {
-      console.error(`failed to log in, still guest (status code ${status})`);
+      // console.error(`failed to log in, still guest (status code ${status})`);
       return false;
     }
     if (nick !== config.nick) {

@@ -24,11 +24,10 @@ class Log {
 
   toFile(file, msg) {
     // const out = new Date().toUTCString() + ' ' + msg + '\n';
-    const out = msg + ',';
-    fs.appendFile( 'log/' + file, out, (err) => {
+    fs.appendFile( 'log/' + file, msg, (err) => {
       if (err) console.error(err);
     });
-    console.log(colors.blue(msg));
+    // console.log(colors.blue(msg));
   }
 }
 const log = new Log();

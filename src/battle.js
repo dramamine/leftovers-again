@@ -143,8 +143,10 @@ class Battle {
   decide() {
     const currentState = this.store.data();
 
-    log.info('STATE:');
-    log.info(JSON.stringify(currentState));
+    log.debug('STATE:');
+    log.debug(JSON.stringify(currentState));
+
+    log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(currentState) + '\n');
 
     const choice = this.myBot().onRequest(currentState);
     if (choice instanceof Promise) {

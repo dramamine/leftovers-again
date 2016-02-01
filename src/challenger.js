@@ -46,6 +46,8 @@ class Challenger {
 
     // all the users we've seen
     this.users = {};
+    this.challengesFrom = {};
+    this.challengeTo = {};
   }
 
   /**
@@ -65,7 +67,6 @@ class Challenger {
    * @param  {string} user The user who joined.
    */
   onUserJoin([user]) {
-    console.log('user action!');
     const trimmed = user.trim();
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
       this.users[trimmed] = Statuses.ACTIVE;
@@ -80,7 +81,6 @@ class Challenger {
    * @param  {string} user The nickname of the user who left.
    */
   onUserLeave([user]) {
-    console.log('user action!');
     this.users[user.trim()] = Statuses.INACTIVE;
   }
 
@@ -92,7 +92,17 @@ class Challenger {
    * @param  {Integer} status Unused.
    */
   onUpdateUser([nick, status]) { // eslint-disable-line
-    this.users[nick] = Statuses.SELF;
+    switch (status) {
+      case '0':
+        break;
+      case '1':
+        Log.info(`Successfully logged in as ${nick}`);
+        this.users[nick] = Statuses.SELF;
+        break;
+      default:
+        Log.error(`Weird status when trying to log in: ${status} ${nick}`);
+        break;
+    }
   }
 
   /**
@@ -107,7 +117,11 @@ class Challenger {
       }
     });
     if (opponent) {
-      this._challenge(opponent);
+      if (this.challengesFrom[opponent] || this.challengeTo[opponent]) {
+        Log.info(`already have a challenge from this person: ${opponent}`);
+      } else {
+        this._challenge(opponent);
+      }
       this.users[opponent] = Statuses.CHALLENGED;
       this.timer = setTimeout(this._challengeNext, 1000);
     }
@@ -160,9 +174,8 @@ class Challenger {
    */
   onUpdateChallenges(msg) {
     const {challengesFrom, challengeTo} = JSON.parse(msg);
-    console.log(challengesFrom);
-    console.log(this.botinfo.accepts);
-    console.log(this.botinfo.format);
+    this.challengesFrom = challengesFrom;
+    this.challengeTo = challengeTo;
     Object.keys(challengesFrom).forEach( (opponent) => {
       const challengeType = challengesFrom[opponent];
       // only accept battles of the type we're designed for
@@ -190,7 +203,6 @@ class Challenger {
    */
   static _acceptable(challenge, accepts) {
     if (accepts === 'ALL') return true;
-    console.log('checkin out ', accepts, challenge);
     return accepts.includes(challenge);
   }
 

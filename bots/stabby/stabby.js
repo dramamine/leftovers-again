@@ -9,19 +9,12 @@ import Damage from 'lib/damage';
 
 import {MOVE, SWITCH} from 'decisions';
 
-const meta = {
-  battletype: 'randombattle',
-  author: 'marten'
-};
-
 class Stabby extends AI {
   constructor() {
-    console.log('stabby created.');
-    super(meta);
+    super();
   }
 
   onRequest(state) {
-    console.log(JSON.stringify(state));
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -51,7 +44,6 @@ class Stabby extends AI {
         console.log(e);
         console.log(state.self.active, state.opponent.active, move);
       }
-      console.log('estimated ' + est + ' for move ' + move.name);
       if (est[0] > maxDamage) {
         maxDamage = est[0];
         bestMove = idx;
