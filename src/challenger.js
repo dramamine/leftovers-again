@@ -1,8 +1,10 @@
 // import listener from './listener';
-import socket from 'socket';
+// import socket from 'socket';
 import Team from 'lib/team';
 import Log from 'log';
 import listener from 'listener';
+import report from 'report';
+import Reporter from 'reporters/endofmatch';
 
 // for tracking the status of users in the lobby
 const Statuses = {
@@ -24,12 +26,14 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(connection, botinfo, scrappy) {
+  constructor(connection, botinfo, scrappy, matches) {
     this.connection = connection;
     this.botinfo = botinfo;
+    this.scrappy = scrappy;
+    this.matches = matches;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
-    listener.subscribe('battlereport', this.onBattleReport);
+    listener.subscribe('battlereport', this.onBattleReport.bind(this));
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
 
     if (scrappy) {
@@ -93,15 +97,15 @@ class Challenger {
    */
   onUpdateUser([nick, status]) { // eslint-disable-line
     switch (status) {
-      case '0':
-        break;
-      case '1':
-        Log.info(`Successfully logged in as ${nick}`);
-        this.users[nick] = Statuses.SELF;
-        break;
-      default:
-        Log.error(`Weird status when trying to log in: ${status} ${nick}`);
-        break;
+    case '0':
+      break;
+    case '1':
+      Log.info(`Successfully logged in as ${nick}`);
+      this.users[nick] = Statuses.SELF;
+      break;
+    default:
+      Log.error(`Weird status when trying to log in: ${status} ${nick}`);
+      break;
     }
   }
 
@@ -134,9 +138,18 @@ class Challenger {
  * @param  {[type]} options.opponent [description]
  * @return {[type]}                  [description]
  */
-  onBattleReport({report, winner, opponent}) {
+  onBattleReport({winner, opponent}) {
     console.log('onBattleReport called.');
     console.log(winner, opponent);
+
+    const battles = report.data().filter(match => match.you == opponent);
+    if (battles.length < this.matches) {
+      if (this.scrappy) {
+        Log.warn('rechallenging ' + opponent);
+        this._challenge(opponent);
+      }
+    }
+    Reporter.report(battles);
   }
 
   /**
@@ -173,9 +186,11 @@ class Challenger {
    *
    */
   onUpdateChallenges(msg) {
+    console.log('got challenge update');
     const {challengesFrom, challengeTo} = JSON.parse(msg);
-    this.challengesFrom = challengesFrom;
-    this.challengeTo = challengeTo;
+    console.log(challengesFrom, challengeTo);
+    this.challengesFrom = challengesFrom || {};
+    this.challengeTo = challengeTo || {};
     Object.keys(challengesFrom).forEach( (opponent) => {
       const challengeType = challengesFrom[opponent];
       // only accept battles of the type we're designed for
@@ -223,7 +238,7 @@ class Challenger {
       Log.info('sending utm...', utmString);
       this.connection.send('|/utm ' + utmString);
     }
-    Log.info('sending challenge...', nick, this.botinfo.format);
+    Log.warn('sending challenge...', nick, this.botinfo.format);
     this.connection.send('|/challenge ' + nick + ', ' + this.botinfo.format);
   }
 

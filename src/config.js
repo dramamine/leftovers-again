@@ -13,5 +13,5 @@ export default {
 
   bot: 'randumb',
 
-  matches: 1
+  matches: 3
 };

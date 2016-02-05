@@ -28,10 +28,12 @@ myconnection.connect(args);
 
 const botpath = args.bot || config.bot;
 const scrappy = args.scrappy || config.scrappy;
+const matches = args.matches || config.matches;
 
 const chat = new Chat();
 
-const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy);
+const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy,
+  matches);
 
 // battlemanager is going to create new battles as we learn about them.
 // for each one, it creates a new instance of a battle and of our AI class.

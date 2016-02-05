@@ -33,9 +33,7 @@ class Randumb extends AI {
     }
     // pick a random move
     try {
-      const possibleMoves = state.self.active.moves.filter( (move) => {
-        return !(move.pp === 0 || move.disabled);
-      });
+      const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
     } catch(e) {

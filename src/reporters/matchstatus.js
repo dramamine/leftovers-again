@@ -9,7 +9,7 @@ const YOUR_BACKGROUND = chalk.bgCyan;
 const MY_TEXT = chalk.bold.black;
 const YOUR_TEXT = chalk.bold.black;
 const EMPTY = '           ';
-class Reporter {
+class MatchStatus {
   report(state) {
     const myr = this.myReserve(state.self.reserve);
     const yor = this.yourReserve(state.opponent.reserve);
@@ -71,13 +71,13 @@ class Reporter {
 
   padLeft(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
-    return Array(n-String(nr).length+1).join(str||' ')+nr;
+    return Array(n - String(nr).length + 1).join(str ||' ') + nr;
   }
   padRight(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
-    return nr + Array(n-String(nr).length+1).join(str||' ');
+    return nr + Array(n - String(nr).length + 1).join(str || ' ');
   }
 }
 
-let reporter = new Reporter();
-export default reporter;
+let ms = new MatchStatus();
+export default ms;

@@ -4,7 +4,7 @@ import log from 'log';
 import {MOVE, SWITCH} from 'decisions';
 import report from 'report';
 import listener from 'listener';
-import Reporter from 'reporters/main';
+import Reporter from 'reporters/matchstatus';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -132,7 +132,6 @@ class Battle {
     const results = report.win(winner, this.store);
 
     listener.relay('battlereport', {
-      results,
       winner,
       opponent: this.store.yourNick});
   }
