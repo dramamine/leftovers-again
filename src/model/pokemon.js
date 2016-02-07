@@ -65,7 +65,7 @@ export default class Pokemon {
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item' // for debugging
+    'position', 'owner', 'item', 'boosts' // for debugging
     ]
     .forEach( (field) => {
       if (this[field]) out[field] = this[field];
@@ -206,6 +206,29 @@ export default class Pokemon {
       this.gender = deets[2] || 'M';
     } catch (e) {
       log.err('useDetails: error parsing mon.details', e);
+    }
+  }
+
+  /**
+   * Record a boost or unboost.
+   * The boost object only has keys set for stats that are affected; they
+   * should be undefined otherwise.
+   *
+   * @param  {String} stat  The stat type affected.
+   * @param  {Number} stage The stage of boost, ex. Swords Dance boosts attack
+   * by 2 stages.
+   *
+   */
+  useBoost(stat, stage) {
+    if (!this.boosts) {
+      this.boosts = {};
+    }
+    const current = this.boosts[stat] || 0;
+    const next = Math.max(-6, Math.min(6, current + stage));
+    if (next === 0) {
+      delete this.boosts[stat];
+    } else {
+      this.boosts[stat] = next;
     }
   }
 

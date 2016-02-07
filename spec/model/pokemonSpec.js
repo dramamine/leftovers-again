@@ -115,4 +115,42 @@ describe('Pokemon', () => {
       expect(moves[2].type).toEqual(jasmine.any(String));
     });
   });
+  describe('useBoost', () => {
+    let mon;
+    beforeEach( () => {
+      spyOn(util, 'researchPokemonById').and.returnValue({});
+      mon = new Pokemon('Fakechu');
+    });
+    it('should boost a stat', () => {
+      mon.useBoost('atk', 1);
+      expect(mon.data().boosts.atk).toEqual(1);
+
+      mon.useBoost('atk', 2);
+      expect(mon.data().boosts.atk).toEqual(3);
+
+      mon.useBoost('atk', -3);
+      expect(mon.data().boosts.atk).toBe(undefined);
+    });
+
+    it('should unboost a stat', () => {
+      mon.useBoost('atk', -1);
+      expect(mon.data().boosts.atk).toEqual(-1);
+
+      mon.useBoost('atk', -2);
+      expect(mon.data().boosts.atk).toEqual(-3);
+
+      mon.useBoost('atk', 3);
+      expect(mon.data().boosts.atk).toBe(undefined);
+    });
+
+    it('should limit boost level to 6', () => {
+      mon.useBoost('atk', -7);
+      expect(mon.data().boosts.atk).toEqual(-6);
+
+      mon.useBoost('atk', 13);
+      expect(mon.data().boosts.atk).toEqual(6);
+    });
+
+
+  });
 });

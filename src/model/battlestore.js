@@ -33,7 +33,9 @@ export default class BattleStore {
       player: this.handlePlayer,
       cant: this.handleCant,
       '-fail': this.handleFail,
-      '-miss': this.handleMiss
+      '-miss': this.handleMiss,
+      '-boost': this.handleBoost,
+      '-unboost': this.handleUnboost
       // @TODO why don't we track field effects??
       // @TODO rocks, weather, etc.
       // |-sidestart|p1: 5nowden4189|move: Stealth Rock
@@ -132,6 +134,15 @@ export default class BattleStore {
   handleFail(target) {
     const lastmove = this.events[this.events.length - 1];
     lastmove.miss = true;
+  }
+
+  handleBoost(target, stat, stage) {
+    const mon = this._recordIdent(target);
+    mon.useBoost(stat, stage);
+  }
+
+  handleUnboost(target, stat, stage) {
+    this.handleBoost(target, stat, -1 * stage);
   }
 
   handleDamage(target, condition, explanation) {
