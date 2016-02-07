@@ -1,4 +1,5 @@
 import util from 'pokeutil';
+import fs from 'fs';
 
 export default class Team {
   constructor(tm) {
@@ -18,6 +19,29 @@ export default class Team {
 
   asUtm() {
     return Team.packTeam(this.self);
+  }
+
+  static random(seed = undefined) {
+    const data = fs.readFileSync('./src/data/randomteams.txt', 'utf8');
+    const lines = data.split('\n');
+
+    if (seed === undefined) {
+      seed = Team._getNextSeed();
+      // seed = Math.floor( Math.random() * lines.length ); // eslint-disable-line
+    }
+    console.log('seed: ' + seed, lines.length);
+    if (seed > lines.length) {
+      throw new Error('File end reached without finding line');
+    }
+    return JSON.parse(lines[seed]);
+  }
+
+  static _getNextSeed() {
+    const data = fs.readFileSync('./tmp/lastseed', 'utf8');
+    // increment
+    const updated = parseInt(data, 10) + 1;
+    fs.writeFile('./tmp/lastseed', updated);
+    return data.trim();
   }
 
   /**

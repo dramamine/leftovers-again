@@ -202,6 +202,7 @@ class Challenger {
         if (team) {
           const utmString = new Team(team).asUtm();
           Log.info('sending team msg...', utmString);
+
           this.connection.send('|/utm ' + utmString);
         }
 
@@ -230,7 +231,7 @@ class Challenger {
    * @param {String} The nickname to challenge.
    */
   _challenge(nick) {
-    Log.info('challenge called.', nick);
+    Log.info(`challenge called. ${nick}`);
 
     const team = this.botinfo.getTeam(nick);
     if (team) {
@@ -238,7 +239,7 @@ class Challenger {
       Log.info('sending utm...', utmString);
       this.connection.send('|/utm ' + utmString);
     }
-    Log.warn('sending challenge...', nick, this.botinfo.format);
+    Log.warn(`sending challenge... ${nick} ${this.botinfo.format}`);
     this.connection.send('|/challenge ' + nick + ', ' + this.botinfo.format);
   }
 

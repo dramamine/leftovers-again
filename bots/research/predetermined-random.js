@@ -6,11 +6,8 @@
 
 
 import AI from 'ai';
-import Randumb from 'randumb';
+import team from 'lib/team';
 import {MOVE, SWITCH} from 'decisions';
-const meta = {
-  battletype: 'anythinggoes'
-};
 
 export default class Predetermined extends AI {
   constructor() {
@@ -18,6 +15,8 @@ export default class Predetermined extends AI {
     this.meta = {
       accepts: 'anythinggoes',
       format: 'anythinggoes',
+      // note that this will use the same random team for the duration of the
+      // session! team is only set at initialization.
       team: this.getTeam()
     };
 
@@ -25,13 +24,11 @@ export default class Predetermined extends AI {
   }
 
   getTeam() {
-    return [{"name":"Chandelure","moves":["fireblast","trick","shadowball","energyball"],"ability":"Infiltrator","evs":{"hp":85,"atk":85,"def":85,"spa":85,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Choice Specs","level":77,"shiny":false},{"name":"Accelgor","moves":["encore","spikes","yawn","bugbuzz"],"ability":"Hydration","evs":{"hp":81,"atk":85,"def":85,"spa":89,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Leftovers","level":79,"shiny":false},{"name":"Mismagius","moves":["painsplit","willowisp","shadowball","destinybond"],"ability":"Levitate","evs":{"hp":85,"atk":85,"def":85,"spa":85,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Leftovers","level":81,"shiny":false},{"name":"Rapidash","moves":["willowisp","sunnyday","solarbeam","flareblitz"],"ability":"Flash Fire","evs":{"hp":81,"atk":85,"def":85,"spa":89,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Heat Rock","level":83,"shiny":false},{"name":"Wobbuffet","moves":["counter","destinybond","mirrorcoat","encore"],"ability":"Shadow Tag","evs":{"hp":85,"atk":85,"def":85,"spa":85,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Custap Berry","level":79,"shiny":false},{"name":"Rhyperior","moves":["rockpolish","aquatail","earthquake","rockblast"],"ability":"Solid Rock","evs":{"hp":85,"atk":85,"def":85,"spa":85,"spd":85,"spe":85},"ivs":{"hp":31,"atk":31,"def":31,"spa":31,"spd":31,"spe":31},"item":"Weakness Policy","level":79,"shiny":false}];
+    return team.random();
   }
 
   onRequest(state) {
-    console.log(state);
     if (state.forceSwitch || state.teamPreview) {
-      console.log('being forced to switch');
       // our pokemon died :(
       // choose a random one
       const possibleMons = state.self.reserve.filter( (mon) => {

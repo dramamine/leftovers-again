@@ -33,7 +33,7 @@ class BotInfo {
     return this.metadata.accepts;
   }
   get team() {
-    return this.metadata.team || null;
+    return this.metadata.team;
   }
   getTeam(x) { // @TODO
     return this.metadata.team;
