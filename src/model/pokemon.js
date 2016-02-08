@@ -233,6 +233,35 @@ export default class Pokemon {
   }
 
   /**
+   * Add a status condition to our Pokemon. Updates 'condition' and 'conditions'.
+   *
+   * @param {String} status The status type.
+   */
+  addStatus(status) {
+    if (mon.condition) {
+      mon.condition + ' ' + status;
+    } else {
+      mon.condition = status;
+    }
+
+    if (mon.conditions) {
+      mon.conditions = [];
+    }
+    mon.conditions.push(status);
+  }
+
+  /**
+   * Removes a status condition from our Pokemon. Updates 'condition' and
+   * 'conditions'.
+   *
+   * @param {String} status The status type.
+   */
+  removeStatus(status) {
+    mon.condition.replace(' ' + status, '');
+    mon.conditions.splice(mon.conditions.indexOf(status), 1);
+  }
+
+  /**
    * Use this species name, and research this species to get basic information
    * about this species.
    *

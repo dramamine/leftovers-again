@@ -11,7 +11,7 @@ class PokeUtil {
     let name = '';
     if (text) {
       // most lines copied from server code..
-      name = ('' + text).replace(/[\|\s\[\]\,]+/g, '').toLowerCase().trim();
+      name = ('' + text).replace(/[\|\s\[\]\,\']+/g, '').toLowerCase().trim();
 
       // these two are not! but I needed them.
       name = name.replace('-', '');
