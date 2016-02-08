@@ -65,7 +65,7 @@ export default class Pokemon {
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item', 'boosts' // for debugging
+    'position', 'owner', 'item', 'boosts', 'lastMove'
     ]
     .forEach( (field) => {
       if (this[field]) out[field] = this[field];
@@ -238,16 +238,16 @@ export default class Pokemon {
    * @param {String} status The status type.
    */
   addStatus(status) {
-    if (mon.condition) {
-      mon.condition + ' ' + status;
+    if (this.condition) {
+      this.condition + ' ' + status;
     } else {
-      mon.condition = status;
+      this.condition = status;
     }
 
-    if (mon.conditions) {
-      mon.conditions = [];
+    if (this.conditions) {
+      this.conditions = [];
     }
-    mon.conditions.push(status);
+    this.conditions.push(status);
   }
 
   /**
@@ -257,8 +257,12 @@ export default class Pokemon {
    * @param {String} status The status type.
    */
   removeStatus(status) {
-    mon.condition.replace(' ' + status, '');
-    mon.conditions.splice(mon.conditions.indexOf(status), 1);
+    this.condition.replace(' ' + status, '');
+    this.conditions.splice(this.conditions.indexOf(status), 1);
+  }
+
+  setLastMove(move) {
+    this.lastMove = move;
   }
 
   /**

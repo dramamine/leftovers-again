@@ -114,10 +114,14 @@ export default class BattleStore {
       to: targetMon.species,
       topos: targetMon.position
     });
+
+    actingMon.setLastMove(move);
   }
 
   handleCant(target, reason) {
-    Log.error(`can't! ${target} ${reason}`);
+    if (['slp', 'par', 'flinch'].indexOf(reason) === -1) {
+      Log.error(`can't! ${target} ${reason}`);
+    }
     const targetMon = this._recordIdent(target);
     this.events.push({
       type: 'cant',
@@ -427,6 +431,7 @@ export default class BattleStore {
 
 
     output.rqid = this.rqid;
+    output.turn = this.turn;
 
     return output;
   }

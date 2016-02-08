@@ -27,7 +27,10 @@ export default class Team {
 
     if (seed === undefined) {
       seed = Team._getNextSeed();
-      // seed = Math.floor( Math.random() * lines.length ); // eslint-disable-line
+      if (!seed) {
+        seed = Math.floor( Math.random() * lines.length ); // eslint-disable-line
+      }
+      //
     }
     console.log('seed: ' + seed, lines.length);
     if (seed > lines.length) {
@@ -38,8 +41,11 @@ export default class Team {
 
   static _getNextSeed() {
     const data = fs.readFileSync('./tmp/lastseed', 'utf8');
+
     // increment
     const updated = parseInt(data, 10) + 1;
+    console.log(`read ${data} and am writing ${updated}`);
+    if (isNaN(updated)) return null;
     fs.writeFile('./tmp/lastseed', updated);
     return data.trim();
   }

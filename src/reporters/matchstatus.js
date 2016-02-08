@@ -19,7 +19,9 @@ class MatchStatus {
     const yourHp = this.hp(state.opponent.active.hppct || EMPTY);
     const mySpecies = this.padLeft(state.self.active.species, 10);
     const yourSpecies = this.padRight(state.opponent.active.species, 10);
-    const stuff = `${myr} ${mys} ${mySpecies} ${myHp} | ${yourHp} ${yourSpecies} ${yos} ${yor}`;
+    const myLast = this.padLeft(state.self.active.lastMove || undefined, 12);
+    const yourLast = this.padRight(state.opponent.active.lastMove || undefined, 12);
+    const stuff = `${myLast}| ${mys} ${mySpecies} ${myHp}  ${myr} | ${yor} ${yourHp} ${yourSpecies} ${yos} |${yourLast}`;
     console.log(stuff);
   }
   hp(hppct) {
@@ -71,7 +73,7 @@ class MatchStatus {
 
   padLeft(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
-    return Array(n - String(nr).length + 1).join(str ||' ') + nr;
+    return Array(n - String(nr).length + 1).join(str || ' ') + nr;
   }
   padRight(nr = ' ', n, str) {
     if (nr.length >= n) return nr.substr(0, n);
