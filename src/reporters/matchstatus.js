@@ -9,25 +9,35 @@ const YOUR_BACKGROUND = chalk.bgCyan;
 const MY_TEXT = chalk.bold.black;
 const YOUR_TEXT = chalk.bold.black;
 const EMPTY = '           ';
+
 class MatchStatus {
   report(state) {
-    const myr = this.myReserve(state.self.reserve);
-    const yor = this.yourReserve(state.opponent.reserve);
-    const mys = this.padLeft( this.statusString(state.self.active.conditions), 10);
-    const yos = this.padRight( this.statusString(state.opponent.active.conditions), 10);
-    const myBoosts = this.boostString(state.self.active.boosts);
-    const yourBoosts = this.boostString(state.opponent.active.boosts);
-    const myHp = this.hp(state.self.active.hppct || EMPTY);
-    const yourHp = this.hp(state.opponent.active.hppct || EMPTY);
-    const mySpecies = this.padLeft(state.self.active.species, 10);
-    const yourSpecies = this.padRight(state.opponent.active.species, 10);
-    const myLast = this.padLeft(state.self.active.lastMove || undefined, 12);
-    const yourLast = this.padRight(state.opponent.active.lastMove || undefined, 12);
+    const stuff = this.padLeft(state.self.active.lastMove || undefined, 12) + ' | ' +
 
-    // const stuff = mylast + '| ';
+      this.padLeft(
+        this.boostString(state.self.active.boosts) + ' ' +
+        this.statusString(state.self.active.conditions)
+      , 15).trim() + ' ' +
+      this.padLeft(
+        state.self.active.species
+      , 10) + ' ' +
+      this.hp(state.self.active.hppct || EMPTY) + ' | ' +
 
+      this.myReserve(state.self.reserve) + ' | ' +
+      this.yourReserve(state.opponent.reserve) + ' | ' +
 
-    const stuff = `${myLast}| ${myBoosts} ${mys} ${mySpecies} ${myHp}  ${myr} | ${yor} ${yourHp} ${yourSpecies} ${yourBoosts} ${yos} |${yourLast}`;
+      this.hp(state.opponent.active.hppct || EMPTY) + ' ' +
+
+      this.padRight(
+        state.opponent.active.species
+      , 10) + ' ' +
+      this.boostString(state.opponent.active.boosts) + ' ' +
+      this.padRight(
+        this.statusString(state.opponent.active.conditions)
+      , 10) + ' | ' +
+      this.padRight(
+        state.opponent.active.lastMove || undefined
+      , 12) + '';
     console.log(stuff);
   }
   hp(hppct) {
@@ -44,10 +54,9 @@ class MatchStatus {
     return '[' + statuses.map(str => str.substr(0, 2)).join(' ').substr(0, 8) + ']';
   }
 
-  boostString(boosts) {
+  boostString(boosts = {}) {
     let out = '';
     Object.keys(boosts).forEach(key => {
-      console.log(key, boosts[key]);
       const mod = (boosts[key] > 0)
         ? '+'.repeat(boosts[key])
         : '-'.repeat(-1 * boosts[key]);

@@ -1,12 +1,12 @@
-const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"conditions":["par poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"conditions":[],"species":"Arcanine"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}};
+const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"lastMove":"Sandstorm","boosts":{"spd":-1},"conditions":["par poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"conditions":[],"boosts":{"atk":1},"species":"Arcanine","lastMove":"Roost"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}};
+
 import Reporter from 'reporters/matchstatus';
 
-fdescribe('matchstatus reporter', () => {
+describe('matchstatus reporter', () => {
   it('should report as I expect', () => {
-    // spyOn(console, 'log');
+    spyOn(console, 'log');
     const res = Reporter.report(exampleState);
-    console.log(res);
-    // expect(console.log).toHaveBeenCalled();
+    expect(res).toBe(undefined);
   });
   describe('pad left', () => {
     it('should pad left', () => {
