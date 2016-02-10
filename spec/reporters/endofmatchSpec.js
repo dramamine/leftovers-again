@@ -5,7 +5,7 @@ const exampleState = [
 ];
 import EndOfMatch from 'reporters/endofmatch';
 
-fdescribe('matchstatus reporter', () => {
+describe('matchstatus reporter', () => {
   it('should report as I expect', () => {
     spyOn(console, 'log');
     const res = EndOfMatch.report(exampleState);
