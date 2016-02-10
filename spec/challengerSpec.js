@@ -36,7 +36,7 @@ describe('challenger', () => {
   });
   describe('onUpdateUser', () => {
     it('should notice itself', () => {
-      challenger.onUpdateUser(['slodeth', 1]);
+      challenger.onUpdateUser(['slodeth', '1']);
       expect(challenger.users.slodeth).toEqual('self');
     });
   });
