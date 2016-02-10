@@ -13,15 +13,21 @@ class MatchStatus {
   report(state) {
     const myr = this.myReserve(state.self.reserve);
     const yor = this.yourReserve(state.opponent.reserve);
-    const mys = this.myStatuses(state.self.active.conditions);
-    const yos = this.myStatuses(state.opponent.active.conditions);
+    const mys = this.padLeft( this.statusString(state.self.active.conditions), 10);
+    const yos = this.padRight( this.statusString(state.opponent.active.conditions), 10);
+    const myBoosts = this.boostString(state.self.active.boosts);
+    const yourBoosts = this.boostString(state.opponent.active.boosts);
     const myHp = this.hp(state.self.active.hppct || EMPTY);
     const yourHp = this.hp(state.opponent.active.hppct || EMPTY);
     const mySpecies = this.padLeft(state.self.active.species, 10);
     const yourSpecies = this.padRight(state.opponent.active.species, 10);
     const myLast = this.padLeft(state.self.active.lastMove || undefined, 12);
     const yourLast = this.padRight(state.opponent.active.lastMove || undefined, 12);
-    const stuff = `${myLast}| ${mys} ${mySpecies} ${myHp}  ${myr} | ${yor} ${yourHp} ${yourSpecies} ${yos} |${yourLast}`;
+
+    // const stuff = mylast + '| ';
+
+
+    const stuff = `${myLast}| ${myBoosts} ${mys} ${mySpecies} ${myHp}  ${myr} | ${yor} ${yourHp} ${yourSpecies} ${yourBoosts} ${yos} |${yourLast}`;
     console.log(stuff);
   }
   hp(hppct) {
@@ -30,18 +36,24 @@ class MatchStatus {
     return chalk.bgGreen(' '.repeat(blox)) + chalk.bgRed(' '.repeat(antiblox));
   }
 
-  myStatuses(conditions) {
-    return this.padLeft(this.statusString(conditions), 10);
-  }
-  yourStatuses(conditions) {
-    return this.padRight(this.statusString(conditions), 10);
-  }
   statusString(statuses) {
     if (!statuses || statuses.length === 0) return EMPTY;
     if (statuses.length <= 2) {
       return '[' + statuses.join(' ') + ']';
     }
     return '[' + statuses.map(str => str.substr(0, 2)).join(' ').substr(0, 8) + ']';
+  }
+
+  boostString(boosts) {
+    let out = '';
+    Object.keys(boosts).forEach(key => {
+      console.log(key, boosts[key]);
+      const mod = (boosts[key] > 0)
+        ? '+'.repeat(boosts[key])
+        : '-'.repeat(-1 * boosts[key]);
+      out += mod + key + ' ';
+    });
+    return out.trim();
   }
 
   myReserve(reserve) {
