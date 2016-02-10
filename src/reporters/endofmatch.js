@@ -5,16 +5,18 @@ const loseSymbol = chalk.bold.red('X');
 
 class EndOfMatch {
   report(state) {
-    let out = '';
-    console.log('eom called.');
+    let xo = '';
+    let matchup = '';
     state.forEach(s => {
-      if(s.won) {
-        out += winSymbol;
+      if (s.won) {
+        xo += winSymbol;
       } else {
-        out += loseSymbol;
+        xo += loseSymbol;
       }
+
+      matchup += s.myAlive + '-' + s.yourAlive + ' ';
     });
-    console.log(out);
+    console.log(xo + ' ' + matchup.trim());
   }
 }
 

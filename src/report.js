@@ -46,12 +46,22 @@ class Report {
       return prev + (curr.hppct || 0);
     }, 0);
 
+    const myAlive = state.opponent.reserve.filter( mon => {
+      return !mon.dead;
+    });
+    const yourAlive = 6 - state.self.reserve.filter( mon => {
+      return !mon.dead;
+    });
+
+
 
     const result = {
       matchid: matchid,
       won: iwon,
       damageDone,
       damageTaken,
+      myAlive,
+      yourAlive,
       me: store.myNick,
       you: store.yourNick,
       mine: state.self.reserve,
