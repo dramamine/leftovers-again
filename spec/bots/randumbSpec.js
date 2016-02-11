@@ -27,8 +27,7 @@ describe('Randumb', () => {
         active: {
           moves: [{ name: 'a', disabled: true, pp: 99 },
           { name: 'b', disabled: false, pp: 99 },
-          { name: 'c', disabled: true, pp: 0 },
-          { name: 'd', disabled: false, pp: 0 }]
+          { name: 'c', disabled: true, pp: 0 }]
         }
       }
     };
