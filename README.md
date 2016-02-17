@@ -93,11 +93,18 @@ $ ENGINE WORK
 - move a bunch of functions from lib/damage.js to damageWrapper.js (or something)
 - create a set of tests for a "generic bot testing script"
 - setup the script for said tests
-- shell commands for running bots
-- better logging: write the last request and state to a file somewhere
++ shell commands for running bots
++ better logging: write the last request and state to a file somewhere
 - have bots ping for challenge updates
-- set 'disabled' on moves with 0 HP
-- if your opponent cures a status, do you notice?
++ set 'disabled' on moves with 0 HP
++ if your opponent cures a status, do you notice?
+- cannot find my move hiddenpowerfightin
+- speed on boosts error:
+- _onSpeedData: Object {mine: 77, yours: 164}
+- _onSpeedData: Object {mine: 77, yours: 5.075554161070059e+28}
+- consider handling 'detailschange'
+    + |detailschange|p1a: Groudon|Groudon-Primal, L70
+    + |-formechange|p2a: Cherrim|Cherrim-Sunshine
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses
@@ -109,7 +116,7 @@ $ BOT WORK
 + better handling of stat guessing & damage ranges
 + koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 - take acct of Accuracy in damage est(?)
-
+- Choice Band: all of a sudden, you know what move the opponent is going to use! take advantage of this for safe switching
 
 
 10/18/2015

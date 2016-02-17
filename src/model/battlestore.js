@@ -1,6 +1,7 @@
 import Pokemon from 'model/pokemon';
 import util from 'pokeutil';
 import Log from 'log';
+import Weather from 'constants/weather';
 
 /**
  * Store for tracking the status of the battle.
@@ -19,6 +20,7 @@ export default class BattleStore {
     this.events = [];
     this.statuses = [];
     this.turn = 0;
+    this.weather = Weather.NONE;
 
     this.handlers = {
       '-damage': this.handleDamage,
@@ -37,7 +39,8 @@ export default class BattleStore {
       '-boost': this.handleBoost,
       '-unboost': this.handleUnboost,
       '-status': this.handleStatus,
-      '-curestatus': this.handleCureStatus
+      '-curestatus': this.handleCureStatus,
+      '-weather': this.handleWeather
       // @TODO why don't we track field effects??
       // @TODO rocks, weather, etc.
       // |-sidestart|p1: 5nowden4189|move: Stealth Rock
@@ -343,6 +346,10 @@ export default class BattleStore {
     }
   }
 
+  handleWeather(weather) {
+    this.weather = weather;
+  }
+
   /**
    * Output function for getting an object representation of the current
    * battle.
@@ -432,6 +439,7 @@ export default class BattleStore {
 
     output.rqid = this.rqid;
     output.turn = this.turn;
+    output.weather = this.weather;
 
     return output;
   }

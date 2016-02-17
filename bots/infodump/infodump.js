@@ -51,7 +51,8 @@ class Infodump extends AI {
         est = Damage.getDamageResult(
           state.self.active,
           state.opponent.active,
-          move
+          move,
+          { weather: state.weather }
         );
       } catch (e) {
         Log.error(e);
@@ -100,7 +101,8 @@ class Infodump extends AI {
             est = Damage.getDamageResult(
               state.self.active,
               state.opponent.active,
-              move
+              move,
+              { weather: state.weather }
             );
           } catch (e) {
             Log.error(e);
@@ -141,7 +143,8 @@ class Infodump extends AI {
           est = Damage.getDamageResult(
             state.opponent.active,
             mon,
-            move
+            move,
+            { weather: state.weather }
           );
         } catch (e) {
           Log.error(e, state.opponent.active, mon, move);
@@ -160,7 +163,8 @@ class Infodump extends AI {
           est = Damage.getDamageResult(
             mon, // my mon
             state.opponent.active,
-            move // my move
+            move, // my move
+            { weather: state.weather }
           );
           Log.info('my ' + mon.species + ' uses ' + move.name + ' against '
             + state.opponent.active.species + ':', est);

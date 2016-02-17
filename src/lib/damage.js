@@ -248,7 +248,8 @@ class Damage {
     }
   }
 
-  getDamageResult(a, d, move, field = defaultField, maxOnly = false) {
+  getDamageResult(a, d, move, field = {}, maxOnly = false) {
+
     if (typeof a === 'string') {
       a = util.researchPokemonById(a);
     }
@@ -261,6 +262,8 @@ class Damage {
 
     let attacker = Object.assign({}, a);
     let defender = Object.assign({}, d);
+
+    field = Object.assign(defaultField, field); // eslint-disable-line
 
     attacker = this.processPokemon(attacker);
     defender = this.processPokemon(defender);
