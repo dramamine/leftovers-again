@@ -105,6 +105,8 @@ $ ENGINE WORK
 - consider handling 'detailschange'
     + |detailschange|p1a: Groudon|Groudon-Primal, L70
     + |-formechange|p2a: Cherrim|Cherrim-Sunshine
+- spacing on Reports is wrong. make sure boosts/statuses are lining up better
+
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses
@@ -117,6 +119,13 @@ $ BOT WORK
 + koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 - take acct of Accuracy in damage est(?)
 - Choice Band: all of a sudden, you know what move the opponent is going to use! take advantage of this for safe switching
+
+$ LAPTOP SETUP SHIT THAT DIDN'T WORK
+- submodules didn't work, make sure you have that .gitmodules file working
+- weirdly, the client worked straight (without my special branch that bypasses auth)
++ needed a 'log' folder
++ needed to update node
+- setting up Tampermonkey didn't quite work...
 
 
 10/18/2015
