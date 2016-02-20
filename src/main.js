@@ -7,6 +7,7 @@ import Chat from 'chat';
 import config from 'config';
 import BotInfo from 'botinfo';
 import BattleManager from 'battlemanager';
+import Spawner from 'spawner';
 
 // process cmdline args
 const args = require('minimist')(process.argv.slice(2));
@@ -14,6 +15,10 @@ const args = require('minimist')(process.argv.slice(2));
 if (args.help || args.h) {
   _displayHelp();
   process.exit();
+}
+
+if (args.opponent) {
+  Spawner.spawn(args.opponent);
 }
 
 let myconnection;
@@ -30,8 +35,8 @@ const botpath = args.bot || config.bot;
 const scrappy = args.scrappy || config.scrappy;
 const matches = args.matches || config.matches;
 
+// create some necessary classes
 const chat = new Chat();
-
 const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy,
   matches);
 
@@ -73,6 +78,7 @@ Leftovers Again: interface for Pokemon Showdown bots
 -monkey:         listen to userscripts instead of connecting to a server
 -loglevel [1-5]: level of severity of logs to show. higher levels are more
                  verbose. default 3.
+-opponent [path]: Spawn a specific opponent via a child process.
 `);
 }
 
