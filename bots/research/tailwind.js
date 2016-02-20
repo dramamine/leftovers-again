@@ -29,7 +29,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost
@@ -39,7 +39,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost
@@ -49,7 +49,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost
@@ -59,7 +59,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost
@@ -69,7 +69,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost
@@ -79,7 +79,7 @@ Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
 Serious Nature
-- Acrobatics
+- Tailwind
 - Agility
 - Brave Bird
 - Roost

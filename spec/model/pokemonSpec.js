@@ -93,6 +93,19 @@ describe('Pokemon', () => {
       expect(res.dead).toBe(undefined);
     });
   });
+  describe('stat handling', () => {
+    it('should process boosted stats', () => {
+      spyOn(util, 'researchPokemonById').and.returnValue({
+        stats: {atk: 100},
+        boosts: {atk: 2}
+      });
+      const mon = new Pokemon('Fakechu');
+      const res = mon.data();
+      expect(res.stats.atk).toEqual(100);
+      expect(res.boosts.atk).toEqual(2);
+      expect(res.boostedStats.atk).toEqual(200);
+    });
+  });
   describe('updateMoveList', () => {
     const list = ['roost', 'fakeout', 'hiddenpowerice'];
     const moves = Pokemon.updateMoveList(list);

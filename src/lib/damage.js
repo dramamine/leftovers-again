@@ -67,10 +67,57 @@ class Damage {
     mon.nature = 'serious';
 
     mon.level = mon.level || ASSUME_LEVEL;
-    // this is true...
-    // mon.baseStats;
-    this.makeAssumptions(mon);
 
+    mon.status = (mon.conditions)
+      ? mon.conditions.join(' ') // string vs array
+      : '';
+    mon.ability = mon.ability || mon.abilities['0'];
+    mon.item = mon.item || '';
+    mon.gender = 'M';
+
+    this.calculateStats(mon);
+
+    return mon;
+  }
+
+  /**
+   * Calculate the 'stats' object, which takes baseStats, boosts, EVs, and IVs
+   * into account. Default values are provided for boosts, EVs, and IVs if the
+   * object doesn't currently have these set.
+   *
+   * @param  A reference to the mon in question.
+   * @return The pokemon, with updated values for 'boosts', 'evs', 'ivs', and
+   * 'stats'.
+   */
+  calculateStats(mon) {
+    mon.boosts = Object.assign({
+      [AT]: 0,
+      [DF]: 0,
+      [SA]: 0,
+      [SD]: 0,
+      [SP]: 0
+    }, mon.boosts);
+
+    mon.evs = Object.assign({
+      [AT]: 84,
+      [DF]: 84,
+      [SA]: 84,
+      [SD]: 84,
+      [SP]: 84,
+      [HP]: 84
+    }, mon.evs);
+
+    mon.ivs = Object.assign({
+      [AT]: 31,
+      [DF]: 31,
+      [SA]: 31,
+      [SD]: 31,
+      [SP]: 31,
+      [HP]: 31
+    }, mon.ivs);
+
+    // REMINDER: if it exists, 'stats' is already modified based on baseStats,
+    // EVs, IVs, and level, but not boosts!
     if (!mon.stats) {
       mon.stats = {};
     }
@@ -80,29 +127,14 @@ class Damage {
       }
     });
 
+    if (!mon.boostedStats) {
+      mon.boostedStats = {};
+    }
     [AT, SA, DF, SD, SP].forEach( stat => {
-      mon.stats[stat] = getModifiedStat(
+      mon.boostedStats[stat] = getModifiedStat(
         mon.stats[stat], mon.boosts[stat]);
     });
     return mon;
-  }
-
-  makeAssumptions(mon) {
-    // mon.species = mon.species;
-    mon.status = (mon.conditions)
-      ? mon.conditions.join(' ') // string vs array
-      : '';
-    mon.ability = mon.ability || mon.abilities['0'];
-    mon.item = '';
-    mon.gender = 'M';
-
-    mon.boosts = Object.assign({
-      [AT]: 0,
-      [DF]: 0,
-      [SA]: 0,
-      [SD]: 0,
-      [SP]: 0
-    }, mon.boosts);
   }
 
   processMove(move) {
@@ -372,7 +404,7 @@ class Damage {
     }
 
 
-    const turnOrder = attacker.stats[SP] > defender.stats[SP] ? 'FIRST' : 'LAST';
+    const turnOrder = attacker.boostedStats[SP] > defender.boostedStats[SP] ? 'FIRST' : 'LAST';
 
     // //////////////////////////////
     // //////// BASE POWER //////////
@@ -384,12 +416,12 @@ class Damage {
       description.moveBP = basePower;
       break;
     case 'Electro Ball':
-      const r = Math.floor(attacker.stats[SP] / defender.stats[SP]);
+      const r = Math.floor(attacker.boostedStats[SP] / defender.boostedStats[SP]);
       basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
       description.moveBP = basePower;
       break;
     case 'Gyro Ball':
-      basePower = Math.min(150, Math.floor(25 * defender.stats[SP] / attacker.stats[SP]));
+      basePower = Math.min(150, Math.floor(25 * defender.boostedStats[SP] / attacker.boostedStats[SP]));
       description.moveBP = basePower;
       break;
     case 'Punishment':
@@ -587,7 +619,7 @@ class Damage {
     // }
     // @TODO I caused a lot of fuckery here - the original code is using raw
     // stats a lot here, for some reason.
-    attack = attackSource.stats[attackStat];
+    attack = attackSource.boostedStats[attackStat];
 
     // unlike all other attack modifiers, Hustle gets applied directly
     if (attacker.ability === 'Hustle' && move.category === 'Physical') {
@@ -657,7 +689,7 @@ class Damage {
     //   defense = defender.stats[defenseStat];
     //   description.defenseBoost = defender.boosts[defenseStat];
     // }
-    defense = defender.stats[defenseStat];
+    defense = defender.boostedStats[defenseStat];
 
     // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
     if (field.weather === 'Sand' && (defender.type1 === 'Rock' || defender.type2 === 'Rock') && !hitsPhysical) {

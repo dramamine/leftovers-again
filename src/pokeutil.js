@@ -41,6 +41,20 @@ class PokeUtil {
     log.warn('couldn\'t find my pokemon ' + id );
     return {name: id, id};
   }
+
+  /**
+   * Apply boost levels to a stat.
+   *
+   * @param  {Number} stat The calculated stat.
+   * @param  {Number} mod  The boost level, from -6 to 6.
+   * @return {Number} The stat including the boost multiplier.
+   */
+  boostMultiplier(stat, mod = 0) {
+    console.log(stat, mod);
+    return mod > 0 ? Math.floor(stat * (2 + mod) / 2)
+    : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
+      : stat;
+  }
 }
 
 const util = new PokeUtil();

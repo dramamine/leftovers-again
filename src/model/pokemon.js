@@ -42,12 +42,18 @@ export default class Pokemon {
  * @property {number} baseStats.spa: The special attack value before boosts, EVs, IVs, etc.
  * @property {number} baseStats.spd: The special defense value before boosts, EVs, IVs, etc.
  * @property {number} baseStats.spe: The speend value before boosts, EVs, IVs, etc.
+ * @property {Object} stats An object similar to baseStats, but includes calculations
+ *           based on EVs, IVs, and level. It does NOT include calculations based
+ *           on boosts and unboosts.
  * @property {string} ability  The mon's ability (?)
  * @property {Array} abilities  An array of abilities this mon might have (?)
  * @property {string} baseAbility  The mon's ability (?)
  * @property {number} weightkg  The mon's weight, in kg.
  * @property {string} nature  The mon's nature, ex. 'Jolly'. Usually, you only know
  * this about your own mons.
+ * @property {Object} boosts An object with properties set for boosts and unboosts.
+ *           For example, if this mon has cast Swords Dance, you will have
+ *           boosts = {atk: 2}. Boost values range from -6 to 6.
  * @property {string} position  The mon's position, in Showdown format. 'p1a' means
  *           they are in player 1's first active slot; 'p2c' means they are
  *           in player 2's third active slot (in a Triples battle)
@@ -65,11 +71,20 @@ export default class Pokemon {
     ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item', 'boosts', 'lastMove'
-    ]
+    'position', 'owner', 'item', 'boosts', 'lastMove']
     .forEach( (field) => {
       if (this[field]) out[field] = this[field];
     });
+
+    // sometimes we want to apply some boosts.
+    if (out.stats) {
+      out.boostedStats = {};
+      const boosts = out.boosts || {};
+      Object.keys(out.stats).forEach( (key) => {
+        out.boostedStats[key] = util.boostMultiplier(out.stats[key], boosts[key]);
+      });
+    }
+
     return out;
   }
 

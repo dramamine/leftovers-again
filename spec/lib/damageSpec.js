@@ -91,6 +91,15 @@ describe('damage calculator', () => {
       const rawDmg = Damage.getDamageResult('eevee', raw, 'bodyslam');
       expect(boostedDmg).toEqual(rawDmg);
     });
+    it('should handle +2 boosted speed', () => {
+      const unboosted = util.researchPokemonById('eevee');
+      const boosted = Object.assign({}, unboosted);
+      boosted.boosts = {spd: 2};
+      Damage.calculateStats(unboosted);
+      Damage.calculateStats(boosted);
+
+      expect(unboosted.stats.spd * 2).toEqual(boosted.stats.spd);
+    });
   });
   describe('_getNatureMultiplier', () => {
     it('should return 1 if nature is falsy', () => {

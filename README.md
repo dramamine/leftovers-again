@@ -83,8 +83,9 @@ $ ENGINE WORK
 + damage done by that weight-based move that Onix has is not calculated
 - don't think that Explosion is such a great move
 - don't think that Water Spout sux
-- process fields
-- process weather
+- don't break on HP-based moves
++ process fields
++ process weather
 - see if "Happiness: 200" is parsed by team declarer
 - 'Seismic Toss' calculates incorrectly
 - Kyurem vs Kyurem-White (causes a crash)
@@ -105,7 +106,7 @@ $ ENGINE WORK
 - consider handling 'detailschange'
     + |detailschange|p1a: Groudon|Groudon-Primal, L70
     + |-formechange|p2a: Cherrim|Cherrim-Sunshine
-- spacing on Reports is wrong. make sure boosts/statuses are lining up better
++ spacing on Reports is wrong. make sure boosts/statuses are lining up better
 - Damage calculator side effects work
     + Implement light screen
     + Implement reflect

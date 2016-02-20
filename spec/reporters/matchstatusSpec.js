@@ -29,7 +29,7 @@ describe('matchstatus reporter', () => {
   });
   describe('boost string', () => {
     it('should handle good & bad statuses', () => {
-      expect(Reporter.boostString({atk: 2, def: -1})).toEqual('++atk -def');
+      expect(Reporter.boostString({atk: 2, def: -1})).toEqual('atk++ def-');
     });
   });
 });
