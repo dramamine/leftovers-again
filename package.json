@@ -9,6 +9,7 @@
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js",
     "spawn": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
+    "battle": "NODE_PATH='src:bots' babel-node scripts/battle.js",
     "server": "node lib/Pokemon-Showdown/app.js",
     "client": "xdg-open lib/Pokemon-Showdown-Client/testclient.html"
   },

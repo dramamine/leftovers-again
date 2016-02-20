@@ -106,6 +106,12 @@ $ ENGINE WORK
     + |detailschange|p1a: Groudon|Groudon-Primal, L70
     + |-formechange|p2a: Cherrim|Cherrim-Sunshine
 - spacing on Reports is wrong. make sure boosts/statuses are lining up better
+- Damage calculator side effects work
+    + Implement light screen
+    + Implement reflect
+    + Implement gravity & foresight
+    + See if any of these things even happen in random battles...
+
 
 
 $ FRONT-END SCRIPT WORK
