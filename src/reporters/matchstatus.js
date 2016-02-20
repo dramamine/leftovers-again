@@ -15,12 +15,14 @@ class MatchStatus {
     const stuff = this.padLeft(state.self.active.lastMove || undefined, 12) + ' | ' +
 
       this.padLeft(
-        this.boostString(state.self.active.boosts) + ' ' +
-        this.statusString(state.self.active.conditions)
-      , 15).trim() + ' ' +
+        this.statusString(state.self.active.conditions) + ' ' +
+        this.boostString(state.self.active.boosts)
+      , 15) + ' ' +
+
       this.padLeft(
         state.self.active.species
       , 10) + ' ' +
+
       this.hp(state.self.active.hppct || EMPTY) + ' | ' +
 
       this.myReserve(state.self.reserve) + ' | ' +
@@ -31,10 +33,12 @@ class MatchStatus {
       this.padRight(
         state.opponent.active.species
       , 10) + ' ' +
-      this.boostString(state.opponent.active.boosts) + ' ' +
+
       this.padRight(
-        this.statusString(state.opponent.active.conditions)
-      , 10) + ' | ' +
+        this.statusString(state.opponent.active.conditions) + ' ' +
+        this.boostString(state.opponent.active.boosts)
+      , 15) + ' | ' +
+
       this.padRight(
         state.opponent.active.lastMove || undefined
       , 12) + '';
@@ -47,7 +51,7 @@ class MatchStatus {
   }
 
   statusString(statuses) {
-    if (!statuses || statuses.length === 0) return EMPTY;
+    if (!statuses || statuses.length === 0) return '';
     if (statuses.length <= 2) {
       return '[' + statuses.join(' ') + ']';
     }
@@ -58,9 +62,9 @@ class MatchStatus {
     let out = '';
     Object.keys(boosts).forEach(key => {
       const mod = (boosts[key] > 0)
-        ? '+'.repeat(boosts[key])
+        ? '+'.                                                                                                                repeat(boosts[key])
         : '-'.repeat(-1 * boosts[key]);
-      out += mod + key + ' ';
+      out += key + mod + ' ';
     });
     return out.trim();
   }

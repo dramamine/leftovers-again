@@ -150,11 +150,11 @@ export default class BattleStore {
 
   handleBoost(target, stat, stage) {
     const mon = this._recordIdent(target);
-    mon.useBoost(stat, stage);
+    mon.useBoost(stat, +stage);
   }
 
   handleUnboost(target, stat, stage) {
-    this.handleBoost(target, stat, -1 * stage);
+    this.handleBoost(target, stat, -1 * +stage);
   }
 
   handleStatus(target, status) {
