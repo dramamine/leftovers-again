@@ -3,7 +3,7 @@ import Side from 'model/side';
 import Log from 'log';
 
 let side;
-fdescribe('Side', () => {
+describe('Side', () => {
   beforeEach( () => {
     side = new Side();
   });

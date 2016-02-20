@@ -1,10 +1,8 @@
 /**
- * Summon Talonflames to cast 'Roost' over and over.
+ * Testing out specific random teams.
  *
- * npm run develop -- --bot=anythinggoes/tester/rooster.js
+ * npm run develop -- --bot=predetermined-random
  */
-
-
 import AI from 'ai';
 import team from 'lib/team';
 import {MOVE, SWITCH} from 'decisions';

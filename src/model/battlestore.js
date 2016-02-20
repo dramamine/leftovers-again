@@ -1,4 +1,5 @@
 import Pokemon from 'model/pokemon';
+import Side from 'model/side';
 import util from 'pokeutil';
 import Log from 'log';
 import Weather from 'constants/weather';
@@ -21,6 +22,7 @@ export default class BattleStore {
     this.statuses = [];
     this.turn = 0;
     this.weather = Weather.NONE;
+    this.sides = [];
 
     this.handlers = {
       '-damage': this.handleDamage,
@@ -40,12 +42,12 @@ export default class BattleStore {
       '-unboost': this.handleUnboost,
       '-status': this.handleStatus,
       '-curestatus': this.handleCureStatus,
-      '-weather': this.handleWeather
+      '-weather': this.handleWeather,
       // @TODO why don't we track field effects??
       // @TODO rocks, weather, etc.
       // |-sidestart|p1: 5nowden4189|move: Stealth Rock
-      // '-sidestart': this.handleSideStart,
-      // '-sideend': this.handleSideEnd
+      '-sidestart': this.handleSideStart,
+      '-sideend': this.handleSideEnd
     };
 
     // NOT sent to user. temporary storage.
@@ -312,6 +314,7 @@ export default class BattleStore {
     // -- plato
     if (!this.myId) {
       this.myId = data.side.id;
+      this.yourId = this.myId === 'p1' ? 'p2' : 'p1';
     }
 
     if (data.side && data.side.pokemon) {
@@ -349,6 +352,25 @@ export default class BattleStore {
   handleWeather(weather) {
     this.weather = weather;
   }
+
+  handleSideStart(side, action) {
+    // ex. 'p1' or 'p2'
+    const id = side.split(':').pop().trim();
+    if (!this.sides[id]) {
+      this.sides[id] = new Side();
+    }
+    this.sides[id].digest(action);
+  }
+
+  handleSideEnd(side, action) {
+    // ex. 'p1' or 'p2'
+    const id = side.split(':').pop().trim();
+    if (!this.sides[id]) {
+      return;
+    }
+    this.sides[id].remove(action);
+  }
+
 
   /**
    * Output function for getting an object representation of the current
@@ -440,6 +462,13 @@ export default class BattleStore {
     output.rqid = this.rqid;
     output.turn = this.turn;
     output.weather = this.weather;
+
+    if (this.sides[this.myNick]) {
+      output.self.effects = this.sides[this.myNick].data();
+    }
+    if (this.sides[this.yourNick]) {
+      output.opponent.effects = this.sides[this.yourNick].data();
+    }
 
     return output;
   }
