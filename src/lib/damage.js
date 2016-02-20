@@ -249,7 +249,7 @@ class Damage {
   }
 
   getDamageResult(a, d, move, field = {}, maxOnly = false) {
-
+    console.log('field coming in:', field, defaultField.weather);
     if (typeof a === 'string') {
       a = util.researchPokemonById(a);
     }
@@ -263,7 +263,8 @@ class Damage {
     let attacker = Object.assign({}, a);
     let defender = Object.assign({}, d);
 
-    field = Object.assign(defaultField, field); // eslint-disable-line
+    const defaults = Object.assign({}, defaultField);
+    field = Object.assign(defaults, field); // eslint-disable-line
 
     attacker = this.processPokemon(attacker);
     defender = this.processPokemon(defender);
@@ -695,10 +696,12 @@ class Damage {
     if (field.format !== 'Singles' && move.isSpread) {
       baseDamage = pokeRound(baseDamage * 0xC00 / 0x1000);
     }
-    if ((field.weather.indexOf('Sun') !== -1 && move.type === 'Fire') || (field.weather.indexOf('Rain') !== -1 && move.type === 'Water')) {
+    const isSunny = field.weather && field.weather.indexOf('Sun') >= 0;
+    const isRainy = field.weather && field.weather.indexOf('Rain') >= 0;
+    if ((isSunny && move.type === 'Fire') || (isRainy && move.type === 'Water')) {
       baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
       description.weather = field.weather;
-    } else if ((field.weather === 'Sun' && move.type === 'Water') || (field.weather === 'Rain' && move.type === 'Fire')) {
+    } else if ( (isSunny && move.type === 'Water') || (isRainy && move.type === 'Fire')) {
       baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
       description.weather = field.weather;
     } else if ((field.weather === 'Harsh Sunshine' && move.type === 'Water') || (field.weather === 'Heavy Rain' && move.type === 'Fire')) {
@@ -784,20 +787,22 @@ class Damage {
     let i = 0;
     if (maxOnly) i = 15;
     for (; i < 16; i++) {
-      damage[i] = Math.floor(baseDamage * (85 + i) / 100);
-      damage[i] = pokeRound(damage[i] * stabMod / 0x1000);
-      damage[i] = Math.floor(damage[i] * typeEffectiveness);
+      let final = Math.floor(baseDamage * (85 + i) / 100);
+      final = pokeRound(final * stabMod / 0x1000);
+      final = Math.floor(final * typeEffectiveness);
       if (applyBurn) {
-        damage[i] = Math.floor(damage[i] / 2);
+        final = Math.floor(final / 2);
       }
-      damage[i] = Math.max(1, damage[i]);
-      damage[i] = pokeRound(damage[i] * finalMod / 0x1000);
+      final = Math.max(1, final);
+      final = pokeRound(final * finalMod / 0x1000);
 
       // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
       if (attacker.ability === 'Parental Bond' && move.hits === 1 &&
         (field.format === 'Singles' || !move.isSpread)) {
-        damage[i] = Math.floor(damage[i] * 3 / 2);
+        final = Math.floor(damage[i] * 3 / 2);
       }
+      if (maxOnly) return final;
+      damage[i] = final;
     }
     // console.log('returning result:', damage);
     return damage;
@@ -1118,9 +1123,7 @@ const defaultField = {
   isReflect: '',
   isLightScreen: '',
   isForesight: '',
-  weather: '',
-  clearWeather: () => {},
-  getWeather: () => {return ''; } // this could be bad.
+  weather: 'None'
 };
 
 // function Field() {

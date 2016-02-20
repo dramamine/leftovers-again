@@ -120,6 +120,24 @@ describe('damage calculator', () => {
       expect(Damage._getNatureMultiplier('serious', 'spe')).toBe(1);
     });
   });
+  describe('weather', () => {
+    describe('Sunny Day', () => {
+      it('should enhance fire moves', () => {
+        const sunny = Damage.getDamageResult(
+          'eevee', 'meowth', 'overheat', {weather: 'SunnyDay'}, true);
+        const cloudy = Damage.getDamageResult(
+          'eevee', 'meowth', 'overheat', {weather: 'None'}, true);
+        expect(cloudy * 1.5).toBeCloseTo(sunny);
+      });
+      it('should dehance water moves', () => {
+        const sunny = Damage.getDamageResult(
+          'meowth', 'meowth', 'hydropump', {weather: 'SunnyDay'}, true);
+        const cloudy = Damage.getDamageResult(
+          'meowth', 'meowth', 'hydropump', {weather: 'None'}, true);
+        expect(cloudy * 0.5).toBeCloseTo(sunny);
+      });
+    });
+  });
   describe('_assumeStat', () => {
     const base = {
       stats: {},
