@@ -1,0 +1,8 @@
+{
+  "name": "${Repo}",
+  "version": "0.0.0",
+  "description": "${description}",
+  "main": "${repo}.js",
+  "format": "${format}",
+  "accepts": "${accept}"
+}
