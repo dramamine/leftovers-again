@@ -1,0 +1,14 @@
+OK, you're all set! Your core bot files are in this folder:
+bots/{{repo}}
+
+Your bot's already prepared for battle! First, get a local server running:
+`npm run server`
+
+Then, in a new window, run this command to play against your first opponent:
+`npm run develop -- --bot={{repo}} --opponent=randumb --loglevel=2`
+
+Ready for more and tougher opponents? Run this command to choose your opponents:
+`npm run gauntlet`
+
+Want to make sure your bot won't break under pressure? Run tests against it:
+`cd bots/{{repo}} && npm test`

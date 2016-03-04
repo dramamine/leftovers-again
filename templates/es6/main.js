@@ -1,12 +1,12 @@
 /**
- * ${Repo}
+ * {{Repo}}
  *
  */
 import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
 
 
-class ${Repo} extends AI {
+class {{Repo}} extends AI {
   constructor() {
     super();
   }
@@ -29,4 +29,4 @@ class ${Repo} extends AI {
   }
 }
 
-export default ${Repo};
+export default {{Repo}};

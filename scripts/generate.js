@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
+import Handlebars from 'handlebars';
 
 const formats = ['anythinggoes', 'randombattle', 'ubers', 'ou', 'monotype'];
 
@@ -43,26 +44,21 @@ const questions = [
   },
 ];
 
-const parse = (input, vars) => {
-  let data = fs.readFileSync(input, 'ascii');
-  Object.keys(vars).forEach((key) => {
-    const rex = new RegExp('\\$\\{' + key + '\\}', 'g');
-    data = data.replace(rex, vars[key]);
-  });
-  return data;
+const parseAndWrite = (source, destination, vars) => {
+  const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii') );
+  const parsed = tmplt(vars);
+  if (destination) fs.writeFile(destination, parsed);
+  return parsed;
 };
 
-const parseAndWrite = (source, destination, vars) => {
-  const parsed = parse(source, vars);
-  fs.writeFile(destination, parsed);
-};
 
 inquirer.prompt(questions, (answers) => {
   answers.accept = answers.accept.join(',');
   answers.repo = answers.Repo.toLowerCase();
   const lang = 'es6';
+  // @TODO this goes to tmp but should eventually go to 'bots'
   const folder = 'tmp/' + answers.repo;
-  // fs.mkdirSync(folder);
+  fs.mkdirSync(folder);
 
   parseAndWrite(
     `templates/${lang}/main.js`,
@@ -74,4 +70,6 @@ inquirer.prompt(questions, (answers) => {
     `${folder}/package.json`,
     answers
   );
+
+  console.log(parseAndWrite('templates/goodbye.txt', null, answers));
 });

@@ -1,6 +1,10 @@
 const spawn = require('child_process').spawn;
 import Log from 'log';
 
+/**
+ * Array of all spawned threads.
+ * @type {Array}
+ */
 const children = [];
 
 class Spawner {
@@ -8,6 +12,15 @@ class Spawner {
 
   }
 
+  /**
+   * Spawn a node instance that runs the given bot. Logs errors, but suppresses
+   * stdout.
+   *
+   * @param  {[type]} path The bot path. This gets 'required' and is generally
+   * expected to be in the 'bots' folder and not collide with any other
+   * modules (other bots, or modules in src/).
+   * @return {[type]}      [description]
+   */
   spawn(path) {
     Log.info('spawning opponent from file ' + path);
     const op = spawn('babel-node', [
