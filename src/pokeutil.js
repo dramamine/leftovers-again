@@ -3,6 +3,7 @@
  *
  */
 import BattleMovedex from 'data/moves';
+import HonkoMovedex from 'data/moves-ext';
 import BattlePokedex from 'data/pokedex';
 import log from 'log';
 
@@ -28,10 +29,16 @@ class PokeUtil {
     // hiddenpowerground6 due to the 18-character limit. it's kept as
     // hiddenpowerground in our data.
     id = this.toId(id).replace(/6[0]?$/,''); // eslint-disable-line
-    if (BattleMovedex[id]) return BattleMovedex[id];
 
-    log.warn('couldn\'t find my move ' + id );
-    return {name: id, id: this.toId(id)};
+    if (!BattleMovedex[id]) {
+      log.warn('couldn\'t find my move ' + id );
+      return {name: id, id: this.toId(id)};
+    }
+
+    const battleData = BattleMovedex[id] || {};
+    const honkoData = HonkoMovedex[id] || {};
+
+    return Object.assign(battleData, honkoData);
   }
 
   researchPokemonById(id) {

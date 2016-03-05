@@ -147,6 +147,28 @@ describe('damage calculator', () => {
       });
     });
   });
+
+  describe('recoil damage', () => {
+    it('should kill via explosion', () => {
+      const attacker = { maxhp: 69 };
+      const defender = {};
+      const recoil = Damage.getRecoilDamage(attacker, defender, 'explosion', 0);
+      expect(recoil).toEqual(69);
+    });
+    it('should hurt via 25% recoil damage', () => {
+      const attacker = {};
+      const defender = {};
+      const recoil = Damage.getRecoilDamage(attacker, defender, 'headcharge', 100);
+      expect(recoil).toEqual(25);
+    });
+    it('should hurt via 33% recoil damage', () => {
+      const attacker = {};
+      const defender = {};
+      const recoil = Damage.getRecoilDamage(attacker, defender, 'woodhammer', 100);
+      expect(recoil).toEqual(33);
+    });
+  });
+
   describe('_assumeStat', () => {
     const base = {
       stats: {},
