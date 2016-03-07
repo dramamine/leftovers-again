@@ -1,0 +1,4 @@
+- Follow linting & style rules
+- Write unit tests for your code
+- Don't cause tests to fail
+- Write to me before making any breaking changes
