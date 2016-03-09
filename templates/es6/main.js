@@ -11,6 +11,20 @@ class {{Repo}} extends AI {
     super();
   }
 
+{{#if team }}
+  getTeam() {
+    return `
+Magikarp @ Leftovers
+Ability: Rattled
+EVs: 252 HP / 4 Atk / 252 Spe
+Careful Nature
+- Celebrate
+- Flail
+- Happy Hour
+- Splash`;
+  }
+{{/if}}
+
   onRequest(state) {
     if (state.forceSwitch) {
       const myMon = this._pickOne(
