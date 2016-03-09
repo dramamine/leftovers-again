@@ -8,9 +8,12 @@
  */
 
 import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
+import DamageCalcMovedex from '../lib/honko-damagecalc/js/data/movedata';
 import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
 import {BattleFormatsData} from '../lib/Pokemon-Showdown/data/formats-data';
 import fs from 'fs';
+
+const destination = 'src/data/';
 
 function copyMoves() {
   const updated = {};
@@ -37,10 +40,44 @@ function copyMoves() {
     });
   }
 
-  fs.writeFile('data/moves.json', JSON.stringify(updated));
+  fs.writeFile(destination + 'moves.json', JSON.stringify(updated));
 }
 
-function copyPokes() {
+const copyOtherMoves = () => {
+  const updated = {};
+  const keysToCopy = [
+    'alwaysCrit',
+    'dealsPhysicalDamage',
+    'hasRecoil',
+    'hasSecondaryEffect',
+    'ignoresDefenseBoosts',
+    'isBite',
+    'isBullet',
+    'isMultihit',
+    'isPulse',
+    'isPunch',
+    'isSpread',
+    'isTwoHit',
+    'makesContact'
+  ];
+  for (const hongosMoveName in DamageCalcMovedex) { // eslint-disable-line
+    const properMoveName = toId(hongosMoveName);
+
+    keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
+      if (DamageCalcMovedex[hongosMoveName].hasOwnProperty(keyToCopy)) {
+        if (!updated.hasOwnProperty(properMoveName)) {
+          updated[properMoveName] = {};
+        }
+        updated[properMoveName][keyToCopy] = DamageCalcMovedex[hongosMoveName][keyToCopy];
+      }
+    });
+  }
+
+  fs.writeFile(destination + 'moves-ext.json', JSON.stringify(updated));
+};
+
+
+const copyPokes = () => {
   const updated = {};
   const keysToCopy = [
     'species',
@@ -66,10 +103,10 @@ function copyPokes() {
   if (updated.floetteeternalflower) {
     updated.floetteeternalflow = updated.floetteeternalflower;
   }
-  fs.writeFile('data/pokedex.json', JSON.stringify(updated));
-}
+  fs.writeFile(destination + 'pokedex.json', JSON.stringify(updated));
+};
 
-function copyFormats() {
+const copyFormats = () => {
   const updated = {};
   const keysToCopy = [
     'randomBattleMoves',
@@ -82,9 +119,27 @@ function copyFormats() {
     });
   }
 
-  fs.writeFile('data/formats.json', JSON.stringify(updated));
-}
+  fs.writeFile(destination + 'formats.json', JSON.stringify(updated));
+};
+
+// copied from src/pokeutil, don't give an f
+const toId = (text) => {
+  let name = '';
+  if (text) {
+    // most lines copied from server code..
+    name = ('' + text).replace(/[\|\s\[\]\,\']+/g, '').toLowerCase().trim();
+
+    // these two are not! but I needed them.
+    name = name.replace('-', '');
+    name = name.replace('.', '');
+    name = name.replace(' ', '');
+
+    if (name.length > 18) name = name.substr(0, 18).trim();
+  }
+  return name;
+};
 
 copyMoves();
+copyOtherMoves();
 copyPokes();
 copyFormats();

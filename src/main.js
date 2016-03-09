@@ -11,6 +11,7 @@ import Spawner from 'spawner';
 
 // process cmdline args
 const args = require('minimist')(process.argv.slice(2));
+console.log('got these args:', args);
 
 if (args.help || args.h) {
   _displayHelp();
@@ -31,7 +32,9 @@ if (args.monkey) {
 // connect to a server, or create one and start listening.
 myconnection.connect(args);
 
-const botpath = args.bot || config.bot;
+const firstArg = (args._ && args._[0]) ? args._[0] : null;
+const botpath = args.bot || firstArg || config.bot;
+
 const scrappy = args.scrappy || config.scrappy;
 const matches = args.matches || config.matches;
 

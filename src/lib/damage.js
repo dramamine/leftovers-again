@@ -280,6 +280,52 @@ class Damage {
     }
   }
 
+  getRecoilDamage(attacker, defender, move, damage) {
+    if (typeof move === 'string') {
+      move = util.researchMoveById(move); // eslint-disable-line
+    }
+
+    if (attacker.ability === 'rockhead') return 0;
+    if (move.id === 'struggle') {
+      return pokeRound(attacker.maxhp * 0.25);
+    }
+    let cumulative = 0;
+    if (attacker.item === 'lifeorb') {
+      cumulative += attacker.maxhp * 0.1;
+    }
+
+    // dmg percent multiplier. 0-1
+    let factor = 0;
+    switch (move.id) {
+    case 'headcharge':
+    case 'submission':
+    case 'takedown':
+    case 'wildcharge':
+      factor = 0.25;
+      break;
+
+    case 'bravebird':
+    case 'doubleedge':
+    case 'flareblitz':
+    case 'volttackle':
+    case 'woodhammer':
+      factor = 0.33;
+      break;
+    case 'headsmash':
+      factor = 0.5;
+      break;
+    case 'explosion':
+      cumulative += attacker.maxhp;
+      break;
+    default:
+      break;
+    }
+
+    if (attacker.ability === 'reckless') factor = factor * 2;
+
+    return cumulative + damage * factor;
+  }
+
   getDamageResult(a, d, move, field = {}, maxOnly = false) {
     console.log('field coming in:', field, defaultField.weather);
     if (typeof a === 'string') {

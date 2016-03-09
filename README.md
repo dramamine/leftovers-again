@@ -112,7 +112,10 @@ $ ENGINE WORK
     + Implement reflect
     + Implement gravity & foresight
     + See if any of these things even happen in random battles...
-
+- respond to 'cant' messages by logging an error
+- implement 'oppponents' spawning from main
+- remove or hide www code
+- change logging to use timestamps
 
 
 $ FRONT-END SCRIPT WORK
