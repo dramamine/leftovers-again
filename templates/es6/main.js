@@ -1,15 +1,29 @@
 /**
- * ${Repo}
+ * {{Repo}}
  *
  */
 import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
 
 
-class ${Repo} extends AI {
+class {{Repo}} extends AI {
   constructor() {
     super();
   }
+
+{{#if team }}
+  getTeam() {
+    return `
+Magikarp @ Leftovers
+Ability: Rattled
+EVs: 252 HP / 4 Atk / 252 Spe
+Careful Nature
+- Celebrate
+- Flail
+- Happy Hour
+- Splash`;
+  }
+{{/if}}
 
   onRequest(state) {
     if (state.forceSwitch) {
@@ -29,4 +43,4 @@ class ${Repo} extends AI {
   }
 }
 
-export default ${Repo};
+export default {{Repo}};
