@@ -16,48 +16,55 @@ export default class Pokemon {
   }
 
 /**
- * @typedef Pokemon
- * @property {boolean} dead  True if the mon is dead, undefined otherwise
- * @property {string} condition  a condition in Showdown format, ex. '100/100 par poi',
- *            '0/100 fnt' etc.
- * @property {Array<string>} conditions  an array of conditions, ex. ['par', 'poi'], in case
- *             that's easier to use.
- * @property id a mon's id, in Showdown format. @TODO does this exist? probs not
- * @property {string} species  the species of Pokemon, ex. "Pikachu".
- * @property {Array<Move>} moves  an array of Moves.
- * @property {number} level  the level of the mon.
- * @property {string} gender  One of 'M', 'F', or undefined/empty(?)
- * @property {number} hp  The mon's current HP.
- * @property {number} maxhp  The mon's max HP. Note that if the 'HP Percentage Mod'
- *        rule is set, this will be 100 for all of your opponent's mons.
- * @property {number} hppct  The mon's current HP as a percentage of max HP, in case
- *        that's easier to use.
- * @property {boolean} active  True if this mon is active, undefined otherwise.
- * @property {Array<Object>} events  Not currently being used. (things that happened to this
- *         mon? things this mon did?)
- * @property {Array<string>} types  An array of the mon's types, ex. ['Fire', 'Flying']
+ * @typedef PokemonData
+ *
+ * Here's all the data you get with Pokemon objects.
+ *
+ * @property {String} ability  The mon's ability, if known.
+ * @property {Object} abilities  A key-value list of abilities the Pokemon might
+ *         have. The keys are numbers ('0', '1', etc.) plus the key 'H' for
+ *         hidden abilities.
+ * @property {Boolean} active  True if this mon is active, undefined otherwise.
+ * @property {String} baseAbility  The mon's ability, if known. This will only
+ *           be set for Pokemon you control.
  * @property {Object} baseStats  An object with these properties:
- * @property {number} baseStats.atk: The attack value before boosts, EVs, IVs, etc.
- * @property {number} baseStats.def: The defense value before boosts, EVs, IVs, etc.
- * @property {number} baseStats.spa: The special attack value before boosts, EVs, IVs, etc.
- * @property {number} baseStats.spd: The special defense value before boosts, EVs, IVs, etc.
- * @property {number} baseStats.spe: The speend value before boosts, EVs, IVs, etc.
- * @property {Object} stats An object similar to baseStats, but includes calculations
- *           based on EVs, IVs, and level. It does NOT include calculations based
- *           on boosts and unboosts.
- * @property {string} ability  The mon's ability (?)
- * @property {Array} abilities  An array of abilities this mon might have (?)
- * @property {string} baseAbility  The mon's ability (?)
- * @property {number} weightkg  The mon's weight, in kg.
- * @property {string} nature  The mon's nature, ex. 'Jolly'. Usually, you only know
- * this about your own mons.
+ * @property {Number} baseStats.atk: The attack value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.def: The defense value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spa: The special attack value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spd: The special defense value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spe: The speend value before boosts, EVs, IVs, etc.
  * @property {Object} boosts An object with properties set for boosts and unboosts.
  *           For example, if this mon has cast Swords Dance, you will have
  *           boosts = {atk: 2}. Boost values range from -6 to 6.
- * @property {string} position  The mon's position, in Showdown format. 'p1a' means
+ * @property {String} condition  a condition in Showdown format, ex. '100/100 par poi',
+ *            '0/100 fnt' etc.
+ * @property {Array<String>} conditions  an array of conditions, ex. ['par', 'poi'], in case
+ *             that's easier to use.
+ * @property {boolean} dead  True if the mon is dead, undefined otherwise
+ * @property {Array<Object>} events  Not currently being used. (things that happened to this
+ *         mon? things this mon did?)
+ * @property id a mon's id, in Showdown format. @TODO does this exist? probs not
+ * @property {String} gender  One of 'M', 'F', or undefined/empty(?)
+ * @property {Number} hp  The mon's current HP.
+ * @property {Number} hppct  The mon's current HP as a percentage of max HP, in case
+ *        that's easier to use.
+ * @property {Number} level  the level of the mon.
+ * @property {Number} maxhp  The mon's max HP. Note that if the 'HP Percentage Mod'
+ *        rule is set, this will be 100 for all of your opponent's mons.
+ * @property {Array<MoveData>} moves  an array of Moves.
+ * @property {String} nature  The mon's nature, ex. 'Jolly'. Usually, you only know
+ * this about your own mons.
+ * @property {String} owner  The mon's owner, ex. 'p1' or 'p2'
+ * @property {String} position  The mon's position, in Showdown format. 'p1a' means
  *           they are in player 1's first active slot; 'p2c' means they are
  *           in player 2's third active slot (in a Triples battle)
- * @property {string} owner  The mon's owner, ex. 'p1' or 'p2'
+ * @property {Array<String>} types  An array of the mon's types, ex. ['Fire', 'Flying']
+ * @property {String} species  the species of Pokemon, ex. "Pikachu". This is
+ *         the same as {@link PokemonData.id}, but more human-readable.
+ * @property {Object} stats An object similar to baseStats, but includes calculations
+ *           based on EVs, IVs, and level. It does NOT include calculations based
+ *           on boosts and unboosts.
+ * @property {Number} weightkg  The mon's weight, in kg.
  */
 
   /**
@@ -114,44 +121,50 @@ export default class Pokemon {
   }
 
 /**
- * @typedef Move
+ * @typedef MoveData
+ *
+ * Here's all the information you get with Move objects.
  *
  *
- * @property {number/boolean} accuracy The move's accuracy, as a percent. 100 or true
+ * @property {Number|Boolean} accuracy The move's accuracy, as a percent. 100 or true
  * means they will always connect, unless affected by something else.
- * @property {number} basePower  The base power, ex. 80.
- * @property {string} category  'Physical', 'Special', or 'Status'
- * @property {string} id  The move ID, ex. 'acrobatics'
- * @property {string} name  The move name, ex. 'Acrobatics'
- * @property {number} priority  Does this move have priority? Most have the value 0.
+ * @property {Number} basePower  The base power, ex. 80.
+ * @property {String} category  'Physical', 'Special', or 'Status'
+ * @property {Object} flags From the flags Showdown server:
+ * @property {Boolean} flags.authentic Ignores a target's substitute.
+ * @property {Boolean} flags.bite Power is multiplied by 1.5 when used by a Pokemon with the Ability Strong Jaw.
+ * @property {Boolean} flags.bullet Has no effect on Pokemon with the Ability Bulletproof.
+ * @property {Boolean} flags.charge The user is unable to make a move between turns.
+ * @property {Boolean} flags.contact Makes contact.
+ * @property {Boolean} flags.defrost Thaws the user if executed successfully while the user is frozen.
+ * @property {Boolean} flags.distance Can target a Pokemon positioned anywhere in a Triple Battle.
+ * @property {Boolean} flags.gravity Prevented from being executed or selected during Gravity's effect.
+ * @property {Boolean} flags.heal Prevented from being executed or selected during Heal Block's effect.
+ * @property {Boolean} flags.mirror Can be copied by Mirror Move.
+ * @property {Boolean} flags.nonsky Prevented from being executed or selected in a Sky Battle.
+ * @property {Boolean} flags.powder Has no effect on Grass-type Pokemon, Pokemon with the Ability Overcoat, and Pokemon holding Safety Goggles.
+ * @property {Boolean} flags.protect Blocked by Detect, Protect, Spiky Shield, and if not a Status move, King's Shield.
+ * @property {Boolean} flags.pulse Power is multiplied by 1.5 when used by a Pokemon with the Ability Mega Launcher.
+ * @property {Boolean} flags.punch Power is multiplied by 1.2 when used by a Pokemon with the Ability Iron Fist.
+ * @property {Boolean} flags.recharge If this move is successful, the user must recharge on the following turn and cannot make a move.
+ * @property {Boolean} flags.reflectable Bounced back to the original user by Magic Coat or the Ability Magic Bounce.
+ * @property {Boolean} flags.snatch Can be stolen from the original user and instead used by another Pokemon using Snatch.
+ * @property {Boolean} flags.sound Has no effect on Pokemon with the Ability Soundproof.
+ * @property {String} id  The move ID, ex. 'acrobatics'
+ * @property {String} name  The move name, ex. 'Acrobatics'
+ * @property {Number} priority  Does this move have priority? Most have the value 0.
  *           Moves with priority 1 will go before moves with priority 0 in
  *           normal cases.
- * @property {Object} flags From the flags Showdown server:
- * @property {boolean} flags.authentic Ignores a target's substitute.
- * @property {boolean} flags.bite Power is multiplied by 1.5 when used by a Pokemon with the Ability Strong Jaw.
- * @property {boolean} flags.bullet Has no effect on Pokemon with the Ability Bulletproof.
- * @property {boolean} flags.charge The user is unable to make a move between turns.
- * @property {boolean} flags.contact Makes contact.
- * @property {boolean} flags.defrost Thaws the user if executed successfully while the user is frozen.
- * @property {boolean} flags.distance Can target a Pokemon positioned anywhere in a Triple Battle.
- * @property {boolean} flags.gravity Prevented from being executed or selected during Gravity's effect.
- * @property {boolean} flags.heal Prevented from being executed or selected during Heal Block's effect.
- * @property {boolean} flags.mirror Can be copied by Mirror Move.
- * @property {boolean} flags.nonsky Prevented from being executed or selected in a Sky Battle.
- * @property {boolean} flags.powder Has no effect on Grass-type Pokemon, Pokemon with the Ability Overcoat, and Pokemon holding Safety Goggles.
- * @property {boolean} flags.protect Blocked by Detect, Protect, Spiky Shield, and if not a Status move, King's Shield.
- * @property {boolean} flags.pulse Power is multiplied by 1.5 when used by a Pokemon with the Ability Mega Launcher.
- * @property {boolean} flags.punch Power is multiplied by 1.2 when used by a Pokemon with the Ability Iron Fist.
- * @property {boolean} flags.recharge If this move is successful, the user must recharge on the following turn and cannot make a move.
- * @property {boolean} flags.reflectable Bounced back to the original user by Magic Coat or the Ability Magic Bounce.
- * @property {boolean} flags.snatch Can be stolen from the original user and instead used by another Pokemon using Snatch.
- * @property {boolean} flags.sound Has no effect on Pokemon with the Ability Soundproof.
  * @property {Object} self  Does this have an effect on myself?
- * @property {Object} self.boosts
- * @property {number} self.def Defense raised or lowered by this # of stages
- * @property {number} self.spe Speed raised or lowered by this # of stages
- * @property {string} self.volatileStatus: 'mustrecharge' from frenzyplant
- * @property {string} volatileStatus  Ex. 'aquaring', 'attract', 'autotomize', 'bide',
+ * @property {Object} self.boosts An object containing boost properties.
+ * @property {Number} self.boosts.def Defense raised or lowered by this # of stages
+ * @property {Number} self.boosts.spe Speed raised or lowered by this # of stages
+ * @property {String} self.volatileStatus: 'mustrecharge' from frenzyplant
+ * @property {String} target  Ex. 'normal', 'self', 'allySide', 'any', 'randomNormal',
+ *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
+ * @property {String} type  The type of move, ex. 'Ghost'. Every move has one and only
+ *       one type.
+ * @property {String} volatileStatus  Ex. 'aquaring', 'attract', 'autotomize', 'bide',
  * 'charge', 'confusion', 'curse', 'destinybond', 'disable', 'electrify',
  * 'embargo', 'encore', 'endure', 'flinch', 'focusenergy', 'followme',
  * 'foresight', 'gastroacid', 'grudge', 'healblock', 'helpinghand',
@@ -160,11 +173,6 @@ export default class Pokemon {
  * 'nightmare', 'partiallytrapped', 'powder', 'powertrick', 'protect',
  * 'rage', 'ragepowder', 'roost' 'smackdown', 'snatch', 'spikyshield',
  * 'stockpile', 'taunt', 'telekinesis', 'torment', 'uproar' 'yawn'
- * @see http://pokemondb.net/move/attract
- * @property {String} target  Ex. 'normal', 'self', 'allySide', 'any', 'randomNormal',
- *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
- * @property {String} type  The type of move, ex. 'Ghost'. Every move has one and only
- *       one type.
  */
 
   /**

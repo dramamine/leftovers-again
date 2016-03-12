@@ -11,7 +11,6 @@ import Spawner from 'spawner';
 
 // process cmdline args
 const args = require('minimist')(process.argv.slice(2));
-console.log('got these args:', args);
 
 if (args.help || args.h) {
   _displayHelp();

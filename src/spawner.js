@@ -9,7 +9,7 @@ class Spawner {
   }
 
   spawn(path) {
-    Log.info('spawning opponent from file ' + path);
+    Log.notice('spawning opponent with path ' + path);
     const op = spawn('babel-node', [
       'src/main.js',
       `--bot=${path}`

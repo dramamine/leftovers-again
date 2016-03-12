@@ -1,3 +1,6 @@
+
+
+
 ## How do I get started?
 Run `make`, which will install some important things.
 
@@ -19,7 +22,7 @@ The `getTeam` takes team data in other formats - see the [code documentation]() 
 Note that if you're playing the `randombattle` format, you don't need to define `getTeam`.
 
 ### What's in a request?
-The heart of developing a bot lies in processing the `state` data from each turn / request, and choosing your moves & switches wisely. Check the [code documentation]() for 
+The heart of developing a bot lies in processing the `state` data from each turn / request, and choosing your moves & switches wisely. Check the [code documentation](https://doc.esdoc.org/github.com/dramamine/leftovers-again/class/src/ai.js~AI.html) for more details.
 
 ### How do I respond to a request?
 The preferred way is to return new instances of MOVE or SWITCH. Example code:

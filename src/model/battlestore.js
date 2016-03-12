@@ -224,6 +224,13 @@ export default class BattleStore {
     }
   }
 
+  /**
+   * Saves the name of the player.
+   *
+   * @param  {String} id        The id of the player, ex. 'p1' or 'p2'
+   * @param  {String} name      The name of the player, ex. '5nowden'
+   * @param  {[type]} something  ignored
+   */
   handlePlayer(id, name, something) { //eslint-disable-line
     this.names[id] = name;
   }
@@ -236,8 +243,7 @@ export default class BattleStore {
    * When we get this message, we also record the status of each active
    * Pokemon, in our statuses array.
    *
-   * @param  {[type]} x [description]
-   * @return {[type]}   [description]
+   * @param  {Number} x The turn number.
    */
   handleTurn(x) {
     this.turn = parseInt(x, 10);
@@ -258,43 +264,18 @@ export default class BattleStore {
    * Handles an incoming request. The one parameter to this is a string of
    * JSON, known as the request.
    *
-   *  what does the request look like? WELL. Check out these properties:
-   *  'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
-   *          These don't match up perfectly with turns bc you may have to swap
-   *          out pokemon if one dies, etc.
-   *   'side':
-   *     'name': your name
-   *     'id': either 'p1' or 'p2'
-   *     'pokemon': [Pokemon]      (6 of them. they're the pokemon on yr side)
-   *   'active':
-   *     'moves': [Move]           (the 4 moves of your active pokemon)
+   *  what does the request look like? WELL. These properties are all integrated
+   *  into the {@link AI} object, so you probably want to look at that instead.
+   *  But in case you're wondering what the actual data from the server looks
+   *  like, keep reading.
    *
-   *    Move is an object with these properties:
-   *    'move': the move name (ex.'Fake Out')
-   *    'id': the move ID (ex. 'fakeout')
-   *    'pp': how many PP you currently have
-   *    'maxpp': the max PP for this move
-   *    'target': target in options (ex. 'normal')
-   *    'disabled': boolean for whether this move can be used.
+   *  {@link MoveData} objects here are limited and contain only 'move' (the
+   *  move name, ex. 'Fake Out', 'id' ex. 'fakeout', 'pp', 'maxpp', 'target',
+   *  and 'disabled'.
    *
-   *    Pokemon look like this:
-   *    'ident': ex. 'p1: Wormadam'
-   *    'details': ex. 'Wormadam, L83, F'
-   *    'condition': ex. '255/255'
-   *    'hp': current HP
-   *    'maxhp': maximum HP
-   *    'active': boolean, true if pokemon is currently active
-   *    'stats':
-   *      'atk': attack
-   *      'def': defense
-   *      'spa': special attack
-   *      'spd': special defense
-   *      'spe': speed
-   *    'moves': Array of move IDs
-   *    'baseAbility': the ability of the Pokemon (ex. 'overcoat')
-   *    'item' the Pokemon's held item (ex. 'leftovers')
-   *    'pokeball': what kind of pokeball the Pokemon was caught with
-   *    'canMegaEvo': Boolean for whether this Pokemon can mega-evolve
+   * {@link PokemonData} objects are limited and contain only 'ident', 'details',
+   * 'condition', 'hp', 'maxhp', 'active', 'stats', 'moves', 'baseAbility',
+   * 'item', 'pokeball', and 'canMegaEvo'.
    *
    * With most of this information, we may know the things already, ex. we
    * know if a Pokemon took damage or not. However there are lots of ways we
@@ -307,6 +288,27 @@ export default class BattleStore {
    *
    * @param {String} json The string of JSON which makes up the request.
    *
+   * @param {Array<Object>} json.active  An array containing the moves that
+   * your active Pokemon can perform. The size of the array is the number of
+   * active Pokemon on your side, ex. in Singles matches, the array length is 1.
+   * @param {Array<MoveData>} json.active[].moves            (the 4 moves of your active pokemon)
+   * @param {Array<Boolean>}  json.forceSwitch  booleans for each position that
+   * needs to switch out. ex. [true] means it's a singles match and your mon
+   * needs to switch out. [false, true] means it's a doubles match and your
+   * second mon needs to switch out.
+   * @param {Boolean} json.noCancel  Moves cannot be cancelled in the interval
+   * between sending the move and the server receiving your opponent's move.
+   * This is unused.
+   * @param {String} json.rqid  The request ID. ex. '1' for the first turn, '2' for the second, etc.
+   *          These don't match up perfectly with turns bc you may have to swap
+   *          out pokemon if one dies, etc.
+   * @param {Object} json.side
+   * @param {String} json.side.id    either 'p1' or 'p2'
+   * @param {String} json.side.name  your name
+   * @param {Array<PokemonData>} json.side.pokemon   6 of them. they're the pokemon on yr side.
+   * @param {Boolean} json.wait  True if this is not a request - just updated
+   * information. The opponent needs to do something; ex. if their mon feinted
+   * last turn, they need to choose a mon to send in. This is unused.
    */
   handleRequest(json) {
     const data = JSON.parse(json);
