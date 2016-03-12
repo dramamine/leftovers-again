@@ -8,9 +8,6 @@ import Damage from 'lib/damage';
 import {MOVE, SWITCH} from 'decisions';
 
 class Stabby {
-  constructor() {
-    super();
-  }
 
   decide(state) {
     if (state.forceSwitch) {

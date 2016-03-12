@@ -6,7 +6,8 @@ class BotInfo {
 
     // note that this instance of the bot is created ONLY for pulling its team
     // string and metadata. this instance is not actually used in battles.
-    this.bot = null;
+    const It = require(path);
+    this.bot = new It();
 
     // metadata location
     try {
@@ -15,9 +16,7 @@ class BotInfo {
     } catch (e) {
       // nested try-catch, u mad brah?
       try {
-        // just load the bot and hope it has all these metadata functions
-        const It = require(path);
-        this.bot = new It();
+        this.metadata = this.bot.meta;
       } catch (x) {
         Log.error('No metadata found! Expected to find the file in node_path '
          + path);
@@ -26,14 +25,14 @@ class BotInfo {
   }
 
   get version() {
-    return this.bot.meta.version;
+    return this.metadata.version;
   }
 
   get format() {
-    return this.bot.meta.format;
+    return this.metadata.format;
   }
   get accepts() {
-    return this.bot.meta.accepts;
+    return this.metadata.accepts;
   }
   /**
    * Either the bot has
@@ -42,8 +41,10 @@ class BotInfo {
   team(opponent) {
     if (this.bot.team && typeof this.bot.team === 'function') {
       return this.bot.team(opponent);
+    } else if (this.metadata && this.metadata.team) {
+      return this.metadata.team;
     }
-    return this.bot.meta.team;
+    return '';
   }
 }
 

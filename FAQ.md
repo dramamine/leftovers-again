@@ -91,7 +91,7 @@ I'm not comfortable releasing that code to the public, but message marten@metal-
 You need to publish your bot on NPM, GitHub, or some other git hosting service. I'm manually maintaining these lists for now, so just message marten@metal-heart.org with installation instructions for me.
 
 ## I'd like to contribute code to this project!
-[link to CONTRIBUTING.md]
+[Read the contribution guide](./CONTRIBUTING.md).
 
 
 

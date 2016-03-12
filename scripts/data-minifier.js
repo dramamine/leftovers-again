@@ -34,9 +34,10 @@ function copyMoves() {
     'volatileStatus',
   ];
   for (const key in BattleMovedex) { // eslint-disable-line
-    updated[key] = {};
+    const properMoveName = toId(key);
+    updated[properMoveName] = {};
     keysToCopy.forEach( (keyToCopy) => { // eslint-disable-line
-      updated[key][keyToCopy] = BattleMovedex[key][keyToCopy];
+      updated[properMoveName][keyToCopy] = BattleMovedex[key][keyToCopy];
     });
   }
 

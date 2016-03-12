@@ -1,6 +1,9 @@
 ## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
 
+'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
 Full code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+
+This is the official repository for an ongoing AI competition for Pokemon battles.
 
 Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
 
@@ -14,17 +17,16 @@ Many developers have worked on AI bots before, in multiple languages, always hav
 
 That work is *already done for you*.
 
-To write a bot, you only need two files:
-- A bot config file, defining your team and your game tier. ([example])
-- A class with your `decide` function. This is where the fun stuff happens! Read the spec (here) to see all the state data you have access to. ([example])
+You can have a working bot up and running in minutes. Read the [Getting Started guide](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md) to see how easy it is.
+
 
 ## Get Useful Feedback. Quickly Iterate on Your Design.
 
-Before AI, to test a new team, you'd have to play your team for hours just to get a feel for how it performs. Now, you can get 100 matches of feedback in MINUTES. Use data, not feelings!
+Have an idea for a new strategy? Want to tweak your team ideas?
 
-With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? Stall teams? Trick Rooms? You'll know your bot's weaknesses and can improve your 
+Before AI, to test a new team, you'd have to use your team for hours just to get a feel for how it performs. Now, you can get 100 matches of feedback in MINUTES. Use data, not feelings!
 
-You can also save replays from your bot battles. Even though your battles don't take place on official servers, you can play or upload your replays to the official [Replay Replayer](http://replay.pokemonshowdown.com/).
+With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? Stall teams? Trick Rooms? You'll know your bot's weaknesses and can improve your design as such.
 
 ## Compete Against Other Bots. And Humans.
 
@@ -34,36 +36,12 @@ We're running our own Showdown server named 'Cyberdyne'. There, every bot in thi
 
 The ethics of taking bots onto official servers is questionable. [Watch this video to see what happens.]()
 
-## Writing Your First Bot
+**TODO example results**
 
-### 0. Setting Up Your Environment
-First, clone this project and install dependencies:
-```
-git clone https://github.com/dramamine/leftovers-again
-# these need to be installed globally
-sudo npm install -g karma karma-cli babel-node ...etc
-npm install
-```
+## Love playing Pokemon but suck at programming?
 
-### 1. Writing Your Config File
-Lots of sample configs in the cfg/ folder. Say we have a file called `sample.cfg` that looks like this:
-```
-{
-  path: [botpath]
-}
-```
+Writing a Pokemon bot is a small, low-risk project where you can create something rewarding without a huge time investment. You don't have to create the next 'Deep Blue'! Just come up with a creative team and strategy, then set easy goals for yourself, like [beating all the Elite Four and Champions from 6th Generation]().
 
-### 2. Writing Your Bot
-Copy the contents of bot.tmpl to [botpath].js to get started. This will 
-
-
-### 3. Testing Your Bot
-
-
-
-## The Decide() Loop
-
-Your AI bot runs the function decide(state) over and over agin. The `state` object contains all the information you need about the current state of the game - your pokemon, their statuses, moves, and everything you know about your opponent's pokemon. It's up to you 
 
 ## Write in Any Language You Want
 
@@ -73,6 +51,38 @@ Languages currently supported:
 - jk nothing yet
 
 If you'd like to implement your favorite language: 
+
+
+## Example Usage
+
+### Install everything
+First, make sure you have installed node and npm.
+```bash
+git clone git@github.com:dramamine/leftovers-again.git
+cd leftovers-again
+sudo npm install -g babel-node
+make
+```
+
+### Run a `randombattle` between two bots:
+```bash
+npm run server # in a separate window
+npm start -- stabby --opponent=randumb --scrappy --loglevel=2 --matches=1
+```
+
+### Build skeleton code for your bot:
+`npm run generate`
+
+### Battle against all the other bots included in this repo:
+`npm run gauntlet`
+
+### Play against a stall team, in the browser
+```bash
+npm run server
+npm start research/rooster
+npm run client # then add ?~~localhost:8000 to the end of the URL
+```
+
 
 ## NOTES
 1/3/2016

@@ -1,3 +1,9 @@
 [submodule "bots/la-fitness"]
 	path = bots/la-fitness
 	url = git@github.com:dramamine/la-fitness.git
+[submodule "lib/Pokemon-Showdown"]
+  path = lib/Pokemon-Showdown
+  url = git@github.com:Zarel/Pokemon-Showdown.git
+[submodule "lib/Pokemon-Showdown-Client"]
+  path = lib/Pokemon-Showdown-Client
+  url = git@github.com:Zarel/Pokemon-Showdown-Client.git
