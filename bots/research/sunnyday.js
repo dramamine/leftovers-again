@@ -81,7 +81,7 @@ Serious Nature
 `;
   }
 
-  onRequest(state) {
+  decide(state) {
     console.log('WEATHER REPORT: ' + state.weather);
     if (state.forceSwitch || !this.canSunny(state)) {
       this.ctr = this.ctr + 1;

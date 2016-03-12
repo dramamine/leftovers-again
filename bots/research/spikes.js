@@ -84,7 +84,7 @@ Relaxed Nature
 `;
   }
 
-  onRequest(state) {
+  decide(state) {
     console.log('active effects: ', state.self.effects);
     console.log('opponent effects: ', state.opponent.effects);
 

@@ -86,7 +86,7 @@ class Battle {
    * @TODO is this necessary or should we do this in handleRequest?
    */
   handleTeamPreview() {
-    this.decide();
+   this.decide();
   }
 
   /**
@@ -113,7 +113,11 @@ class Battle {
       return false;
     }
 
-    if (data.forceSwitch || data.teamPreview) {
+    if (data.teamPreview) {
+      return false;
+    }
+
+    if (data.forceSwitch) {
       this.decide();
     }
   }

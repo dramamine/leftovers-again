@@ -99,12 +99,18 @@ Serious Nature
   }
 
   decide(state) {
+    console.log(state);
     if (state.forceSwitch || !this.canFacade(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
 
       return new SWITCH(this.ctr);
     }
+    if (!state.opponent.active || state.opponent.active.length === 0) {
+      console.log('NO ACTIVE OPPONENT OH NO');
+      return new MOVE('facade');
+    }
+
     state.self.active.nature = 'serious';
     state.self.active.level = 100;
     state.opponent.active.nature = 'serious';

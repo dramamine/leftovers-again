@@ -15,11 +15,11 @@ Try battling your bot against a simple opponent - one who chooses moves at rando
 You will probably lose.
 
 ### Choosing the Team
-The `getTeam` function should return a string that matches the Smogon format. So, if you build a team on [Pokemon Showdown](http://play.pokemonshowdown.com/) using the Teambuilder, or if you copy Pokemon data from [Smogon](http://www.smogon.com/), you can paste it in this function.
+The `team()` function should return a string that matches the Smogon format. So, if you build a team on [Pokemon Showdown](http://play.pokemonshowdown.com/) using the Teambuilder, or if you copy Pokemon data from [Smogon](http://www.smogon.com/), you can paste it in this function.
 
-The `getTeam` takes team data in other formats - see the [code documentation]() for more details
+The `team()` takes team data in other formats - see the [code documentation](https://doc.esdoc.org/github.com/dramamine/leftovers-again/class/src/lib/team.js~Team.html) for more details
 
-Note that if you're playing the `randombattle` format, you don't need to define `getTeam`.
+Note that if you're playing the `randombattle` format, you don't need to define `team()`.
 
 ### What's in a request?
 The heart of developing a bot lies in processing the `state` data from each turn / request, and choosing your moves & switches wisely. Check the [code documentation](https://doc.esdoc.org/github.com/dramamine/leftovers-again/class/src/ai.js~AI.html) for more details.
@@ -79,7 +79,7 @@ Make sure you're only choosing valid choices.
 You can change the logging level when running the bot using '--loglevel=[x]'. 1 returns only errors, 5 shows debug info
 
 Server messages get logged to `log/replays/{{timestamp}}-{{battleid}}`
-States get logged to `log/states/{{timestamp}}-{{battleid}}`. These can be extremely useful for unit tests and debugging crashes (you can easily call onRequest() on these JSON objects)
+States get logged to `log/states/{{timestamp}}-{{battleid}}`. These can be extremely useful for unit tests and debugging crashes (you can easily call decide() on these JSON objects). **TODO:** logging isn't like this yet. 
 
 
 
