@@ -18,7 +18,6 @@
  * npm run develop -- --bot=anythinggoes/tester/facader.js
  */
 
-
 import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
 import Damage from 'lib/damage';
@@ -29,14 +28,13 @@ export default class Facader extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
     this.ctr = -1;
     this.hasLogged = false;
   }
 
-  getTeam() {
+  team() {
     return `
 Cinccino
 Ability: Skill Link
@@ -100,7 +98,7 @@ Serious Nature
 `;
   }
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch || !this.canFacade(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;

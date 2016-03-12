@@ -16,7 +16,7 @@ import Reporter from 'reporters/matchstatus';
 class Battle {
   /**
    * Construct a Battle instance.
-   * @param  {string} bid The battle ID; essential for server communication
+   * @param  {String} bid The battle ID; essential for server communication
    * @param  {Connection} connection The connection instance to use for
    * sending and receiving messages.
    * @param  {string} botpath The path to the bot JS file to use. The file it
@@ -150,7 +150,7 @@ class Battle {
 
     log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(currentState) + '\n');
 
-    const choice = this.myBot().onRequest(currentState);
+    const choice = this.myBot().decide(currentState);
     if (choice instanceof Promise) {
       // wait for promises to resolve
       choice.then( (resolved) => {

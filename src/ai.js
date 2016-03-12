@@ -2,9 +2,7 @@
  * AI class. Extend this when creating your bot.
  */
 export default class AI {
-  constructor(meta) {
-    this.meta = meta;
-  }
+  constructor() {}
 
   /**
    * Abstract function that must be overridden.
@@ -14,8 +12,8 @@ export default class AI {
    *
    * @return {String}   A Showdown-formatted team string.
    */
-  getTeam(opponent) { // eslint-disable-line
-    return ``;
+  team(opponent) { // eslint-disable-line
+    return this.meta.team || ``;
   }
 
   /**
@@ -53,8 +51,8 @@ export default class AI {
    *
    *
    */
-  onRequest(state) { // eslint-disable-line
-    console.log('You need to implement onRequest in your AI class!');
+  decide(state) { // eslint-disable-line
+    console.error('You need to implement decide() in your AI class!');
     return false;
   }
 }

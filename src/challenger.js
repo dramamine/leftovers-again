@@ -198,7 +198,7 @@ class Challenger {
         // this is the point at which we need to pick a team!
         // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        const team = this.botinfo.getTeam(opponent);
+        const team = this.botinfo.team(opponent);
         if (team) {
           const utmString = new Team(team).asUtm();
           Log.info('sending team msg...', utmString);
@@ -233,7 +233,7 @@ class Challenger {
   _challenge(nick) {
     Log.info(`challenge called. ${nick}`);
 
-    const team = this.botinfo.getTeam(nick);
+    const team = this.botinfo.team(nick);
     if (team) {
       const utmString = new Team(team).asUtm();
       Log.info('sending utm...', utmString);

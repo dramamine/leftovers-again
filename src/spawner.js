@@ -22,7 +22,7 @@ class Spawner {
    * @return {[type]}      [description]
    */
   spawn(path) {
-    Log.notice('spawning opponent with path ' + path);
+    Log.log('spawning opponent with path ' + path);
     const op = spawn('babel-node', [
       'src/main.js',
       `--bot=${path}`

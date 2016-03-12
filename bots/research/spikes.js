@@ -14,14 +14,13 @@ export default class SunnyDay extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
 
     this.ctr = -1;
   }
 
-  getTeam() {
+  team() {
     return `
 Ferrothorn
 Ability: Iron Barbs

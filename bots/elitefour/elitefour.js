@@ -64,7 +64,7 @@ export default class EliteFour extends AI {
     this.randomnessExponent = randomnessExponent;
   }
 
-  onRequest(state) {
+  decide(state) {
     console.dir(state);
     if (state.forceSwitch) {
       // our pokemon died :(

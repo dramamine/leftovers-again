@@ -14,14 +14,13 @@ export default class SunnyDay extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
 
     this.ctr = -1;
   }
 
-  getTeam() {
+  team() {
     return `
 Pancham
 Ability: Mold Breaker
@@ -85,8 +84,9 @@ Adamant Nature
 `;
   }
 
-  onRequest(state) {
-    if (state.forceSwitch || !this.can(state)) {
+  decide(state) {
+    console.log(state.self.reserve);
+    if (state.forceSwitch || state.teamPreview || !this._can(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
 
@@ -95,7 +95,7 @@ Adamant Nature
     return new MOVE(moveId);
   }
 
-  can(state) {
+  _can(state) {
     if (!state.self.active) return false;
     if (!state.self.active.moves) return false;
     const move = state.self.active.moves.find(m => m.id === moveId);

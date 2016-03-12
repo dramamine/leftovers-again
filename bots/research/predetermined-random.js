@@ -12,20 +12,17 @@ export default class Predetermined extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      // note that this will use the same random team for the duration of the
-      // session! team is only set at initialization.
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
 
     this.ctr = -1;
   }
 
-  getTeam() {
+  team() {
     return team.random();
   }
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch || state.teamPreview) {
       // our pokemon died :(
       // choose a random one
@@ -42,7 +39,7 @@ export default class Predetermined extends AI {
       const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
-    } catch(e) {
+    } catch (e) {
       console.log('broke when checking possible moves:', e);
       console.dir(state);
       return null;

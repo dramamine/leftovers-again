@@ -19,7 +19,7 @@ class Randumb extends AI {
     };
   }
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one

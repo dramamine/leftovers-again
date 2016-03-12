@@ -12,7 +12,7 @@ class {{Repo}} extends AI {
   }
 
 {{#if team }}
-  getTeam() {
+  team() {
     return `
 Magikarp @ Leftovers
 Ability: Rattled
@@ -25,7 +25,7 @@ Careful Nature
   }
 {{/if}}
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch) {
       const myMon = this._pickOne(
         state.self.reserve.filter( mon => !mon.dead );

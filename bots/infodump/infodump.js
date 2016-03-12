@@ -2,6 +2,7 @@
  * Get some helpful info about pokemon & their moves
  *
  */
+
 import AI from 'ai';
 import Damage from 'lib/damage';
 import KO from 'lib/kochance';
@@ -12,17 +13,12 @@ import util from 'pokeutil';
 
 import {MOVE, SWITCH} from 'decisions';
 
-const meta = {
-  battletype: 'randombattle',
-  author: 'marten'
-};
-
 class Infodump extends AI {
   constructor() {
-    super(meta);
+    super();
   }
 
-  onRequest(state) {
+  decide(state) {
     Log.info('infodumps state:: ', state);
     Damage.assumeStats(state.opponent.active);
     if (state.forceSwitch) {

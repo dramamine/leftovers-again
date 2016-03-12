@@ -16,7 +16,7 @@ describe('Randumb', () => {
     };
 
     for (let i = 0; i < 10; i++) {
-      const result = randumb.onRequest(state);
+      const result = randumb.decide(state);
       expect(result instanceof(MOVE)).toBe(true);
     }
   });
@@ -32,7 +32,7 @@ describe('Randumb', () => {
       }
     };
 
-    const result = randumb.onRequest(state);
+    const result = randumb.decide(state);
     expect(result.id.name).toEqual('b');
   });
 
@@ -45,7 +45,7 @@ describe('Randumb', () => {
           { name: 'bazmelion', condition: '0 fnt' }]
       }
     };
-    const result = randumb.onRequest(state);
+    const result = randumb.decide(state);
     expect(result instanceof(SWITCH)).toBe(true);
     expect(result.id.name).toEqual('foomander');
   });

@@ -1,6 +1,6 @@
 import EliteFour from './elitefour';
 
-export default class Diantha extends EliteFour {
+export default class Glacea extends EliteFour {
   constructor() {
     super();
     this.meta = meta;

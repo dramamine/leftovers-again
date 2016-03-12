@@ -13,14 +13,13 @@ export default class RapidSpin extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
 
     this.ctr = -1;
   }
 
-  getTeam() {
+  team() {
     return `
 Avalugg @ Leftovers
 Ability: Sturdy
@@ -78,7 +77,7 @@ Careful Nature
 `;
   }
 
-  onRequest(state) {
+  decide(state) {
     console.log('active effects: ', state.self.effects);
     console.log('opponent effects: ', state.opponent.effects);
 

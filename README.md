@@ -116,7 +116,7 @@ $ ENGINE WORK
 - implement 'oppponents' spawning from main
 - remove or hide www code
 - change logging to use timestamps
-
+- fix the elitefour bots to use package.json
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

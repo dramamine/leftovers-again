@@ -3,18 +3,16 @@
  * switch out, though.
  *
  */
-
-import AI from 'ai';
 import Damage from 'lib/damage';
 
 import {MOVE, SWITCH} from 'decisions';
 
-class Stabby extends AI {
+class Stabby {
   constructor() {
     super();
   }
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -23,7 +21,7 @@ class Stabby extends AI {
         if (mon.active) return false;
         return true;
       });
-      const myMon = this.pickOne(possibleMons);
+      const myMon = this._pickOne(possibleMons);
       return new SWITCH(myMon);
     }
 
@@ -53,7 +51,7 @@ class Stabby extends AI {
     return new MOVE(bestMove);
   }
 
-  pickOne(arr) {
+  _pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

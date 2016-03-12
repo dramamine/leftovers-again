@@ -15,14 +15,13 @@ export default class Rooster extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes',
-      team: this.getTeam()
+      format: 'anythinggoes'
     };
 
     this.ctr = -1;
   }
 
-  getTeam() {
+  team() {
     return `
 Talonflame
 Ability: Gale Wings
@@ -86,7 +85,7 @@ Serious Nature
 `;
   }
 
-  onRequest(state) {
+  decide(state) {
     if (state.forceSwitch || !this.canRoost(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
