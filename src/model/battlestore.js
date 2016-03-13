@@ -425,16 +425,14 @@ export default class BattleStore {
       .map(dataGetter);
 
     if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
-      console.log('stop the presses! pokemon with no owner.');
-      console.log(output.opponent.active[0]);
+      Log.warn('stop the presses! pokemon with no owner.');
+      Log.warn(output.opponent.active[0]);
       exit();
     }
 
     if (output.self.active.length > 1) {
-      console.log('stop the presses! too many active pokemon');
-      console.dir(this.allmon
-        .filter(iamowner)
-        .filter(isactive));
+      Log.warn('stop the presses! too many active pokemon');
+      Log.warn(output.self.active);
     }
 
     // this was causing some errors before. could use some more research...

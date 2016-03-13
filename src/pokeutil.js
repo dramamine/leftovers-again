@@ -57,7 +57,6 @@ class PokeUtil {
    * @return {Number} The stat including the boost multiplier.
    */
   boostMultiplier(stat, mod = 0) {
-    console.log(stat, mod);
     return mod > 0 ? Math.floor(stat * (2 + mod) / 2)
     : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
       : stat;

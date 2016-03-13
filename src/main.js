@@ -1,4 +1,3 @@
-// @TODO move these to 'connection' and maybe don't load them all
 import socket from 'socket';
 import monkey from 'monkey';
 import listener from 'listener';
@@ -61,8 +60,7 @@ listener.use(battlemanager);
  *
  */
 function exitHandler(options, err) {
-  if (options.cleanup) console.log('clean');
-  if (err) console.log(err.stack);
+  if (err) console.error(err.stack);
   myconnection.close();
   if (options.exit) process.exit();
 }
@@ -81,6 +79,8 @@ Leftovers Again: interface for Pokemon Showdown bots
 -loglevel [1-5]: level of severity of logs to show. higher levels are more
                  verbose. default 3.
 -opponent [path]: Spawn a specific opponent via a child process.
+-scrappy:       Have your bot pick fights with anyone who's in the lobby or
+                 who joins the lobby.
 `);
 }
 

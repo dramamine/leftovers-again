@@ -21,7 +21,7 @@ class Socket extends Connection {
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
     ws.on('open', () => {
-      console.log('got open message from websocket');
+      Log.info('got open message from websocket');
     });
 
     ws.on('message', this._handleMessage);
@@ -88,22 +88,22 @@ class Socket extends Connection {
       });
       res.on('end', () => {
         if (chunks === ';') {
-          console.error('failed to log in; nick is registered - invalid or no password given');
+          Log.error('failed to log in; nick is registered - invalid or no password given');
           process.exit(-1);
         }
         if (chunks.length < 50) {
-          console.error('failed to log in: ' + chunks);
+          Log.error('failed to log in: ' + chunks);
           process.exit(-1);
         }
         if (chunks.indexOf('heavy load') !== -1) {
-          console.error('the login server is under heavy load; trying again in one minute');
+          Log.error('the login server is under heavy load; trying again in one minute');
           setTimeout( () => {
             return this._handleMessage(message);
           }, 60 * 1000);
           return;
         }
         if (chunks.substr(0, 16) === '<!DOCTYPE html>') {
-          console.error('Connection error 522; trying agian in one minute');
+          Log.error('Connection error 522; trying agian in one minute');
           setTimeout( () => {
             return this._handleMessage(message);
           }, 60 * 1000);
@@ -131,7 +131,7 @@ class Socket extends Connection {
     });
 
     req.on('error', (err) => {
-      return console.error('login error: ' + err.stack);
+      return Log.error('login error: ' + err.stack);
     });
 
     if (data) {

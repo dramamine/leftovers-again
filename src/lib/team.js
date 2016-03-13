@@ -1,5 +1,6 @@
 import util from 'pokeutil';
 import fs from 'fs';
+import Log from 'log';
 
 export default class Team {
   constructor(tm) {
@@ -32,7 +33,7 @@ export default class Team {
       }
       //
     }
-    console.log('seed: ' + seed, lines.length);
+    Log.debug('random team seed: ' + seed, lines.length);
     if (seed > lines.length) {
       throw new Error('File end reached without finding line');
     }
@@ -44,7 +45,7 @@ export default class Team {
 
     // increment
     const updated = parseInt(data, 10) + 1;
-    console.log(`read ${data} and am writing ${updated}`);
+    Log.debug(`random team seed: read ${data} and am writing ${updated}`);
     if (isNaN(updated)) return null;
     fs.writeFile('./tmp/lastseed', updated);
     return data.trim();
@@ -60,15 +61,15 @@ export default class Team {
     for (let i = 0; i < tm.length; i++) {
       member = tm[i];
       if (!member.name && !member.species) {
-        console.error('a pokemon didn\'t have a name or species!');
+        Log.error('a pokemon didn\'t have a name or species!');
         return false;
       }
       if (!Array.isArray(member.moves)) {
-        console.error('property \'moves\' must be an array of move names.');
+        Log.error('property \'moves\' must be an array of move names.');
         return false;
       }
       if (member.moves.length > 4) {
-        console.error('more moves than I expected.');
+        Log.error('more moves than I expected.');
         return false;
       }
     }
@@ -118,7 +119,7 @@ export default class Team {
           numAndLabel = iv.trim().split(' ');
           ivLabel = numAndLabel[1].trim().toLowerCase();
           if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(ivLabel)) {
-            console.error('something weird with iv label', ivLabel, line);
+            Log.warn('something weird with iv label', ivLabel, line);
           } else {
             mon.ivs[ivLabel] = parseInt(numAndLabel[0].trim(), 10);
           }
@@ -147,10 +148,9 @@ export default class Team {
         }
         const nicknames = nameAndGender.match(/\((.+)\)/);
         if (nicknames) {
-          console.log(nicknames);
+          Log.debug('nicknames: ' + nicknames);
           mon.name = nameAndGender.split(' (')[0];
           mon.species = nicknames[1];
-          console.log(mon);
         } else {
           mon.species = nameAndGender.trim();
         }
@@ -285,116 +285,3 @@ export default class Team {
 
 }
 
-  // Tools.prototype.fastUnpackTeam = function (buf) {
-  //   if (!buf) return null;
-
-  //   var team = [];
-  //   var i = 0, j = 0;
-
-  //   // limit to 24
-  //   for (var count = 0; count < 24; count++) {
-  //     var set = {};
-  //     team.push(set);
-
-  //     // name
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     set.name = buf.substring(i, j);
-  //     i = j + 1;
-
-  //     // species
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     set.species = buf.substring(i, j) || set.name;
-  //     i = j + 1;
-
-  //     // item
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     set.item = buf.substring(i, j);
-  //     i = j + 1;
-
-  //     // ability
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     var ability = buf.substring(i, j);
-  //     var template = moddedTools.base.getTemplate(set.species);
-  //     set.ability = (template.abilities && ability in {'':1, 0:1, 1:1, H:1} ? template.abilities[ability || '0'] : ability);
-  //     i = j + 1;
-
-  //     // moves
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     set.moves = buf.substring(i, j).split(',');
-  //     i = j + 1;
-
-  //     // nature
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     set.nature = buf.substring(i, j);
-  //     i = j + 1;
-
-  //     // evs
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     if (j !== i) {
-  //       var evs = buf.substring(i, j).split(',');
-  //       set.evs = {
-  //         hp: Number(evs[0]) || 0,
-  //         atk: Number(evs[1]) || 0,
-  //         def: Number(evs[2]) || 0,
-  //         spa: Number(evs[3]) || 0,
-  //         spd: Number(evs[4]) || 0,
-  //         spe: Number(evs[5]) || 0
-  //       };
-  //     }
-  //     i = j + 1;
-
-  //     // gender
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     if (i !== j) set.gender = buf.substring(i, j);
-  //     i = j + 1;
-
-  //     // ivs
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     if (j !== i) {
-  //       var ivs = buf.substring(i, j).split(',');
-  //       set.ivs = {
-  //         hp: ivs[0] === '' ? 31 : Number(ivs[0]) || 0,
-  //         atk: ivs[1] === '' ? 31 : Number(ivs[1]) || 0,
-  //         def: ivs[2] === '' ? 31 : Number(ivs[2]) || 0,
-  //         spa: ivs[3] === '' ? 31 : Number(ivs[3]) || 0,
-  //         spd: ivs[4] === '' ? 31 : Number(ivs[4]) || 0,
-  //         spe: ivs[5] === '' ? 31 : Number(ivs[5]) || 0
-  //       };
-  //     }
-  //     i = j + 1;
-
-  //     // shiny
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     if (i !== j) set.shiny = true;
-  //     i = j + 1;
-
-  //     // level
-  //     j = buf.indexOf('|', i);
-  //     if (j < 0) return;
-  //     if (i !== j) set.level = parseInt(buf.substring(i, j), 10);
-  //     i = j + 1;
-
-  //     // happiness
-  //     j = buf.indexOf(']', i);
-  //     if (j < 0) {
-  //       if (buf.substring(i)) {
-  //         set.happiness = Number(buf.substring(i));
-  //       }
-  //       break;
-  //     }
-  //     if (i !== j) set.happiness = Number(buf.substring(i, j));
-  //     i = j + 1;
-  //   }
-
-  //   return team;
-  // };

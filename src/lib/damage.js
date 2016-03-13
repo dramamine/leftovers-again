@@ -327,7 +327,7 @@ class Damage {
   }
 
   getDamageResult(a, d, move, field = {}, maxOnly = false) {
-    console.log('field coming in:', field, defaultField.weather);
+    // console.log('field coming in:', field, defaultField.weather);
     if (typeof a === 'string') {
       a = util.researchPokemonById(a);
     }
