@@ -18,6 +18,8 @@ if (args.help || args.h) {
 
 if (args.opponent) {
   Spawner.spawn(args.opponent);
+  // auto-set scrappy
+  args.scrappy = true;
 }
 
 let myconnection;
