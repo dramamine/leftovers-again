@@ -5,7 +5,7 @@ Your bot's already prepared for battle! First, get a local server running:
 `npm run server`
 
 Then, in a new window, run this command to play against your first opponent:
-`npm run develop -- --bot={{repo}} --opponent=randumb --loglevel=2`
+`npm run develop -- {{repo}} --opponent=randumb --loglevel=2`
 
 Ready for more and tougher opponents? Run this command to choose your opponents:
 `npm run gauntlet`

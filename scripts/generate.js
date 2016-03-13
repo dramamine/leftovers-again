@@ -57,7 +57,7 @@ inquirer.prompt(questions, (answers) => {
   answers.repo = answers.Repo.toLowerCase();
   const lang = 'es6';
   // @TODO this goes to tmp but should eventually go to 'bots'
-  const folder = 'tmp/' + answers.repo;
+  const folder = 'bots/' + answers.repo;
   fs.mkdirSync(folder);
 
   parseAndWrite(
