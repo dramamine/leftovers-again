@@ -25,15 +25,23 @@ Careful Nature
   }
 {{/if}}
 
+  /**
+   * Here's the main loop of your bot. Please read the documentation for more
+   * details.
+   *
+   * @param  {Object} state The current state of the game.
+   *
+   * @return {Decision}     A decision object.
+   */
   decide(state) {
-    if (state.forceSwitch) {
+    if (state.forceSwitch{{#if team}} || state.teamPreview{{/if}}) {
       const myMon = this._pickOne(
-        state.self.reserve.filter( mon => !mon.dead );
+        state.self.reserve.filter( mon => !mon.dead )
       );
       return new SWITCH(myMon);
     }
     const myMove = this._pickOne(
-      state.self.active.moves.filter( move => !move.disabled );
+      state.self.active.moves.filter( move => !move.disabled )
     );
     return new MOVE(myMove);
   }

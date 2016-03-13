@@ -6,21 +6,27 @@
  */
 import AI from 'ai';
 import {MOVE, SWITCH} from 'decisions';
-
+import team from 'lib/team';
 
 class Randumb extends AI {
   constructor() {
     super();
     this.meta = {
-      accepts: 'randombattle',
+      accepts: 'ALL', // trying this out, fingers crossed
       format: 'randombattle',
       team: null,
       version: 'alpha'
     };
   }
 
+  team() {
+    // if this gets called use a predetermined random team.
+    // @TODO hardcoded to a Slowking team.
+    return team.random(0);
+  }
+
   decide(state) {
-    if (state.forceSwitch) {
+    if (state.forceSwitch || state.teamPreview) {
       // our pokemon died :(
       // choose a random one
       const possibleMons = state.self.reserve.filter( (mon) => {
