@@ -3,6 +3,7 @@ import fs from 'fs';
 import Handlebars from 'handlebars';
 
 const formats = ['anythinggoes', 'randombattle', 'ubers', 'ou', 'monotype'];
+const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'monotype'];
 
 const questions = [
   {
@@ -55,6 +56,10 @@ const parseAndWrite = (source, destination, vars) => {
 inquirer.prompt(questions, (answers) => {
   answers.accept = answers.accept.join(',');
   answers.repo = answers.Repo.toLowerCase();
+  if (formatsWithTeams.indexOf(answers.format) >= 0) {
+    answers.team = true;
+  }
+
   const lang = 'es6';
   // @TODO this goes to tmp but should eventually go to 'bots'
   const folder = 'bots/' + answers.repo;
