@@ -128,6 +128,9 @@ $ ENGINE WORK
 - change logging to use timestamps
 - fix the elitefour bots to use package.json
 - stuff breaks when you don't obey the one-per-species rule. ex. reserve doesn't have enough entries, active is sometimes unset.
+- cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
+- "accepts" always becomes ALL in bot generator
+- document reporters and how they're used
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

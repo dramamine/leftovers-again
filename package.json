@@ -13,7 +13,7 @@
     "battle": "NODE_PATH='src:bots' babel-node scripts/battle.js",
     "generate": "NODE_PATH='src:bots' babel-node scripts/generate.js",
     "server": "cd lib/Pokemon-Showdown && node app.js",
-    "client": "xdg-open lib/Pokemon-Showdown-Client/testclient.html"
+    "client": "./scripts/open-client.sh"
   },
   "repository": {
     "type": "git",
