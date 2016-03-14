@@ -152,3 +152,5 @@ $ LAPTOP SETUP SHIT THAT DIDN'T WORK
 + needed a 'log' folder
 + needed to update node
 - setting up Tampermonkey didn't quite work...
+
+# If you can read this text on esdoc.org, then clearly your docs:publish script is working.
