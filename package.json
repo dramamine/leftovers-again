@@ -1,6 +1,6 @@
 {
   "name": "leftovers-again",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Pokemon Showdown - Node Client",
   "main": "src/main.js",
   "scripts": {
