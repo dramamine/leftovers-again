@@ -7,9 +7,11 @@ This is the official repository for an ongoing AI competition for Pokemon battle
 
 Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
 
-2015: Pokemon bots start spontaneously fighting amongst themselves.
-2016: With the knowledge of infinite matches in their memory banks, AIs begin beating tournament-level players.
-20XX: The Pokemon Championships are won by a player using AI insights to crush her human opponents.
+2016: Pokemon bots start spontaneously fighting amongst themselves.
+
+2017: With the knowledge of infinite matches in their memory banks, AIs begin winning matches against tournament-level players.
+
+20XX: The Human Pokemon Championships are won by a player using AI insights to crush her human opponents.
 
 ## Designed with Simplicity and Accessibility in Mind
 
@@ -67,7 +69,7 @@ make
 ### Run a `randombattle` between two bots:
 ```bash
 npm run server # in a separate window
-npm start -- stabby --opponent=randumb --scrappy --loglevel=2 --matches=1
+npm start -- stabby --opponent=randumb
 ```
 
 ### Build skeleton code for your bot:
@@ -109,7 +111,7 @@ $ ENGINE WORK
 - have bots ping for challenge updates
 + set 'disabled' on moves with 0 HP
 + if your opponent cures a status, do you notice?
-- cannot find my move hiddenpowerfightin
++ cannot find my move hiddenpowerfightin
 - speed on boosts error:
 - _onSpeedData: Object {mine: 77, yours: 164}
 - _onSpeedData: Object {mine: 77, yours: 5.075554161070059e+28}
@@ -122,13 +124,13 @@ $ ENGINE WORK
     + Implement reflect
     + Implement gravity & foresight
     + See if any of these things even happen in random battles...
-- respond to 'cant' messages by logging an error
-- implement 'oppponents' spawning from main
-- remove or hide www code
++ respond to 'cant' messages by logging an error
+- implement multiple 'oppponents' spawning from main
++ remove or hide www code
 - change logging to use timestamps
 - fix the elitefour bots to use package.json
 - stuff breaks when you don't obey the one-per-species rule. ex. reserve doesn't have enough entries, active is sometimes unset.
-- cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
++ cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
 

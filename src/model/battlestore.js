@@ -123,8 +123,22 @@ export default class BattleStore {
     actingMon.setLastMove(move);
   }
 
+  /**
+   * Handles the cant message.
+   *
+   * Sometimes we get this because the user chose an invalid option. This is
+   * bad and we want to let the user know.
+   *
+   * Sometimes we get this because the move failed. For this, we just log to
+   * events and do nothing. The server sends "reasons" and we keep a list of
+   * reasons that we're expecting in the normal course of play.
+   *
+   * @param  {[type]} target [description]
+   * @param  {[type]} reason [description]
+   * @return {[type]}        [description]
+   */
   handleCant(target, reason) {
-    if (['slp', 'par', 'flinch'].indexOf(reason) === -1) {
+    if (['slp', 'par', 'flinch', 'frz'].indexOf(reason) === -1) {
       Log.error(`can't! ${target} ${reason}`);
     }
     const targetMon = this._recordIdent(target);

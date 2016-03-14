@@ -224,11 +224,13 @@ export default class Pokemon {
         log.warn('weird, learning about species from deets.');
         this.useSpecies(deets[0]);
       }
-
-      this.level = parseInt(deets[1].substr(1), 10);
+      if (deets[1]) {
+        this.level = parseInt(deets[1].substr(1), 10);
+      }
       this.gender = deets[2] || 'M';
     } catch (e) {
-      log.err('useDetails: error parsing mon.details', e);
+      log.err('useDetails: error parsing mon.details: ' + details);
+      log.err(e);
     }
   }
 

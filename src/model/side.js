@@ -2,7 +2,7 @@ import SideEffects from 'constants/sideeffects';
 import Log from 'log';
 
 const clean = (x) => {
-  return x.replace('Move: ', '').trim();
+  return x.replace('Move: ', '').replace('move: ', '').trim();
 };
 
 // does
@@ -28,7 +28,7 @@ export default class Side {
         this.stuff[move] = 1;
       }
     } else {
-      Log.warn('Never heard of starting this side effect:', action);
+      Log.warn('Never heard of starting this side effect: ' + move);
     }
   }
 
@@ -37,7 +37,7 @@ export default class Side {
     if (this.stuff[move]) {
       delete this.stuff[move];
     } else {
-      Log.warn('Never heard of ending this side effect:', action);
+      Log.warn('Never heard of ending this side effect: ' + move);
     }
   }
 

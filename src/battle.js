@@ -159,7 +159,7 @@ class Battle {
       // wait for promises to resolve
       choice.then( (resolved) => {
         const res = Battle._formatMessage(this.bid, resolved, currentState);
-        log.log(res);
+        log.info(res);
         listener.relay('_send', res);
       }, (err) => {
         log.err('I think there was an error here.');
@@ -168,7 +168,7 @@ class Battle {
     } else {
       // message is ready to go
       const res = Battle._formatMessage(this.bid, choice, currentState);
-      log.log(res);
+      log.info(res);
       listener.relay('_send', res);
     }
   }

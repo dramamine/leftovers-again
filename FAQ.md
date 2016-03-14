@@ -128,9 +128,8 @@ You can set your format in your bot config file; this is not validated before it
 Probably every singles format is functional. Doubles formats aren't implemented yet.
 
 
-
 ## #How do I use the damage calculator?
-Included in here is library code for the [Pokemon Damage Calculator](http://pokemonshowdown.com/damagecalc/). I adapted it to work with our bot code. To use it, simply call: //TODO
+Included in here is library code for the [Pokemon Damage Calculator](http://pokemonshowdown.com/damagecalc/). I adapted it to work with our bot code. To use it, simply call: **TODO**
 
 ### What's your bot code of ethics?
 - Bots will not ruin the game for anyone.
@@ -161,8 +160,9 @@ If you're playing random battles:
 - 'stabby' picks the strongest attack moves, and switches into another Pokemon only when necessary.
 
 If you're playing other tiers:
-- Set your bot to 'anythinggoes' so that you can test against bots in any tier.
-- 'elitefour' bots are included. Check the bots/elitefour directory for full names, ex. 'opponent=elitefour/xy-diantha'
+- 'randumb' is still a good opponent; it chooses a random team, then random moves etc.
+- You may want to set your bot to 'anythinggoes' so that you can test against bots in any tier.
+- 'elitefour' bots are included. Check the bots/elitefour directory for full names, ex. 'opponent=elitefour/xy-diantha' **TODO**
 
 ### What gets logged to the console?
 Set --loglevel=[x] to whatever you'd like:
