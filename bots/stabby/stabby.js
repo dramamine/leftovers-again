@@ -23,7 +23,7 @@ class Stabby {
     }
 
     // check each move
-    let maxDamage = 0;
+    let maxDamage = -1;
     let bestMove = 0;
 
     state.self.active.moves.forEach( (move, idx) => {
