@@ -138,8 +138,10 @@ export default class BattleStore {
    * @return {[type]}        [description]
    */
   handleCant(target, reason) {
-    if (['slp', 'par', 'flinch', 'frz'].indexOf(reason) === -1) {
+    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) === -1) {
       Log.error(`can't! ${target} ${reason}`);
+    } else {
+      Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
     }
     const targetMon = this._recordIdent(target);
     this.events.push({

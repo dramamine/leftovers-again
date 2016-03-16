@@ -7,16 +7,14 @@ class EndOfMatch {
   report(state) {
     let xo = '';
     let matchup = '';
-    state.forEach(s => {
-      if (s.won) {
-        xo += winSymbol;
-      } else {
-        xo += loseSymbol;
-      }
-
-      matchup += s.myAlive + '-' + s.yourAlive + ' ';
+    state.forEach(match => {
+      xo += (match.won) ? winSymbol : loseSymbol;
+      const myDead = match.mine.filter( mon =>  mon.dead).length;
+      const yourDead = match.yours.filter( mon =>  mon.dead).length;
+      matchup += yourDead + '-' + myDead + ' ';
     });
-    console.log(xo + ' ' + matchup.trim());
+    console.log('WINS: ' + xo);
+    console.log('KOs: ' + matchup.trim());
   }
 }
 

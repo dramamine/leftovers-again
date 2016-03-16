@@ -48,12 +48,10 @@ class Report {
 
     const myAlive = state.opponent.reserve.filter( mon => {
       return !mon.dead;
-    });
+    }).length;
     const yourAlive = 6 - state.self.reserve.filter( mon => {
       return !mon.dead;
-    });
-
-
+    }).length;
 
     const result = {
       matchid: matchid,
@@ -76,7 +74,6 @@ class Report {
 
   /**
    * Get my data.
-   * @TODO not sure if this is working!
    *
    * @return {array} Array of match results
    */

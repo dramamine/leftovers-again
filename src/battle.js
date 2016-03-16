@@ -132,8 +132,8 @@ class Battle {
   }
 
   handleWin(winner) {
-    console.log('WON: ', winner);
-    const results = report.win(winner, this.store);
+    log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
+    report.win(winner, this.store, this.bid);
 
     listener.relay('battlereport', {
       winner,
