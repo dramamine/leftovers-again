@@ -62,7 +62,6 @@ describe('damage calculator', () => {
       boosted.level = 75;
       Damage._assumeStat(boosted, 'atk');
       boosted.boosts = {atk: 2};
-      console.log('boosted atk:', boosted.stats.atk);
 
       const raw = Object.assign({}, attacker);
       raw.stats = {};
