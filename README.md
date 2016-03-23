@@ -135,6 +135,7 @@ $ ENGINE WORK
 + cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
+- see if you can use the file volatileStatuses in the docs (MoveData in pokemon.js)
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses
@@ -147,6 +148,7 @@ $ BOT WORK
 + koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 - take acct of Accuracy in damage est(?)
 - Choice Band: all of a sudden, you know what move the opponent is going to use! take advantage of this for safe switching
+
 
 $ LAPTOP SETUP SHIT THAT DIDN'T WORK
 - submodules didn't work, make sure you have that .gitmodules file working

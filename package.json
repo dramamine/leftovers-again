@@ -40,7 +40,7 @@
   "devDependencies": {
     "babel-eslint": "^5.0.0",
     "cheerio": "^0.20.0",
-    "esdoc": "^0.4.3",
+    "esdoc": "^0.4.6",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "handlebars": "^4.0.5",

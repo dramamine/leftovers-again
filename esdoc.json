@@ -1,6 +1,7 @@
 {
   "source": "./src",
   "destination": "./docs",
+  "includeSource": true,
   "undocumentIdentifier": false
 }
 

@@ -1,3 +1,6 @@
+/**
+ * @see http://bulbapedia.bulbagarden.net/wiki/Status_condition#Volatile_status
+ */
 export default {
   AQUARING: 'aquaring',
   ATTRACT: 'attract',
@@ -41,6 +44,7 @@ export default {
   TAUNT: 'taunt',
   TELEKINESIS: 'telekinesis',
   TORMENT: 'torment',
+  TRAPPED: 'trapped',
   WISH: 'wish',
   YAWN: 'yawn'
 };

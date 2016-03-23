@@ -44,8 +44,6 @@ export class SWITCH {
  * Either a {@link MOVE} or a {@link SWITCH}. Whatever class this is, is the 'verb' of the
  * action.
  *
- * @link SWITCH
- *
  */
 export class Decision { // eslint-disable-line
   /**

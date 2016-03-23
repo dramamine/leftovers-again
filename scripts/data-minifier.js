@@ -20,15 +20,16 @@ function copyMoves() {
   const keysToCopy = [
     'accuracy',
     'basePower',
+    'boosts',
     'category',
-    'id',
+    'drain',
+    'flags',
     'hits',
+    'id',
     'name',
     'priority',
-    'flags',
-    'drain',
     'secondary',
-    'boosts',
+    'status',
     'target',
     'type',
     'volatileStatus',
@@ -81,12 +82,12 @@ const copyOtherMoves = () => {
 const copyPokes = () => {
   const updated = {};
   const keysToCopy = [
-    'species',
-    'types',
+    'abilities',
     'baseStats',
     'heightm',
-    'weightkg',
-    'abilities'
+    'species',
+    'types',
+    'weightkg'
   ];
   for (const key in BattlePokedex) { // eslint-disable-line
     updated[key] = {};

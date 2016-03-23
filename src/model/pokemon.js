@@ -38,8 +38,6 @@ export default class Pokemon {
  *           boosts = {atk: 2}. Boost values range from -6 to 6.
  * @property {String} condition  a condition in Showdown format, ex. '100/100 par poi',
  *            '0/100 fnt' etc.
- * @property {Array<String>} conditions  an array of conditions, ex. ['par', 'poi'], in case
- *             that's easier to use.
  * @property {boolean} dead  True if the mon is dead, undefined otherwise
  * @property {Array<Object>} events  Not currently being used. (things that happened to this
  *         mon? things this mon did?)
@@ -60,11 +58,14 @@ export default class Pokemon {
  *           in player 2's third active slot (in a Triples battle)
  * @property {Array<String>} types  An array of the mon's types, ex. ['Fire', 'Flying']
  * @property {String} species  the species of Pokemon, ex. "Pikachu". This is
- *         the same as {@link PokemonData.id}, but more human-readable.
+ *         the same as {@link PokemonData.id|PokemonData.id}, but more human-readable.
  * @property {Object} stats An object similar to baseStats, but includes calculations
  *           based on EVs, IVs, and level. It does NOT include calculations based
  *           on boosts and unboosts.
+ * @property {Array<String>} statuses  an array of status conditions, ex. ['par', 'poi'].
  * @property {Number} weightkg  The mon's weight, in kg.
+ *
+ * @see Status conditions: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/statuses.js.html
  */
 
   /**
@@ -160,6 +161,8 @@ export default class Pokemon {
  * @property {Number} self.boosts.def Defense raised or lowered by this # of stages
  * @property {Number} self.boosts.spe Speed raised or lowered by this # of stages
  * @property {String} self.volatileStatus: 'mustrecharge' from frenzyplant
+ * @property {String} status  If this is a 'Status' type move, this is the status
+ * applied to the opponent.
  * @property {String} target  Ex. 'normal', 'self', 'allySide', 'any', 'randomNormal',
  *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
  * @property {String} type  The type of move, ex. 'Ghost'. Every move has one and only
