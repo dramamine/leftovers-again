@@ -80,7 +80,7 @@ export default class Pokemon {
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
     'position', 'owner', 'item', 'boosts', 'lastMove']
-    .forEach( (field) => {
+    .forEach((field) => {
       if (this[field]) out[field] = this[field];
     });
 
@@ -88,7 +88,7 @@ export default class Pokemon {
     if (out.stats) {
       out.boostedStats = {};
       const boosts = out.boosts || {};
-      Object.keys(out.stats).forEach( (key) => {
+      Object.keys(out.stats).forEach((key) => {
         out.boostedStats[key] = util.boostMultiplier(out.stats[key], boosts[key]);
       });
     }
@@ -133,24 +133,38 @@ export default class Pokemon {
  * @property {String} category  'Physical', 'Special', or 'Status'
  * @property {Object} flags From the flags Showdown server:
  * @property {Boolean} flags.authentic Ignores a target's substitute.
- * @property {Boolean} flags.bite Power is multiplied by 1.5 when used by a Pokemon with the Ability Strong Jaw.
+ * @property {Boolean} flags.bite Power is multiplied by 1.5 when used by a
+ * Pokemon with the Ability Strong Jaw.
  * @property {Boolean} flags.bullet Has no effect on Pokemon with the Ability Bulletproof.
  * @property {Boolean} flags.charge The user is unable to make a move between turns.
  * @property {Boolean} flags.contact Makes contact.
- * @property {Boolean} flags.defrost Thaws the user if executed successfully while the user is frozen.
- * @property {Boolean} flags.distance Can target a Pokemon positioned anywhere in a Triple Battle.
- * @property {Boolean} flags.gravity Prevented from being executed or selected during Gravity's effect.
- * @property {Boolean} flags.heal Prevented from being executed or selected during Heal Block's effect.
+ * @property {Boolean} flags.defrost Thaws the user if executed successfully
+ * while the user is frozen.
+ * @property {Boolean} flags.distance Can target a Pokemon positioned anywhere
+ * in a Triple Battle.
+ * @property {Boolean} flags.gravity Prevented from being executed or selected
+ * during Gravity's effect.
+ * @property {Boolean} flags.heal Prevented from being executed or selected
+ * during Heal Block's effect.
  * @property {Boolean} flags.mirror Can be copied by Mirror Move.
- * @property {Boolean} flags.nonsky Prevented from being executed or selected in a Sky Battle.
- * @property {Boolean} flags.powder Has no effect on Grass-type Pokemon, Pokemon with the Ability Overcoat, and Pokemon holding Safety Goggles.
- * @property {Boolean} flags.protect Blocked by Detect, Protect, Spiky Shield, and if not a Status move, King's Shield.
- * @property {Boolean} flags.pulse Power is multiplied by 1.5 when used by a Pokemon with the Ability Mega Launcher.
- * @property {Boolean} flags.punch Power is multiplied by 1.2 when used by a Pokemon with the Ability Iron Fist.
- * @property {Boolean} flags.recharge If this move is successful, the user must recharge on the following turn and cannot make a move.
- * @property {Boolean} flags.reflectable Bounced back to the original user by Magic Coat or the Ability Magic Bounce.
- * @property {Boolean} flags.snatch Can be stolen from the original user and instead used by another Pokemon using Snatch.
- * @property {Boolean} flags.sound Has no effect on Pokemon with the Ability Soundproof.
+ * @property {Boolean} flags.nonsky Prevented from being executed or selected
+ * in a Sky Battle.
+ * @property {Boolean} flags.powder Has no effect on Grass-type Pokemon, Pokemon
+ * with the Ability Overcoat, and Pokemon holding Safety Goggles.
+ * @property {Boolean} flags.protect Blocked by Detect, Protect, Spiky Shield,
+ * and if not a Status move, King's Shield.
+ * @property {Boolean} flags.pulse Power is multiplied by 1.5 when used by a
+ * Pokemon with the Ability Mega Launcher.
+ * @property {Boolean} flags.punch Power is multiplied by 1.2 when used by a
+ * Pokemon with the Ability Iron Fist.
+ * @property {Boolean} flags.recharge If this move is successful, the user must
+ * recharge on the following turn and cannot make a move.
+ * @property {Boolean} flags.reflectable Bounced back to the original user by
+ * Magic Coat or the Ability Magic Bounce.
+ * @property {Boolean} flags.snatch Can be stolen from the original user and
+ * instead used by another Pokemon using Snatch.
+ * @property {Boolean} flags.sound Has no effect on Pokemon with the Ability
+ * Soundproof.
  * @property {String} id  The move ID, ex. 'acrobatics'
  * @property {String} name  The move name, ex. 'Acrobatics'
  * @property {Number} priority  Does this move have priority? Most have the value 0.
@@ -167,15 +181,10 @@ export default class Pokemon {
  *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
  * @property {String} type  The type of move, ex. 'Ghost'. Every move has one and only
  *       one type.
- * @property {String} volatileStatus  Ex. 'aquaring', 'attract', 'autotomize', 'bide',
- * 'charge', 'confusion', 'curse', 'destinybond', 'disable', 'electrify',
- * 'embargo', 'encore', 'endure', 'flinch', 'focusenergy', 'followme',
- * 'foresight', 'gastroacid', 'grudge', 'healblock', 'helpinghand',
- * 'imprison', 'ingrain', 'kingsshield', 'leechseed', 'lockedmove',
- * 'magiccoat', 'magnetrise', 'minimize', 'miracleeye', 'mustrecharge',
- * 'nightmare', 'partiallytrapped', 'powder', 'powertrick', 'protect',
- * 'rage', 'ragepowder', 'roost' 'smackdown', 'snatch', 'spikyshield',
- * 'stockpile', 'taunt', 'telekinesis', 'torment', 'uproar' 'yawn'
+ * @property {String} volatileStatus  A volatile status, if there is one. (ex.
+ * 'protect' or 'taunt').
+ *
+ * @see Volatile statuses: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/volatileStatuses.js.html
  */
 
   /**
@@ -191,12 +200,12 @@ export default class Pokemon {
    * @return {Array} An array of researched moves.
    */
   static updateMoveList(moves) {
-    return moves.map( (move) => {
+    return moves.map((move) => {
       // console.log('old:', move);
       const research = util.researchMoveById(move);
       const out = {};
       ['accuracy', 'basePower', 'category', 'id', 'name', 'volatileStatus',
-      'priority', 'flags', 'heal', 'self', 'target', 'type', 'pp', 'maxpp'].forEach( (field) => {
+      'priority', 'flags', 'heal', 'self', 'target', 'type', 'pp', 'maxpp'].forEach((field) => {
         if (research[field]) out[field] = research[field];
       });
       // console.log('returning ', out);
@@ -232,7 +241,7 @@ export default class Pokemon {
       }
       this.gender = deets[2] || 'M';
     } catch (e) {
-      log.err('useDetails: error parsing mon.details: ' + details);
+      log.err(`useDetails: error parsing mon.details: ${details}`);
       log.err(e);
     }
   }
@@ -267,7 +276,7 @@ export default class Pokemon {
    */
   addStatus(status) {
     if (this.condition) {
-      this.condition + ' ' + status;
+      this.condition += ' ' + status;
     } else {
       this.condition = status;
     }
@@ -341,7 +350,7 @@ export default class Pokemon {
         this.hp = 0;
         this.hppct = 0;
       } else {
-        log.err('weird condition:', mon.condition);
+        log.err('weird condition:' + condition);
       }
     } catch (e) {
       log.err('useCondition: error parsing mon.condition', e);

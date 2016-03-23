@@ -38,6 +38,7 @@
     "ws": "^1.0.1"
   },
   "devDependencies": {
+    "babel-core": "^6.7.4",
     "babel-eslint": "^5.0.0",
     "cheerio": "^0.20.0",
     "esdoc": "^0.4.6",

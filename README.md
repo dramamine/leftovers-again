@@ -30,9 +30,13 @@ Before AI, to test a new team, you'd have to use your team for hours just to get
 
 With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? Stall teams? Trick Rooms? You'll know your bot's weaknesses and can improve your design as such.
 
+## Run Battles from the Commandline, or Battle Against Them in the Official Client
+
+**TODO screenshots**
+
 ## Compete Against Other Bots. And Humans.
 
-Every month, bots are pitted against each other in a competition here. Currently, only a few tiers are supported - Uber, OU, and Randombattle.
+Every month, bots are pitted against each other in a competition here. Currently, only a few tiers are supported - Anythinggoes, Ubers, OU, and Randombattle.
 
 We're running our own Showdown server named 'Cyberdyne'. There, every bot in this repo is running and responding to all challenge requests. Humans can play against these bots at any time!
 
@@ -58,12 +62,11 @@ If you'd like to implement your favorite language:
 ## Example Usage
 
 ### Install everything
-First, make sure you have installed node and npm.
+First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node).
 ```bash
 git clone git@github.com:dramamine/leftovers-again.git
-# install globally, or you might have compatibility problems
-sudo npm install -g babel-node jasmine-es6
-
+# install this globally, or you might have compatibility problems
+sudo npm install -g babel-node
 cd leftovers-again
 make
 ```
@@ -135,7 +138,6 @@ $ ENGINE WORK
 + cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
-- see if you can use the file volatileStatuses in the docs (MoveData in pokemon.js)
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses
@@ -148,7 +150,6 @@ $ BOT WORK
 + koChance is terribly inefficient. try a new strategy, like, use exponential math to figure out which damage amounts would be enough
 - take acct of Accuracy in damage est(?)
 - Choice Band: all of a sudden, you know what move the opponent is going to use! take advantage of this for safe switching
-
 
 $ LAPTOP SETUP SHIT THAT DIDN'T WORK
 - submodules didn't work, make sure you have that .gitmodules file working
