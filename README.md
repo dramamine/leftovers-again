@@ -61,8 +61,10 @@ If you'd like to implement your favorite language:
 First, make sure you have installed node and npm.
 ```bash
 git clone git@github.com:dramamine/leftovers-again.git
+# install globally, or you might have compatibility problems
+sudo npm install -g babel-node jasmine-es6
+
 cd leftovers-again
-sudo npm install -g babel-node
 make
 ```
 

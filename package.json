@@ -44,8 +44,7 @@
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "handlebars": "^4.0.5",
-    "jasmine": "^2.4.1",
-    "jasmine-es6": "^0.1.6",
+    "jasmine-es6": "^0.1.7",
     "lodash": "^4.6.1"
   },
   "engine": "node >= 5.9.0"
