@@ -68,8 +68,8 @@ class Damage {
 
     mon.level = mon.level || ASSUME_LEVEL;
 
-    mon.status = (mon.conditions)
-      ? mon.conditions.join(' ') // string vs array
+    mon.status = (mon.statuses)
+      ? mon.statuses.join(' ') // string vs array
       : '';
     mon.ability = mon.ability || mon.abilities['0'];
     mon.item = mon.item || '';

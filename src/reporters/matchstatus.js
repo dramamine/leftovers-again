@@ -15,7 +15,7 @@ class MatchStatus {
     const stuff = this.padLeft(state.self.active.lastMove || undefined, 12) + ' | ' +
 
       this.padLeft(
-        this.statusString(state.self.active.conditions) + ' ' +
+        this.statusString(state.self.active.statuses) + ' ' +
         this.boostString(state.self.active.boosts)
       , 15) + ' ' +
 
@@ -35,7 +35,7 @@ class MatchStatus {
       , 10) + ' ' +
 
       this.padRight(
-        this.statusString(state.opponent.active.conditions) + ' ' +
+        this.statusString(state.opponent.active.statuses) + ' ' +
         this.boostString(state.opponent.active.boosts)
       , 15) + ' | ' +
 

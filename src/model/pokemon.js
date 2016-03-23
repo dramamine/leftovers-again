@@ -76,7 +76,7 @@ export default class Pokemon {
   data() {
     // return only what's necessary
     const out = {};
-    ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
+    ['dead', 'condition', 'statuses', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
     'position', 'owner', 'item', 'boosts', 'lastMove']
@@ -261,7 +261,7 @@ export default class Pokemon {
   }
 
   /**
-   * Add a status condition to our Pokemon. Updates 'condition' and 'conditions'.
+   * Add a status condition to our Pokemon. Updates 'condition' and 'statuses'.
    *
    * @param {String} status The status type.
    */
@@ -272,21 +272,21 @@ export default class Pokemon {
       this.condition = status;
     }
 
-    if (this.conditions) {
-      this.conditions = [];
+    if (this.statuses) {
+      this.statuses = [];
     }
-    this.conditions.push(status);
+    this.statuses.push(status);
   }
 
   /**
    * Removes a status condition from our Pokemon. Updates 'condition' and
-   * 'conditions'.
+   * 'statuses'.
    *
    * @param {String} status The status type.
    */
   removeStatus(status) {
     this.condition.replace(' ' + status, '');
-    this.conditions.splice(this.conditions.indexOf(status), 1);
+    this.statuses.splice(this.statuses.indexOf(status), 1);
   }
 
   setLastMove(move) {
@@ -309,7 +309,7 @@ export default class Pokemon {
 
   /**
    * Use the condition of the Pokemon. This will update the fields 'condition',
-   * 'conditions', 'hp', 'maxhp', 'hppct', and 'dead'.
+   * 'statuses', 'hp', 'maxhp', 'hppct', and 'dead'.
    *
    * @param  {String} condition The mon's condition, ex. '58/130 par poi'
    */
@@ -322,18 +322,19 @@ export default class Pokemon {
       return;
     }
     this.condition = condition;
-    this.conditions = [];
+    this.statuses = this.statuses || [];
 
     try {
       const hps = condition.split('/');
       if (hps.length === 2) {
         this.hp = parseInt(hps[0], 10);
-        const maxhpAndConditions = hps[1].split(' ');
-        this.maxhp = parseInt(maxhpAndConditions[0], 10);
+        // array with max hp at 0 and other stuff at 1+
+        const maxHpAndStatuses = hps[1].split(' ');
+        this.maxhp = parseInt(maxHpAndStatuses[0], 10);
         this.hppct = Math.round(100 * this.hp / this.maxhp);
 
-        if (maxhpAndConditions.length > 1) {
-          this.conditions = maxhpAndConditions.slice(1);
+        if (maxHpAndStatuses.length > 1) {
+          this.statuses = maxHpAndStatuses.slice(1);
         }
       } else if (condition === '0 fnt') {
         this.dead = true;

@@ -37,7 +37,7 @@ describe('Pokemon', () => {
       expect(mon.maxhp).toEqual(100);
       expect(mon.hppct).toEqual(100);
       expect(mon.condition).toEqual(cond);
-      expect(mon.conditions.length).toEqual(0);
+      expect(mon.statuses.length).toEqual(0);
       expect(mon.dead).toBe(undefined);
     });
 
@@ -48,7 +48,7 @@ describe('Pokemon', () => {
       expect(mon.maxhp).toEqual(250);
       expect(mon.hppct).toEqual(10);
       expect(mon.condition).toEqual(cond);
-      expect(mon.conditions.length).toEqual(2);
+      expect(mon.statuses.length).toEqual(2);
       expect(mon.dead).toBe(undefined);
     });
 
@@ -89,7 +89,7 @@ describe('Pokemon', () => {
       mon.useCondition(cond);
       const res = mon.data();
       expect(res.condition).toEqual(cond);
-      expect(res.conditions.length).toEqual(2);
+      expect(res.statuses.length).toEqual(2);
       expect(res.dead).toBe(undefined);
     });
   });
@@ -163,7 +163,5 @@ describe('Pokemon', () => {
       mon.useBoost('atk', 13);
       expect(mon.data().boosts.atk).toEqual(6);
     });
-
-
   });
 });

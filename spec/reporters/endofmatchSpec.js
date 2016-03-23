@@ -1,7 +1,7 @@
 const exampleState = [
-  {won: true, myAlive: 6, yourAlive: 3},
-  {won: true, myAlive: 6, yourAlive: 0},
-  {won: false, myAlive: 0, yourAlive: 6},
+  {won: true, myAlive: 6, yourAlive: 3, mine: [], yours: []},
+  {won: true, myAlive: 6, yourAlive: 0, mine: [], yours: []},
+  {won: false, myAlive: 0, yourAlive: 6, mine: [], yours: []},
 ];
 import EndOfMatch from 'reporters/endofmatch';
 

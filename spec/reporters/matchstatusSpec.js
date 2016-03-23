@@ -1,4 +1,4 @@
-const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"lastMove":"Sandstorm","boosts":{"spd":-1},"conditions":["par poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"conditions":[],"boosts":{"atk":1},"species":"Arcanine","lastMove":"Roost"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}};
+const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"lastMove":"Sandstorm","boosts":{"spd":-1},"statuses":["par", "poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"statuses":[],"boosts":{"atk":1},"species":"Arcanine","lastMove":"Roost"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}}; // eslint-disable-line
 
 import Reporter from 'reporters/matchstatus';
 
