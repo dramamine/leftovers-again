@@ -7,7 +7,8 @@ class BotInfo {
     // note that this instance of the bot is created ONLY for pulling its team
     // string and metadata. this instance is not actually used in battles.
     const It = require(path);
-    this.bot = new It();
+    Log.info('trying to load path:', path, It);
+    this.bot = new It.default();
 
     // metadata location
     try {

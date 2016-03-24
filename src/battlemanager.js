@@ -9,7 +9,7 @@ export default class BattleManager {
   }
   find(id) {
     if (!this.battles[id]) {
-      this.battles[id] = new Battle(id, new BotClass());
+      this.battles[id] = new Battle(id, new BotClass.default());
     }
     return this.battles[id];
   }
