@@ -6,7 +6,7 @@
   "scripts": {
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
-    "docs:update": "npm docs:publish",
+    "docs:update": "npm run docs:publish",
     "test": "NODE_PATH='src:bots:spec' jasmine",
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js",

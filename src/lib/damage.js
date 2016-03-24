@@ -355,6 +355,9 @@ class Damage {
     };
 
     // console.log(description);
+    if (move.name === 'Dragon Rage') {
+      return [40];
+    }
 
     if (move.bp === 0) {
       return [0];
@@ -884,6 +887,29 @@ class Damage {
     }
     // console.log('returning result:', damage);
     return damage;
+  }
+
+  /**
+   * WORK IN PROGRESS
+   *
+   * @param  {[type]} mine     [description]
+   * @param  {[type]} yours    [description]
+   * @param  {[type]} myMove   [description]
+   * @param  {[type]} yourMove [description]
+   * @return {[type]}          [description]
+   */
+  goesFirst(mine, yours) {
+    if (mine.ability === 'Prankster' && mine.move.type === 'Status') {
+      myMove.priority = 1;
+    }
+    if (yours.ability === 'Prankster' && yours.move.type === 'Status') {
+      yours.priority = 1;
+    }
+    const myStats = mine.boostedStats || mine.stats;
+    const yourStats = yours.boostedStats || yours.stats;
+
+    return (mine.move.priority > yours.move.priority ||
+      myStats.spe > yourStats.spe);
   }
 }
 

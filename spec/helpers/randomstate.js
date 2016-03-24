@@ -385,7 +385,6 @@ export default {
         "hp": 250,
         "maxhp": 250,
         "hppct": 100,
-        "active": true,
         "types": [
           "Ground",
           "Flying"
