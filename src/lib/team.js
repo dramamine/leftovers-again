@@ -2,6 +2,11 @@ import util from 'pokeutil';
 import fs from 'fs';
 import Log from 'log';
 
+/**
+ * Teams: so documented.
+ *
+ * @see http://play.pokemonshowdown.com/teambuilder
+ */
 export default class Team {
   constructor(tm) {
     if (Array.isArray(tm) && Team._seemsValid(tm)) {
@@ -79,8 +84,11 @@ export default class Team {
   static interpretSmogon(str) {
     const mons = str.split('\n\n');
     const team = [];
-    mons.forEach( (mon) => {
-      team.push( Team.interpretOneSmogon(mon) );
+    mons.forEach( (lines) => {
+      const mon = Team.interpretOneSmogon(lines);
+      if (mon.species) {
+        team.push(mon);
+      }
     });
     return team;
   }
@@ -92,6 +100,7 @@ export default class Team {
     let line;
     for (let i = 0; i < lines.length; i++) {
       line = lines[i].trim();
+      if (!line) continue;
       if (line.indexOf('Ability:') === 0) {
         mon.ability = line.replace('Ability:', '').trim();
       } else if (line.indexOf('EVs:') === 0) {
@@ -154,7 +163,6 @@ export default class Team {
         } else {
           mon.species = nameAndGender.trim();
         }
-
       }
     }
     return mon;

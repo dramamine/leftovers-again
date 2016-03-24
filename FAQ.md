@@ -13,7 +13,7 @@ Make runs `npm install` and installs the git submodules, which contain the Pokem
 ### Initialize Your Bot
 To create your first bot, run `npm run generate`.
 
-Note that you'll want to have a good idea of what format you'd like to compete in. Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
+Note that you'll want to have a good idea of [what format you'd like to compete in](http://pokemonforever.com/Thread-A-Beginner-s-Guide-to-Smogon). Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
 
 ### Your bot already works.
 Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary. Run the command `npm start -- {{your bot name}} --opponent=randumb` to run a battle and see what happens!
