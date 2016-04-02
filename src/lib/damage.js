@@ -277,7 +277,11 @@ class Damage {
     if (mon.hppct && mon.stats.hp) {
       mon.maxhp = mon.stats.hp;
       mon.hp = mon.stats.hp * mon.hppct / 100;
+    } else if (!mon.hp) {
+      mon.hp = mon.hppct || 100;
+      mon.maxhp = 100;
     }
+    return mon;
   }
 
   getRecoilDamage(attacker, defender, move, damage) {
@@ -890,7 +894,7 @@ class Damage {
   }
 
   /**
-   * WORK IN PROGRESS
+   * @TODO WORK IN PROGRESS
    *
    * @param  {[type]} mine     [description]
    * @param  {[type]} yours    [description]
@@ -905,8 +909,8 @@ class Damage {
     if (yours.ability === 'Prankster' && yours.move.type === 'Status') {
       yours.priority = 1;
     }
-    const myStats = mine.boostedStats || mine.stats;
-    const yourStats = yours.boostedStats || yours.stats;
+    const myStats = mine.boostedStats || mine.stats || {};
+    const yourStats = yours.boostedStats || yours.stats || {};
 
     return (mine.move.priority > yours.move.priority ||
       myStats.spe > yourStats.spe);

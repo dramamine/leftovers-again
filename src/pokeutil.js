@@ -7,6 +7,10 @@ import HonkoMovedex from 'data/moves-ext';
 import BattlePokedex from 'data/pokedex';
 import log from 'log';
 
+const clone = (x) => {
+  return JSON.parse(JSON.stringify(x));
+};
+
 class PokeUtil {
   /**
    * Return the Smogon official ID for a given Pokemon. This works on both
@@ -69,7 +73,11 @@ class PokeUtil {
    */
   researchPokemonById(id) {
     id = this.toId(id); // eslint-disable-line
-    if (BattlePokedex[id]) return BattlePokedex[id];
+    if (BattlePokedex[id]) {
+      const res = clone(BattlePokedex[id]);
+      res.id = id;
+      return res;
+    }
 
     log.warn('couldn\'t find my pokemon ' + id );
     return {name: id, id};
