@@ -341,15 +341,16 @@ export default class BattleStore {
         // if(mon.dead) {
         //   return handleDeath(mon.ident);
         // }
-        const ref = this._recordIdent(mon.ident);
+        // console.log('checking out this ident:', mon.ident, i);
+        const ref = this._recordIdent(mon.ident, i);
         // force this to update, since it's always true or unset.
         ref.active = mon.active || false;
         ref.assimilate(mon);
 
         // keep our own in the right order
-        if (ref.owner === this.myId) {
-          ref.order = i;
-        }
+        // if (ref.owner === this.myId) {
+        //   ref.order = i;
+        // }
       }
     }
 
@@ -501,18 +502,31 @@ export default class BattleStore {
    * @param  {String} ident The ident string.
    * @return {Pokemon} The Pokemon whose ident we just recorded.
    */
-  _recordIdent(ident) {
+  _recordIdent(ident, reserveSlot = null) {
     const owner = this._identToOwner(ident);
     const position = this._identToPos(ident);
     const species = ident.substr(ident.indexOf(' ') + 1);
 
     let hello = this.allmon.find( (mon) => {
+      if (reserveSlot) {
+        // const bool = (mon.order === reserveSlot);
+        // if (!bool && owner === mon.owner && util.toId(species) === util.toId(mon.species)) {
+        //   console.log('warningz! Theres a matching pokemon but with a different reserve slot.');
+        //   console.log('this should only happen when you are copying specieses..');
+        //   console.log(bool, reserveSlot);
+        // }
+        return mon.order === reserveSlot;
+      }
       // @TODO really shouldn't have to util.toId these things.
       return owner === mon.owner && util.toId(species) === util.toId(mon.species);
     });
 
     if (!hello) {
       hello = new Pokemon(species);
+      if (reserveSlot) {
+        hello.setOrder(reserveSlot);
+        // console.log('new pokemon with order:', hello.order);
+      }
       this.allmon.push(hello);
     }
 
@@ -529,6 +543,8 @@ export default class BattleStore {
 
     hello.position = position;
     hello.owner = owner;
+
+    // console.log('pushing a new pokemon', hello.owner);
     return hello;
   }
 

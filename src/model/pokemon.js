@@ -360,4 +360,8 @@ export default class Pokemon {
   setItem(item) {
     this.item = util.toId(item);
   }
+
+  setOrder(order) {
+    this.order = order;
+  }
 }

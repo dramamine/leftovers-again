@@ -30,6 +30,23 @@ describe('BattleStore', () => {
       expect(replacement.owner).toEqual('p1');
       expect(replacement.position).toBe('p1a');
     });
+    it('should handle reserve order', () => {
+      store.myId = 'p1';
+      store._recordIdent('p1a: Fakechu', 0);
+      store._recordIdent('p1: Fakechu', 1);
+      const reserve = store.data().self.reserve;
+      expect(reserve[0].species).toEqual('fakechu');
+      expect(reserve[1].species).toEqual('fakechu');
+      expect(reserve.length).toBe(2);
+    });
+    it('should handle 2nd request', () => {
+      store.myId = 'p1';
+      store._recordIdent('p1a: Fakechu', 0);
+      store._recordIdent('p1a: Fakechu', 0);
+      const reserve = store.data().self.reserve;
+      expect(reserve[0].species).toEqual('fakechu');
+      expect(reserve.length).toBe(1);
+    });
   });
 
   describe('_handleSwitch', () => {
