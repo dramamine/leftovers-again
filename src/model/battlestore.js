@@ -1,5 +1,6 @@
-import Pokemon from 'model/pokemon';
+// import Pokemon from 'model/pokemon';
 import Side from 'model/side';
+import Barn from 'model/pokebarn';
 import util from 'pokeutil';
 import Log from 'log';
 import Weather from 'constants/weather';
@@ -12,6 +13,9 @@ export default class BattleStore {
   constructor() {
     // The array of all Pokemons involved in the battle.
     this.allmon = [];
+
+    this.barn = new Barn();
+
     this.forceSwitch = false;
     this.teamPreview = false;
 
@@ -74,8 +78,19 @@ export default class BattleStore {
 
   handleSwitch(ident, details, condition) {
     const pos = this._identToPos(ident);
-    const former = this._findByPos(pos);
-    const mon = this._recordIdent(ident);
+    const former = this.barn.findByPos(pos);
+
+    const mon = this.barn.findOrCreate(ident);
+    mon.position = pos;
+
+    if (former) {
+      former.position = null;
+      if (former.order && mon.order) {
+        const swap = former.order;
+        former.order = intval(mon.order);
+        mon.order = intval(swap);
+      }
+    }
 
     mon.useCondition(condition);
     mon.useDetails(details);
@@ -107,8 +122,8 @@ export default class BattleStore {
    * @return {[type]}        [description]
    */
   handleMove(actor, move, target) {
-    const actingMon = this._recordIdent(actor);
-    const targetMon = this._recordIdent(target);
+    const actingMon = this.barn.find(actor);
+    const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
       player: this._identToOwner(actor),
@@ -143,7 +158,7 @@ export default class BattleStore {
     } else {
       Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
     }
-    const targetMon = this._recordIdent(target);
+    const targetMon = this._findByIdent(target);
     this.events.push({
       type: 'cant',
       turn: this.turn,
@@ -165,7 +180,7 @@ export default class BattleStore {
   }
 
   handleBoost(target, stat, stage) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
     mon.useBoost(stat, +stage);
   }
 
@@ -174,17 +189,17 @@ export default class BattleStore {
   }
 
   handleStatus(target, status) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
     mon.addStatus(status);
   }
 
   handleCureStatus(target, status) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
     mon.removeStatus(status);
   }
 
   handleDamage(target, condition, explanation) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
 
     let move;
     // @TODO lazy implementation
@@ -225,13 +240,14 @@ export default class BattleStore {
   }
 
   handleFaint(ident) {
-    const mon = this._recordIdent(ident);
+    const mon = this.barn.find(ident);
     mon.useCondition('0 fnt');
+    mon.order = null;
   }
 
   // @TODO this is pretty much thte same as the damage function
   handleHeal(target, condition, explanation) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
     mon.useCondition(condition);
     if (!mon.item && explanation &&
       explanation.indexOf('[from] item:') >= 0) {
@@ -265,7 +281,7 @@ export default class BattleStore {
     this.turn = parseInt(x, 10);
 
     const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
-    this.allmon.filter(isactive).forEach( mon => {
+    this.barn.all().filter(isactive).forEach( mon => {
       this.statuses.push({
         turn: this.turn,
         position: mon.position,
@@ -336,21 +352,23 @@ export default class BattleStore {
     }
 
     if (data.side && data.side.pokemon) {
-      for (let i = 0; i < data.side.pokemon.length; i++) {
-        const mon = data.side.pokemon[i];
-        // if(mon.dead) {
-        //   return handleDeath(mon.ident);
-        // }
-        // console.log('checking out this ident:', mon.ident, i);
-        const ref = this._recordIdent(mon.ident, i);
-        // force this to update, since it's always true or unset.
-        ref.active = mon.active || false;
-        ref.assimilate(mon);
-
-        // keep our own in the right order
-        // if (ref.owner === this.myId) {
-        //   ref.order = i;
-        // }
+      if (this.barn.all().length === 0) {
+        // handle some stuff during the first request
+        for (let i = 0; i < data.side.pokemon.length; i++) {
+          const mon = data.side.pokemon[i];
+          const ref = this.barn.create(mon.ident);
+          ref.active = mon.active || false;
+          ref.order = i;
+          ref.assimilate(mon);
+        }
+      } else {
+        // be safer this time - only update previous info.
+        for (let i = 0; i < data.side.pokemon.length; i++) {
+          const mon = data.side.pokemon[i];
+          const ref = this.barn.findByOrder(i);
+          ref.active = mon.active || false;
+          ref.assimilate(mon);
+        }
       }
     }
 
@@ -422,21 +440,21 @@ export default class BattleStore {
 
 
     // use getState so we can filter out any crap.
-    output.self.active = this.allmon
+    output.self.active = this.barn.all()
       .filter(iamowner)
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
-    output.opponent.active = this.allmon
+    output.opponent.active = this.barn.all()
       .filter(youareowner)
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
-    output.self.reserve = this.allmon
+    output.self.reserve = this.barn.all()
       .filter(iamowner)
       .sort(byOrder)
       .map(dataGetter);
-    output.opponent.reserve = this.allmon
+    output.opponent.reserve = this.barn.all()
       .filter(youareowner)
       .sort(byOrder)
       .map(dataGetter);
@@ -488,83 +506,6 @@ export default class BattleStore {
     }
 
     return output;
-  }
-
-  /**
-   * Interprets the 'ident' string of a Pokemon. Ident is something that comes
-   * attached with nearly all events, and it tells us a lot about the state
-   * of that Pokemon - its owner, current position, and species. This is
-   * especially helpful in tracking whether a Pokemon is active or not.
-   *
-   * This function relies on the 'fact' that teams cannot have more than one
-   * of the same species of Pokemon. If that's not the case, I will cry.
-   *
-   * @param  {String} ident The ident string.
-   * @return {Pokemon} The Pokemon whose ident we just recorded.
-   */
-  _recordIdent(ident, reserveSlot = null) {
-    const owner = this._identToOwner(ident);
-    const position = this._identToPos(ident);
-    const species = ident.substr(ident.indexOf(' ') + 1);
-
-    let hello = this.allmon.find( (mon) => {
-      if (reserveSlot) {
-        // const bool = (mon.order === reserveSlot);
-        // if (!bool && owner === mon.owner && util.toId(species) === util.toId(mon.species)) {
-        //   console.log('warningz! Theres a matching pokemon but with a different reserve slot.');
-        //   console.log('this should only happen when you are copying specieses..');
-        //   console.log(bool, reserveSlot);
-        // }
-        return mon.order === reserveSlot;
-      }
-      // @TODO really shouldn't have to util.toId these things.
-      return owner === mon.owner && util.toId(species) === util.toId(mon.species);
-    });
-
-    if (!hello) {
-      hello = new Pokemon(species);
-      if (reserveSlot) {
-        hello.setOrder(reserveSlot);
-        // console.log('new pokemon with order:', hello.order);
-      }
-      this.allmon.push(hello);
-    }
-
-    if (position) {
-      // update the guy who got replaced
-      const goodbye = this.allmon.find( (mon) => {
-        return position === mon.position;
-      });
-      if (goodbye) {
-        goodbye.position = null;
-        goodbye.active = false;
-      }
-    }
-
-    hello.position = position;
-    hello.owner = owner;
-
-    // console.log('pushing a new pokemon', hello.owner);
-    return hello;
-  }
-
-  /**
-   * Find a Pokemon by its ID, ex. 'p2a: Pikachu'
-   *
-   * @param  {String} id The Pokemon ID.
-   * @return {Pokemon} The Pokemon object.
-   */
-  _findById(id) {
-    return this.allmon.find( (mon) => { return mon.id === id; });
-  }
-
-  /**
-   * Find a Pokemon by its position, ex. 'p2a'
-   * @param  {String} pos The position of the Pokemon.
-   * @return {Pokemon} The Pokemon object.
-   */
-  _findByPos(pos) {
-    return this.allmon.find( (mon) => { return mon.position === pos; });
   }
 
   /**

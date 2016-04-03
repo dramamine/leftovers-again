@@ -79,7 +79,7 @@ export default class Pokemon {
     ['dead', 'condition', 'statuses', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item', 'boosts', 'lastMove']
+    'position', 'owner', 'item', 'boosts', 'lastMove', 'order']
     .forEach((field) => {
       if (this[field]) out[field] = this[field];
     });
@@ -349,6 +349,7 @@ export default class Pokemon {
         this.dead = true;
         this.hp = 0;
         this.hppct = 0;
+        this.active = false;
       } else {
         log.err('weird condition:' + condition);
       }

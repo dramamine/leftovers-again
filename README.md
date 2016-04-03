@@ -138,6 +138,8 @@ $ ENGINE WORK
 + cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
+- same species bugs. try giving a name to each mon of SplashBot. rename _recordIdent to 'findBestMatchOrCreate'. sometimes the active mons of requests are not getting recorded. I think we are finding the wrong pokemon (a dead one)!
+
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

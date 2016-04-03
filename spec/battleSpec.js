@@ -88,7 +88,3 @@ describe('store integration', () => {
     expect(moves[0].disabled).toBe(false);
   });
 });
-
-
-
-
