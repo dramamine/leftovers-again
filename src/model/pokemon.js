@@ -11,8 +11,11 @@ export default class Pokemon {
    * @param  {String} species The species of Pokemon.
    * @return {Pokemon} An instance of the class Pokemon.
    */
-  constructor(species) {
-    this.useSpecies(species);
+  constructor(ident, details) {
+    this.useIdent(ident);
+    this.useDetails(details);
+
+    this.research();
   }
 
 /**
@@ -79,7 +82,7 @@ export default class Pokemon {
     ['dead', 'condition', 'statuses', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item', 'boosts', 'lastMove', 'order']
+    'position', 'owner', 'item', 'boosts', 'lastMove', 'order', 'nickname']
     .forEach((field) => {
       if (this[field]) out[field] = this[field];
     });
@@ -231,10 +234,10 @@ export default class Pokemon {
     try {
       const deets = details.split(', ');
 
-      // if we're just learning this...that would be weird / impossible.
       if (!this.species) {
-        log.warn('weird, learning about species from deets.');
-        this.useSpecies(deets[0]);
+        // log.warn('weird, learning about species from deets.');
+        this.species = deets[0];
+        this.id = util.toId(deets[0]);
       }
       if (deets[1]) {
         this.level = parseInt(deets[1].substr(1), 10);
@@ -244,6 +247,13 @@ export default class Pokemon {
       log.err(`useDetails: error parsing mon.details: ${details}`);
       log.err(e);
     }
+  }
+
+  useIdent(ident) {
+    this.ident = util.identWithoutPosition(ident); // for convenience
+    this.owner = util.identToOwner(ident);
+    this.position = util.identToPos(ident);
+    this.nickname = ident.substr(ident.indexOf(' ') + 1);
   }
 
   /**
@@ -308,12 +318,8 @@ export default class Pokemon {
    *
    * @param  {String} spec The species name, ex. 'Pikachu'
    */
-  useSpecies(spec) {
-    const key = util.toId(spec);
-    this.species = key;
-
-    // lol also dangerous
-    Object.assign(this, util.researchPokemonById(key));
+  research() {
+    Object.assign(this, util.researchPokemonById(this.species));
   }
 
   /**
@@ -345,6 +351,8 @@ export default class Pokemon {
         if (maxHpAndStatuses.length > 1) {
           this.statuses = maxHpAndStatuses.slice(1);
         }
+
+        if (this.dead) this.dead = false; // uh oh.
       } else if (condition === '0 fnt') {
         this.dead = true;
         this.hp = 0;

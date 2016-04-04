@@ -157,7 +157,6 @@ export default class Team {
         }
         const nicknames = nameAndGender.match(/\((.+)\)/);
         if (nicknames) {
-          Log.debug('nicknames: ' + nicknames);
           mon.name = nameAndGender.split(' (')[0];
           mon.species = nicknames[1];
         } else {
@@ -183,17 +182,11 @@ export default class Team {
       if (buf) buf += ']';
 
       // name
-      buf += (set.name || set.species);
+      buf += set.name || '';
 
-      const id = util.toId(set.name || set.species);
-      // console.log('using id', set.id, set.name, set.species);
+      const id = util.toId(set.species);
 
-      // species
-      let name = '';
-      if (set.name && set.species && util.toId(set.species) !== util.toId(set.name)) {
-        name = set.name;
-      }
-      buf += '|' + name;
+      buf += '|' + id;
 
       // item
       buf += '|' + util.toId(set.item);

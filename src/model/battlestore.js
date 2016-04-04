@@ -77,28 +77,24 @@ export default class BattleStore {
 
 
   handleSwitch(ident, details, condition) {
-    const pos = this._identToPos(ident);
+    const pos = util.identToPos(ident);
     const former = this.barn.findByPos(pos);
 
-    const mon = this.barn.findOrCreate(ident);
+    const mon = this.barn.findOrCreate(ident, details);
     mon.position = pos;
     mon.active = true;
 
-
     if (former) {
       former.position = null;
-      former.order = mon.order;
       former.active = false;
-
-      mon.order = 0; // @TODO better update this for doubles
     }
 
     mon.useCondition(condition);
-    mon.useDetails(details);
+    mon.useDetails(details); // @TODO is this necessary?
 
     this.events.push({
       type: 'switch',
-      player: this._identToOwner(ident),
+      player: util.identToOwner(ident),
       turn: this.turn,
       from: former ? former.species : null,
       frompos: mon.position,
@@ -127,7 +123,7 @@ export default class BattleStore {
     const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
-      player: this._identToOwner(actor),
+      player: util.identToOwner(actor),
       turn: this.turn,
       from: actingMon.species,
       frompos: actingMon.position,
@@ -159,11 +155,11 @@ export default class BattleStore {
     } else {
       Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
     }
-    const targetMon = this._findByIdent(target);
+    const targetMon = this.barn.find(target);
     this.events.push({
       type: 'cant',
       turn: this.turn,
-      player: this._identToOwner(target),
+      player: util.identToOwner(target),
       from: targetMon.species,
       frompos: targetMon.position,
       reason
@@ -356,23 +352,13 @@ export default class BattleStore {
     }
 
     if (data.side && data.side.pokemon) {
-      if (this.barn.all().length === 0) {
-        // handle some stuff during the first request
-        for (let i = 0; i < data.side.pokemon.length; i++) {
-          const mon = data.side.pokemon[i];
-          const ref = this.barn.create(mon.ident);
-          ref.active = mon.active || false;
-          ref.order = i;
-          ref.assimilate(mon);
-        }
-      } else {
-        // be safer this time - only update previous info.
-        for (let i = 0; i < data.side.pokemon.length; i++) {
-          const mon = data.side.pokemon[i];
-          const ref = this.barn.findByOrder(i, mon.ident);
-          ref.assimilate(mon);
-          ref.active = mon.active || false; // order matters! keep dead mons active
-        }
+      // handle some stuff during the first request
+      for (let i = 0; i < data.side.pokemon.length; i++) {
+        const mon = data.side.pokemon[i];
+        const ref = this.barn.findOrCreate(mon.ident, mon.details);
+        ref.assimilate(mon);
+        ref.active = mon.active || false;
+        ref.order = i;
       }
     }
 
@@ -460,7 +446,7 @@ export default class BattleStore {
       .map(dataGetter);
     output.opponent.reserve = this.barn.all()
       .filter(youareowner)
-      .sort(byOrder)
+      .sort(byOrder) // @TODO does this do anything
       .map(dataGetter);
 
     if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
@@ -510,26 +496,6 @@ export default class BattleStore {
     }
 
     return output;
-  }
-
-  /**
-   * Get the position from the 'ident'.
-   * @param  {String} ident The Pokemon ident.
-   * @return {String} The position.
-   */
-  _identToPos(ident) {
-    const posStr = ident.substr(0, ident.indexOf(':'));
-    const position = (posStr.length === 3) ? posStr : null;
-    return position;
-  }
-
-  /**
-   * Get the owner from the 'ident'.
-   * @param  {String} ident The Pokemon ident.
-   * @return {String} The owner.
-   */
-  _identToOwner(ident) {
-    return ident.substr(0, 2);
   }
 
   /**

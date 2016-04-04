@@ -112,6 +112,33 @@ class PokeUtil {
     : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
       : stat;
   }
+
+  /**
+   * Get the position from the 'ident'.
+   * @param  {String} ident The Pokemon ident.
+   * @return {String} The position.
+   */
+  identToPos(ident) {
+    const posStr = ident.substr(0, ident.indexOf(':'));
+    const position = (posStr.length === 3) ? posStr : null;
+    return position;
+  }
+
+  /**
+   * Get the owner from the 'ident'.
+   * @param  {String} ident The Pokemon ident.
+   * @return {String} The owner.
+   */
+  identToOwner(ident) {
+    return ident.substr(0, 2);
+  }
+
+  identWithoutPosition(ident) {
+    const [player, nickname] = ident.split(':');
+    return player.substr(0, 2) + ':' + nickname;
+  }
+
+
 }
 
 const util = new PokeUtil();
