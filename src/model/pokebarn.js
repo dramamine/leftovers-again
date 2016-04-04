@@ -24,31 +24,34 @@ class Pokebarn {
     return res;
   }
 
-  find(ident) {
+  find(ident, expectAlive = true) {
     const owner = this._identToOwner(ident);
     const position = this._identToPos(ident);
     const species = ident.substr(ident.indexOf(' ') + 1);
 
     const matches = this.allmon.filter( (mon) => {
       // @TODO really shouldn't have to util.toId these things.
-      return owner === mon.owner && util.toId(species) === util.toId(mon.species) && !mon.dead;
+      return owner === mon.owner && util.toId(species) === util.toId(mon.species);
+    }).sort((a, b) => {
+      if (expectAlive) {
+        if (a.dead) return 1;
+        if (b.dead) return -1;
+      }
+      if (a.position === position) return -1;
+      if (b.position === position) return 1;
+      return 0;
     });
-
-    const samePosition = matches.find( mon => mon.position === position);
-    if (samePosition) return samePosition;
     return matches[0];
   }
 
   findOrCreate(ident) {
     const mon = this.find(ident);
     if (mon) return mon;
-
     return this.create(ident);
   }
 
-  findByOrder(ident, order) {
+  findByOrder(order, ident = null) {
     // const owner = this._identToOwner(ident);
-    const species = ident.substr(ident.indexOf(' ') + 1);
 
     const matches = this.allmon.filter( (mon) => {
       // @TODO really shouldn't have to util.toId these things.
@@ -65,9 +68,18 @@ class Pokebarn {
     }
 
     const res = matches[0];
-    if (res.species !== util.toId(species)) {
-      Log.error('o fuck, wrong species. fucked up the order somehow.');
-      Log.error(`expected ${species} but founr ${res.species}`);
+    if (!res) {
+      Log.error('no pokemon with that order!' + order);
+      return res;
+    }
+    // error-checking only
+    // @TODO if this consistently works, use find instead of filter above
+    if (ident) {
+      const species = ident.substr(ident.indexOf(' ') + 1);
+      if (util.toId(res.species) !== util.toId(species)) {
+        Log.error('o fuck, wrong species. fucked up the order somehow.');
+        Log.error(`expected ${species} but founr ${res.species}`);
+      }
     }
     return res;
   }

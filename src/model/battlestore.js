@@ -82,14 +82,15 @@ export default class BattleStore {
 
     const mon = this.barn.findOrCreate(ident);
     mon.position = pos;
+    mon.active = true;
+
 
     if (former) {
       former.position = null;
-      if (former.order && mon.order) {
-        const swap = former.order;
-        former.order = intval(mon.order);
-        mon.order = intval(swap);
-      }
+      former.order = mon.order;
+      former.active = false;
+
+      mon.order = 0; // @TODO better update this for doubles
     }
 
     mon.useCondition(condition);
@@ -241,8 +242,11 @@ export default class BattleStore {
 
   handleFaint(ident) {
     const mon = this.barn.find(ident);
+    if (!mon) {
+      Log.error('couldnt find that pokemon' + ident);
+      Log.error(JSON.stringify(this.barn.all()));
+    }
     mon.useCondition('0 fnt');
-    mon.order = null;
   }
 
   // @TODO this is pretty much thte same as the damage function
@@ -365,9 +369,9 @@ export default class BattleStore {
         // be safer this time - only update previous info.
         for (let i = 0; i < data.side.pokemon.length; i++) {
           const mon = data.side.pokemon[i];
-          const ref = this.barn.findByOrder(i);
-          ref.active = mon.active || false;
+          const ref = this.barn.findByOrder(i, mon.ident);
           ref.assimilate(mon);
+          ref.active = mon.active || false; // order matters! keep dead mons active
         }
       }
     }
