@@ -8,12 +8,15 @@ import log from 'log';
 export default class Pokemon {
   /**
    * Pokemon constructor.
-   * @param  {String} species The species of Pokemon.
+   * @param  {String} ident  The ident of the Pokemon, ex. 'p1a: Nickname'
+   * @param {String} details  The details of the Pokemon, ex. 'Talonflame, L83, M'
    * @return {Pokemon} An instance of the class Pokemon.
    */
   constructor(ident, details) {
     this.useIdent(ident);
     this.useDetails(details);
+    this.prevMoves = [];
+    this.seenMoves = [];
 
     this.research();
   }
@@ -59,7 +62,15 @@ export default class Pokemon {
  * @property {String} position  The mon's position, in Showdown format. 'p1a' means
  *           they are in player 1's first active slot; 'p2c' means they are
  *           in player 2's third active slot (in a Triples battle)
+ * @property {Array<String>} prevMoves  An array containing the move ids for moves
+ *           this Pokemon has used. prevMoves[0] is the last used move, and
+ *           prevMoves[prevMoves.length-1] is the first move that Pokemon used
+ *           when they were out on the field. This array is reset when a Pokemon
+ *           switches out.
  * @property {Array<String>} types  An array of the mon's types, ex. ['Fire', 'Flying']
+ * @property {Array<String>} seenMoves  An array of moves that we've seen this
+ *           Pokemon use. This carries throughout the match. The string is the
+ *           move id.
  * @property {String} species  the species of Pokemon, ex. "Pikachu". This is
  *         the same as {@link PokemonData.id|PokemonData.id}, but more human-readable.
  * @property {Object} stats An object similar to baseStats, but includes calculations
@@ -82,7 +93,8 @@ export default class Pokemon {
     ['dead', 'condition', 'statuses', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
     'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
-    'position', 'owner', 'item', 'boosts', 'lastMove', 'order', 'nickname']
+    'position', 'owner', 'item', 'boosts', 'prevMoves', 'order', 'nickname',
+    'seenMoves']
     .forEach((field) => {
       if (this[field]) out[field] = this[field];
     });
@@ -308,8 +320,18 @@ export default class Pokemon {
     this.statuses.splice(this.statuses.indexOf(status), 1);
   }
 
-  setLastMove(move) {
-    this.lastMove = move;
+  /**
+   * Record that we saw this Pokemon perform a move. Updates prevMoves and
+   * seenMoves.
+   *
+   * @param  {String} move The move id of the performed move.
+   */
+  recordMove(move) {
+    this.prevMoves.unshift(move);
+    // could use a Set here, but let's keep it simple.
+    if (this.seenMoves.indexOf(move) === -1) {
+      this.seenMoves.push(move);
+    }
   }
 
   /**

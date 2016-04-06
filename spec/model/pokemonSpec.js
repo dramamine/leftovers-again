@@ -11,24 +11,24 @@ describe('Pokemon', () => {
     let mon;
     beforeEach( () => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
-      mon = new Pokemon('fakechu');
+      mon = new Pokemon('p1a: Fakechu', 'Fakechu, L83, M');
     });
     it('should figure out the species', () => {
       mon.useDetails('Fakechu, L83, M');
-      expect(mon.species).toEqual('fakechu');
+      expect(mon.species).toEqual('Fakechu');
       expect(mon.level).toEqual(83);
       expect(mon.gender).toEqual('M');
     });
 
-    it('should reject malformed details', () => {
+    // it('should reject malformed details', () => {
 
-    });
+    // });
   });
   describe('useCondition', () => {
     let mon;
     beforeEach( () => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
-      mon = new Pokemon('fakechu');
+      mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });
     it('should parse a healthy condition', () => {
       const cond = '100/100';
@@ -82,7 +82,7 @@ describe('Pokemon', () => {
     let mon;
     beforeEach( () => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
-      mon = new Pokemon('Fakechu');
+      mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });
     it('should return only what is set', () => {
       const cond = '25/250 par poi';
@@ -99,7 +99,7 @@ describe('Pokemon', () => {
         stats: {atk: 100},
         boosts: {atk: 2}
       });
-      const mon = new Pokemon('Fakechu');
+      const mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
       const res = mon.data();
       expect(res.stats.atk).toEqual(100);
       expect(res.boosts.atk).toEqual(2);
@@ -128,11 +128,25 @@ describe('Pokemon', () => {
       expect(moves[2].type).toEqual(jasmine.any(String));
     });
   });
+  describe('recordMove', () => {
+    it('should record moves used', () => {
+      const mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
+      mon.recordMove('surf');
+      mon.recordMove('waterfall');
+      mon.recordMove('surf');
+      mon.recordMove('thunderbolt');
+      expect(mon.prevMoves).toEqual(['thunderbolt', 'surf', 'waterfall', 'surf']);
+      expect(mon.seenMoves).toContain('surf');
+      expect(mon.seenMoves).toContain('waterfall');
+      expect(mon.seenMoves).toContain('thunderbolt');
+      expect(mon.seenMoves.length).toEqual(3);
+    });
+  });
   describe('useBoost', () => {
     let mon;
     beforeEach( () => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
-      mon = new Pokemon('Fakechu');
+      mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });
     it('should boost a stat', () => {
       mon.useBoost('atk', 1);

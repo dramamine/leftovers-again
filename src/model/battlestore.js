@@ -132,7 +132,7 @@ export default class BattleStore {
       topos: targetMon.position
     });
 
-    actingMon.setLastMove(move);
+    actingMon.recordMove(move);
   }
 
   /**

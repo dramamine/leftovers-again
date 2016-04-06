@@ -5,6 +5,7 @@ import {MOVE, SWITCH} from 'decisions';
 import report from 'report';
 import listener from 'listener';
 import Reporter from 'reporters/matchstatus';
+// import util from 'pokeutil';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -41,6 +42,8 @@ class Battle {
 
     this.bot = bot;
     this.store = new BattleStore();
+
+    this.prevStates = [];
   }
 
   /**
@@ -86,7 +89,7 @@ class Battle {
    * @TODO is this necessary or should we do this in handleRequest?
    */
   handleTeamPreview() {
-   this.decide();
+    this.decide();
   }
 
   /**
@@ -154,6 +157,9 @@ class Battle {
 
     log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(currentState) + '\n');
 
+    // attach previous states
+    currentState.prevStates = this.prevStates;
+
     const choice = this.myBot().decide(currentState);
     if (choice instanceof Promise) {
       // wait for promises to resolve
@@ -161,6 +167,8 @@ class Battle {
         const res = Battle._formatMessage(this.bid, resolved, currentState);
         log.info(res);
         listener.relay('_send', res);
+        // saving this state for future reference
+        this.prevStates.unshift( this.abbreviateState(currentState) );
       }, (err) => {
         log.err('I think there was an error here.');
         log.err(err);
@@ -170,7 +178,36 @@ class Battle {
       const res = Battle._formatMessage(this.bid, choice, currentState);
       log.info(res);
       listener.relay('_send', res);
+      // saving this state for future reference
+      this.prevStates.unshift( this.abbreviateState(currentState) );
     }
+  }
+
+  /**
+   * The prevStates array that we send to the bots doesn't need a ton of detail.
+   * Let's just send a couple important fields.
+   *
+   * @param  {Object} state  The state object sent to bots.
+   * @return {[type]}        Fewer fields of that state object.
+   */
+  abbreviateState(state) {
+    return {
+      turn: state.turn,
+      self: {
+        active: {
+          hp: state.self.active.hp,
+          hppct: state.self.active.hppct,
+          statuses: state.self.active.statuses
+        }
+      },
+      opponent: {
+        active: {
+          hp: state.opponent.active.hp,
+          hppct: state.opponent.active.hppct,
+          statuses: state.opponent.active.statuses
+        }
+      }
+    };
   }
 
   /**
