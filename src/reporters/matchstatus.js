@@ -12,7 +12,14 @@ const EMPTY = '           ';
 
 class MatchStatus {
   report(state) {
-    const stuff = this.padLeft(state.self.active.lastMove || undefined, 12) + ' | ' +
+    const myLastMove = state.self.active.prevMoves
+      ? state.self.active.prevMoves[0]
+      : '';
+    const yourLastMove = state.opponent.active.prevMoves
+      ? state.opponent.active.prevMoves[0]
+      : '';
+
+    const stuff = this.padLeft(myLastMove, 12) + ' | ' +
 
       this.padLeft(
         this.statusString(state.self.active.statuses) + ' ' +
@@ -39,9 +46,7 @@ class MatchStatus {
         this.boostString(state.opponent.active.boosts)
       , 15) + ' | ' +
 
-      this.padRight(
-        state.opponent.active.lastMove || undefined
-      , 12) + '';
+      this.padRight(yourLastMove, 12) + '';
     console.log(stuff);
   }
   hp(hppct) {

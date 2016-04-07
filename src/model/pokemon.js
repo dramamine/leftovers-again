@@ -327,10 +327,11 @@ export default class Pokemon {
    * @param  {String} move The move id of the performed move.
    */
   recordMove(move) {
-    this.prevMoves.unshift(move);
+    const id = util.toId(move);
+    this.prevMoves.unshift(id);
     // could use a Set here, but let's keep it simple.
-    if (this.seenMoves.indexOf(move) === -1) {
-      this.seenMoves.push(move);
+    if (this.seenMoves.indexOf(id) === -1) {
+      this.seenMoves.push(id);
     }
   }
 
