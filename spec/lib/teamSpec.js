@@ -47,7 +47,7 @@ IVs: 0 Atk
 - Taunt
 `;
 
-const utm = 'Alakazam-Mega||alakazite|magicguard|psychic,hiddenpowerfire,shadowball,taunt|Timid|,,,252,4,252||,0,,,,|||';
+const utm = '|alakazammega|alakazite|magicguard|psychic,hiddenpowerfire,shadowball,taunt|Timid|,,,252,4,252||,0,,,,|||';
 
 
 describe('team', () => {
