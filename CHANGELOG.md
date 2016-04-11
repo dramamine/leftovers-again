@@ -1,3 +1,8 @@
+0.4.1 => 0.5.0
+- Fix teams that break the single species rule (via nicknames)
+- Old typechart method is deprecated, use Typechart.compare
+- Cancel challenges sometimes
+- Automatically mega-evolve
 
 
 10/18/2015
