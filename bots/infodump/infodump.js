@@ -182,8 +182,8 @@ class Infodump extends AI {
       const defenses = [];
       state.opponent.active.types.forEach( yourtype => {
         mon.types.forEach( mytype => {
-          attacks.push( Typechart[mytype][yourtype] );
-          defenses.push( Typechart[yourtype][mytype] );
+          attacks.push(Typechart.compare(mytype, yourtype));
+          defenses.push(Typechart.compare(yourtype, mytype));
         });
       });
 

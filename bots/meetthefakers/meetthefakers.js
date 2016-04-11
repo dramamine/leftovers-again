@@ -192,11 +192,7 @@ EVs: 136 Atk / 120 SpA / 252 Spe
     //   return new MOVE('raindance');
     // }
 
-
-    let waterEffectiveness = 99;
-    state.opponent.active.types.forEach(type => {
-      waterEffectiveness = Math.min(waterEffectiveness, Typechart.Water[type]);
-    });
+    const waterEffectiveness = Typechart.compare('Water', state.opponent.active.types);
 
     const shouldToxic = state.opponent.active.statuses.indexOf('tox') === -1;
     const shouldSurf = isRaining && waterEffectiveness >= 1;

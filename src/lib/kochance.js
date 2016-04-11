@@ -1,4 +1,4 @@
-import typeChart from 'lib/typechart';
+import Typechart from 'lib/typechart';
 import Damage from 'lib/damage';
 
 class KO {
@@ -55,7 +55,7 @@ class KO {
 
     let hazards = 0;
     if (field.isSR && defender.ability !== 'Magic Guard') {
-      const effectiveness = typeChart.Rock[defender.type1] * (defender.type2 ? typeChart.Rock[defender.type2] : 1);
+      const effectiveness = Typechart.compare('Rock', defender.types);
       hazards += Math.floor(effectiveness * defender.maxhp / 8);
     }
     if ([defender.type1, defender.type2].indexOf('Flying') === -1 &&

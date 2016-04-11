@@ -67,9 +67,12 @@ Seriously, read the docs! They are most up-to-date!
 
 ## How do I check if a move will be super-effective?
 ```javascript
-import typechart from 'lib/typechart';
-typechart['Normal']['Fighting'] // 0.5
-typechart['Fire']['Grass'] // 2
+import Typechart from 'lib/typechart';
+Typechart.compare('Normal', 'Fighting'); // 0.5
+Typechart.compare('Fire', 'Grass'); // 2
+
+// my move against the opponent
+Typechart.compare(move.type, state.opponent.active.types);
 ```
 
 ### How can I tell if I have buffs?

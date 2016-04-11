@@ -4,7 +4,7 @@
  */
 
 import AI from 'ai';
-import typechart from 'lib/typechart';
+import Typechart from 'lib/typechart';
 
 import {MOVE, SWITCH} from 'decisions';
 
@@ -90,12 +90,8 @@ export default class EliteFour extends AI {
       fitness[move.id] = {};
 
       // favor super-effective moves, disfavor ineffective / weak moves
-      fitness[move.id].effectiveness =
-        state.opponent.active.types.map( (opponentType) => {
-          return typechart[move.type][opponentType];
-        }).reduce( (prev, curr) => {
-          return prev * curr;
-        }, 0);
+      fitness[move.id].effectiveness = Typechart.compare(move.type,
+        state.opponent.active.types);
 
       fitness[move.id].stabby = !!state.self.active.types.indexOf(move.type);
 

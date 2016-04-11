@@ -1,4 +1,4 @@
-import typeChart from 'lib/typechart';
+import Typechart from 'lib/typechart';
 import util from 'pokeutil';
 
 const AT = 'atk';
@@ -432,7 +432,8 @@ class Damage {
       description.defenderAbility = defAbility;
       return [0];
     }
-    if (field.weather === 'Strong Winds' && (defender.type1 === 'Flying' || defender.type2 === 'Flying') && typeChart[move.type].Flying > 1) {
+    if (field.weather === 'Strong Winds' && (defender.type1 === 'Flying' ||
+      defender.type2 === 'Flying') && Typechart.compare(move.type, 'Flying') > 1) {
       typeEffectiveness /= 2;
       description.weather = field.weather;
     }
@@ -946,9 +947,9 @@ function getMoveEffectiveness(move, type, isGhostRevealed, isGravity) {
   } else if (move.name === 'Freeze-Dry' && type === 'Water') {
     return 2;
   } else if (move.name === 'Flying Press') {
-    return typeChart.Fighting[type] * typeChart.Flying[type];
+    return Typechart.compare('Fighting', type) * Typechart.compare('Flying', type);
   }
-  return typeChart[move.type][type];
+  return Typechart.compare(move.type, type);
 }
 
 function getModifiedStat(stat, mod) {

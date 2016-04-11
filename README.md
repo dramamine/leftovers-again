@@ -96,27 +96,17 @@ npm run client # then add ?~~localhost:8000 to the end of the URL
 $ ENGINE WORK
 - need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon
 - need to handle Zoroark - see 20160104-bug-too-many-active.txt
-+ damage done by Return calculated incorrectly
-+ damage done by that weight-based move that Onix has is not calculated
 - don't think that Explosion is such a great move
 - don't think that Water Spout sux
 - don't break on HP-based moves
-+ process fields
-+ process weather
 - see if "Happiness: 200" is parsed by team declarer
 - 'Seismic Toss' calculates incorrectly
 - Kyurem vs Kyurem-White (causes a crash)
 - maybe return nothing instead of crashing out (from getHelp function)
-+ make sure pokemon properties include 'level'. (I am pretty sure I checked this. turns out lots of modes like ou/uber don't report level. );
 - move a bunch of functions from lib/damage.js to damageWrapper.js (or something)
 - create a set of tests for a "generic bot testing script"
 - setup the script for said tests
-+ shell commands for running bots
-+ better logging: write the last request and state to a file somewhere
 - have bots ping for challenge updates
-+ set 'disabled' on moves with 0 HP
-+ if your opponent cures a status, do you notice?
-+ cannot find my move hiddenpowerfightin
 - speed on boosts error:
 - _onSpeedData: Object {mine: 77, yours: 164}
 - _onSpeedData: Object {mine: 77, yours: 5.075554161070059e+28}
@@ -134,14 +124,9 @@ $ ENGINE WORK
 + remove or hide www code
 - change logging to use timestamps
 - fix the elitefour bots to use package.json
-- stuff breaks when you don't obey the one-per-species rule. ex. reserve doesn't have enough entries, active is sometimes unset.
-+ cant probably shouldn't error out so hard, since it sometimes happens (like with frz)
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
-- same species bugs. try giving a name to each mon of SplashBot. rename _recordIdent to 'findBestMatchOrCreate'. sometimes the active mons of requests are not getting recorded. I think we are finding the wrong pokemon (a dead one)!
-- Add typechart function that takes types as arrays
 - is Damage.getDamageResult checking weather/field effects everywhere?
-- fix this: You're already challenging '5nowden3729'. Cancel that challenge before challenging someone else.
 
 
 $ FRONT-END SCRIPT WORK

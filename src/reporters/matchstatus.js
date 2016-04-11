@@ -111,5 +111,4 @@ class MatchStatus {
   }
 }
 
-let ms = new MatchStatus();
-export default ms;
+export default new MatchStatus();
