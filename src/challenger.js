@@ -52,6 +52,8 @@ class Challenger {
     this.users = {};
     this.challengesFrom = {};
     this.challengeTo = {};
+
+    this.hasChallenged = true;
   }
 
   /**
@@ -100,7 +102,7 @@ class Challenger {
     case '0':
       break;
     case '1':
-      Log.info(`Successfully logged in as ${nick}`);
+      Log.warn(`Successfully logged in as ${nick}`);
       this.users[nick] = Statuses.SELF;
       break;
     default:
@@ -186,9 +188,8 @@ class Challenger {
    *
    */
   onUpdateChallenges(msg) {
-    console.log('got challenge update');
     const {challengesFrom, challengeTo} = JSON.parse(msg);
-    console.log(challengesFrom, challengeTo);
+    Log.debug('updated challenges: ' + msg);
     this.challengesFrom = challengesFrom || {};
     this.challengeTo = challengeTo || {};
     Object.keys(challengesFrom).forEach( (opponent) => {
@@ -209,6 +210,22 @@ class Challenger {
         this.connection.send('|/accept ' + opponent);
       }
     });
+
+    // these were pre-existing challenges, so let's just pretend they
+    // didn't happen.
+    if (this.challengeTo && this.challengeTo.to && !this.hasChallenged) {
+      this.cancelOutstandingChallenges();
+    }
+  }
+
+  /**
+   * Cancels outstanding challenges.
+   */
+  cancelOutstandingChallenges() {
+    if (this.challengeTo && this.challengeTo.to) {
+      Log.warn(' ~ cancelling a challenge with ' + this.challengeTo.to);
+      this.connection.send('|/cancelchallenge ' + this.challengeTo.to);
+    }
   }
 
   /**
@@ -241,6 +258,8 @@ class Challenger {
     }
     Log.warn(`sending challenge... ${nick} ${this.botinfo.format}`);
     this.connection.send('|/challenge ' + nick + ', ' + this.botinfo.format);
+
+    this.hasChallenged = true;
   }
 
 }

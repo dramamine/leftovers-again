@@ -63,8 +63,11 @@ listener.use(battlemanager);
  */
 function exitHandler(options, err) {
   if (err) console.error(err.stack);
-  myconnection.close();
-  if (options.exit) process.exit();
+  challenger.cancelOutstandingChallenges();
+  setTimeout(() => {
+    myconnection.close();
+    if (options.exit) process.exit();
+  }, 100);
 }
 
 /**
