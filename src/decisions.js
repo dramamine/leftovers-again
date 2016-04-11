@@ -16,6 +16,17 @@ export class MOVE {
   constructor(id, target = null) {
     this.id = id;
     this.target = target;
+
+    this.shouldMegaEvo = true;
+  }
+
+  /**
+   * Should this pokemon mega-evolve?
+   *
+   * @param {Boolean} should  True if it should, false otherwise.
+   */
+  setMegaEvo(should) {
+    this.shouldMegaEvo = should;
   }
 }
 

@@ -233,6 +233,10 @@ class Battle {
       }
 
       verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
+
+      if (state.self.active.canMegaEvo && choice.shouldMegaEvo) {
+        verb += ' mega';
+      }
     } else if (choice instanceof SWITCH) {
       verb = (state.teamPreview)
         ? '/team '

@@ -139,6 +139,9 @@ $ ENGINE WORK
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
 - same species bugs. try giving a name to each mon of SplashBot. rename _recordIdent to 'findBestMatchOrCreate'. sometimes the active mons of requests are not getting recorded. I think we are finding the wrong pokemon (a dead one)!
+- Add typechart function that takes types as arrays
+- is Damage.getDamageResult checking weather/field effects everywhere?
+- fix this: You're already challenging '5nowden3729'. Cancel that challenge before challenging someone else.
 
 
 $ FRONT-END SCRIPT WORK
