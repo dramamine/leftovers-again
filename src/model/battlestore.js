@@ -464,11 +464,17 @@ export default class BattleStore {
     // @TODO why aren't we clearing out activeData?
     if (this.activeData && output.self.active.length === this.activeData.length) {
       for (let i = 0; i < this.activeData.length; i++) {
+        // researching moves and copying them over
         const movesArr = this.activeData[i].moves;
         const updated = movesArr.map( (move) => { // eslint-disable-line
           return Object.assign(move, util.researchMoveById(move.id));
         });
         output.self.active[i].moves = updated;
+
+        // for mega-evolution
+        if (this.activeData[i].canMegaEvo) {
+          output.self.active[i].canMegaEvo = this.activeData[i].canMegaEvo;
+        }
       }
     }
 

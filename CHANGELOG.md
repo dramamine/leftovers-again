@@ -3,7 +3,7 @@
 - Old typechart method is deprecated, use Typechart.compare
 - Cancel challenges sometimes
 - Automatically mega-evolve
-
+- Teampreview now shows opponent's Pokemons, as you'd expect
 
 10/18/2015
 npm run develop -- --bot=randombattle/stabby.js
