@@ -77,10 +77,8 @@ Serious Nature
         return true;
       });
       const myMon = this._pickOne(possibleMons);
-      console.log('switching to: ', myMon);
       return new SWITCH(myMon);
     }
-    console.log('doing this move:', moveId);
     return new MOVE(moveId);
   }
 

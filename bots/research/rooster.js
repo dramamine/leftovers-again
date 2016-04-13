@@ -23,7 +23,7 @@ export default class Rooster extends AI {
 
   team() {
     return `
-Talonflame
+TalonflameA (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -33,7 +33,7 @@ Serious Nature
 - Brave Bird
 - Roost
 
-Talonflame
+TalonflameB (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -43,7 +43,7 @@ Serious Nature
 - Brave Bird
 - Roost
 
-Talonflame
+TalonflameC (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -53,7 +53,7 @@ Serious Nature
 - Brave Bird
 - Roost
 
-Talonflame
+TalonflameD (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -63,7 +63,7 @@ Serious Nature
 - Brave Bird
 - Roost
 
-Talonflame
+TalonflameE (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -73,7 +73,7 @@ Serious Nature
 - Brave Bird
 - Roost
 
-Talonflame
+TalonflameF (Talonflame)
 Ability: Gale Wings
 Level: 100
 EVs: 84 HP / 84 Atk / 84 Def / 84 SpA / 84 SpD / 84 Spe
@@ -86,11 +86,14 @@ Serious Nature
   }
 
   decide(state) {
-    if (state.forceSwitch || state.teamPreview || !this.canRoost(state)) {
-      this.ctr = this.ctr + 1;
-      // will crash out when ctr >= 7;
+    if (state.forceSwitch || state.teamPreview || !this.can(state)) {
 
-      return new SWITCH(this.ctr);
+      const possibleMons = state.self.reserve.filter( (mon) => {
+        if (mon.condition === '0 fnt') return false;
+        if (mon.active) return false;
+        return true;
+      });
+      return new SWITCH(this.pickOne(possibleMons));
     }
     return new MOVE(moveId);
   }
@@ -101,6 +104,10 @@ Serious Nature
     const move = state.self.active.moves.find(m => m.id === moveId);
     if (move.disabled) return false;
     return true;
+  }
+
+  pickOne(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
   }
 }
 

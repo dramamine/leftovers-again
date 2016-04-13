@@ -40,6 +40,7 @@ export default class BattleStore {
       heal: this.handleHeal,
       player: this.handlePlayer,
       cant: this.handleCant,
+      replace: this.handleReplace,
       '-fail': this.handleFail,
       '-miss': this.handleMiss,
       '-boost': this.handleBoost,
@@ -164,6 +165,10 @@ export default class BattleStore {
       frompos: targetMon.position,
       reason
     });
+  }
+
+  handleReplace(ident, details, condition) {
+    this.barn.replace(ident, details, condition);
   }
 
   handleMiss(actor, target) {
@@ -456,8 +461,27 @@ export default class BattleStore {
     }
 
     if (output.self.active.length > 1) {
-      Log.warn('stop the presses! too many active pokemon');
-      Log.warn(output.self.active);
+      const zoroark = output.self.active.find(mon => mon.id === 'zoroark');
+      if (zoroark) {
+        Log.warn('OK, found my zoroark.');
+
+        // in reserves, pretend this guy is not actually active.
+        output.self.reserve.push(zoroark);
+        zoroark.active = false;
+
+        // remove from active
+        output.self.active.splice(output.self.active.indexOf(zoroark), 1);
+
+        // mark the actual pokemon of ours as being Zoroark
+        output.self.active.map(mon => {
+          mon.isZoroark = true;
+        });
+
+
+      } else {
+        Log.warn('stop the presses! too many active pokemon');
+        Log.warn(output.self.active);
+      }
     }
 
     // this was causing some errors before. could use some more research...

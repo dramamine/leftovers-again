@@ -25,9 +25,7 @@ class PokeUtil {
     name = ('' + text).replace(/[\|\s\[\]\,\']+/g, '').toLowerCase().trim();
 
     // these lines are not! but I needed them.
-    name = name.replace('-', '');
-    name = name.replace('.', '');
-    name = name.replace(' ', '');
+    name = name.replace(/[\-\.\ ]+/g, '');
 
     if (name.length > 18) name = name.substr(0, 18).trim();
     return name;

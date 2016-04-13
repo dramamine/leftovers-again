@@ -36,6 +36,31 @@ class Pokebarn {
   }
 
   /**
+   * Sometimes Pokemon get replaced. Like when Zoroark comes to town.
+   *
+   * @param  {[type]} ident     [description]
+   * @param  {[type]} details   [description]
+   * @param  {[type]} condition [description]
+   * @return {[type]}           [description]
+   */
+  replace(ident, details, condition) {
+    const pos = util.identToPos(ident);
+    const replaced = this.findByPos(pos);
+    const idx = this.allmon.indexOf(replaced);
+    if (idx >= 0) {
+      Log.warn('Found zoroark! replacing him!');
+      this.allmon.splice(idx, 1);
+    } else {
+      Log.error('Couldnt find the thing we want to replace.');
+      Log.error(ident, details, condition);
+    }
+
+    const updated = this.findOrCreate(ident, details);
+    updated.useCondition(condition);
+    return updated;
+  }
+
+  /**
    * Find a Pokemon by its position, ex. 'p2a'
    * @param  {String} pos The position of the Pokemon.
    * @return {Pokemon} The Pokemon object.
