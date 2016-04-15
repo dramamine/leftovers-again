@@ -9,8 +9,8 @@
 
 import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
 import DamageCalcMovedex from '../lib/honko-damagecalc/js/data/movedata';
-import {BattlePokedex} from '../lib/Pokemon-Showdown/data/pokedex';
-import {BattleFormatsData} from '../lib/Pokemon-Showdown/data/formats-data';
+import { BattlePokedex } from '../lib/Pokemon-Showdown/data/pokedex';
+import { BattleFormatsData } from '../lib/Pokemon-Showdown/data/formats-data';
 import fs from 'fs';
 
 const destination = 'src/data/';
@@ -24,11 +24,13 @@ function copyMoves() {
     'category',
     'drain',
     'flags',
+    'heal',
     'hits',
     'id',
     'name',
     'priority',
     'secondary',
+    'sideCondition',
     'status',
     'target',
     'type',
