@@ -1,7 +1,7 @@
 /**
- * Summon Talonflames to cast 'Roost' over and over.
+ * Summon Talonflames to cast 'Brave Bird' over and over.
  *
- * npm run develop -- --bot=anythinggoes/tester/rooster.js
+ * npm start -- research/bravest
  */
 
 

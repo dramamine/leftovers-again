@@ -23,13 +23,17 @@ class Challenger {
    * Constructor.
    * @param  {boolean} scrappy Set to true if we want this user to challenge
    * everyone in the lobby and everyone who joins the lobby later.
+   * @param  {String}  challengeType  The type of match we're challenging
+   * opponents to. By default, the challenge type used matches the 'format'
+   * field of the bot's package.json
    *
    * @return Constructor
    */
-  constructor(connection, botinfo, scrappy, matches) {
+  constructor(connection, botinfo, scrappy, challengeType, matches) {
     this.connection = connection;
     this.botinfo = botinfo;
     this.scrappy = scrappy;
+    this.challengeType = challengeType || this.botinfo.format;
     this.matches = matches;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
@@ -197,14 +201,18 @@ class Challenger {
       // only accept battles of the type we're designed for
       if (Challenger._acceptable(challengeType, this.botinfo.accepts)) {
         // this is the point at which we need to pick a team!
-        // TODO use promises here to maybe wait for user to pick a team
         // team message is: /utm ('use team')
-        const team = this.botinfo.team(opponent);
-        if (team) {
-          const utmString = new Team(team).asUtm();
-          Log.info('sending team msg...', utmString);
 
-          this.connection.send('|/utm ' + utmString);
+        if (Challenger._requiresTeam(challengeType)) {
+          const team = this.botinfo.team(opponent);
+          if (team) {
+            const utmString = new Team(team).asUtm();
+            Log.info('sending team msg...', utmString);
+
+            this.connection.send('|/utm ' + utmString);
+          } else {
+            Log.error('team required but couldnt get one!');
+          }
         }
 
         this.connection.send('|/accept ' + opponent);
@@ -240,6 +248,19 @@ class Challenger {
   }
 
   /**
+   * @TODO this is a lazy implementation
+   *
+   * @param  {[type]} challengeType [description]
+   * @return {[type]}               [description]
+   */
+  static _requiresTeam(challengeType) {
+    if (challengeType === 'randombattle') {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Send a challenge to this user; maybe load your bot to find its team.
    *
    * @TODO combine this with onUpdateChallenges functionality? ex. the logic
@@ -249,15 +270,19 @@ class Challenger {
    */
   _challenge(nick) {
     Log.info(`challenge called. ${nick}`);
+    const challengeType = this.challengeType;
 
-    const team = this.botinfo.team(nick);
-    if (team) {
-      const utmString = new Team(team).asUtm();
-      Log.info('sending utm...', utmString);
-      this.connection.send('|/utm ' + utmString);
+    if (Challenger._requiresTeam(challengeType)) {
+      const team = this.botinfo.team(nick);
+      if (team) {
+        const utmString = new Team(team).asUtm();
+        Log.info('sending utm...', utmString);
+        this.connection.send('|/utm ' + utmString);
+      }
     }
-    Log.warn(`sending challenge... ${nick} ${this.botinfo.format}`);
-    this.connection.send('|/challenge ' + nick + ', ' + this.botinfo.format);
+
+    Log.warn(`sending challenge... ${nick} ${challengeType}`);
+    this.connection.send('|/challenge ' + nick + ', ' + challengeType);
 
     this.hasChallenged = true;
   }

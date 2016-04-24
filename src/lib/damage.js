@@ -610,8 +610,8 @@ class Damage {
       description.moveBP = move.bp / 2;
       description.weather = field.weather;
     } else if (gen >= 6 && move.name === 'Knock Off' && !(defender.item === '' ||
-      (defender.name === 'Giratina-O' && defender.item === 'Griseous Orb') ||
-      (defender.name.indexOf('Arceus') !== -1 && defender.item.indexOf('Plate') !== -1))) {
+      (defender.species === 'Giratina-O' && defender.item === 'Griseous Orb') ||
+      (defender.species.indexOf('Arceus') !== -1 && defender.item.indexOf('Plate') !== -1))) {
       bpMods.push(0x1800);
       description.moveBP = move.bp * 1.5;
     }
@@ -711,12 +711,12 @@ class Damage {
       description.attackerAbility = attacker.ability;
     }
 
-    if ((attacker.item === 'Thick Club' && (attacker.name === 'Cubone' || attacker.name === 'Marowak') && move.category === 'Physical') ||
-      (attacker.item === 'Deep Sea Tooth' && attacker.name === 'Clamperl' && move.category === 'Special') ||
-      (attacker.item === 'Light Ball' && attacker.name === 'Pikachu')) {
+    if ((attacker.item === 'Thick Club' && (attacker.species === 'Cubone' || attacker.species === 'Marowak') && move.category === 'Physical') ||
+      (attacker.item === 'Deep Sea Tooth' && attacker.species === 'Clamperl' && move.category === 'Special') ||
+      (attacker.item === 'Light Ball' && attacker.species === 'Pikachu')) {
       atMods.push(0x2000);
       description.attackerItem = attacker.item;
-    } else if ((attacker.item === 'Soul Dew' && (attacker.name === 'Latios' || attacker.name === 'Latias') && move.category === 'Special') ||
+    } else if ((attacker.item === 'Soul Dew' && (attacker.species === 'Latios' || attacker.species === 'Latias') && move.category === 'Special') ||
       (attacker.item === 'Choice Band' && move.category === 'Physical') ||
       (attacker.item === 'Choice Specs' && move.category === 'Special')) {
       atMods.push(0x1800);
@@ -761,9 +761,9 @@ class Damage {
       description.weather = field.weather;
     }
 
-    if ((defender.item === 'Deep Sea Scale' && defender.name === 'Clamperl' && !hitsPhysical) ||
-      (defender.item === 'Metal Powder' && defender.name === 'Ditto') ||
-      (defender.item === 'Soul Dew' && (defender.name === 'Latios' || defender.name === 'Latias') && !hitsPhysical) ||
+    if ((defender.item === 'Deep Sea Scale' && defender.species === 'Clamperl' && !hitsPhysical) ||
+      (defender.item === 'Metal Powder' && defender.species === 'Ditto') ||
+      (defender.item === 'Soul Dew' && (defender.species === 'Latios' || defender.species === 'Latias') && !hitsPhysical) ||
       (defender.item === 'Assault Vest' && !hitsPhysical) || defender.item === 'Eviolite') {
       dfMods.push(0x1800);
       description.defenderItem = defender.item;

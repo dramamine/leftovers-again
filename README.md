@@ -128,7 +128,6 @@ $ ENGINE WORK
 - document reporters and how they're used
 - is Damage.getDamageResult checking weather/field effects everywhere?
 
-
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses
 - Get data from fitness bot

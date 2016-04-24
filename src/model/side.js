@@ -11,7 +11,7 @@ const STACKS = {
 };
 
 /**
- * Pokemon class, for tracking information and status of each Pokemon.
+ * @TODO documentation
  */
 export default class Side {
   constructor() {

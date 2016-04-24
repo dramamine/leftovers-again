@@ -1,6 +1,6 @@
 import BattleStore from 'model/battlestore';
 
-import log from 'log';
+import Log from 'log';
 import {MOVE, SWITCH} from 'decisions';
 import report from 'report';
 import listener from 'listener';
@@ -35,6 +35,7 @@ class Battle {
       request: this.handleRequest,
       turn: this.handleTurn,
       win: this.handleWin,
+      callback: this.handleCallback,
 
       // special function for auditing yrself.
       ask4help: this.getHelp
@@ -135,7 +136,7 @@ class Battle {
   }
 
   handleWin(winner) {
-    log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
+    Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
     report.win(winner, this.store, this.bid);
 
     listener.relay('battlereport', {
@@ -143,43 +144,59 @@ class Battle {
       opponent: this.store.yourNick});
   }
 
+  handleCallback(desc, code) {
+    Log.error('FYI THE TRAPPED CALLBACK WAS CALLED');
+    Log.error('THIS IS NOT AN ERROR, IN FACT MAYBE ITS WORKING??');
+    Log.error(desc + ' ' + code);
+    if (desc === 'trapped') {
+      console.log('runnin my lil trapped routine');
+      const state = this.store.data();
+      state.self.reserve.forEach(mon => {
+        mon.dead = true;
+      });
+      this.decide(state);
+    }
+  }
+
   /**
    * Asks the AI to make a decision, then sends it to the server.
    *
    */
-  decide() {
-    const currentState = this.store.data();
+  decide(state) {
+    if (!state) {
+      state = this.store.data();
+    }
 
-    log.debug('STATE:');
-    log.debug(JSON.stringify(currentState));
+    Log.debug('STATE:');
+    Log.debug(JSON.stringify(state));
 
-    Reporter.report(currentState);
+    Reporter.report(state);
 
-    log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(currentState) + '\n');
+    Log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(state) + '\n');
 
     // attach previous states
-    currentState.prevStates = this.prevStates;
+    state.prevStates = this.prevStates;
 
-    const choice = this.myBot().decide(currentState);
+    const choice = this.myBot().decide(state);
     if (choice instanceof Promise) {
       // wait for promises to resolve
       choice.then( (resolved) => {
-        const res = Battle._formatMessage(this.bid, resolved, currentState);
-        log.info(res);
+        const res = Battle._formatMessage(this.bid, resolved, state);
+        Log.info(res);
         listener.relay('_send', res);
         // saving this state for future reference
-        this.prevStates.unshift( this.abbreviateState(currentState) );
+        this.prevStates.unshift( this.abbreviateState(state) );
       }, (err) => {
-        log.err('I think there was an error here.');
-        log.err(err);
+        Log.err('I think there was an error here.');
+        Log.err(err);
       });
     } else {
       // message is ready to go
-      const res = Battle._formatMessage(this.bid, choice, currentState);
-      log.info(res);
+      const res = Battle._formatMessage(this.bid, choice, state);
+      Log.info(res);
       listener.relay('_send', res);
       // saving this state for future reference
-      this.prevStates.unshift( this.abbreviateState(currentState) );
+      this.prevStates.unshift( this.abbreviateState(state) );
     }
   }
 
@@ -228,7 +245,7 @@ class Battle {
       const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
 
       if (typeof moveIdx !== 'number' || moveIdx < 0) {
-        console.warn('[invalid move!!', choice, state, 'invalid move yo]');
+        console.warn('[invalid move!!', choice, state.self.active.moves, 'invalid move yo.');
         exit;
       }
 
@@ -287,7 +304,7 @@ class Battle {
       return mons.indexOf(idx);
     case 'string':
       return mons.findIndex( (mon) => {
-        return mon.species === idx;
+        return mon.species === idx || mon.id === idx;
       });
     default:
       console.log('not a valid choice!', idx, mons);

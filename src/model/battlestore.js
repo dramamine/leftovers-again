@@ -296,7 +296,6 @@ export default class BattleStore {
       });
     });
   }
-
   /**
    * Handles an incoming request. The one parameter to this is a string of
    * JSON, known as the request.
@@ -519,10 +518,10 @@ export default class BattleStore {
     output.weather = this.weather;
 
     if (this.sides[this.myNick]) {
-      output.self.effects = this.sides[this.myNick].data();
+      output.self.side = this.sides[this.myNick].data();
     }
     if (this.sides[this.yourNick]) {
-      output.opponent.effects = this.sides[this.yourNick].data();
+      output.opponent.side = this.sides[this.yourNick].data();
     }
 
     return output;

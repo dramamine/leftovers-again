@@ -36,12 +36,15 @@ const firstArg = (args._ && args._[0]) ? args._[0] : null;
 const botpath = args.bot || firstArg || config.bot;
 
 const scrappy = args.scrappy || config.scrappy;
+// the battle format if we issue challenges.
+// if you're not using cmdline: this lives in the bot's config, not config.js
+const format = args.format;
 const matches = args.matches || config.matches;
 
 // create some necessary classes
 const chat = new Chat();
 const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy,
-  matches);
+  format, matches);
 
 // battlemanager is going to create new battles as we learn about them.
 // for each one, it creates a new instance of a battle and of our AI class.
