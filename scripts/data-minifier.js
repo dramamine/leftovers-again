@@ -7,10 +7,10 @@
  * babel-node scripts/data-minifier.js
  */
 
-import {BattleMovedex} from '../lib/Pokemon-Showdown/data/moves';
-import DamageCalcMovedex from '../lib/honko-damagecalc/js/data/movedata';
-import { BattlePokedex } from '../lib/Pokemon-Showdown/data/pokedex';
-import { BattleFormatsData } from '../lib/Pokemon-Showdown/data/formats-data';
+import {BattleMovedex} from '../deps/Pokemon-Showdown/data/moves';
+import DamageCalcMovedex from '../deps/honko-damagecalc/js/data/movedata';
+import { BattlePokedex } from '../deps/Pokemon-Showdown/data/pokedex';
+import { BattleFormatsData } from '../deps/Pokemon-Showdown/data/formats-data';
 import fs from 'fs';
 
 const destination = 'src/data/';
@@ -30,6 +30,7 @@ function copyMoves() {
     'name',
     'priority',
     'secondary',
+    'self',
     'sideCondition',
     'status',
     'target',

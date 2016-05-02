@@ -14,6 +14,7 @@
     "develop": "NODE_PATH=./:lib:lib/bots nodemon --watch src --watch bots --exec \"npm run build && node lib/main.js\"",
     "develop:old": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/main.js",
     "start": "npm run clean && npm run build && NODE_PATH=./:lib:lib/bots node lib/main.js",
+    "start:quick": "NODE_PATH=./:lib:lib/bots node lib/main.js",
     "start:old": "NODE_PATH='src:bots' babel-node src/main.js",
     "spawn:old": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
     "battle:old": "NODE_PATH='src:bots' babel-node scripts/battle.js",

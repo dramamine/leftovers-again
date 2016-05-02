@@ -4,7 +4,10 @@ let challenger;
 
 describe('challenger', () => {
   beforeEach( () => {
-    challenger = new Challenger(false);
+    challenger = new Challenger(false, {
+      format: 'anythinggoes',
+      accepts: 'anythinggoes'
+    });
   });
   afterEach( () => {
     if (challenger.timer) clearTimeout(challenger.timer);

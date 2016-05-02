@@ -33,7 +33,7 @@ class Challenger {
     this.connection = connection;
     this.botinfo = botinfo;
     this.scrappy = scrappy;
-    this.challengeType = challengeType || this.botinfo.format;
+    this.challengeType = challengeType || this.botinfo.format || 'anythinggoes';
     this.matches = matches;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
