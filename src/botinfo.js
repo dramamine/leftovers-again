@@ -32,6 +32,15 @@ class BotInfo {
   get format() {
     return this.metadata.format;
   }
+
+  get nickname() {
+    return this.metadata.nickname;
+  }
+
+  get password() {
+    return this.metadata.password;
+  }
+
   get accepts() {
     return this.metadata.accepts;
   }

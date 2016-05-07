@@ -29,8 +29,6 @@ if (args.monkey) {
   myconnection = socket;
 }
 
-// connect to a server, or create one and start listening.
-myconnection.connect(args);
 
 const firstArg = (args._ && args._[0]) ? args._[0] : null;
 const botpath = args.bot || firstArg || config.bot;
@@ -41,9 +39,11 @@ const scrappy = args.scrappy || config.scrappy;
 const format = args.format;
 const matches = args.matches || config.matches;
 
+const info = new BotInfo(botpath);
+
 // create some necessary classes
 const chat = new Chat();
-const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy,
+const challenger = new Challenger(myconnection, info, scrappy,
   format, matches);
 
 // battlemanager is going to create new battles as we learn about them.
@@ -52,6 +52,12 @@ const challenger = new Challenger(myconnection, new BotInfo(botpath), scrappy,
 // messages to the right battle instance.
 const battlemanager = new BattleManager(botpath);
 listener.use(battlemanager);
+
+
+// connect to a server, or create one and start listening.
+args.nickname = info.nickname || args.nickname || config.nickname;
+args.password = info.password || args.password || config.password;
+myconnection.connect(args);
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using

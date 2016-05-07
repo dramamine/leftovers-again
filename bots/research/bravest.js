@@ -15,7 +15,8 @@ export default class Bravest extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes'
+      format: 'anythinggoes',
+      nickname: 'Bravestbymartens'
     };
 
     this.ctr = -1;

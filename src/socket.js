@@ -9,14 +9,29 @@ import Log from 'log';
 
 
 let ws;
-const requestUrl = url.parse(config.actionurl);
 
 class Socket extends Connection {
   constructor() {
     super();
   }
 
-  connect({server = 'localhost', port = 8000, bot, scrappy}) {
+  connect({
+    actionHost = 'play.pokemonshowdown.com',
+    actionPath = '/~~localhost:8000/action.php',
+    nickname = '5nowden' + Math.floor(Math.random() * 10000),
+    password = null
+  }) {
+    this.actionurl = url.parse('https://play.pokemonshowdown.com/~~localhost:8000/action.php');
+    // this.actionurl = {
+    //   hostname: actionHost,
+    //   port: null,
+    //   path: actionPath
+    // };
+
+    this.nickname = nickname;
+    this.password = password;
+    console.log('using nickname ', this.nickname);
+
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
 
@@ -62,18 +77,21 @@ class Socket extends Connection {
     // console.log(id, str);
 
     const requestOptions = {
-      hostname: requestUrl.hostname,
-      port: requestUrl.port,
-      path: requestUrl.pathname,
+      hostname: this.actionurl.hostname,
+      port: this.actionurl.port,
+      path: this.actionurl.pathname,
       agent: false
     };
+    console.log(requestOptions);
     let data = '';
-    if (!config.pass) {
+    if (!this.password) {
+      console.log('logging in w no password');
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + util.toId(config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
+      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + id + '&challenge=' + str;
     } else {
+      console.log('uh oh, trying to log in with a password.');
       requestOptions.method = 'POST';
-      data = 'act=login&name=' + config.nick + '&pass=' + config.pass + '&challengekeyid=' + id + '&challenge=' + str;
+      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + id + '&challenge=' + str;
       requestOptions.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': data.length
