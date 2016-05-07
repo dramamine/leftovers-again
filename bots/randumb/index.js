@@ -16,7 +16,7 @@ class Randumb extends AI {
       format: 'randombattle',
       team: null,
       version: 'alpha',
-      nickname: 'Randumb .~.by.~.marten.~.'
+      nickname: 'Randumb ★marten★'
     };
   }
 

@@ -1,10 +1,8 @@
 import listener from 'listener';
 import WebSocket from 'ws';
-import url from 'url';
 import Connection from 'connection';
 import https from 'https';
 import Log from 'log';
-
 
 let ws;
 

@@ -14,7 +14,7 @@ export default class RapidSpin extends AI {
     this.meta = {
       accepts: 'anythinggoes',
       format: 'anythinggoes',
-      nickname: '0o.marten.o0 Spinner'
+      nickname: 'Spinner ★marten★'
     };
 
     this.ctr = -1;

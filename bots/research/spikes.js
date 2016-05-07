@@ -15,7 +15,7 @@ export default class SunnyDay extends AI {
     this.meta = {
       accepts: 'anythinggoes',
       format: 'anythinggoes',
-      nickname: '0o.marten.o0 Yikes Spikes'
+      nickname: 'Yikes Spikes ★marten★'
     };
 
     this.ctr = -1;

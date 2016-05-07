@@ -4,5 +4,6 @@
   "description": "Uses fakeout a lot.",
   "main": "meetthefakers.js",
   "format": "anythinggoes",
-  "accepts": "ALL"
+  "accepts": "ALL",
+  "nickname": "Meet the Fakers ★max★"
 }
