@@ -2,8 +2,7 @@ import socket from 'socket';
 import monkey from 'monkey';
 import listener from 'listener';
 import Challenger from 'challenger';
-import Chat from 'chat';
-import config from 'config';
+import defaults from 'defaults';
 import BotInfo from 'botinfo';
 import BattleManager from 'battlemanager';
 import Spawner from 'spawner';
@@ -31,18 +30,19 @@ if (args.monkey) {
 
 
 const firstArg = (args._ && args._[0]) ? args._[0] : null;
-const botpath = args.bot || firstArg || config.bot;
+const botpath = args.bot || firstArg || defaults.bot;
 
-const scrappy = args.scrappy || config.scrappy;
+const scrappy = args.scrappy || defaults.scrappy;
 // the battle format if we issue challenges.
-// if you're not using cmdline: this lives in the bot's config, not config.js
+// if you're not using cmdline: this lives in the bot's defaults, not defaults.js
 const format = args.format;
-const matches = args.matches || config.matches;
+const matches = args.matches || defaults.matches;
 
 const info = new BotInfo(botpath);
+args.nickname = info.nickname || args.nickname || defaults.nickname;
+args.password = info.password || args.password || defaults.password;
 
 // create some necessary classes
-const chat = new Chat();
 const challenger = new Challenger(myconnection, info, scrappy,
   format, matches);
 
@@ -55,8 +55,6 @@ listener.use(battlemanager);
 
 
 // connect to a server, or create one and start listening.
-args.nickname = info.nickname || args.nickname || config.nickname;
-args.password = info.password || args.password || config.password;
 myconnection.connect(args);
 
 /**

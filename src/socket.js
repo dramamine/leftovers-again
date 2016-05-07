@@ -2,8 +2,6 @@ import listener from 'listener';
 import WebSocket from 'ws';
 import url from 'url';
 import Connection from 'connection';
-import config from 'config';
-import util from 'pokeutil';
 import https from 'https';
 import Log from 'log';
 
@@ -19,7 +17,8 @@ class Socket extends Connection {
     actionHost = 'play.pokemonshowdown.com',
     actionPath = '/~~localhost:8000/action.php',
     nickname = '5nowden' + Math.floor(Math.random() * 10000),
-    password = null
+    password = null,
+    chatroom = 'lobby'
   }) {
     this.actionurl = url.parse('https://play.pokemonshowdown.com/~~localhost:8000/action.php');
     // this.actionurl = {
@@ -30,7 +29,7 @@ class Socket extends Connection {
 
     this.nickname = nickname;
     this.password = password;
-    console.log('using nickname ', this.nickname);
+    this.chatroom = chatroom;
 
     // console.log('connection constructed.');
     ws = new WebSocket('ws://localhost:8000/showdown/websocket');
@@ -42,6 +41,7 @@ class Socket extends Connection {
     ws.on('message', this._handleMessage);
 
     listener.subscribe('challstr', this._login.bind(this));
+    listener.subscribe('updateuser', this.onUpdateUser.bind(this));
     listener.subscribe('popup', this._relayPopup);
     // defined message type for calling from battles, etc.
     listener.subscribe('_send', this.send);
@@ -82,14 +82,11 @@ class Socket extends Connection {
       path: this.actionurl.pathname,
       agent: false
     };
-    console.log(requestOptions);
     let data = '';
     if (!this.password) {
-      console.log('logging in w no password');
       requestOptions.method = 'GET';
       requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + id + '&challenge=' + str;
     } else {
-      console.log('uh oh, trying to log in with a password.');
       requestOptions.method = 'POST';
       data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + id + '&challenge=' + str;
       requestOptions.headers = {
@@ -144,7 +141,7 @@ class Socket extends Connection {
           // probably nothing.
           // console.error('error trying to parse data:', err, chunks);
         }
-        this.send('|/trn ' + config.nick + ',0,' + chunks);
+        this.send('|/trn ' + this.nickname + ',0,' + chunks);
       });
     });
 
@@ -161,6 +158,21 @@ class Socket extends Connection {
   _relayPopup(args) {
     Log.warn('Got a popup:');
     Log.warn(args);
+  }
+
+  onUpdateUser(args) {
+    // this includes a 3rd parameter, i.e. "mysterycode". who knows.
+    const [nick, status] = args;
+    if (status !== '1') {
+      // console.error(`failed to log in, still guest (status code ${status})`);
+      return false;
+    }
+    if (nick !== this.nickname) {
+      console.error('nickname was ', nick, ' expecting ', this.nickname);
+      return false;
+    }
+
+    socket.send('|/join ' + this.chatroom);
   }
 
 }
