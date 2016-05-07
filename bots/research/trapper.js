@@ -14,7 +14,8 @@ export default class Trapper extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes'
+      format: 'anythinggoes',
+      nickname: '0o.marten.o0 Trapper'
     };
 
     this.ctr = -1;

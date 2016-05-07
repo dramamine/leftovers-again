@@ -4,5 +4,6 @@
   "description": "A fckin bot",
   "main": "stabby.js",
   "format": "randombattle",
-  "accepts": "ALL"
+  "accepts": "ALL",
+  "nickname": "0o.marten.o0 Stabby"
 }

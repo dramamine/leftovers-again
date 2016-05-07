@@ -15,7 +15,8 @@ class Randumb extends AI {
       accepts: 'ALL', // trying this out, fingers crossed
       format: 'randombattle',
       team: null,
-      version: 'alpha'
+      version: 'alpha',
+      nickname: 'Randumb .~.by.~.marten.~.'
     };
   }
 

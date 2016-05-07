@@ -16,16 +16,15 @@ class Socket extends Connection {
   connect({
     actionHost = 'play.pokemonshowdown.com',
     actionPath = '/~~localhost:8000/action.php',
-    nickname = '5nowden' + Math.floor(Math.random() * 10000),
+    nickname = 'cyberdyne.thrall.' + Math.floor(Math.random() * 10000),
     password = null,
     chatroom = 'lobby'
   }) {
-    this.actionurl = url.parse('https://play.pokemonshowdown.com/~~localhost:8000/action.php');
-    // this.actionurl = {
-    //   hostname: actionHost,
-    //   port: null,
-    //   path: actionPath
-    // };
+    this.actionurl = {
+      host: actionHost,
+      port: null,
+      path: actionPath
+    };
 
     this.nickname = nickname;
     this.password = password;
@@ -77,11 +76,12 @@ class Socket extends Connection {
     // console.log(id, str);
 
     const requestOptions = {
-      hostname: this.actionurl.hostname,
+      hostname: this.actionurl.host,
       port: this.actionurl.port,
-      path: this.actionurl.pathname,
+      path: this.actionurl.path,
       agent: false
     };
+    console.log(requestOptions);
     let data = '';
     if (!this.password) {
       requestOptions.method = 'GET';

@@ -15,7 +15,8 @@ export default class Rooster extends AI {
     super();
     this.meta = {
       accepts: 'anythinggoes',
-      format: 'anythinggoes'
+      format: 'anythinggoes',
+      nickname: '0o.marten.o0 Tailwind'
     };
 
     this.ctr = -1;
