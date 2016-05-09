@@ -12,5 +12,9 @@ export default {
 
   bot: 'randumb',
 
-  matches: 3
+  matches: 3,
+
+  server: 'localhost',
+  port: 8000,
+  format: 'randombattle'
 };

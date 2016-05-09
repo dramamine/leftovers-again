@@ -9,9 +9,6 @@ const questions = [
   {
     name: 'Repo',
     message: 'What is your bot\'s name? (Capitalized, no spaces)',
-    validate: (str) => {
-      return str !== 'Yoda'; // Yoda had *better not* use this application!!
-    },
     default: 'Terminator',
     filter: (str) => {
       return str.replace(/\W/g, '').replace(/^./, (match) => {

@@ -13,23 +13,26 @@ class Socket extends Connection {
 
   connect({
     actionHost = 'play.pokemonshowdown.com',
-    actionPath = '/~~localhost:8000/action.php',
     nickname = 'cyberdyne.thrall.' + Math.floor(Math.random() * 10000),
     password = null,
-    chatroom = 'lobby'
+    chatroom = 'lobby',
+    server = 'localhost',
+    port = 8000,
+    format
   }) {
     this.actionurl = {
       host: actionHost,
       port: null,
-      path: actionPath
+      path: `/~~${server}:${port}/action.php`
     };
 
     this.nickname = nickname;
     this.password = password;
     this.chatroom = chatroom;
+    this.format = format;
 
     // console.log('connection constructed.');
-    ws = new WebSocket('ws://localhost:8000/showdown/websocket');
+    ws = new WebSocket(`ws://${server}:${port}/showdown/websocket`);
 
     ws.on('open', () => {
       Log.info('got open message from websocket');
@@ -171,6 +174,9 @@ class Socket extends Connection {
     }
 
     socket.send('|/join ' + this.chatroom);
+
+    // also try to join a room according to our battle format
+    if (this.format) socket.send('|/join ' + this.format);
   }
 
 }

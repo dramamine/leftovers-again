@@ -28,23 +28,20 @@ if (args.monkey) {
   myconnection = socket;
 }
 
-
 const firstArg = (args._ && args._[0]) ? args._[0] : null;
 const botpath = args.bot || firstArg || defaults.bot;
-
-const scrappy = args.scrappy || defaults.scrappy;
-// the battle format if we issue challenges.
-// if you're not using cmdline: this lives in the bot's defaults, not defaults.js
-const format = args.format;
-const matches = args.matches || defaults.matches;
-
 const info = new BotInfo(botpath);
-args.nickname = info.nickname || args.nickname || defaults.nickname;
-args.password = info.password || args.password || defaults.password;
+
+// for everything else, check args, then bot info, then defaults.
+// lots of these, you wouldn't really want them in bot info, but eh, whatever.
+const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'port',
+  'matches'];
+params.forEach((param) => {
+  args[param] = args[param] || info[param] || defaults[param];
+});
 
 // create some necessary classes
-const challenger = new Challenger(myconnection, info, scrappy,
-  format, matches);
+const challenger = new Challenger(myconnection, info, args);
 
 // battlemanager is going to create new battles as we learn about them.
 // for each one, it creates a new instance of a battle and of our AI class.

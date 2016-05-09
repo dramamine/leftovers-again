@@ -4,7 +4,7 @@
   "description": "Pokemon Showdown - Node Client",
   "main": "src/main.js",
   "scripts": {
-    "build": "babel src -d lib && babel bots -d lib/bots && cp src/data lib -R && find ./bots -type f \\( -name '*.json' \\) | tar -cf - -T - | tar -xf - -C ./lib -v",
+    "build": "babel src -d lib && babel bots -d lib/bots && babel scripts -d lib/scripts && cp src/data lib -R && find ./bots -type f \\( -name '*.json' \\) | tar -cf - -T - | tar -xf - -C ./lib -v",
     "clean": "rm -rf lib",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",

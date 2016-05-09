@@ -127,6 +127,9 @@ $ ENGINE WORK
 - "accepts" always becomes ALL in bot generator
 - document reporters and how they're used
 - is Damage.getDamageResult checking weather/field effects everywhere?
+- 'spawn' script needs to be fixed
+
+
 
 $ FRONT-END SCRIPT WORK
 - 'clear' doesn't clear out the parentheses

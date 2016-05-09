@@ -23,17 +23,18 @@ class Challenger {
    * Constructor.
    * @param  {boolean} scrappy Set to true if we want this user to challenge
    * everyone in the lobby and everyone who joins the lobby later.
-   * @param  {String}  challengeType  The type of match we're challenging
+   * @param  {String}  format  The type of match we're challenging
    * opponents to. By default, the challenge type used matches the 'format'
    * field of the bot's package.json
    *
    * @return Constructor
    */
-  constructor(connection, botinfo, scrappy, challengeType, matches) {
+  constructor(connection, botinfo, args) {
+    const {format, scrappy, matches} = args;
     this.connection = connection;
     this.botinfo = botinfo;
     this.scrappy = scrappy;
-    this.challengeType = challengeType || this.botinfo.format || 'anythinggoes';
+    this.format = format;
     this.matches = matches;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
@@ -197,13 +198,13 @@ class Challenger {
     this.challengesFrom = challengesFrom || {};
     this.challengeTo = challengeTo || {};
     Object.keys(challengesFrom).forEach( (opponent) => {
-      const challengeType = challengesFrom[opponent];
+      const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(challengeType, this.botinfo.accepts)) {
+      if (Challenger._acceptable(format, this.botinfo.accepts)) {
         // this is the point at which we need to pick a team!
         // team message is: /utm ('use team')
 
-        if (Challenger._requiresTeam(challengeType)) {
+        if (Challenger._requiresTeam(format)) {
           const team = this.botinfo.team(opponent);
           if (team) {
             const utmString = new Team(team).asUtm();
@@ -250,11 +251,11 @@ class Challenger {
   /**
    * @TODO this is a lazy implementation
    *
-   * @param  {[type]} challengeType [description]
+   * @param  {[type]} format [description]
    * @return {[type]}               [description]
    */
-  static _requiresTeam(challengeType) {
-    if (challengeType === 'randombattle') {
+  static _requiresTeam(format) {
+    if (format === 'randombattle') {
       return false;
     }
     return true;
@@ -270,9 +271,9 @@ class Challenger {
    */
   _challenge(nick) {
     Log.info(`challenge called. ${nick}`);
-    const challengeType = this.challengeType;
+    const format = this.format;
 
-    if (Challenger._requiresTeam(challengeType)) {
+    if (Challenger._requiresTeam(format)) {
       const team = this.botinfo.team(nick);
       if (team) {
         const utmString = new Team(team).asUtm();
@@ -281,8 +282,8 @@ class Challenger {
       }
     }
 
-    Log.warn(`sending challenge... ${nick} ${challengeType}`);
-    this.connection.send('|/challenge ' + nick + ', ' + challengeType);
+    Log.warn(`sending challenge... ${nick} ${format}`);
+    this.connection.send('|/challenge ' + nick + ', ' + format);
 
     this.hasChallenged = true;
   }

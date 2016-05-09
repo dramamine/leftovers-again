@@ -11,7 +11,7 @@ const children = [];
 
 function getServer() {
   return new Promise( (resolve, reject) => {
-    const showdown = spawn('node', ['app.js'], {cwd: './lib/Pokemon-Showdown'});
+    const showdown = spawn('node', ['app.js'], {cwd: './deps/Pokemon-Showdown'});
     let done = false;
     // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
@@ -40,7 +40,7 @@ function getServer() {
 function loadMe(file) {
   console.log('spawning opponent from file ' + file);
   const botrootForMain = '--bot=' + file;
-  const op = spawn('babel-node', ['main.js', botrootForMain, '--spawned', ], {cwd: './src/'});
+  const op = spawn('node', ['main.js', botrootForMain, '--spawned', ], {cwd: './lib/'});
   // const showdown = spawn('npm start', [], {cwd: '../../server'});
 
   op.stdout.on('data', (data) => {
@@ -59,7 +59,7 @@ function loadMe(file) {
 }
 
 getServer().then( () => {
-  const folders = glob.sync('*/', {cwd: __dirname + '/../src/bots/'});
+  const folders = glob.sync('*/', {cwd: __dirname + '/../lib/bots/'});
   // console.log(folders);
   const validOptions = folders
     .map( (txt) => { return txt.replace('/', ''); })
@@ -73,7 +73,7 @@ getServer().then( () => {
       choices: validOptions
     }], (folder) => {
       // console.log(folder);
-      const botfiles = glob.sync('**/*.js', {cwd: __dirname + '/../src/bots/' + folder.format});
+      const botfiles = glob.sync('**/*.js', {cwd: __dirname + '/../lib/bots/' + folder.format});
       // console.log(botfiles);
       const choices = botfiles.map( (txt) => { return { name: txt, checked: true }; });
 
