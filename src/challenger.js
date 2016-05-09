@@ -5,6 +5,7 @@ import Log from 'log';
 import listener from 'listener';
 import report from 'report';
 import Reporter from 'reporters/endofmatch';
+import util from 'pokeutil';
 
 // for tracking the status of users in the lobby
 const Statuses = {
@@ -14,6 +15,8 @@ const Statuses = {
   // includes states that happen after the challenge, ex. matches and stuff
   CHALLENGED: 'challenged'
 };
+
+let mynick = '';
 
 /**
  * Used for managing challenges to other users.
@@ -78,9 +81,11 @@ class Challenger {
    * @param  {string} user The user who joined.
    */
   onUserJoin([user]) {
-    const trimmed = user.trim();
+    const trimmed = util.toId(user);
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
-      this.users[trimmed] = Statuses.ACTIVE;
+      this.users[trimmed] = (trimmed === mynick)
+        ? Statuses.SELF
+        : Statuses.ACTIVE;
       if (this.timer) clearTimeout(this.timer);
       this.timer = setTimeout(this._challengeNext, 1000);
     }
@@ -92,7 +97,7 @@ class Challenger {
    * @param  {string} user The nickname of the user who left.
    */
   onUserLeave([user]) {
-    this.users[user.trim()] = Statuses.INACTIVE;
+    this.users[util.toId(user)] = Statuses.INACTIVE;
   }
 
   /**
@@ -107,8 +112,8 @@ class Challenger {
     case '0':
       break;
     case '1':
-      Log.warn(`Successfully logged in as ${nick}`);
-      this.users[nick] = Statuses.SELF;
+      Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
+      mynick = util.toId(nick);
       break;
     default:
       Log.error(`Weird status when trying to log in: ${status} ${nick}`);
@@ -123,8 +128,9 @@ class Challenger {
   _challengeNext() {
     let opponent = '';
     Object.keys(this.users).some(user => {
-      if (this.users[user] === Statuses.ACTIVE) {
-        opponent = user;
+      const userid = util.toId(user);
+      if (this.users[userid] === Statuses.ACTIVE) {
+        opponent = userid;
       }
     });
     if (opponent) {
@@ -133,7 +139,7 @@ class Challenger {
       } else {
         this._challenge(opponent);
       }
-      this.users[opponent] = Statuses.CHALLENGED;
+      this.users[util.toId(opponent)] = Statuses.CHALLENGED;
       this.timer = setTimeout(this._challengeNext, 1000);
     }
   }
@@ -169,7 +175,7 @@ class Challenger {
     const userList = usersStr.split(', ');
     // userlist[0] is just the count of users. skip it
     for (let i = 1; i < userList.length; i++) {
-      opponent = userList[i].trim();
+      opponent = util.toId(userList[i]);
       // don't challenge yourself. (ha)
       if (this.users[opponent] !== Statuses.SELF) {
         this.users[opponent] = Statuses.ACTIVE;
@@ -283,6 +289,9 @@ class Challenger {
     }
 
     Log.warn(`sending challenge... ${nick} ${format}`);
+    console.log(this.users);
+    console.log(this.challengesFrom);
+    console.log(this.challengeTo);
     this.connection.send('|/challenge ' + nick + ', ' + format);
 
     this.hasChallenged = true;

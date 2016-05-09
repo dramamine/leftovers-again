@@ -27,6 +27,8 @@ class PokeUtil {
     // these lines are not! but I needed them.
     name = name.replace(/[\-\.\ ]+/g, '');
 
+    name = name.replace(/[^a-z0-9]/gi, '');
+
     if (name.length > 18) name = name.substr(0, 18).trim();
     return name;
   }
