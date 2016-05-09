@@ -8,9 +8,9 @@ export default class Drasna extends EliteFour {
 }
 
 const meta = {
-  battletype: 'anythinggoes',
-  accepts: 'ALL',
   format: 'anythinggoes',
+  accepts: 'ALL',
+  nickname: 'EliteFour Drasna x',
   team: `
 Dragalge
 Ability: Poison Point

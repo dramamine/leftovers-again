@@ -65,7 +65,6 @@ export default class EliteFour extends AI {
   }
 
   decide(state) {
-    console.dir(state);
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
@@ -186,6 +185,4 @@ export default class EliteFour extends AI {
   pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
-
-
 }

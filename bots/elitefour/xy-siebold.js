@@ -8,9 +8,9 @@ export default class Siebold extends EliteFour {
 }
 
 const meta = {
-  battletype: 'anythinggoes',
-  accepts: 'ALL',
   format: 'anythinggoes',
+  accepts: 'ALL',
+  nickname: 'EliteFour Sieboldx',
   team: `
 Clawitzer
 Ability: Mega Launcher
