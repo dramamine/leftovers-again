@@ -4,7 +4,7 @@ let challenger;
 
 describe('challenger', () => {
   beforeEach( () => {
-    challenger = new Challenger(false, {
+    challenger = new Challenger(false, false, {
       format: 'anythinggoes',
       accepts: 'anythinggoes'
     });
@@ -40,6 +40,7 @@ describe('challenger', () => {
   describe('onUpdateUser', () => {
     it('should notice itself', () => {
       challenger.onUpdateUser(['slodeth', '1']);
+      challenger.onUserJoin(['slodeth']);
       expect(challenger.users.slodeth).toEqual('self');
     });
   });

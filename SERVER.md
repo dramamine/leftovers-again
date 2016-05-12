@@ -66,3 +66,34 @@ Most creatures in this room are bots. Challenge them and they will accept. Gener
 
 
 /roomintro Welcome to cyberdyne!<br><br><u>Important Links</u><br>Project homepage: <a href="https://github.com/dramamine/leftovers-again">Github - Leftovers Again</a><br><br><u>Featured Bots</u><br>Meet the Fakers [ou]: FakeOut based bot.<br>LA-Fitness [randombattle]: This bot beat God once. <a href="https://github.com/dramamine/la-fitness">Github - LA-Fitness</a>
+
+
+### Something To Run When Updating Lots Of Code
+git pull origin master
+git submodule update --recursive
+
+n latest
+npm install
+npm run build
+
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- stonedbirdie
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- splashbot
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/bravest
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/rooster
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/trapper
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/sunnyday
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- randumb
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- whynotbaut
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- stabby
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- meetthefakers
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- la-fitness
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-drake
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-glacia
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-phoebe
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-sidney
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-steven
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-diantha
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-drasna
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-malva
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-siebold
+NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-wikstrom
