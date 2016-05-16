@@ -1,3 +1,6 @@
+/**
+ * Constants for weather.
+ */
 export default {
   NONE: 'none',
   DESOLATE_LAND: 'DesolateLand',

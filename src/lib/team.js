@@ -5,9 +5,19 @@ import Log from 'log';
 /**
  * Teams: so documented.
  *
+ * This class is used for creating a team and relaying it to the server.
+ *
  * @see http://play.pokemonshowdown.com/teambuilder
  */
 export default class Team {
+  /**
+   * Team constructor.
+   *
+   * @param {Array<Pokemon>|String} Either a Smogon string, or an array of
+   * Pokemon data. Smogon strings are preferred; if you use an array here,
+   * you're responsible for data validation and you'd better read more of this
+   * file to figure out what you need.
+   */
   constructor(tm) {
     if (Array.isArray(tm) && Team._seemsValid(tm)) {
       this.self = tm;
@@ -19,14 +29,35 @@ export default class Team {
     }
   }
 
+  /**
+   * Get team value as an array.
+   */
   asArray() {
     return this.self;
   }
 
+  /**
+   * Get the team as a utm message (for sending to the server).
+   */
   asUtm() {
     return Team.packTeam(this.self);
   }
 
+  /**
+   * Pick a random team for the player. This is designed for situations where 
+   * you want to play against a 'randombattle' bot, but want to play a format
+   * that requires teams. Can also be used for testing, ex. you want to play
+   * random battles but with a set team.
+   *
+   * The file used here, randomteams.txt, is just something I compiled from
+   * logging actual teams that you could get during a randombattle. Note that
+   * this isn't a true representation of all the possibilities you can get from
+   * a randombattle, as you can get teams that are considered invalid for
+   * anythinggoes due to having weird moves / items. I removed those for better
+   * compatibility.
+   *
+   * @param {Integer} seed  The line number to use.
+   */
   static random(seed = undefined) {
     const data = fs.readFileSync('./src/data/randomteams.txt', 'utf8');
     const lines = data.split('\n');
@@ -45,6 +76,11 @@ export default class Team {
     return JSON.parse(lines[seed]);
   }
 
+  /**
+   * Iterate on random seeds. Doing this temporarily becuase lots of the teams
+   * are not valid for anythinggoes so we want to error out and manually remove
+   * them.
+   */
   static _getNextSeed() {
     const data = fs.readFileSync('./tmp/lastseed', 'utf8');
 
@@ -57,9 +93,9 @@ export default class Team {
   }
 
   /**
-   *
+   * Some quick checks to see if this team is valid.
    * @param  {Array} tm The team array
-   * @return bool True if the team seems valid; false otherwise
+   * @return {Boolean} True if the team seems valid; false otherwise
    */
   static _seemsValid(tm) {
     let member;
@@ -81,6 +117,13 @@ export default class Team {
     return true;
   }
 
+  /**
+   * Interpret a Smogon team.
+   *
+   * @param {String}  The Smogon team string, like you see on forums and
+   * Smogon pages and whatnot.
+   * @return {Array<Pokemon>}  An array of Pokemon-lookin' objects.
+   */
   static interpretSmogon(str) {
     const mons = str.split('\n\n');
     const team = [];
@@ -92,6 +135,16 @@ export default class Team {
     });
     return team;
   }
+
+  /**
+   * Interpret one Smogon-mon.
+   *
+   * @param {String}  The Smogon string, like you see on forums and
+   * Smogon pages and whatnot.
+   * @return {Pokemon}  A Pokemon-lookin' object. Has properties such as
+   * ability, evs, moves, ivs, shiny, happiness, nature, gender, species, name,
+   * and item.
+   */
   static interpretOneSmogon(str) {
     const mon = {
       moves: []
@@ -167,10 +220,12 @@ export default class Team {
     return mon;
   }
   /**
+   * Turn a Pokemon team into a string to send to the server.
+
    * Code transformed from Pokemon-Showdown tools.js
    *
-   * @param  {[type]} team [description]
-   * @return {[type]}      [description]
+   * @param  {Array<Pokemon>} team  The team array.
+   * @return {String}  A string to send to the server.
    */
   static packTeam(team) {
     if (!team) return '';

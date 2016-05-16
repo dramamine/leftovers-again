@@ -1,4 +1,6 @@
 /**
+ * Constants for volatile statuses.
+ *
  * @see http://bulbapedia.bulbagarden.net/wiki/Status_condition#Volatile_status
  */
 export default {
