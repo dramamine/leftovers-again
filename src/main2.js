@@ -3,7 +3,7 @@ import monkey from './monkey';
 import listener from './listener';
 import Challenger from './challenger';
 import defaults from './defaults';
-import BotInfo from './botinfo2';
+import BotManager from './BotManager';
 import BattleManager from './battlemanager';
 import Spawner from './spawner';
 // import {random} from './team';
@@ -77,7 +77,7 @@ const start = (metadata, botClass) => {
 
   const firstArg = (args._ && args._[0]) ? args._[0] : null;
   // const botpath = args.bot || firstArg || defaults.bot;
-  const info = new BotInfo(metadata, botClass);
+  const info = new BotManager(metadata, botClass);
 
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.

@@ -32,10 +32,10 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(connection, botinfo, args) {
+  constructor(connection, botmanager, args) {
     const {format, scrappy, matches} = args;
     this.connection = connection;
-    this.botinfo = botinfo;
+    this.botmanager = botmanager;
     this.scrappy = scrappy;
     this.format = format;
     this.matches = matches;
@@ -206,12 +206,12 @@ class Challenger {
     Object.keys(challengesFrom).forEach( (opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(format, this.botinfo.accepts)) {
+      if (Challenger._acceptable(format, this.botmanager.accepts)) {
         // this is the point at which we need to pick a team!
         // team message is: /utm ('use team')
 
         if (Challenger._requiresTeam(format)) {
-          const team = this.botinfo.team(opponent);
+          const team = this.botmanager.team(opponent);
           if (team) {
             const utmString = new Team(team).asUtm();
             Log.info('sending team msg...', utmString);
@@ -280,7 +280,7 @@ class Challenger {
     const format = this.format;
 
     if (Challenger._requiresTeam(format)) {
-      const team = this.botinfo.team(nick);
+      const team = this.botmanager.team(nick);
       if (team) {
         const utmString = new Team(team).asUtm();
         Log.info('sending utm...', utmString);

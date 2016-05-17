@@ -10,3 +10,9 @@ cd ..
 cd src
 find ./ -type f \( -name '*.json' \) | tar -cf - -T - | tar -xf - -C ../lib -v
 
+## generator
+
+* Are you developing your bot inside this directory?
+** Yes, that sounds easier; I'm going to write code in ES6 and don't plan to publish my own module for now.
+** No, I want to require leftovers-again as a module and do my own thing.
+
