@@ -1,5 +1,5 @@
-import data from 'data/typechart';
-import Log from 'log';
+import data from '../data/typechart';
+import Log from '../log';
 /**
  * Type chart, in the format [Attacker][Defender] = attack multiplier.
  * Derived from the official Gen 6 charts.

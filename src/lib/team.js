@@ -1,6 +1,6 @@
-import util from 'pokeutil';
+import util from '../pokeutil';
+import Log from '../log';
 import fs from 'fs';
-import Log from 'log';
 
 /**
  * Teams: so documented.
@@ -44,7 +44,7 @@ export default class Team {
   }
 
   /**
-   * Pick a random team for the player. This is designed for situations where 
+   * Pick a random team for the player. This is designed for situations where
    * you want to play against a 'randombattle' bot, but want to play a format
    * that requires teams. Can also be used for testing, ex. you want to play
    * random battles but with a set team.

@@ -1,6 +1,6 @@
 
-import util from 'pokeutil';
-import log from 'log';
+import util from '../pokeutil';
+import log from '../log';
 
 /**
  * Pokemon class, for tracking information and status of each Pokemon.

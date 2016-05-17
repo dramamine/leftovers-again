@@ -1,10 +1,10 @@
-import Battle from 'battle';
+import Battle from './battle';
 
 let BotClass;
 
 export default class BattleManager {
-  constructor(botpath) {
-    BotClass = require(botpath);
+  constructor(botClass) {
+    BotClass = botClass;
     this.battles = {};
   }
   find(id) {

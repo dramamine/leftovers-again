@@ -1,6 +1,6 @@
-import util from 'pokeutil';
-import Pokemon from 'model/pokemon';
-import Log from 'log';
+import Pokemon from './pokemon';
+import Log from '../log';
+import util from '../pokeutil';
 
 class Pokebarn {
   constructor() {

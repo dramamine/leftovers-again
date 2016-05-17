@@ -1,11 +1,11 @@
 // import listener from './listener';
 // import socket from 'socket';
-import Team from 'lib/team';
-import Log from 'log';
-import listener from 'listener';
-import report from 'report';
-import Reporter from 'reporters/endofmatch';
-import util from 'pokeutil';
+import Team from './lib/team';
+import Log from './log';
+import listener from './listener';
+import report from './report';
+import Reporter from './reporters/endofmatch';
+import util from './pokeutil';
 
 // for tracking the status of users in the lobby
 const Statuses = {

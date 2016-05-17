@@ -1,5 +1,5 @@
-import Typechart from 'lib/typechart';
-import util from 'pokeutil';
+import Typechart from './typechart';
+import util from '../pokeutil';
 
 const AT = 'atk';
 const DF = 'def';

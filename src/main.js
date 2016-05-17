@@ -1,11 +1,11 @@
-import socket from 'socket';
-import monkey from 'monkey';
-import listener from 'listener';
-import Challenger from 'challenger';
-import defaults from 'defaults';
-import BotInfo from 'botinfo';
-import BattleManager from 'battlemanager';
-import Spawner from 'spawner';
+import socket from './socket';
+import monkey from './monkey';
+import listener from './listener';
+import Challenger from './challenger';
+import defaults from './defaults';
+import BotInfo from './botinfo';
+import BattleManager from './battlemanager';
+import Spawner from './spawner';
 
 // process cmdline args
 const args = require('minimist')(process.argv.slice(2));
@@ -47,7 +47,7 @@ const challenger = new Challenger(myconnection, info, args);
 // for each one, it creates a new instance of a battle and of our AI class.
 // listener needs to know about the BattleManager to properly relay battle
 // messages to the right battle instance.
-const battlemanager = new BattleManager(botpath);
+const battlemanager = new BattleManager(info.botClass);
 listener.use(battlemanager);
 
 

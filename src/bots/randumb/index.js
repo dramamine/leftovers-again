@@ -4,9 +4,9 @@
  * it.
  *
  */
-import AI from 'ai';
-import {MOVE, SWITCH} from 'decisions';
-import team from 'lib/team';
+import AI from '../../ai';
+import {MOVE, SWITCH} from '../../decisions';
+import team from '../../lib/team';
 
 class Randumb extends AI {
   constructor() {

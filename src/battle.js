@@ -1,10 +1,10 @@
-import BattleStore from 'model/battlestore';
+import BattleStore from './model/battlestore';
 
-import Log from 'log';
-import {MOVE, SWITCH} from 'decisions';
-import report from 'report';
-import listener from 'listener';
-import Reporter from 'reporters/matchstatus';
+import Log from './log';
+import {MOVE, SWITCH} from './decisions';
+import report from './report';
+import listener from './listener';
+import Reporter from './reporters/matchstatus';
 // import util from 'pokeutil';
 
 /**

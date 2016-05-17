@@ -1,5 +1,5 @@
 const spawn = require('child_process').spawn;
-import Log from 'log';
+import Log from './log';
 
 /**
  * Array of all spawned threads.

@@ -1,8 +1,8 @@
-import listener from 'listener';
-import WebSocket from 'ws';
-import Connection from 'connection';
+import listener from './listener';
+import Connection from './connection';
+import Log from './log';
 import https from 'https';
-import Log from 'log';
+import WebSocket from 'ws';
 
 let ws;
 
