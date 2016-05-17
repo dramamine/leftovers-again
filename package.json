@@ -12,7 +12,7 @@
     "test": "NODE_PATH='src:bots:spec' jasmine",
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/start.js",
-    "start": "npm run clean && npm run build && NODE_PATH=./:lib:lib/bots node lib/start.js",
+    "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "NODE_PATH=./:lib:lib/bots node lib/start.js",
     "start:old": "NODE_PATH='src:bots' babel-node src/start.js",
     "spawn:old": "NODE_PATH='src:bots' babel-node scripts/spawn.js",

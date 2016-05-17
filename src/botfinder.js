@@ -1,10 +1,13 @@
+import Log from './log';
 
   /**
    * Sets up important stuff like the bot location, class, and metadata.
    *
    * @param {String} path  The user-inputted path to the bot.
    */
-export default botFinder = (path) => {
+const botFinder = (path) => {
+  console.log('botFinder called.');
+  console.log('trying path ', path);
   let location;
   let botClass;
   try {
@@ -36,11 +39,16 @@ export default botFinder = (path) => {
   } catch (e) {
     // nested try-catch, u mad brah?
     try {
-      metadata = this.bot.meta;
+      console.log('trying to make a bot.');
+      const bot = new botClass.default();
+      metadata = bot.meta;
     } catch (x) {
       Log.error('No metadata found! Expected to find the file in node_path '
        + path);
+      Log.error(x);
     }
   };
   return {botClass, metadata};
-}
+};
+
+export default botFinder;
