@@ -32,24 +32,22 @@
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "babel-preset-es2015-node6": "^0.2.0",
     "chalk": "^1.1.1",
-    "colors": "~1.1.2",
     "glob": "^7.0.3",
+    "handlebars": "^4.0.5",
     "inquirer": "^1.0.2",
     "minimist": "~1.2.0",
-    "request": "^2.69.0",
     "ws": "^1.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.8.0",
     "babel-eslint": "^5.0.0",
+    "babel-preset-es2015-node6": "^0.2.0",
     "cheerio": "^0.20.0",
     "esdoc": "^0.4.6",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.3.0",
-    "handlebars": "^4.0.5",
     "jasmine-es6": "^0.1.7",
     "lodash": "^4.6.1"
   },

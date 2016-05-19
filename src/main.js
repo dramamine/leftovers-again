@@ -6,6 +6,7 @@ import defaults from './defaults';
 import BotManager from './botmanager';
 import BattleManager from './battlemanager';
 import Spawner from './spawner';
+import Log from './log';
 // import {random} from './team';
 import {MOVE, SWITCH} from './decisions';
 
@@ -73,6 +74,10 @@ const start = (metadata, botClass) => {
     myconnection = monkey;
   } else {
     myconnection = socket;
+  }
+
+  if (args.loglevel) {
+    Log.setLogLevel(args.loglevel);
   }
 
   const firstArg = (args._ && args._[0]) ? args._[0] : null;
