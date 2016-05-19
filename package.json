@@ -4,7 +4,7 @@
   "description": "Pokemon Showdown - Node Client",
   "main": "lib/main.js",
   "scripts": {
-    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && find ./src -type f \\( -name '*.json' \\) | tar -cf - -T - | tar -xf - -C ./lib -v",
+    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && cd src && find ./ -type f \\( -name '*.json' \\) | tar -cf - -T - | tar -xf - -C ../lib -v && cd ..",
     "clean": "rm -rf lib",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
@@ -13,7 +13,7 @@
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src:bots' nodemon --watch src --watch bots --exec babel-node src/start.js",
     "start": "npm run clean && npm run build && node lib/start.js",
-    "start:quick": "NODE_PATH=./:lib:lib/bots node lib/start.js",
+    "start:quick": "node lib/start.js",
     "start:old": "NODE_PATH='src:bots' babel-node src/start.js",
     "spawn:old": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
     "battle:old": "NODE_PATH='src:bots' babel-node scripts/battle.js",

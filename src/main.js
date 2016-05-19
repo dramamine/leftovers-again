@@ -3,7 +3,7 @@ import monkey from './monkey';
 import listener from './listener';
 import Challenger from './challenger';
 import defaults from './defaults';
-import BotManager from './BotManager';
+import BotManager from './botmanager';
 import BattleManager from './battlemanager';
 import Spawner from './spawner';
 // import {random} from './team';

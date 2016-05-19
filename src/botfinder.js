@@ -6,8 +6,6 @@ import Log from './log';
    * @param {String} path  The user-inputted path to the bot.
    */
 const botFinder = (path) => {
-  console.log('botFinder called.');
-  console.log('trying path ', path);
   let location;
   let botClass;
   try {
@@ -17,17 +15,12 @@ const botFinder = (path) => {
     try {
       location = './bots/' + path;
       botClass = require(location);
-    } catch (e) {
-      try {
-        location = '../../../'; // current directory?
-        botClass = require(location);
-      } catch (e) {
-        Log.error('couldnt find path! trying to require ' + path);
-      }
+    } catch (e) { // eslint-disable-line
+      Log.error('couldnt find path! trying to require ' + __dirname + ' ' + path);
     }
   }
   if (!botClass) {
-    return;
+    return {};
   }
 
   let metadata;
@@ -47,7 +40,7 @@ const botFinder = (path) => {
        + path);
       Log.error(x);
     }
-  };
+  }
   return {botClass, metadata};
 };
 

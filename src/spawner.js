@@ -1,4 +1,4 @@
-const spawn = require('child_process').spawn;
+import {fork} from 'child_process';
 import Log from './log';
 
 /**
@@ -23,16 +23,18 @@ class Spawner {
    */
   spawn(path) {
     Log.log('spawning opponent with path ' + path);
-    const op = spawn('babel-node', [
-      'src/main.js',
-      `--bot=${path}`
+    const op = fork('./lib/start', [
+      `${path}`, '--loglevel=0'
     ], {
       cwd: './'
     });
-    op.stderr.on('data', (data) => {
-      Log.err('error from child process:');
-      Log.err(data);
-    });
+    // op.stdout.on('data', (data) => {
+    //   console.log(data);
+    // });
+    // op.stderr.on('data', (data) => {
+    //   Log.err('error from child process:');
+    //   Log.err(data);
+    // });
 
     op.on('close', (code) => {
       Log.err('child process exited with code ' + code);

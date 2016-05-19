@@ -3,9 +3,9 @@
  * switch out, though.
  *
  */
-import Damage from 'lib/damage';
+import Damage from '../../lib/damage';
 
-import {MOVE, SWITCH} from 'decisions';
+import {MOVE, SWITCH} from '../../decisions';
 
 class Stabby {
 

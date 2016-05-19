@@ -5,7 +5,7 @@ import Log from '../log';
  * Clean an action string.
  */
 const clean = (x) => {
-  return x.replace('Move: ', '').replace('move: ', '').trim();
+  return x.replace('Move:', '').replace('move:', '').replace(' ', '').toLowerCase();
 };
 
 // some effects can stack multiple times.

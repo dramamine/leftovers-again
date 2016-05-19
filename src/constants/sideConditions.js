@@ -19,5 +19,5 @@ export default {
   TAILWIND: 'tailwind',
   TOXICSPIKES: 'toxicspikes',
   WIDEGUARD: 'wideguard',
-  WISH: 'Wish',
+  WISH: 'wish',
 };
