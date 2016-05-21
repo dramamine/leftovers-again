@@ -55,7 +55,7 @@ Leftovers Again: interface for Pokemon Showdown bots
 /**
  * argv: i.e., process.argv
  */
-const start = (metadata, botClass) => {
+const start = (metadata, Bot) => {
   // process cmdline args
   const args = require('minimist')(process.argv.slice(2));
 
@@ -80,9 +80,9 @@ const start = (metadata, botClass) => {
     Log.setLogLevel(args.loglevel);
   }
 
-  const firstArg = (args._ && args._[0]) ? args._[0] : null;
+  // const firstArg = (args._ && args._[0]) ? args._[0] : null;
   // const botpath = args.bot || firstArg || defaults.bot;
-  const info = new BotManager(metadata, botClass);
+  const info = new BotManager(metadata, Bot);
 
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
@@ -99,7 +99,7 @@ const start = (metadata, botClass) => {
   // for each one, it creates a new instance of a battle and of our AI class.
   // listener needs to know about the BattleManager to properly relay battle
   // messages to the right battle instance.
-  const battlemanager = new BattleManager(info.botClass);
+  const battlemanager = new BattleManager(info.BotClass);
   listener.use(battlemanager);
 
 

@@ -6,22 +6,13 @@ import Log from './log';
    * @param {String} path  The user-inputted path to the bot.
    */
 const botFinder = (path) => {
-  let location;
-  let botClass;
-  try {
-    location = path;
-    console.info('botFinder: checking ' + location);
-    botClass = require(location);
-  } catch (e) {
-    try {
-      location = './bots/' + path;
-      console.info('botFinder: checking ' + location);
-      botClass = require(location);
-    } catch (e) { // eslint-disable-line
-      Log.error('couldnt find path! trying to require ' + __dirname + ' ' + path);
-    }
-  }
-  if (!botClass) {
+  let Bot;
+  const location = [path, './bots/' + path, '../bots/' + path].find((loc) => {
+    Bot = tryRequire(loc);
+    if (Bot) return true;
+  });
+  if (!location) {
+    Log.error(`couldnt find path! trying to require ${path} from ${__dirname}`);
     return {};
   }
 
@@ -34,8 +25,7 @@ const botFinder = (path) => {
   } catch (e) {
     // nested try-catch, u mad brah?
     try {
-      console.log('trying to make a bot.');
-      const bot = new botClass.default();
+      const bot = Bot.default ? new Bot.default() : new Bot();
       metadata = bot.meta;
     } catch (x) {
       Log.error('No metadata found! Expected to find the file in node_path '
@@ -43,7 +33,22 @@ const botFinder = (path) => {
       Log.error(x);
     }
   }
-  return {botClass, metadata};
+  return {metadata, Bot};
 };
+
+/**
+ * Try to require a thing.
+ *
+ * @param  {String} path The path to require
+ * @return {Class}  The thing, undefined otherwise
+ */
+const tryRequire = (path) => {
+  try {
+    return require(path);
+  } catch(e) {
+    return undefined;
+  }
+};
+
 
 export default botFinder;

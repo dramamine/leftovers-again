@@ -1,22 +1,22 @@
 import Log from './log';
-import Foreigner from './foreigner';
+import foreigner from './foreigner';
 
 class BotManager {
-  constructor(metadata, botClass) {
+  constructor(metadata, Bot) {
     if (metadata) {
       this.metadata = metadata;
 
       // note that this instance of the bot is created ONLY for pulling its team
       // string and metadata. this instance is not actually used in battles.
-      if (botClass) {
-        this.botClass = botClass;
-        this.bot = new botClass.default();
+      if (Bot) {
+        this.BotClass = Bot;
+        this.bot = Bot.default ? new Bot.default() : new Bot();
       } else {
-        Log.warn('No botClass supplied!');
+        Log.warn('No Bot class supplied!');
         Log.warn('If you\'re trying to write non-Javascript,');
         Log.warn('It\'s not supported yet!');
 
-        this.botClass = Foreigner(metadata.script);
+        this.BotClass = foreigner(metadata.script);
       }
     }
   }

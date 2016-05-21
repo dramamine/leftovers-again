@@ -82,7 +82,7 @@ class Socket extends Connection {
       path: this.actionurl.path,
       agent: false
     };
-    console.log(requestOptions);
+    // console.log(requestOptions);
     let data = '';
     if (!this.password) {
       requestOptions.method = 'GET';

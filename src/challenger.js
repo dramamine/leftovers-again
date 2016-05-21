@@ -289,9 +289,9 @@ class Challenger {
     }
 
     Log.warn(`sending challenge... ${nick} ${format}`);
-    console.log(this.users);
-    console.log(this.challengesFrom);
-    console.log(this.challengeTo);
+    // console.log(this.users);
+    // console.log(this.challengesFrom);
+    // console.log(this.challengeTo);
     this.connection.send('|/challenge ' + nick + ', ' + format);
 
     this.hasChallenged = true;
