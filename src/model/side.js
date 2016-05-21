@@ -1,5 +1,5 @@
-import SideConditions from '../constants/sideConditions';
-import Log from '../log';
+import SideConditions from 'leftovers-again/constants/sideConditions';
+import Log from 'leftovers-again/log';
 
 /**
  * Clean an action string.

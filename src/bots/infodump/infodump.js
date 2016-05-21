@@ -3,13 +3,13 @@
  *
  */
 
-import AI from 'ai';
-import Damage from 'lib/damage';
-import KO from 'lib/kochance';
-import Typechart from 'lib/typechart';
-import Formats from 'data/formats';
-import Log from 'log';
-import util from 'pokeutil';
+import AI from 'leftovers-again/ai';
+import Damage from 'leftovers-again/damage';
+import KO from 'leftovers-again/kochance';
+import Typechart from 'leftovers-again/typechart';
+import Formats from 'leftovers-again/data/formats';
+import Log from 'leftovers-again/log';
+import util from 'leftovers-again/pokeutil';
 
 import {MOVE, SWITCH} from 'decisions';
 

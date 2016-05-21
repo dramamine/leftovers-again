@@ -3,9 +3,9 @@
  * switch out, though.
  *
  */
-import Damage from '../../game/damage';
+import Damage from 'leftovers-again/game/damage';
 
-import {MOVE, SWITCH} from '../../decisions';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 class Stabby {
 

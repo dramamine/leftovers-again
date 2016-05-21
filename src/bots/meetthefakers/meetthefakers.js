@@ -2,10 +2,10 @@
  * MeetTheFakers
  *
  */
-import AI from 'ai';
-import {MOVE, SWITCH} from 'decisions';
-import Typechart from 'lib/typechart';
-import Damage from 'lib/damage';
+import AI from 'leftovers-again/ai';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import Typechart from 'leftovers-again/game/typechart';
+import Damage from 'leftovers-again/game/damage';
 
 
 class MeetTheFakers extends AI {

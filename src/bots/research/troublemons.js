@@ -5,8 +5,8 @@
  * npm run develop -- --bot=research/megaevo
  */
 
-import AI from 'ai';
-import {MOVE, SWITCH} from 'decisions';
+import AI from 'leftovers-again/ai';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 export default class Trouble extends AI {
   constructor() {

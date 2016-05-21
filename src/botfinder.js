@@ -10,10 +10,12 @@ const botFinder = (path) => {
   let botClass;
   try {
     location = path;
+    console.info('botFinder: checking ' + location);
     botClass = require(location);
   } catch (e) {
     try {
       location = './bots/' + path;
+      console.info('botFinder: checking ' + location);
       botClass = require(location);
     } catch (e) { // eslint-disable-line
       Log.error('couldnt find path! trying to require ' + __dirname + ' ' + path);

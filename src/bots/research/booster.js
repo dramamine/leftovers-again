@@ -4,8 +4,8 @@
  * npm run develop -- --bot=research/spikes
  */
 
-import AI from 'ai';
-import {MOVE, SWITCH} from 'decisions';
+import AI from 'leftovers-again/ai';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 const moveId = 'workup';
 

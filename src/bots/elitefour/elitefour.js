@@ -3,10 +3,10 @@
  *
  */
 
-import AI from 'ai';
-import Typechart from 'lib/typechart';
+import AI from 'leftovers-again/ai';
+import Typechart from 'leftovers-again/game/typechart';
 
-import {MOVE, SWITCH} from 'decisions';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end

@@ -2,9 +2,9 @@
  * Whynotbaut
  *
  */
-import AI from 'ai';
-import {MOVE, SWITCH} from 'decisions';
-import util from 'pokeutil';
+import AI from 'leftovers-again/ai';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import util from 'leftovers-again/pokeutil';
 
 
 class Whynotbaut extends AI {
