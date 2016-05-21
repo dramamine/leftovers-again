@@ -4,16 +4,16 @@
  * Hopefully, nobody will miss these fields when they're gone.
  *
  * Run with:
- * babel-node scripts/data-minifier.js
+ * babel-node scripts/gamedata-copier.js
  */
 
-import {BattleMovedex} from '../deps/Pokemon-Showdown/data/moves';
+import {BattleMovedex} from 'pokemon-showdown/data/moves';
 import DamageCalcMovedex from '../deps/honko-damagecalc/js/data/movedata';
-import { BattlePokedex } from '../deps/Pokemon-Showdown/data/pokedex';
-import { BattleFormatsData } from '../deps/Pokemon-Showdown/data/formats-data';
+import { BattlePokedex } from 'pokemon-showdown/data/pokedex';
+import { BattleFormatsData } from 'pokemon-showdown/data/formats-data';
 import fs from 'fs';
 
-const destination = 'src/data/';
+const destination = 'src/gamedata/';
 
 function copyMoves() {
   const updated = {};
