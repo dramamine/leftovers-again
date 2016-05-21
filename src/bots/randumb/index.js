@@ -6,7 +6,7 @@
  */
 import AI from '../../ai';
 import {MOVE, SWITCH} from '../../decisions';
-import team from '../../lib/team';
+import team from '../../model/team';
 
 class Randumb extends AI {
   constructor() {

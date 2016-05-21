@@ -1,6 +1,6 @@
 // import listener from './listener';
 // import socket from 'socket';
-import Team from './lib/team';
+import Team from './team';
 import Log from './log';
 import listener from './listener';
 import report from './report';

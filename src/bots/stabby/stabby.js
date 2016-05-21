@@ -3,7 +3,7 @@
  * switch out, though.
  *
  */
-import Damage from '../../lib/damage';
+import Damage from '../../game/damage';
 
 import {MOVE, SWITCH} from '../../decisions';
 

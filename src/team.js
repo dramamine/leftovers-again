@@ -1,5 +1,5 @@
-import util from '../pokeutil';
-import Log from '../log';
+import util from './pokeutil';
+import Log from './log';
 import fs from 'fs';
 
 /**
