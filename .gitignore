@@ -4,7 +4,6 @@ replays/
 README-*.md
 README-clienthax.js
 scripts/clienthax.js
-lib/
 error.log
 log/
 src/bots/randombattle/predictor/matchups.json

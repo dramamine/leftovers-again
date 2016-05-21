@@ -1,0 +1,9 @@
+{
+  "name": "MeetTheFakers",
+  "version": "0.0.0",
+  "description": "Uses fakeout a lot.",
+  "main": "meetthefakers.js",
+  "format": "anythinggoes",
+  "accepts": "ALL",
+  "nickname": "MeetTheFakers ★max★"
+}
