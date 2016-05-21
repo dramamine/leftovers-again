@@ -4,14 +4,14 @@
  */
 
 import AI from 'leftovers-again/ai';
-import Damage from 'leftovers-again/damage';
-import KO from 'leftovers-again/kochance';
-import Typechart from 'leftovers-again/typechart';
+import Damage from 'leftovers-again/game/damage';
+import KO from 'leftovers-again/game/kochance';
+import Typechart from 'leftovers-again/game/typechart';
 import Formats from 'leftovers-again/data/formats';
 import Log from 'leftovers-again/log';
 import util from 'leftovers-again/pokeutil';
 
-import {MOVE, SWITCH} from 'decisions';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 class Infodump extends AI {
   constructor() {

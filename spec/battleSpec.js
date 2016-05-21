@@ -1,6 +1,7 @@
-import Battle from 'battle';
-import {MOVE, SWITCH} from 'decisions';
-import util from 'pokeutil';
+import Battle from 'leftovers-again/battle';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import util from 'leftovers-again/pokeutil';
+import Reporter from 'leftovers-again/reporters/matchstatus';
 
 // import sampleRequest from './helpers/request';
 import sampleRequest from './helpers/requestb';
@@ -77,6 +78,7 @@ describe('battle', () => {
   });
   describe('decide', () => {
     it('should save previous states', () => {
+      spyOn(Reporter, 'report');
       const battle = new Battle();
       battle.bot = {
         decide: () => {

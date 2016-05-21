@@ -1,6 +1,6 @@
-import SideEffects from 'constants/sideeffects';
-import Side from 'model/side';
-import Log from 'log';
+import SideConditions from 'leftovers-again/constants/sideConditions';
+import Side from 'leftovers-again/model/side';
+import Log from 'leftovers-again/log';
 
 let side;
 describe('Side', () => {
@@ -8,23 +8,23 @@ describe('Side', () => {
     side = new Side();
   });
   it('should handle a true-false effect', () => {
-    side.digest(SideEffects.LIGHT_SCREEN);
-    expect(side.data()[SideEffects.LIGHT_SCREEN]).toBeTruthy();
+    side.digest(SideConditions.LIGHTSCREEN);
+    expect(side.data()[SideConditions.LIGHTSCREEN]).toBeTruthy();
   });
   it('should handle a stacked move', () => {
     // this move stacks
-    side.digest(SideEffects.SPIKES);
-    side.digest(SideEffects.SPIKES);
-    expect(side.data()[SideEffects.SPIKES]).toBe(2);
+    side.digest(SideConditions.SPIKES);
+    side.digest(SideConditions.SPIKES);
+    expect(side.data()[SideConditions.SPIKES]).toBe(2);
 
     // limit is 3
-    side.digest(SideEffects.SPIKES);
-    side.digest(SideEffects.SPIKES);
-    expect(side.data()[SideEffects.SPIKES]).toBe(3);
+    side.digest(SideConditions.SPIKES);
+    side.digest(SideConditions.SPIKES);
+    expect(side.data()[SideConditions.SPIKES]).toBe(3);
   });
   it('should process text', () => {
     side.digest('Move: Light Screen');
-    expect(side.data()[SideEffects.LIGHT_SCREEN]).toBeTruthy();
+    expect(side.data()[SideConditions.LIGHTSCREEN]).toBeTruthy();
   });
   it('should barf on a non-existent move', () => {
     spyOn(Log, 'warn');
@@ -33,9 +33,9 @@ describe('Side', () => {
     expect(Log.warn).toHaveBeenCalled();
   });
   it('should remove', () => {
-    side.digest(SideEffects.TAILWIND);
+    side.digest(SideConditions.TAILWIND);
     expect(side.data()).not.toEqual({});
-    side.remove(SideEffects.TAILWIND);
+    side.remove(SideConditions.TAILWIND);
     expect(side.data()).toEqual({});
   });
 });

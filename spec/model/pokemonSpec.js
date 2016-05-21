@@ -1,6 +1,8 @@
-import Pokemon from 'model/pokemon';
-import util from 'pokeutil';
-import log from 'log';
+import Pokemon from 'leftovers-again/model/pokemon';
+import util from 'leftovers-again/pokeutil';
+import log from 'leftovers-again/log';
+
+log.setLogLevel(1);
 
 describe('Pokemon', () => {
   // it('should figure out the pokemon owner', () => {

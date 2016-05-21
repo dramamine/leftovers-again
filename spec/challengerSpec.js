@@ -1,8 +1,8 @@
-import Challenger from 'challenger';
+import Challenger from 'leftovers-again/challenger';
 
 let challenger;
 
-describe('challenger', () => {
+xdescribe('challenger', () => {
   beforeEach( () => {
     challenger = new Challenger(false, {
       format: 'anythinggoes',

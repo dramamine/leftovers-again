@@ -14,7 +14,7 @@ export default class Pokemon {
    */
   constructor(ident, details) {
     this.useIdent(ident);
-    this.useDetails(details);
+    if (details) this.useDetails(details);
     this.prevMoves = [];
     this.seenMoves = [];
 

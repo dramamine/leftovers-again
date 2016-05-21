@@ -1,5 +1,5 @@
-import Typechart from 'lib/typechart';
-import Log from 'log';
+import Typechart from 'leftovers-again/game/typechart';
+import Log from 'leftovers-again/log';
 
 describe('typechart', () => {
   describe('compare', () => {
