@@ -23,7 +23,8 @@
     "battle:old": "NODE_PATH='src:bots' babel-node scripts/battle.js",
     "generate:old": "NODE_PATH='src:bots' babel-node scripts/generate.js",
     "server": "cd deps/Pokemon-Showdown && node app.js",
-    "client": "./scripts/open-client.sh"
+    "client": "./scripts/open-client.sh",
+    "generate": "./lib/scripts/generate.js"
   },
   "repository": {
     "type": "git",
