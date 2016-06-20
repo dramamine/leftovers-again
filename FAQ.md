@@ -2,7 +2,7 @@
 
 
 ### How do I get started?
-First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node).
+First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node). If you're using Windows, I recommend you use the node Windows installer for the Current version (not LTS), and that you install Git for Windows and use git command shell that comes with it (MinGW).
 
 ```bash
 node -v
