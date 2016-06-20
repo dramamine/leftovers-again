@@ -6,7 +6,7 @@ import Handlebars from 'handlebars';
 
 const formats = ['anythinggoes', 'randombattle', 'ubers', 'ou', 'monotype'];
 const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'monotype'];
-const languages = ['es6', 'javascript'];
+const languages = ['es6'];
 
 /**
  * Try to 'require' stuff without crashing out
@@ -30,8 +30,16 @@ const parse = (source, vars) => {
   return tmplt(vars);
 };
 
-// @TODO make sure this works in ES5 too
-const tmpltDir = path.join(__dirname, '..', 'templates');
+// from lib/scripts folder (ES5)
+let tmpltDir = path.join(__dirname, '../..', 'templates');
+console.log('checking folder...', tmpltDir);
+try {
+  fs.accessSync(tmpltDir);
+} catch (e) {
+  // from scripts folder (ES6)
+  tmpltDir = path.join(__dirname, '..', 'templates');
+}
+
 const pkgLocation = path.join(process.cwd(), 'package.json');
 
 let existingPackage = tryRequire(pkgLocation);
