@@ -3,8 +3,10 @@ deps/
 docs/
 log/
 notes/
+replays/
 scripts/
 spec/
 src/
 tmp/
 www/
+*.out
