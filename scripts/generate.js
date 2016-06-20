@@ -8,6 +8,9 @@ const formats = ['anythinggoes', 'randombattle', 'ubers', 'ou', 'monotype'];
 const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'monotype'];
 const languages = ['es6', 'javascript'];
 
+/**
+ * Try to 'require' stuff without crashing out
+ */
 const tryRequire = (file) => {
   try {
     return require(file);
@@ -16,6 +19,12 @@ const tryRequire = (file) => {
   }
 };
 
+/**
+ * Parses a Handlebars template.
+ * @param  {String} source The Handlebars template.
+ * @param  {Object} vars   An object of variables for the template.
+ * @return {String}  The parsed template.
+ */
 const parse = (source, vars) => {
   const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii'));
   return tmplt(vars);
@@ -77,11 +86,30 @@ const questions = [
   }
 ];
 
-const writePackage = (source, more) => {
+/**
+ * Package.json requires some special handling, as we don't really want to
+ * overwrite the user's file. This function combines two JSON objects and then
+ * writes them to pkgLocation.
+ *
+ * @param  {Object} source The source/original file.
+ * @param  {Object} more   Stuff to add.
+ * @param  {String} destination  The destination path.
+ */
+const writePackage = (source, more, destination) => {
   const combined = Object.assign(source, more);
-  fs.writeFile(pkgLocation + '2', JSON.stringify(combined, null, 2));
+  fs.writeFile(destination, JSON.stringify(combined, null, 2));
 };
 
+/**
+ * Parse templates and write some new files.
+ *
+ * @param  {String} source  The source path to read.
+ * @param  {String} destination  Destination file path. If this is null, just
+ * return the parsed string.
+ * @param  {Object} vars  Variables to feed to Handlebars template
+ *
+ * @return {[type]}             [description]
+ */
 const parseAndWrite = (source, destination, vars) => {
   const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii') );
   const parsed = tmplt(vars);
@@ -105,29 +133,24 @@ inquirer.prompt(questions).then((answers) => {
     path.join(tmpltDir, lang, 'package.json'),
     answers
   ) );
-  writePackage(existingPackage, addStuff);
+  writePackage(existingPackage, addStuff, pkgLocation);
 
-  const filez = glob.sync('**/*', {cwd: path.join(tmpltDir, lang)});
+  fs.mkdirSync(path.join(process.cwd(), 'log'));
+  fs.mkdirSync(path.join(process.cwd(), 'src'));
+
+  const filez = glob.sync('**/*', {
+    cwd: path.join(tmpltDir, lang),
+    nodir: true,
+    dot: true
+  });
   filez.forEach((file) => {
     if (file === 'package.json') return;
-    console.log(file);
     parseAndWrite(
       path.join(tmpltDir, lang, file),
       path.join(process.cwd(), file),
       answers
     );
   });
-
-  // parseAndWrite(
-  //   `templates/${lang}/main.js`,
-  //   `${folder}/${answers.repo}.js`,
-  //   answers
-  // );
-  // parseAndWrite(
-  //   `templates/${lang}/package.json`,
-  //   `${folder}/package.json`,
-  //   answers
-  // );
 
   console.log( parseAndWrite(
     path.join(tmpltDir, 'goodbye.txt'),

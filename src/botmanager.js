@@ -10,7 +10,8 @@ class BotManager {
       // string and metadata. this instance is not actually used in battles.
       if (Bot) {
         this.BotClass = Bot;
-        this.bot = Bot.default ? new Bot.default() : new Bot();
+
+        this.bot = Bot.default ? new Bot.default() : new Bot(); // eslint-disable-line
       } else {
         Log.warn('No Bot class supplied!');
         Log.warn('If you\'re trying to write non-Javascript,');

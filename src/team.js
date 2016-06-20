@@ -59,7 +59,7 @@ export default class Team {
    * @param {Integer} seed  The line number to use.
    */
   static random(seed = undefined) {
-    const data = fs.readFileSync('./src/data/randomteams.txt', 'utf8');
+    const data = fs.readFileSync(__dirname + '/data/randomteams.txt', 'utf8');
     const lines = data.split('\n');
 
     if (seed === undefined) {

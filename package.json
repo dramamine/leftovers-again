@@ -8,7 +8,7 @@
     "la-init": "./lib/scripts/generate.js"
   },
   "scripts": {
-    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
+    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "clean": "rm -rf lib",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
@@ -37,7 +37,6 @@
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "Pokemon-Showdown": "dramamine/Pokemon-Showdown.git",
     "babel": "^6.5.2",
     "babel-plugin-module-alias": "^1.4.0",
     "babel-resolve-relative-module": "^1.0.1",

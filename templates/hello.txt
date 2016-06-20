@@ -6,4 +6,4 @@ This will modify your existing package.json file for {{existingPackage.name}} by
 {{else}}
 Config options will be written to package.json.
 {{/if}}
-Any of these config options can be changed later by editing this file.
+Any of these config options can be changed later by editing package.json.

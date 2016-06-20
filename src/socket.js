@@ -31,20 +31,42 @@ class Socket extends Connection {
     this.chatroom = chatroom;
     this.format = format;
 
-    // console.log('connection constructed.');
-    ws = new WebSocket(`ws://${server}:${port}/showdown/websocket`);
-
-    ws.on('open', () => {
-      Log.info('got open message from websocket');
-    });
-
-    ws.on('message', this._handleMessage);
+    this.build(`ws://${server}:${port}/showdown/websocket`);
 
     listener.subscribe('challstr', this._login.bind(this));
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
     listener.subscribe('popup', this._relayPopup);
     // defined message type for calling from battles, etc.
     listener.subscribe('_send', this.send);
+  }
+
+  /**
+   * Build your socket.
+   * @param  {String} addy The address of the socket.
+   */
+  build(addy) {
+    ws = new WebSocket(addy);
+
+    ws.on('open', () => {
+      Log.info('Got open message from server\'s websocket.');
+    });
+
+    ws.on('message', this._handleMessage);
+
+    ws.on('error', (err) => {
+      if (err.code === 'ECONNREFUSED') {
+        Log.error(`ECONNREFUSED when trying to connect to server at:`);
+        Log.error(`${addy}`);
+        Log.error(`Are you sure a server is running there?`);
+        Log.error(`Make sure you have the official server installed and running.\n`);
+        Log.error(` Using git (preferred):\n`);
+        Log.error(`    git clone https://github.com/Zarel/Pokemon-Showdown.git`);
+        Log.error(`    cd Pokemon-Showdown`);
+        Log.error(`    npm start\n`);
+        Log.error(`Running this separately will reduce startup time and allow you to read`);
+        Log.error(`server logs for debugging.\n`);
+      }
+    });
   }
 
   /**

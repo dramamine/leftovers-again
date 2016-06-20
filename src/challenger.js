@@ -33,10 +33,11 @@ class Challenger {
    * @return Constructor
    */
   constructor(connection, botmanager, args) {
-    const {format, scrappy, matches} = args;
+    const {format, scrappy, matches, opponent} = args;
     this.connection = connection;
     this.botmanager = botmanager;
-    this.scrappy = scrappy;
+    // if user provided opponent, challenge him
+    this.scrappy = scrappy || opponent;
     this.format = format;
     this.matches = matches;
 
@@ -83,9 +84,9 @@ class Challenger {
   onUserJoin([user]) {
     const trimmed = util.toId(user);
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
-      this.users[trimmed] = (trimmed === mynick)
+      this.users[trimmed] = (trimmed === mynick
         ? Statuses.SELF
-        : Statuses.ACTIVE;
+        : Statuses.ACTIVE);
       if (this.timer) clearTimeout(this.timer);
       this.timer = setTimeout(this._challengeNext, 1000);
     }
@@ -131,6 +132,7 @@ class Challenger {
       const userid = util.toId(user);
       if (this.users[userid] === Statuses.ACTIVE) {
         opponent = userid;
+        return true;
       }
     });
     if (opponent) {
@@ -152,14 +154,15 @@ class Challenger {
  * @return {[type]}                  [description]
  */
   onBattleReport({winner, opponent}) {
-    console.log('onBattleReport called.');
-    console.log(winner, opponent);
+    Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you == opponent);
     if (battles.length < this.matches) {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
-        this._challenge(opponent);
+        setTimeout(() => {
+          this._challenge(util.toId(opponent));
+        }, 1000);
       }
     }
     Reporter.report(battles);
@@ -277,6 +280,10 @@ class Challenger {
    */
   _challenge(nick) {
     Log.info(`challenge called. ${nick}`);
+    if (nick === mynick) {
+      Log.error('cant challenege myself.');
+      return;
+    }
     const format = this.format;
 
     if (Challenger._requiresTeam(format)) {
@@ -288,8 +295,7 @@ class Challenger {
       }
     }
 
-    Log.warn(`sending challenge... ${nick} ${format}`);
-    // console.log(this.users);
+    Log.info(`sending challenge... ${nick} ${format}`);
     // console.log(this.challengesFrom);
     // console.log(this.challengeTo);
     this.connection.send('|/challenge ' + nick + ', ' + format);

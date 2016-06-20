@@ -27,6 +27,7 @@ let myconnection;
 function exitHandler(options, err) {
   if (err) console.error(err.stack);
   if (challenger) challenger.cancelOutstandingChallenges();
+  Spawner.kill();
   setTimeout(() => {
     if (myconnection) myconnection.close();
     if (options.exit) process.exit();
@@ -115,7 +116,6 @@ const start = (metadata, Bot) => {
 
   // catches uncaught exceptions
   process.on('uncaughtException', exitHandler.bind(null, {exit: true}));
-
-}
+};
 
 export default {start, MOVE, SWITCH};
