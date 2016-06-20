@@ -5,7 +5,7 @@ import Log from 'leftovers-again/log';
  * Clean an action string.
  */
 const clean = (x) => {
-  return x.replace('Move:', '').replace('move:', '').replace(' ', '').toLowerCase();
+  return x.replace(/move:/gi, '').replace(/ /g, '').toLowerCase();
 };
 
 // some effects can stack multiple times.
@@ -32,6 +32,7 @@ export default class Side {
    */
   digest(action) {
     const move = clean(action);
+    console.log(move);
     if (Object.keys(SideConditions).find( x => SideConditions[x] === move) ) {
       // if it's already set, AND it's a stacking move
       if (this.stuff[move] && STACKS[move]) {

@@ -26,6 +26,10 @@ describe('Side', () => {
     side.digest('Move: Light Screen');
     expect(side.data()[SideConditions.LIGHTSCREEN]).toBeTruthy();
   });
+  it('shouldn\'t worry about capitalization', () => {
+    side.digest('MoVE: LiGHt scREEn');
+    expect(side.data()[SideConditions.LIGHTSCREEN]).toBeTruthy();
+  });
   it('should barf on a non-existent move', () => {
     spyOn(Log, 'warn');
     side.digest('Candygoats');
