@@ -1,4 +1,4 @@
-import Items from 'lib/items';
+import Items from 'leftovers-again/game/items';
 
 describe('Items', () => {
   describe('hasRequiredItem', () => {

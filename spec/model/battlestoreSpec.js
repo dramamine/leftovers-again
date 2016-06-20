@@ -1,6 +1,6 @@
-import BattleStore from 'model/battlestore';
-import Barn from 'model/pokebarn';
-import sampleRequest from 'helpers/requestc';
+import BattleStore from 'leftovers-again/model/battlestore';
+import Barn from 'leftovers-again/model/pokebarn';
+import sampleRequest from '../helpers/requestc';
 
 let store;
 

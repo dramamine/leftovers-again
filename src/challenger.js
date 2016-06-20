@@ -1,11 +1,11 @@
 // import listener from './listener';
 // import socket from 'socket';
-import Team from 'lib/team';
-import Log from 'log';
-import listener from 'listener';
-import report from 'report';
-import Reporter from 'reporters/endofmatch';
-import util from 'pokeutil';
+import Team from './team';
+import Log from './log';
+import listener from './listener';
+import report from './report';
+import Reporter from './reporters/endofmatch';
+import util from './pokeutil';
 
 // for tracking the status of users in the lobby
 const Statuses = {
@@ -32,11 +32,12 @@ class Challenger {
    *
    * @return Constructor
    */
-  constructor(connection, botinfo, args) {
-    const {format, scrappy, matches} = args;
+  constructor(connection, botmanager, args) {
+    const {format, scrappy, matches, opponent} = args;
     this.connection = connection;
-    this.botinfo = botinfo;
-    this.scrappy = scrappy;
+    this.botmanager = botmanager;
+    // if user provided opponent, challenge him
+    this.scrappy = scrappy || opponent;
     this.format = format;
     this.matches = matches;
 
@@ -83,9 +84,9 @@ class Challenger {
   onUserJoin([user]) {
     const trimmed = util.toId(user);
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
-      this.users[trimmed] = (trimmed === mynick)
+      this.users[trimmed] = (trimmed === mynick
         ? Statuses.SELF
-        : Statuses.ACTIVE;
+        : Statuses.ACTIVE);
       if (this.timer) clearTimeout(this.timer);
       this.timer = setTimeout(this._challengeNext, 1000);
     }
@@ -131,6 +132,7 @@ class Challenger {
       const userid = util.toId(user);
       if (this.users[userid] === Statuses.ACTIVE) {
         opponent = userid;
+        return true;
       }
     });
     if (opponent) {
@@ -152,14 +154,15 @@ class Challenger {
  * @return {[type]}                  [description]
  */
   onBattleReport({winner, opponent}) {
-    console.log('onBattleReport called.');
-    console.log(winner, opponent);
+    Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you == opponent);
     if (battles.length < this.matches) {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
-        this._challenge(opponent);
+        setTimeout(() => {
+          this._challenge(util.toId(opponent));
+        }, 1000);
       }
     }
     Reporter.report(battles);
@@ -206,12 +209,12 @@ class Challenger {
     Object.keys(challengesFrom).forEach( (opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(format, this.botinfo.accepts)) {
+      if (Challenger._acceptable(format, this.botmanager.accepts)) {
         // this is the point at which we need to pick a team!
         // team message is: /utm ('use team')
 
         if (Challenger._requiresTeam(format)) {
-          const team = this.botinfo.team(opponent);
+          const team = this.botmanager.team(opponent);
           if (team) {
             const utmString = new Team(team).asUtm();
             Log.info('sending team msg...', utmString);
@@ -277,10 +280,14 @@ class Challenger {
    */
   _challenge(nick) {
     Log.info(`challenge called. ${nick}`);
+    if (nick === mynick) {
+      Log.error('cant challenege myself.');
+      return;
+    }
     const format = this.format;
 
     if (Challenger._requiresTeam(format)) {
-      const team = this.botinfo.team(nick);
+      const team = this.botmanager.team(nick);
       if (team) {
         const utmString = new Team(team).asUtm();
         Log.info('sending utm...', utmString);
@@ -288,10 +295,9 @@ class Challenger {
       }
     }
 
-    Log.warn(`sending challenge... ${nick} ${format}`);
-    console.log(this.users);
-    console.log(this.challengesFrom);
-    console.log(this.challengeTo);
+    Log.info(`sending challenge... ${nick} ${format}`);
+    // console.log(this.challengesFrom);
+    // console.log(this.challengeTo);
     this.connection.send('|/challenge ' + nick + ', ' + format);
 
     this.hasChallenged = true;

@@ -1,9 +1,10 @@
+import EndOfMatch from 'leftovers-again/reporters/endofmatch';
+
 const exampleState = [
   {won: true, myAlive: 6, yourAlive: 3, mine: [], yours: []},
   {won: true, myAlive: 6, yourAlive: 0, mine: [], yours: []},
   {won: false, myAlive: 0, yourAlive: 6, mine: [], yours: []},
 ];
-import EndOfMatch from 'reporters/endofmatch';
 
 describe('matchstatus reporter', () => {
   it('should report as I expect', () => {

@@ -30,19 +30,7 @@ Before AI, to test a new team, you'd have to use your team for hours just to get
 
 With one quick script, you can see how your bot fares against any number of opponent bots. Is your bot weak to Steel types? Special attacks? Stall teams? Trick Rooms? You'll know your bot's weaknesses and can improve your design as such.
 
-## Run Battles from the Commandline, or Battle Against Them in the Official Client
 
-**TODO screenshots**
-
-## Compete Against Other Bots. And Humans.
-
-Every month, bots are pitted against each other in a competition here. Currently, only a few tiers are supported - Anythinggoes, Ubers, OU, and Randombattle.
-
-We're running our own Showdown server named 'Cyberdyne'. There, every bot in this repo is running and responding to all challenge requests. Humans can play against these bots at any time!
-
-The ethics of taking bots onto official servers is questionable. [Watch this video to see what happens.]()
-
-**TODO example results**
 
 ## Love playing Pokemon but suck at programming?
 
@@ -61,14 +49,21 @@ If you'd like to implement your favorite language:
 
 ## Example Usage
 
-### Install everything
+### Install everything (Windows, Mac, Linux)
 First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node).
 ```bash
-git clone git@github.com:dramamine/leftovers-again.git
-# install this globally, or you might have compatibility problems
-sudo npm install -g babel-node
-cd leftovers-again
-make
+node -v
+# 6.0.0 or greater plz!
+
+# inside your bot's directory
+npm install leftovers-again
+
+# run generator script
+node node_modules/leftovers-again/lib/scripts/generate.js
+
+# afterwards, your bot is ready to go
+npm run server # in a separate window
+npm start -- --opponent=randumb
 ```
 
 ### Run a `randombattle` between two bots:
@@ -83,12 +78,32 @@ npm start -- stabby --opponent=randumb
 ### Battle against all the other bots included in this repo:
 `npm run gauntlet`
 
-### Play against a stall team, in the browser
+### Play against your bot, via your web browser
 ```bash
-npm run server
-npm start research/rooster
-npm run client # then add ?~~localhost:8000 to the end of the URL
+npm run server # in a separate window 
+npm start 
+# browse to: http://play.pokemonshowdown.com/?~~localhost:8000
 ```
+
+### Launch your bot on Cyberdyne
+```bash
+npm start -- --production
+# browse to: http://cyberdyne.psim.us/
+```
+
+### Developer's Installation Guide
+Use this code if you'd like to contribute to this repo.
+```bash
+git clone git@github.com:dramamine/leftovers-again.git
+cd leftovers-again
+make
+
+# example usage
+npm run server # in a separate window
+npm test
+npm start -- randumb --opponent=stabby
+```
+
 
 
 ## NOTES

@@ -1,5 +1,5 @@
-import Elite from 'elitefour/xy-malva';
-import util from 'pokeutil';
+import Elite from 'bots/elitefour/xy-malva';
+import util from 'leftovers-again/pokeutil';
 
 const elite = new Elite();
 

@@ -1,4 +1,5 @@
-import Barn from 'model/pokebarn';
+import Barn from 'leftovers-again/model/pokebarn';
+import Log from 'leftovers-again/log';
 
 describe('pokebarn', () => {
   let barn;
@@ -14,7 +15,9 @@ describe('pokebarn', () => {
     expect(barn.all().length).toEqual(7);
   });
   it('should handle self switching', () => {
+    spyOn(Log, 'error');
     barn.findOrCreate('p1a: Fakechu');
     expect(barn.all().length).toEqual(6);
+    expect(Log.error).toHaveBeenCalled();
   });
 });

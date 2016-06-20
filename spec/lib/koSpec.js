@@ -1,4 +1,4 @@
-import KO from 'lib/kochance';
+import KO from 'leftovers-again/game/kochance';
 
 describe('KO', () => {
   describe('predictKO', () => {

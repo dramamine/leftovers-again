@@ -1,6 +1,6 @@
-import state from 'helpers/randomstate';
-import Log from 'log';
-import Infodump from 'infodump';
+import state from '../helpers/randomstate';
+import Log from 'leftovers-again/log';
+import Infodump from 'bots/infodump';
 const infodump = new Infodump();
 
 describe('Infodump', () => {

@@ -1,9 +1,9 @@
 // import Pokemon from 'model/pokemon';
-import Side from 'model/side';
-import Barn from 'model/pokebarn';
-import util from 'pokeutil';
-import Log from 'log';
-import Weather from 'constants/weather';
+import Side from './side';
+import Barn from './pokebarn';
+import util from '../pokeutil';
+import Log from '../log';
+import Weather from '../constants/weather';
 
 /**
  * Store for tracking the status of the battle.

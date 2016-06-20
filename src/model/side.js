@@ -1,26 +1,39 @@
-import SideEffects from 'constants/sideeffects';
-import Log from 'log';
+import SideConditions from 'leftovers-again/constants/sideConditions';
+import Log from 'leftovers-again/log';
 
+/**
+ * Clean an action string.
+ */
 const clean = (x) => {
-  return x.replace('Move: ', '').replace('move: ', '').trim();
+  return x.replace(/move:/gi, '').replace(/ /g, '').toLowerCase();
 };
 
-// does
+// some effects can stack multiple times.
 const STACKS = {
-  [SideEffects.SPIKES]: 3
+  [SideConditions.SPIKES]: 3,
+  [SideConditions.STEALTHROCK]: 3
 };
 
 /**
  * @TODO documentation
  */
 export default class Side {
+  /**
+   * Side constructor.
+   */
   constructor() {
     this.stuff = {};
   }
 
+  /**
+   * Digests an action. The server tells us about a new side effect, and we
+   * record it here. ex. 'move: spikes' or 'Move: reflect'.
+   * @param {String} action  The action reported by the server.
+   */
   digest(action) {
     const move = clean(action);
-    if (Object.keys(SideEffects).find( x => SideEffects[x] === move) ) {
+    console.log(move);
+    if (Object.keys(SideConditions).find( x => SideConditions[x] === move) ) {
       // if it's already set, AND it's a stacking move
       if (this.stuff[move] && STACKS[move]) {
         this.stuff[move] = Math.min(this.stuff[move] + 1, STACKS[move]);
@@ -32,6 +45,14 @@ export default class Side {
     }
   }
 
+  /**
+   * Removes a side effect. Side effects come to an end for various reasons;
+   * here we mark the side effect as gone.
+   * AFAIK 'stacked' side effects cannot have their stack reduced; they can
+   * only be completely removed, ex. 'rapidspin' removes all spikes.
+
+   * @param {String} action  The action reported by the server.
+   */
   remove(action) {
     const move = clean(action);
     if (this.stuff[move]) {
@@ -41,6 +62,9 @@ export default class Side {
     }
   }
 
+  /**
+   * Get the data about this side that we want to report back to the user.
+   */
   data() {
     return this.stuff;
   }

@@ -1,0 +1,9 @@
+{
+  "name": "StonedBirdie",
+  "version": "0.0.0",
+  "description": "this bot is gonna totally destroy bravest bird",
+  "main": "stonedbirdie.js",
+  "format": "anythinggoes",
+  "accepts": "ALL",
+  "nickname": "Stoned Birdie ★marten★"
+}

@@ -2,10 +2,10 @@
  * Utility functions.
  *
  */
-import BattleMovedex from 'data/moves';
-import HonkoMovedex from 'data/moves-ext';
-import BattlePokedex from 'data/pokedex';
-import log from 'log';
+import BattleMovedex from './data/moves';
+import HonkoMovedex from './data/moves-ext';
+import BattlePokedex from './data/pokedex';
+import log from './log';
 
 class PokeUtil {
   /**

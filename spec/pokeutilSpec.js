@@ -1,4 +1,4 @@
-import util from 'pokeutil';
+import util from 'leftovers-again/pokeutil';
 describe('pokeutil', () => {
   describe('boostCombiner', () => {
     it('should add some boosts to nothing', () => {

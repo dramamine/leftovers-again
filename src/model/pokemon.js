@@ -1,6 +1,6 @@
 
-import util from 'pokeutil';
-import log from 'log';
+import util from '../pokeutil';
+import log from '../log';
 
 /**
  * Pokemon class, for tracking information and status of each Pokemon.
@@ -14,7 +14,7 @@ export default class Pokemon {
    */
   constructor(ident, details) {
     this.useIdent(ident);
-    this.useDetails(details);
+    if (details) this.useDetails(details);
     this.prevMoves = [];
     this.seenMoves = [];
 

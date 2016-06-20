@@ -1,4 +1,4 @@
-import Team from 'lib/team';
+import Team from 'leftovers-again/team';
 // @TODO do we need lodash?
 import _ from 'lodash';
 

@@ -1,0 +1,9 @@
+Leftovers-Again Generator
+
+This script will create a working bot for you, to get you started botting quickly,
+{{#if existingPackage}}
+This will modify your existing package.json file for {{existingPackage.name}} by adding and overwriting options.
+{{else}}
+Config options will be written to package.json.
+{{/if}}
+Any of these config options can be changed later by editing package.json.

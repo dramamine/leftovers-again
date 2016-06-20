@@ -1,5 +1,5 @@
-import listener from 'listener';
-import log from 'log';
+import listener from './listener';
+import log from './log';
 
 /**
  * Abstract class for managing connections. All connections are responsible

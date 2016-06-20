@@ -1,7 +1,7 @@
 import Connection from './connection';
 import log from './log';
+import listener from './listener';
 import WebSocket from 'ws';
-import listener from 'listener';
 
 const PORT = 7331;
 

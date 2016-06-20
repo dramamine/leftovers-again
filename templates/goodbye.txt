@@ -1,14 +1,15 @@
-OK, you're all set! Your core bot files are in this folder:
-bots/{{repo}}
+OK, you're all set! Your core bot files are in the current directory.
 
-Your bot's already prepared for battle! First, get a local server running:
-`npm run server`
+Your bot's already prepared for battle! First, open a new window and run the server locally:
+    git clone https://github.com/dramamine/Pokemon-Showdown.git
+    cd Pokemon-Showdown
+    npm start
 
-Then, in a new window, run this command to play against your first opponent:
-`npm run develop -- {{repo}} --opponent=randumb --loglevel=2`
+Run this command to play against your first opponent:
 
-Ready for more and tougher opponents? Run this command to choose your opponents:
-`npm run gauntlet`
+`npm start -- --opponent=randumb`
 
-Want to make sure your bot won't break under pressure? Run tests against it:
-`cd bots/{{repo}} && npm test`
+Other useful commands:
+`npm run start:quick`: run with babel-node (skips transpiling step)
+`npm start -- --cyberdyne`: connect to cyberdyne.psim.us
+`npm start -- --help`: full list of commands for leftovers-again

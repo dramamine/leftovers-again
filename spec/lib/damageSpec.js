@@ -1,5 +1,5 @@
-import Damage from 'lib/damage';
-import util from 'pokeutil';
+import Damage from 'leftovers-again/game/damage';
+import util from 'leftovers-again/pokeutil';
 
 describe('damage calculator', () => {
   describe('normal moves', () => {

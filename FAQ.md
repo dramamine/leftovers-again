@@ -2,21 +2,23 @@
 
 
 ### How do I get started?
+First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node).
+
 ```bash
-git clone git@github.com:dramamine/leftovers-again.git
-cd leftovers-again
-sudo npm install -g babel-node
-make
+node -v
+# 6.0.0 or greater plz!
+
+# inside your bot's directory
+npm install leftovers-again
 ```
-Make runs `npm install` and installs the git submodules, which contain the Pokemon Showdown client and server (for local testing) and other bots.
 
 ### Initialize Your Bot
-To create your first bot, run `npm run generate`.
+To create your first bot, run `node node_modules/leftovers-again/lib/scripts/generate.js`.
 
 Note that you'll want to have a good idea of [what format you'd like to compete in](http://pokemonforever.com/Thread-A-Beginner-s-Guide-to-Smogon). Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
 
 ### Your bot already works.
-Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary. Run the command `npm start -- {{your bot name}} --opponent=randumb` to run a battle and see what happens!
+Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary. Run the command `npm start -- --opponent=randumb` to run a battle and see what happens!
 
 You will probably lose.
 
@@ -45,7 +47,7 @@ return new SWITCH({id: 'eevee', ...});    // a Pokemon object
 return new SWITCH(state.self.reserve[5]); // a Pokemon object
 ```
 
-The unpreferred way is to return the string '/MOVE 4' or '/SWITCH 6' (1-indexed moves and switches),
+The unpreferred way is to return the string '/MOVE 4' or '/SWITCH 6' (1-indexed moves and switches), without using a Decision object.
 
 ## Reading State
 
@@ -54,7 +56,7 @@ The unpreferred way is to return the string '/MOVE 4' or '/SWITCH 6' (1-indexed 
 
 Besides the docs for `state`, you'll also wnat to familiarize yourself with what's in a [Pokemon object](https://doc.esdoc.org/github.com/dramamine/leftovers-again/typedef/index.html#static-typedef-PokemonData) and what's in a [Move object](https://doc.esdoc.org/github.com/dramamine/leftovers-again/typedef/index.html#static-typedef-MoveData)
 
-Seriously, read the docs! They are most up-to-date!
+Seriously, read the docs!
 
 ### What happens when my Pokemon is frozen?
 `state.self.active.conditions = ['fro']`
@@ -76,7 +78,7 @@ Typechart.compare(move.type, state.opponent.active.types);
 ```
 
 ### How can I tell if I have buffs?
-Say you just cast Swords Dance. You should find that `state.self.active.boosts.atk = 2`. Make sure you check if `mon.boosts` exists before poking at it, since the property `boosts` is only set when there _are_ boosts.
+Say you just cast Swords Dance, which raises your attack by 2 levels. You should find that `state.self.active.boosts.atk = 2`. Make sure you check if `mon.boosts` exists before poking at it, since the property `boosts` is only set when there _are_ boosts.
 
 ### How can I tell it's the first turn of the match?
 `state.teamPreview = true`. When this is set, you need to SWITCH (MOVE decisions are not valid).
@@ -97,7 +99,7 @@ You probably care most about 'dead'.
 Make sure you're only choosing valid choices.
 - If `state.forceSwitch` is true, make sure you switch.
 - Don't switch into a Pokemon with (mon.dead = true) or (mon.active = true)
-- Don't send moves with (move.disabled = true) and (move.pp > 0)
+- Don't send moves with (move.disabled = true)
 
 ## What gets logged & what gets written to console?
 You can change the logging level when running the bot using '--loglevel=[x]'. 1 returns only errors, 5 shows debug info
@@ -120,13 +122,13 @@ You need to publish your bot on NPM, GitHub, or some other git hosting service. 
 
 
 ### Something is wrong, and it's your fault.
-Why don't you solve it and send me a pull request? (Please!)
+Why don't you solve it yourself and send me a pull request? (Please!)
 
-File an [issue] on GitHub. Be sure to include reproduction steps, relevant logs, expected / actual results, etc. Help me help you!
+Otherwise, file an [issue](https://github.com/dramamine/leftovers-again/issues). Be sure to include reproduction steps, relevant logs, expected / actual results, etc. Help me help you!
 
 
 ### I'd like to battle in a format that's unsupported.
-You can set your format in your bot config file; this is not validated before it's sent to the server. The valid names of formats are listed [in the official repo](). Formats are more about team validation than anything else.
+You can set your format in your bot config file; this is not validated before it's sent to the server. The valid names of formats are listed [in the official repo](https://github.com/Zarel/Pokemon-Showdown/blob/master/config/formats.js). Formats are more about team validation than anything else.
 
 Probably every singles format is functional. Doubles formats aren't implemented yet.
 
@@ -134,19 +136,7 @@ Probably every singles format is functional. Doubles formats aren't implemented 
 ## #How do I use the damage calculator?
 Included in here is library code for the [Pokemon Damage Calculator](http://pokemonshowdown.com/damagecalc/). I adapted it to work with our bot code. To use it, simply call: **TODO**
 
-### What's your bot code of ethics?
-- Bots will not ruin the game for anyone.
-- Bots and their owners will identify themselves as such.
-
-
-
 ## Development Tips
-* Want to quickly run a match? Try this:
-```bash
-npm run server # in separate tab
-npm start -- {{your bot}} --opponent={{their bot}} --scrappy
-```
-This spawns another node instance which runs your opponent - stdout is suppressed but stderr is reported in red text.
 
 * Want to continuously run battles as you develop code? Use `npm run develop -- {{your bot's name}} [other cmdline args]`, which watches the bots/ and src/ directory and refreshes when those files chage.
 * Want to run battles faster? Keep the server and your opponent running instead of restarting them each time. For example, I would keep three tabs open with these commands running:
