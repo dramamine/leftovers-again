@@ -21,7 +21,7 @@ const tryRequire = (file) => {
 
 /**
  * Try to make a directory without crashing out
- */
+*/
 const tryMkdir = (file) => {
   try {
     return fs.mkdirSync(file);
@@ -43,7 +43,6 @@ const parse = (source, vars) => {
 
 // from lib/scripts folder (ES5)
 let tmpltDir = path.join(__dirname, '../..', 'templates');
-console.log('checking folder...', tmpltDir);
 try {
   fs.accessSync(tmpltDir);
 } catch (e) {
@@ -54,7 +53,6 @@ try {
 const pkgLocation = path.join(process.cwd(), 'package.json');
 
 let existingPackage = tryRequire(pkgLocation);
-console.log(existingPackage);
 console.log(parse(path.join(tmpltDir, 'hello.txt'), {
   existingPackage
 }));
@@ -130,7 +128,6 @@ const writePackage = (source, more, destination) => {
  * @return {[type]}             [description]
  */
 const parseAndWrite = (source, destination, vars) => {
-  console.log('writing a file:', source, destination);
   const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii') );
   const parsed = tmplt(vars);
   if (destination) fs.writeFile(destination, parsed);
