@@ -16,5 +16,5 @@
   },
   "format": "{{format}}",
   "accepts": "{{accept}}",
-  "nickname": "[bot] {{Repo}}"
+  "nickname": "{{Repo}}"
 }
