@@ -6,6 +6,8 @@
   "files": [
     "lib",
     "templates",
+    "CONTRIBUTING.md",
+    "README.md",
     "FAQ.md"
   ],
   "scripts": {
