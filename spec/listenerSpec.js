@@ -1,4 +1,4 @@
-import listener from '../src/listener';
+import listener from 'leftovers-again/listener';
 
 describe('listener', () => {
   it('should load listener', () => {

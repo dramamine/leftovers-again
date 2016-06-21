@@ -1,4 +1,3 @@
-
 /**
  * Reporting class; for returning match results to the user.
  */
@@ -17,17 +16,22 @@ class Report {
    * @param  {string} victor  The nickname of the victor.
    * @param  {BattleStore} store   The final battle state.
    * @param  {string} matchid An ID to identify this match.
-   * @return {object} An object with the following properties:
-   * matchid: {string} The ID of the match
-   * won: {boolean} true if we won the match; false otherwise.
-   * damageDone: {number} The total damage we did, out of 600 (percent).
-   * damageTaken: {number} The total damage we took, out of 600 (percent).
-   * me: {string} your nickname
-   * you: {string} your opponent's nickname
-   * mine: {array} an array of your {Pokemon}
-   * yours: {array} an array of your opponent's {Pokemon}
-   * events: {array} an array of events(?)
-   * statuses: {array} an array of statuses(?)
+   *
+   * @return {ReportObj} A report object.
+   * @property {string} matchid  The ID of the match
+   * @property {boolean} won  true if we won the match; false otherwise.
+   * @property {number} damageDone  The total damage we did, out of 600 (percent).
+   * @property {number} damageTaken  The total damage we took, out of 600 (percent).
+   * @property {string} me  your nickname
+   * @property {string} you  your opponent's nickname
+   * @property {Array<Pokemon>} mine  an array of your Pokemon
+   * @property {Array<Pokemon>} yours  an array of your opponent's Pokemon
+   * @property {Array} events  an array of events(?)
+   * @property {Array} statuses  an array of statuses(?)
+   *
+   * @see Pokemon
+   * @see class/src/model/pokemon.js
+   *
    */
   win(victor, store, matchid = null) {
     const iwon = (victor === store.myNick);
@@ -42,12 +46,20 @@ class Report {
       return prev + (curr.hppct || 0);
     }, 0);
 
+    const myAlive = state.opponent.reserve.filter( mon => {
+      return !mon.dead;
+    }).length;
+    const yourAlive = 6 - state.self.reserve.filter( mon => {
+      return !mon.dead;
+    }).length;
 
     const result = {
       matchid: matchid,
       won: iwon,
       damageDone,
       damageTaken,
+      myAlive,
+      yourAlive,
       me: store.myNick,
       you: store.yourNick,
       mine: state.self.reserve,
@@ -62,7 +74,6 @@ class Report {
 
   /**
    * Get my data.
-   * @TODO not sure if this is working!
    *
    * @return {array} Array of match results
    */

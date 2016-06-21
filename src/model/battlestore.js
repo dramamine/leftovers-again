@@ -1,6 +1,9 @@
-import Pokemon from './pokemon';
-import util from '../util';
-// import log from '../log';
+// import Pokemon from 'model/pokemon';
+import Side from './side';
+import Barn from './pokebarn';
+import util from '../pokeutil';
+import Log from '../log';
+import Weather from '../constants/weather';
 
 /**
  * Store for tracking the status of the battle.
@@ -10,6 +13,9 @@ export default class BattleStore {
   constructor() {
     // The array of all Pokemons involved in the battle.
     this.allmon = [];
+
+    this.barn = new Barn();
+
     this.forceSwitch = false;
     this.teamPreview = false;
 
@@ -19,6 +25,8 @@ export default class BattleStore {
     this.events = [];
     this.statuses = [];
     this.turn = 0;
+    this.weather = Weather.NONE;
+    this.sides = [];
 
     this.handlers = {
       '-damage': this.handleDamage,
@@ -29,15 +37,22 @@ export default class BattleStore {
       request: this.handleRequest,
       turn: this.handleTurn,
       faint: this.handleFaint,
+      heal: this.handleHeal,
       player: this.handlePlayer,
       cant: this.handleCant,
+      replace: this.handleReplace,
       '-fail': this.handleFail,
-      '-miss': this.handleMiss
+      '-miss': this.handleMiss,
+      '-boost': this.handleBoost,
+      '-unboost': this.handleUnboost,
+      '-status': this.handleStatus,
+      '-curestatus': this.handleCureStatus,
+      '-weather': this.handleWeather,
       // @TODO why don't we track field effects??
       // @TODO rocks, weather, etc.
       // |-sidestart|p1: 5nowden4189|move: Stealth Rock
-      // '-sidestart': this.handleSideStart,
-      // '-sideend': this.handleSideEnd
+      '-sidestart': this.handleSideStart,
+      '-sideend': this.handleSideEnd
     };
 
     // NOT sent to user. temporary storage.
@@ -63,16 +78,24 @@ export default class BattleStore {
 
 
   handleSwitch(ident, details, condition) {
-    const pos = this._identToPos(ident);
-    const former = this._findByPos(pos);
-    const mon = this._recordIdent(ident);
+    const pos = util.identToPos(ident);
+    const former = this.barn.findByPos(pos);
+
+    const mon = this.barn.findOrCreate(ident, details);
+    mon.position = pos;
+    mon.active = true;
+
+    if (former) {
+      former.position = null;
+      former.active = false;
+    }
 
     mon.useCondition(condition);
-    mon.useDetails(details);
+    mon.useDetails(details); // @TODO is this necessary?
 
     this.events.push({
       type: 'switch',
-      player: this._identToOwner(ident),
+      player: util.identToOwner(ident),
       turn: this.turn,
       from: former ? former.species : null,
       frompos: mon.position,
@@ -97,11 +120,11 @@ export default class BattleStore {
    * @return {[type]}        [description]
    */
   handleMove(actor, move, target) {
-    const actingMon = this._recordIdent(actor);
-    const targetMon = this._recordIdent(target);
+    const actingMon = this.barn.find(actor);
+    const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
-      player: this._identToOwner(actor),
+      player: util.identToOwner(actor),
       turn: this.turn,
       from: actingMon.species,
       frompos: actingMon.position,
@@ -109,18 +132,43 @@ export default class BattleStore {
       to: targetMon.species,
       topos: targetMon.position
     });
+
+    actingMon.recordMove(move);
   }
 
+  /**
+   * Handles the cant message.
+   *
+   * Sometimes we get this because the user chose an invalid option. This is
+   * bad and we want to let the user know.
+   *
+   * Sometimes we get this because the move failed. For this, we just log to
+   * events and do nothing. The server sends "reasons" and we keep a list of
+   * reasons that we're expecting in the normal course of play.
+   *
+   * @param  {[type]} target [description]
+   * @param  {[type]} reason [description]
+   * @return {[type]}        [description]
+   */
   handleCant(target, reason) {
-    const targetMon = this._recordIdent(target);
+    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) === -1) {
+      Log.error(`can't! ${target} ${reason}`);
+    } else {
+      Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
+    }
+    const targetMon = this.barn.find(target);
     this.events.push({
       type: 'cant',
       turn: this.turn,
-      player: this._identToOwner(target),
+      player: util.identToOwner(target),
       from: targetMon.species,
       frompos: targetMon.position,
       reason
     });
+  }
+
+  handleReplace(ident, details, condition) {
+    this.barn.replace(ident, details, condition);
   }
 
   handleMiss(actor, target) {
@@ -133,8 +181,27 @@ export default class BattleStore {
     lastmove.miss = true;
   }
 
+  handleBoost(target, stat, stage) {
+    const mon = this.barn.find(target);
+    mon.useBoost(stat, +stage);
+  }
+
+  handleUnboost(target, stat, stage) {
+    this.handleBoost(target, stat, -1 * +stage);
+  }
+
+  handleStatus(target, status) {
+    const mon = this.barn.find(target);
+    mon.addStatus(status);
+  }
+
+  handleCureStatus(target, status) {
+    const mon = this.barn.find(target);
+    mon.removeStatus(status);
+  }
+
   handleDamage(target, condition, explanation) {
-    const mon = this._recordIdent(target);
+    const mon = this.barn.find(target);
 
     let move;
     // @TODO lazy implementation
@@ -162,13 +229,45 @@ export default class BattleStore {
     }
     move.damage = move.prevhp - move.nexthp;
     move.damagepct = Math.round(100 * move.damage / mon.maxhp);
+
+    if (mon.maxhp !== 100 && move.damage > 20) {
+      // console.log(move.damage, target, condition, explanation);
+      Log.toFile('damagerangetest', move.damage + ',');
+    }
+
+    if (explanation && explanation.indexOf('[from] item:') >= 0) {
+      const item = explanation.replace('[from] item: ', '');
+      mon.setItem(item);
+    }
   }
 
   handleFaint(ident) {
-    const mon = this._recordIdent(ident);
+    const mon = this.barn.find(ident);
+    if (!mon) {
+      Log.error('couldnt find that pokemon' + ident);
+      Log.error(JSON.stringify(this.barn.all()));
+    }
     mon.useCondition('0 fnt');
   }
 
+  // @TODO this is pretty much thte same as the damage function
+  handleHeal(target, condition, explanation) {
+    const mon = this.barn.find(target);
+    mon.useCondition(condition);
+    if (!mon.item && explanation &&
+      explanation.indexOf('[from] item:') >= 0) {
+      const item = explanation.replace('[from] item: ', '');
+      mon.setItem(item);
+    }
+  }
+
+  /**
+   * Saves the name of the player.
+   *
+   * @param  {String} id        The id of the player, ex. 'p1' or 'p2'
+   * @param  {String} name      The name of the player, ex. '5nowden'
+   * @param  {[type]} something  ignored
+   */
   handlePlayer(id, name, something) { //eslint-disable-line
     this.names[id] = name;
   }
@@ -181,14 +280,13 @@ export default class BattleStore {
    * When we get this message, we also record the status of each active
    * Pokemon, in our statuses array.
    *
-   * @param  {[type]} x [description]
-   * @return {[type]}   [description]
+   * @param  {Number} x The turn number.
    */
   handleTurn(x) {
     this.turn = parseInt(x, 10);
 
     const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
-    this.allmon.filter(isactive).forEach( mon => {
+    this.barn.all().filter(isactive).forEach( mon => {
       this.statuses.push({
         turn: this.turn,
         position: mon.position,
@@ -198,48 +296,22 @@ export default class BattleStore {
       });
     });
   }
-
   /**
    * Handles an incoming request. The one parameter to this is a string of
    * JSON, known as the request.
    *
-   *  what does the request look like? WELL. Check out these properties:
-   *  'rqid': the request ID. ex. '1' for the first turn, '2' for the second, etc.
-   *          These don't match up perfectly with turns bc you may have to swap
-   *          out pokemon if one dies, etc.
-   *   'side':
-   *     'name': your name
-   *     'id': either 'p1' or 'p2'
-   *     'pokemon': [Pokemon]      (6 of them. they're the pokemon on yr side)
-   *   'active':
-   *     'moves': [Move]           (the 4 moves of your active pokemon)
+   *  what does the request look like? WELL. These properties are all integrated
+   *  into the {@link AI} object, so you probably want to look at that instead.
+   *  But in case you're wondering what the actual data from the server looks
+   *  like, keep reading.
    *
-   *    Move is an object with these properties:
-   *    'move': the move name (ex.'Fake Out')
-   *    'id': the move ID (ex. 'fakeout')
-   *    'pp': how many PP you currently have
-   *    'maxpp': the max PP for this move
-   *    'target': target in options (ex. 'normal')
-   *    'disabled': boolean for whether this move can be used.
+   *  {@link MoveData} objects here are limited and contain only 'move' (the
+   *  move name, ex. 'Fake Out', 'id' ex. 'fakeout', 'pp', 'maxpp', 'target',
+   *  and 'disabled'.
    *
-   *    Pokemon look like this:
-   *    'ident': ex. 'p1: Wormadam'
-   *    'details': ex. 'Wormadam, L83, F'
-   *    'condition': ex. '255/255'
-   *    'hp': current HP
-   *    'maxhp': maximum HP
-   *    'active': boolean, true if pokemon is currently active
-   *    'stats':
-   *      'atk': attack
-   *      'def': defense
-   *      'spa': special attack
-   *      'spd': special defense
-   *      'spe': speed
-   *    'moves': Array of move IDs
-   *    'baseAbility': the ability of the Pokemon (ex. 'overcoat')
-   *    'item' the Pokemon's held item (ex. 'leftovers')
-   *    'pokeball': what kind of pokeball the Pokemon was caught with
-   *    'canMegaEvo': Boolean for whether this Pokemon can mega-evolve
+   * {@link PokemonData} objects are limited and contain only 'ident', 'details',
+   * 'condition', 'hp', 'maxhp', 'active', 'stats', 'moves', 'baseAbility',
+   * 'item', 'pokeball', and 'canMegaEvo'.
    *
    * With most of this information, we may know the things already, ex. we
    * know if a Pokemon took damage or not. However there are lots of ways we
@@ -252,6 +324,27 @@ export default class BattleStore {
    *
    * @param {String} json The string of JSON which makes up the request.
    *
+   * @param {Array<Object>} json.active  An array containing the moves that
+   * your active Pokemon can perform. The size of the array is the number of
+   * active Pokemon on your side, ex. in Singles matches, the array length is 1.
+   * @param {Array<MoveData>} json.active[].moves            (the 4 moves of your active pokemon)
+   * @param {Array<Boolean>}  json.forceSwitch  booleans for each position that
+   * needs to switch out. ex. [true] means it's a singles match and your mon
+   * needs to switch out. [false, true] means it's a doubles match and your
+   * second mon needs to switch out.
+   * @param {Boolean} json.noCancel  Moves cannot be cancelled in the interval
+   * between sending the move and the server receiving your opponent's move.
+   * This is unused.
+   * @param {String} json.rqid  The request ID. ex. '1' for the first turn, '2' for the second, etc.
+   *          These don't match up perfectly with turns bc you may have to swap
+   *          out pokemon if one dies, etc.
+   * @param {Object} json.side
+   * @param {String} json.side.id    either 'p1' or 'p2'
+   * @param {String} json.side.name  your name
+   * @param {Array<PokemonData>} json.side.pokemon   6 of them. they're the pokemon on yr side.
+   * @param {Boolean} json.wait  True if this is not a request - just updated
+   * information. The opponent needs to do something; ex. if their mon feinted
+   * last turn, they need to choose a mon to send in. This is unused.
    */
   handleRequest(json) {
     const data = JSON.parse(json);
@@ -259,23 +352,17 @@ export default class BattleStore {
     // -- plato
     if (!this.myId) {
       this.myId = data.side.id;
+      this.yourId = this.myId === 'p1' ? 'p2' : 'p1';
     }
 
     if (data.side && data.side.pokemon) {
+      // handle some stuff during the first request
       for (let i = 0; i < data.side.pokemon.length; i++) {
         const mon = data.side.pokemon[i];
-        // if(mon.dead) {
-        //   return handleDeath(mon.ident);
-        // }
-        const ref = this._recordIdent(mon.ident);
-        // force this to update, since it's always true or unset.
-        ref.active = mon.active || false;
+        const ref = this.barn.findOrCreate(mon.ident, mon.details);
         ref.assimilate(mon);
-
-        // keep our own in the right order
-        if (ref.owner === this.myId) {
-          ref.order = i;
-        }
+        ref.active = mon.active || false;
+        ref.order = i;
       }
     }
 
@@ -292,6 +379,29 @@ export default class BattleStore {
       this.activeData = data.active;
     }
   }
+
+  handleWeather(weather) {
+    this.weather = weather;
+  }
+
+  handleSideStart(side, action) {
+    // ex. 'p1' or 'p2'
+    const id = side.split(':').pop().trim();
+    if (!this.sides[id]) {
+      this.sides[id] = new Side();
+    }
+    this.sides[id].digest(action);
+  }
+
+  handleSideEnd(side, action) {
+    // ex. 'p1' or 'p2'
+    const id = side.split(':').pop().trim();
+    if (!this.sides[id]) {
+      return;
+    }
+    this.sides[id].remove(action);
+  }
+
 
   /**
    * Output function for getting an object representation of the current
@@ -324,50 +434,69 @@ export default class BattleStore {
 
 
     // use getState so we can filter out any crap.
-    output.self.active = this.allmon
+    output.self.active = this.barn.all()
       .filter(iamowner)
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
-    output.opponent.active = this.allmon
+    output.opponent.active = this.barn.all()
       .filter(youareowner)
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
-    output.self.reserve = this.allmon
+    output.self.reserve = this.barn.all()
       .filter(iamowner)
       .sort(byOrder)
       .map(dataGetter);
-    output.opponent.reserve = this.allmon
+    output.opponent.reserve = this.barn.all()
       .filter(youareowner)
-      .sort(byOrder)
+      .sort(byOrder) // @TODO does this do anything
       .map(dataGetter);
 
     if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
-      console.log('stop the presses! pokemon with no owner.');
-      console.log(output.opponent.active[0]);
+      Log.warn('stop the presses! pokemon with no owner.');
+      Log.warn(output.opponent.active[0]);
       exit();
     }
 
     if (output.self.active.length > 1) {
-      console.log('stop the presses! too many active pokemon');
-      console.dir(this.allmon
-        .filter(iamowner)
-        .filter(isactive));
+      const zoroark = output.self.active.find(mon => mon.id === 'zoroark');
+      if (zoroark) {
+        Log.warn('OK, found my zoroark.');
+
+        // in reserves, pretend this guy is not actually active.
+        output.self.reserve.push(zoroark);
+        zoroark.active = false;
+
+        // remove from active
+        output.self.active.splice(output.self.active.indexOf(zoroark), 1);
+
+        // mark the actual pokemon of ours as being Zoroark
+        output.self.active.map(mon => {
+          mon.isZoroark = true;
+        });
+
+
+      } else {
+        Log.warn('stop the presses! too many active pokemon');
+        Log.warn(output.self.active);
+      }
     }
 
-    if (this.activeData) {
+    // this was causing some errors before. could use some more research...
+    // @TODO why aren't we clearing out activeData?
+    if (this.activeData && output.self.active.length === this.activeData.length) {
       for (let i = 0; i < this.activeData.length; i++) {
+        // researching moves and copying them over
         const movesArr = this.activeData[i].moves;
         const updated = movesArr.map( (move) => { // eslint-disable-line
           return Object.assign(move, util.researchMoveById(move.id));
         });
-        try {
-          output.self.active[i].moves = updated;
-        } catch (e) {
-          console.log(e);
-          console.log(output.self.active);
-          console.log(this.activeData);
+        output.self.active[i].moves = updated;
+
+        // for mega-evolution
+        if (this.activeData[i].canMegaEvo) {
+          output.self.active[i].canMegaEvo = this.activeData[i].canMegaEvo;
         }
       }
     }
@@ -385,90 +514,17 @@ export default class BattleStore {
 
 
     output.rqid = this.rqid;
+    output.turn = this.turn;
+    output.weather = this.weather;
+
+    if (this.sides[this.myNick]) {
+      output.self.side = this.sides[this.myNick].data();
+    }
+    if (this.sides[this.yourNick]) {
+      output.opponent.side = this.sides[this.yourNick].data();
+    }
 
     return output;
-  }
-
-  /**
-   * Interprets the 'ident' string of a Pokemon. Ident is something that comes
-   * attached with nearly all events, and it tells us a lot about the state
-   * of that Pokemon - its owner, current position, and species. This is
-   * especially helpful in tracking whether a Pokemon is active or not.
-   *
-   * This function relies on the 'fact' that teams cannot have more than one
-   * of the same species of Pokemon. If that's not the case, I will cry.
-   *
-   * @param  {String} ident The ident string.
-   * @return {Pokemon} The Pokemon whose ident we just recorded.
-   */
-  _recordIdent(ident) {
-    const owner = this._identToOwner(ident);
-    const position = this._identToPos(ident);
-    const species = ident.substr(ident.indexOf(' ') + 1);
-
-    let hello = this.allmon.find( (mon) => {
-      // @TODO really shouldn't have to util.toId these things.
-      return owner === mon.owner && util.toId(species) === util.toId(mon.species);
-    });
-
-    if (!hello) {
-      hello = new Pokemon(species);
-      this.allmon.push(hello);
-    }
-
-    if (position) {
-      // update the guy who got replaced
-      const goodbye = this.allmon.find( (mon) => {
-        return position === mon.position;
-      });
-      if (goodbye) {
-        goodbye.position = null;
-        goodbye.active = false;
-      }
-    }
-
-    hello.position = position;
-    hello.owner = owner;
-    return hello;
-  }
-
-  /**
-   * Find a Pokemon by its ID, ex. 'p2a: Pikachu'
-   *
-   * @param  {String} id The Pokemon ID.
-   * @return {Pokemon} The Pokemon object.
-   */
-  _findById(id) {
-    return this.allmon.find( (mon) => { return mon.id === id; });
-  }
-
-  /**
-   * Find a Pokemon by its position, ex. 'p2a'
-   * @param  {String} pos The position of the Pokemon.
-   * @return {Pokemon} The Pokemon object.
-   */
-  _findByPos(pos) {
-    return this.allmon.find( (mon) => { return mon.position === pos; });
-  }
-
-  /**
-   * Get the position from the 'ident'.
-   * @param  {String} ident The Pokemon ident.
-   * @return {String} The position.
-   */
-  _identToPos(ident) {
-    const posStr = ident.substr(0, ident.indexOf(':'));
-    const position = (posStr.length === 3) ? posStr : null;
-    return position;
-  }
-
-  /**
-   * Get the owner from the 'ident'.
-   * @param  {String} ident The Pokemon ident.
-   * @return {String} The owner.
-   */
-  _identToOwner(ident) {
-    return ident.substr(0, 2);
   }
 
   /**

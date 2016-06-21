@@ -1,8 +1,14 @@
 import state from '../helpers/randomstate';
-import Infodump from '../../src/bots/randombattle/infodump';
+import Log from 'leftovers-again/log';
+import Infodump from 'bots/infodump';
 const infodump = new Infodump();
 
 describe('Infodump', () => {
+  beforeEach(() => {
+    spyOn(Log, 'info');
+    spyOn(Log, 'error');
+    spyOn(Log, 'log');
+  });
   it('responds with something', () => {
     const res = infodump.getHelp(state);
     expect(res).toBeTruthy();
@@ -21,7 +27,6 @@ describe('Infodump', () => {
 
     expect(elektross.weakness).toBe(false);
     expect(elektross.strength).toBe(false);
-
   });
   it('should mention that my ground/flying type is strong & weak against opp\'s electric', () => {
     const res = infodump.getHelp(state);
@@ -30,6 +35,5 @@ describe('Infodump', () => {
     expect(landorus.weakness).toBe(true);
     expect(landorus.strength).toBe(true);
     expect(landorus.myBest.name).toBe('earthpower');
-
   });
 });

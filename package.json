@@ -1,44 +1,65 @@
 {
   "name": "leftovers-again",
-  "version": "0.0.1",
-  "description": "Pokemon Showdown - Node Client",
-  "main": "src/main.js",
+  "version": "0.6.3",
+  "description": "Pokemon Showdown - Bot Client",
+  "main": "lib/main.js",
+  "files": [
+    "lib",
+    "templates",
+    "CONTRIBUTING.md",
+    "README.md",
+    "FAQ.md"
+  ],
   "scripts": {
+    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
+    "clean": "rm -rf lib",
+    "docs": "./node_modules/.bin/esdoc -c esdoc.json",
+    "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
+    "docs:update": "npm run docs:publish",
     "test": "jasmine",
-    "develop": "nodemon --watch src --exec babel-node src/main.js",
-    "spawn": "babel-node scripts/spawn.js",
-    "server": "node lib/Pokemon-Showdown/app.js",
-    "client": "xdg-open lib/Pokemon-Showdown-Client/testclient.html"
+    "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
+    "develop": "NODE_PATH='src' nodemon --watch src --exec babel-node src/start.js",
+    "start": "npm run clean && npm run build && node lib/start.js",
+    "start:quick": "node lib/start.js",
+    "start:old": "NODE_PATH='src:bots' babel-node src/start.js",
+    "spawn:old": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
+    "battle:old": "NODE_PATH='src:bots' babel-node scripts/battle.js",
+    "generate:old": "NODE_PATH='src:bots' babel-node scripts/generate.js",
+    "server": "cd deps/Pokemon-Showdown && node app.js",
+    "client": "./scripts/open-client.sh",
+    "generate": "./lib/scripts/generate.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/dramamine/leftovers-again.git"
   },
+  "bugs": "https://github.com/dramamine/leftovers-again/issues",
   "keywords": [
     "pokemon"
   ],
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "babel": "~5.8.23",
-    "request": "~2.61.0",
-    "websockets": "~0.2.0",
-    "ws": "~0.8.0",
-    "colors": "~1.1.2",
-    "glob": "~5.0.14",
-    "minimist": "~1.2.0"
+    "babel": "^6.5.2",
+    "babel-plugin-module-alias": "^1.4.0",
+    "babel-resolve-relative-module": "^1.0.1",
+    "glob": "^7.0.3",
+    "handlebars": "^4.0.5",
+    "inquirer": "^1.0.2",
+    "minimist": "~1.2.0",
+    "ws": "^1.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.1",
-    "cheerio": "~0.19.0",
-    "eslint": "^1.3.1",
-    "eslint-config-airbnb": "0.0.8",
-    "jQuery": "~1.7.4",
-    "jasmine": "^2.3.2",
-    "jasmine-es6": "0.0.17",
-    "jsdom": "~3.1.2",
-    "lodash": "^3.10.1",
-    "nodemon": "~1.4.1",
-    "inquirer": "~0.10.1"
-  }
+    "babel-cli": "^6.8.0",
+    "babel-eslint": "^5.0.0",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "cheerio": "^0.20.0",
+    "esdoc": "^0.4.6",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.3.0",
+    "jasmine-es6": "^0.1.10",
+    "lodash": "^4.6.1"
+  },
+  "engine": "node >= 6.1.0"
 }

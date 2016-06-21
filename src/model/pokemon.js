@@ -1,5 +1,5 @@
 
-import util from '../util';
+import util from '../pokeutil';
 import log from '../log';
 
 /**
@@ -8,64 +8,106 @@ import log from '../log';
 export default class Pokemon {
   /**
    * Pokemon constructor.
-   * @param  {String} species The species of Pokemon.
+   * @param  {String} ident  The ident of the Pokemon, ex. 'p1a: Nickname'
+   * @param {String} details  The details of the Pokemon, ex. 'Talonflame, L83, M'
    * @return {Pokemon} An instance of the class Pokemon.
    */
-  constructor(species) {
-    this.useSpecies(species);
+  constructor(ident, details) {
+    this.useIdent(ident);
+    if (details) this.useDetails(details);
+    this.prevMoves = [];
+    this.seenMoves = [];
+
+    this.research();
   }
+
+/**
+ * @typedef PokemonData
+ *
+ * Here's all the data you get with Pokemon objects.
+ *
+ * @property {String} ability  The mon's ability, if known.
+ * @property {Object} abilities  A key-value list of abilities the Pokemon might
+ *         have. The keys are numbers ('0', '1', etc.) plus the key 'H' for
+ *         hidden abilities.
+ * @property {Boolean} active  True if this mon is active, undefined otherwise.
+ * @property {String} baseAbility  The mon's ability, if known. This will only
+ *           be set for Pokemon you control.
+ * @property {Object} baseStats  An object with these properties:
+ * @property {Number} baseStats.atk: The attack value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.def: The defense value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spa: The special attack value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spd: The special defense value before boosts, EVs, IVs, etc.
+ * @property {Number} baseStats.spe: The speend value before boosts, EVs, IVs, etc.
+ * @property {Object} boosts An object with properties set for boosts and unboosts.
+ *           For example, if this mon has cast Swords Dance, you will have
+ *           boosts = {atk: 2}. Boost values range from -6 to 6.
+ * @property {String} condition  a condition in Showdown format, ex. '100/100 par poi',
+ *            '0/100 fnt' etc.
+ * @property {boolean} dead  True if the mon is dead, undefined otherwise
+ * @property {Array<Object>} events  Not currently being used. (things that happened to this
+ *         mon? things this mon did?)
+ * @property id a mon's id, in Showdown format. @TODO does this exist? probs not
+ * @property {String} gender  One of 'M', 'F', or undefined/empty(?)
+ * @property {Number} hp  The mon's current HP.
+ * @property {Number} hppct  The mon's current HP as a percentage of max HP, in case
+ *        that's easier to use.
+ * @property {Number} level  the level of the mon.
+ * @property {Number} maxhp  The mon's max HP. Note that if the 'HP Percentage Mod'
+ *        rule is set, this will be 100 for all of your opponent's mons.
+ * @property {Array<MoveData>} moves  an array of Moves.
+ * @property {String} nature  The mon's nature, ex. 'Jolly'. Usually, you only know
+ * this about your own mons.
+ * @property {String} owner  The mon's owner, ex. 'p1' or 'p2'
+ * @property {String} position  The mon's position, in Showdown format. 'p1a' means
+ *           they are in player 1's first active slot; 'p2c' means they are
+ *           in player 2's third active slot (in a Triples battle)
+ * @property {Array<String>} prevMoves  An array containing the move ids for moves
+ *           this Pokemon has used. prevMoves[0] is the last used move, and
+ *           prevMoves[prevMoves.length-1] is the first move that Pokemon used
+ *           when they were out on the field. This array is reset when a Pokemon
+ *           switches out.
+ * @property {Array<String>} types  An array of the mon's types, ex. ['Fire', 'Flying']
+ * @property {Array<String>} seenMoves  An array of moves that we've seen this
+ *           Pokemon use. This carries throughout the match. The string is the
+ *           move id.
+ * @property {String} species  the species of Pokemon, ex. "Pikachu". This is
+ *         the same as {@link PokemonData.id|PokemonData.id}, but more human-readable.
+ * @property {Object} stats An object similar to baseStats, but includes calculations
+ *           based on EVs, IVs, and level. It does NOT include calculations based
+ *           on boosts and unboosts.
+ * @property {Array<String>} statuses  an array of status conditions, ex. ['par', 'poi'].
+ * @property {Number} weightkg  The mon's weight, in kg.
+ *
+ * @see Status conditions: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/statuses.js.html
+ */
+
   /**
    * Gathers all the data we want to pass on to our bots.
-   * @return {Object} an object which may have these properties:
-   * dead: {Boolean} true if the mon is dead, undefined otherwise
-   * condition: {String} a condition in Showdown format, ex. '100/100 par poi',
-   *            '0/100 fnt' etc.
-   * conditions: {Array} an array of conditions, ex. ['par', 'poi'], in case
-   *             that's easier to use.
-   * id: a mon's id, in Showdown format. @TODO does this exist? probs not
-   * species: {String} the species of Pokemon, ex. "Pikachu".
-   * moves: {Array} an array of {Moves}.
-   * level: {Number} the level of the mon.
-   * gender: {String} One of 'M', 'F', or undefined/empty(?)
-   * hp: {Number} The mon's current HP.
-   * maxhp: {Number} The mon's max HP. Note that if the 'HP Percentage Mod'
-   *        rule is set, this will be 100 for all of your opponent's mons.
-   * hppct: {Number} The mon's current HP as a percentage of max HP, in case
-   *        that's easier to use.
-   * active: {Boolean} True if this mon is active, undefined otherwise.
-   * events: {Array} Not currently being used. (things that happened to this
-   *         mon? things this mon did?)
-   * types: {Array} An array of the mon's types, ex. ['Fire', 'Flying']
-   * baseStats: {Object} An object with these properties:
-   *   atk: {Number} The attack value before boosts, EVs, IVs, etc.
-   *   def: {Number} The defense value before boosts, EVs, IVs, etc.
-   *   spa: {Number} The special attack value before boosts, EVs, IVs, etc.
-   *   spd: {Number} The special defense value before boosts, EVs, IVs, etc.
-   *   spe: {Number} The speend value before boosts, EVs, IVs, etc.
-   * ability: {String} The mon's ability (?)
-   * abilities: {Array} An array of abilities this mon might have (?)
-   * baseAbility: {String} The mon's ability (?)
-   * weightkg: {Number} The mon's weight, in kg.
-   * nature: {String} The mon's nature, ex. 'Jolly'. Usually, you only know
-   * this about your own mons.
-   * position: {String} The mon's position, in Showdown format. 'p1a' means
-   *           they are in player 1's first active slot; 'p2c' means they are
-   *           in player 2's third active slot (in a Triples battle)
-   * owner: {String} The mon's owner, ex. 'p1' or 'p2'
+   * @return {Pokemon} an object with just the stuff we want bots to see.
    *
-   * @references Moves
    */
   data() {
     // return only what's necessary
     const out = {};
-    ['dead', 'condition', 'conditions', 'id', 'species', 'moves', 'level',
+    ['dead', 'condition', 'statuses', 'id', 'species', 'moves', 'level',
     'gender', 'hp', 'maxhp', 'hppct', 'active', 'events', 'types', 'baseStats',
-    'ability', 'abilities', 'baseAbility', 'weightkg', 'nature',
-    'position', 'owner' // for debugging
-    ]
-    .forEach( (field) => {
+    'ability', 'abilities', 'baseAbility', 'weightkg', 'nature', 'stats',
+    'position', 'owner', 'item', 'boosts', 'prevMoves', 'order', 'nickname',
+    'seenMoves']
+    .forEach((field) => {
       if (this[field]) out[field] = this[field];
     });
+
+    // sometimes we want to apply some boosts.
+    if (out.stats) {
+      out.boostedStats = {};
+      const boosts = out.boosts || {};
+      Object.keys(out.stats).forEach((key) => {
+        out.boostedStats[key] = util.boostMultiplier(out.stats[key], boosts[key]);
+      });
+    }
+
     return out;
   }
 
@@ -94,73 +136,91 @@ export default class Pokemon {
     }
   }
 
+/**
+ * @typedef MoveData
+ *
+ * Here's all the information you get with Move objects.
+ *
+ *
+ * @property {Number|Boolean} accuracy The move's accuracy, as a percent. 100 or true
+ * means they will always connect, unless affected by something else.
+ * @property {Number} basePower  The base power, ex. 80.
+ * @property {String} category  'Physical', 'Special', or 'Status'
+ * @property {Object} flags From the flags Showdown server:
+ * @property {Boolean} flags.authentic Ignores a target's substitute.
+ * @property {Boolean} flags.bite Power is multiplied by 1.5 when used by a
+ * Pokemon with the Ability Strong Jaw.
+ * @property {Boolean} flags.bullet Has no effect on Pokemon with the Ability Bulletproof.
+ * @property {Boolean} flags.charge The user is unable to make a move between turns.
+ * @property {Boolean} flags.contact Makes contact.
+ * @property {Boolean} flags.defrost Thaws the user if executed successfully
+ * while the user is frozen.
+ * @property {Boolean} flags.distance Can target a Pokemon positioned anywhere
+ * in a Triple Battle.
+ * @property {Boolean} flags.gravity Prevented from being executed or selected
+ * during Gravity's effect.
+ * @property {Boolean} flags.heal Prevented from being executed or selected
+ * during Heal Block's effect.
+ * @property {Boolean} flags.mirror Can be copied by Mirror Move.
+ * @property {Boolean} flags.nonsky Prevented from being executed or selected
+ * in a Sky Battle.
+ * @property {Boolean} flags.powder Has no effect on Grass-type Pokemon, Pokemon
+ * with the Ability Overcoat, and Pokemon holding Safety Goggles.
+ * @property {Boolean} flags.protect Blocked by Detect, Protect, Spiky Shield,
+ * and if not a Status move, King's Shield.
+ * @property {Boolean} flags.pulse Power is multiplied by 1.5 when used by a
+ * Pokemon with the Ability Mega Launcher.
+ * @property {Boolean} flags.punch Power is multiplied by 1.2 when used by a
+ * Pokemon with the Ability Iron Fist.
+ * @property {Boolean} flags.recharge If this move is successful, the user must
+ * recharge on the following turn and cannot make a move.
+ * @property {Boolean} flags.reflectable Bounced back to the original user by
+ * Magic Coat or the Ability Magic Bounce.
+ * @property {Boolean} flags.snatch Can be stolen from the original user and
+ * instead used by another Pokemon using Snatch.
+ * @property {Boolean} flags.sound Has no effect on Pokemon with the Ability
+ * Soundproof.
+ * @property {String} id  The move ID, ex. 'acrobatics'
+ * @property {String} name  The move name, ex. 'Acrobatics'
+ * @property {Number} priority  Does this move have priority? Most have the value 0.
+ *           Moves with priority 1 will go before moves with priority 0 in
+ *           normal cases.
+ * @property {Object} self  Does this have an effect on myself?
+ * @property {Object} self.boosts An object containing boost properties.
+ * @property {Number} self.boosts.def Defense raised or lowered by this # of stages
+ * @property {Number} self.boosts.spe Speed raised or lowered by this # of stages
+ * @property {String} self.volatileStatus: 'mustrecharge' from frenzyplant
+ * @property {String} status  If this is a 'Status' type move, this is the status
+ * applied to the opponent.
+ * @property {String} target  Ex. 'normal', 'self', 'allySide', 'any', 'randomNormal',
+ *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
+ * @property {String} type  The type of move, ex. 'Ghost'. Every move has one and only
+ *       one type.
+ * @property {String} volatileStatus  A volatile status, if there is one. (ex.
+ * 'protect' or 'taunt').
+ *
+ * @see Volatile statuses: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/volatileStatuses.js.html
+ */
+
   /**
-   * For active moves(?)
    * @TODO maybe we want to turn moves into their own thing...
    *
    * This takes a list of moves, looks them up in our move database and
    * returns some helpful fields about those moves.
    *
    * A move has the following spec:
-   * accuracy: {Number/Boolean} The move's accuracy, as a percent. 100 or true
-   *           means they will always connect, unless affected by something
-   *           else.
-   * basePower: {Number} The base power, ex. 80.
-   * category: {String} 'Physical', 'Special', or 'Status'
-   * id: {String} The move ID, ex. 'acrobatics'
-   * name: {String} The move name, ex. 'Acrobatics'
-   * priority: {Number} Does this move have priority? Most have the value 0.
-   *           Moves with priority 1 will go before moves with priority 0 in
-   *           normal cases.
-   * flags: From the Showdown server:
-   *   authentic: Ignores a target's substitute.
-   *   bite: Power is multiplied by 1.5 when used by a Pokemon with the Ability Strong Jaw.
-   *   bullet: Has no effect on Pokemon with the Ability Bulletproof.
-   *   charge: The user is unable to make a move between turns.
-   *   contact: Makes contact.
-   *   defrost: Thaws the user if executed successfully while the user is frozen.
-   *   distance: Can target a Pokemon positioned anywhere in a Triple Battle.
-   *   gravity: Prevented from being executed or selected during Gravity's effect.
-   *   heal: Prevented from being executed or selected during Heal Block's effect.
-   *   mirror: Can be copied by Mirror Move.
-   *   nonsky: Prevented from being executed or selected in a Sky Battle.
-   *   powder: Has no effect on Grass-type Pokemon, Pokemon with the Ability Overcoat, and Pokemon holding Safety Goggles.
-   *   protect: Blocked by Detect, Protect, Spiky Shield, and if not a Status move, King's Shield.
-   *   pulse: Power is multiplied by 1.5 when used by a Pokemon with the Ability Mega Launcher.
-   *   punch: Power is multiplied by 1.2 when used by a Pokemon with the Ability Iron Fist.
-   *   recharge: If this move is successful, the user must recharge on the following turn and cannot make a move.
-   *   reflectable: Bounced back to the original user by Magic Coat or the Ability Magic Bounce.
-   *   snatch: Can be stolen from the original user and instead used by another Pokemon using Snatch.
-   *   sound: Has no effect on Pokemon with the Ability Soundproof.
-   * self: {Object} Does this have an effect on myself? Example values:
-   *   boosts:
-   *     def: 1  Lowers my defense by one stage.
-   *     spe: -1 Lowers my speed by one stage.
-   *     volatileStatus: 'mustrecharge' from frenzyplant
-   * volatileStatus: {String} ex. 'aquaring', 'attract', 'autotomize', 'bide',
-   * 'charge', 'confusion', 'curse', 'destinybond', 'disable', 'electrify',
-   * 'embargo', 'encore', 'endure', 'flinch', 'focusenergy', 'followme',
-   * 'foresight', 'gastroacid', 'grudge', 'healblock', 'helpinghand',
-   * 'imprison', 'ingrain', 'kingsshield', 'leechseed', 'lockedmove',
-   * 'magiccoat', 'magnetrise', 'minimize', 'miracleeye', 'mustrecharge',
-   * 'nightmare', 'partiallytrapped', 'powder', 'powertrick', 'protect',
-   * 'rage', 'ragepowder', 'roost' 'smackdown', 'snatch', 'spikyshield',
-   * 'stockpile', 'taunt', 'telekinesis', 'torment', 'uproar' 'yawn'
-   * target: {String} ex. 'normal', 'self', 'allySide', 'any', 'randomNormal',
-   *         'all', 'allAdjacent', allAdjacentFoes', 'foeSide'
-   * type: {String} The type of move, ex. 'Ghost'. Every move has one and only
-   *       one type.
    *
-   * @param  {Array} moves An array of {Move} objects
+   * @param  {Array} moves An array of Move objects
+   *
    * @return {Array} An array of researched moves.
    */
   static updateMoveList(moves) {
-    return moves.map( (move) => {
+    return moves.map((move) => {
       // console.log('old:', move);
       const research = util.researchMoveById(move);
       const out = {};
       ['accuracy', 'basePower', 'category', 'id', 'name', 'volatileStatus',
-      'priority', 'flags', 'heal', 'self', 'target', 'type'].forEach( (field) => {
+      'priority', 'flags', 'heal', 'self', 'target', 'type', 'pp', 'maxpp'].forEach((field) => {
         if (research[field]) out[field] = research[field];
       });
       // console.log('returning ', out);
@@ -178,24 +238,100 @@ export default class Pokemon {
     // this stuff never changes, so we only need to process once.
     if (this.level && this.gender) return;
 
-    if (this.details !== details) {
-      log.warn('details changed.', this.details, details);
+    if (this.details && this.details !== details) {
+      log.warn(`details changed. ${this.details}, ${details}`);
     }
 
     this.details = details;
     try {
       const deets = details.split(', ');
 
-      // if we're just learning this...that would be weird / impossible.
       if (!this.species) {
-        log.warn('weird, learning about species from deets.');
-        this.useSpecies(deets[0]);
+        // log.warn('weird, learning about species from deets.');
+        this.species = deets[0];
+        this.id = util.toId(deets[0]);
       }
-
-      this.level = parseInt(deets[1].substr(1), 10);
+      if (deets[1]) {
+        this.level = parseInt(deets[1].substr(1), 10);
+      }
       this.gender = deets[2] || 'M';
     } catch (e) {
-      log.err('useDetails: error parsing mon.details', e);
+      log.err(`useDetails: error parsing mon.details: ${details}`);
+      log.err(e);
+    }
+  }
+
+  useIdent(ident) {
+    this.ident = util.identWithoutPosition(ident); // for convenience
+    this.owner = util.identToOwner(ident);
+    this.position = util.identToPos(ident);
+    this.nickname = ident.substr(ident.indexOf(' ') + 1);
+  }
+
+  /**
+   * Record a boost or unboost.
+   * The boost object only has keys set for stats that are affected; they
+   * should be undefined otherwise.
+   *
+   * @param  {String} stat  The stat type affected.
+   * @param  {Number} stage The stage of boost, ex. Swords Dance boosts attack
+   * by 2 stages.
+   *
+   */
+  useBoost(stat, stage) {
+    if (!this.boosts) {
+      this.boosts = {};
+    }
+    const current = this.boosts[stat] || 0;
+    const next = Math.max(-6, Math.min(6, current + stage));
+    if (next === 0) {
+      delete this.boosts[stat];
+    } else {
+      this.boosts[stat] = next;
+    }
+  }
+
+  /**
+   * Add a status condition to our Pokemon. Updates 'condition' and 'statuses'.
+   *
+   * @param {String} status The status type.
+   */
+  addStatus(status) {
+    if (this.condition) {
+      this.condition += ' ' + status;
+    } else {
+      this.condition = status;
+    }
+
+    if (this.statuses) {
+      this.statuses = [];
+    }
+    this.statuses.push(status);
+  }
+
+  /**
+   * Removes a status condition from our Pokemon. Updates 'condition' and
+   * 'statuses'.
+   *
+   * @param {String} status The status type.
+   */
+  removeStatus(status) {
+    this.condition.replace(' ' + status, '');
+    this.statuses.splice(this.statuses.indexOf(status), 1);
+  }
+
+  /**
+   * Record that we saw this Pokemon perform a move. Updates prevMoves and
+   * seenMoves.
+   *
+   * @param  {String} move The move id of the performed move.
+   */
+  recordMove(move) {
+    const id = util.toId(move);
+    this.prevMoves.unshift(id);
+    // could use a Set here, but let's keep it simple.
+    if (this.seenMoves.indexOf(id) === -1) {
+      this.seenMoves.push(id);
     }
   }
 
@@ -205,17 +341,13 @@ export default class Pokemon {
    *
    * @param  {String} spec The species name, ex. 'Pikachu'
    */
-  useSpecies(spec) {
-    const key = util.toId(spec);
-    this.species = key;
-
-    // lol also dangerous
-    Object.assign(this, util.researchPokemonById(key));
+  research() {
+    Object.assign(this, util.researchPokemonById(this.species));
   }
 
   /**
    * Use the condition of the Pokemon. This will update the fields 'condition',
-   * 'conditions', 'hp', 'maxhp', 'hppct', and 'dead'.
+   * 'statuses', 'hp', 'maxhp', 'hppct', and 'dead'.
    *
    * @param  {String} condition The mon's condition, ex. '58/130 par poi'
    */
@@ -228,28 +360,40 @@ export default class Pokemon {
       return;
     }
     this.condition = condition;
-    this.conditions = [];
+    this.statuses = this.statuses || [];
 
     try {
       const hps = condition.split('/');
       if (hps.length === 2) {
         this.hp = parseInt(hps[0], 10);
-        const maxhpAndConditions = hps[1].split(' ');
-        this.maxhp = parseInt(maxhpAndConditions[0], 10);
+        // array with max hp at 0 and other stuff at 1+
+        const maxHpAndStatuses = hps[1].split(' ');
+        this.maxhp = parseInt(maxHpAndStatuses[0], 10);
         this.hppct = Math.round(100 * this.hp / this.maxhp);
 
-        if (maxhpAndConditions.length > 1) {
-          this.conditions = maxhpAndConditions.slice(1);
+        if (maxHpAndStatuses.length > 1) {
+          this.statuses = maxHpAndStatuses.slice(1);
         }
+
+        if (this.dead) this.dead = false; // uh oh.
       } else if (condition === '0 fnt') {
         this.dead = true;
         this.hp = 0;
         this.hppct = 0;
+        this.active = false;
       } else {
-        log.err('weird condition:', mon.condition);
+        log.err('weird condition:' + condition);
       }
     } catch (e) {
       log.err('useCondition: error parsing mon.condition', e);
     }
+  }
+
+  setItem(item) {
+    this.item = util.toId(item);
+  }
+
+  setOrder(order) {
+    this.order = order;
   }
 }

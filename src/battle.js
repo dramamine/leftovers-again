@@ -1,10 +1,11 @@
-import config from './config';
 import BattleStore from './model/battlestore';
 
-import log from './log';
+import Log from './log';
 import {MOVE, SWITCH} from './decisions';
 import report from './report';
-import challenger from './challenger';
+import listener from './listener';
+import Reporter from './reporters/matchstatus';
+// import util from 'pokeutil';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -16,31 +17,34 @@ import challenger from './challenger';
 class Battle {
   /**
    * Construct a Battle instance.
-   * @param  {string} bid The battle ID; essential for server communication
+   * @param  {String} bid The battle ID; essential for server communication
    * @param  {Connection} connection The connection instance to use for
    * sending and receiving messages.
    * @param  {string} botpath The path to the bot JS file to use. The file it
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, connection, botpath = config.botPath) {
+  constructor(bid, bot) {
     // battle ID
     this.bid = bid;
 
     // Messages we want to handle, and their handlers.
     this.handlers = {
+      // from the normal server
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
       turn: this.handleTurn,
       win: this.handleWin,
+      callback: this.handleCallback,
+
+      // special function for auditing yrself.
       ask4help: this.getHelp
     };
 
-    const AI = require(botpath);
-    this.bot = new AI();
-
-    this.connection = connection;
+    this.bot = bot;
     this.store = new BattleStore();
+
+    this.prevStates = [];
   }
 
   /**
@@ -55,10 +59,11 @@ class Battle {
    * Secret function for getting information, not just decisions, from your AI
    * instance. It sends a 'help' message to the server.
    *
-   * This is very undocumented so don't use it.
+   * This is very undocumented (and lazy!) so don't use it.
    */
   getHelp() {
-    this.connection.send( JSON.stringify( this.bot.getHelp( this.store.data() ) ) );
+    listener.relay('_send', this.bid + '|' +
+      JSON.stringify( this.bot.getHelp( this.store.data() ) ));
   }
 
 
@@ -112,7 +117,11 @@ class Battle {
       return false;
     }
 
-    if (data.forceSwitch || data.teamPreview) {
+    if (data.teamPreview) {
+      return false;
+    }
+
+    if (data.forceSwitch) {
       this.decide();
     }
   }
@@ -122,20 +131,30 @@ class Battle {
    *
    * @param that I'm ignoring: the turn number.
    */
-  handleTurn() {
+  handleTurn(turn) { // eslint-disable-line
     this.decide();
   }
 
-  handleWin(x) {
-    console.log('WON: ', x);
-    const results = report.win(x, this.store);
+  handleWin(winner) {
+    Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
+    report.win(winner, this.store, this.bid);
 
+    listener.relay('battlereport', {
+      winner,
+      opponent: this.store.yourNick});
+  }
 
-    if (results.filter(match => match.you === this.store.yourNick).length <
-      config.matches) {
-      challenger.challenge(this.store.yourNick);
-    } else {
-      console.log(JSON.stringify(report.data()));
+  handleCallback(desc, code) {
+    Log.error('FYI THE TRAPPED CALLBACK WAS CALLED');
+    Log.error('THIS IS NOT AN ERROR, IN FACT MAYBE ITS WORKING??');
+    Log.error(desc + ' ' + code);
+    if (desc === 'trapped') {
+      console.log('runnin my lil trapped routine');
+      const state = this.store.data();
+      state.self.reserve.forEach(mon => {
+        mon.dead = true;
+      });
+      this.decide(state);
     }
   }
 
@@ -143,27 +162,69 @@ class Battle {
    * Asks the AI to make a decision, then sends it to the server.
    *
    */
-  decide() {
-    const currentState = this.store.data();
+  decide(state) {
+    if (!state) {
+      state = this.store.data();
+    }
 
-    log.info('STATE:');
-    log.info(JSON.stringify(currentState));
+    Log.debug('STATE:');
+    Log.debug(JSON.stringify(state));
 
-    const choice = this.myBot().onRequest(currentState);
+    Reporter.report(state);
+
+    Log.toFile(`lastknownstate-${this.bid}.log`, JSON.stringify(state) + '\n');
+
+    // attach previous states
+    state.prevStates = this.prevStates;
+
+    const choice = this.myBot().decide(state);
     if (choice instanceof Promise) {
+      // wait for promises to resolve
       choice.then( (resolved) => {
-        const res = Battle._formatMessage(this.bid, resolved, currentState);
-        log.log(res);
-        this.connection.send( res );
+        const res = Battle._formatMessage(this.bid, resolved, state);
+        Log.info(res);
+        listener.relay('_send', res);
+        // saving this state for future reference
+        this.prevStates.unshift( this.abbreviateState(state) );
       }, (err) => {
-        log.err('I think there was an error here.');
-        log.err(err);
+        Log.err('I think there was an error here.');
+        Log.err(err);
       });
     } else {
-      const res = Battle._formatMessage(this.bid, choice, currentState);
-      log.log(res);
-      this.connection.send( res );
+      // message is ready to go
+      const res = Battle._formatMessage(this.bid, choice, state);
+      Log.info(res);
+      listener.relay('_send', res);
+      // saving this state for future reference
+      this.prevStates.unshift( this.abbreviateState(state) );
     }
+  }
+
+  /**
+   * The prevStates array that we send to the bots doesn't need a ton of detail.
+   * Let's just send a couple important fields.
+   *
+   * @param  {Object} state  The state object sent to bots.
+   * @return {[type]}        Fewer fields of that state object.
+   */
+  abbreviateState(state) {
+    return {
+      turn: state.turn,
+      self: {
+        active: {
+          hp: state.self.active.hp,
+          hppct: state.self.active.hppct,
+          statuses: state.self.active.statuses
+        }
+      },
+      opponent: {
+        active: {
+          hp: state.opponent.active.hp,
+          hppct: state.opponent.active.hppct,
+          statuses: state.opponent.active.statuses
+        }
+      }
+    };
   }
 
   /**
@@ -184,11 +245,15 @@ class Battle {
       const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
 
       if (typeof moveIdx !== 'number' || moveIdx < 0) {
-        console.warn('[invalid move!!', choice, state, 'invalid move yo]');
+        console.warn('[invalid move!!', choice, state.self.active.moves, 'invalid move yo.');
         exit;
       }
 
       verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
+
+      if (state.self.active.canMegaEvo && choice.shouldMegaEvo) {
+        verb += ' mega';
+      }
     } else if (choice instanceof SWITCH) {
       verb = (state.teamPreview)
         ? '/team '
@@ -239,7 +304,7 @@ class Battle {
       return mons.indexOf(idx);
     case 'string':
       return mons.findIndex( (mon) => {
-        return mon.species === idx;
+        return mon.species === idx || mon.id === idx;
       });
     default:
       console.log('not a valid choice!', idx, mons);

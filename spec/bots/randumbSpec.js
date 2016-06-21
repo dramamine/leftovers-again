@@ -1,5 +1,5 @@
-import Randumb from '../../src/bots/randombattle/randumb';
-import {MOVE, SWITCH} from '../../src/decisions';
+import Randumb from 'bots/randumb';
+import {MOVE, SWITCH} from 'leftovers-again/decisions';
 const randumb = new Randumb();
 
 describe('Randumb', () => {
@@ -16,7 +16,7 @@ describe('Randumb', () => {
     };
 
     for (let i = 0; i < 10; i++) {
-      const result = randumb.onRequest(state);
+      const result = randumb.decide(state);
       expect(result instanceof(MOVE)).toBe(true);
     }
   });
@@ -27,13 +27,12 @@ describe('Randumb', () => {
         active: {
           moves: [{ name: 'a', disabled: true, pp: 99 },
           { name: 'b', disabled: false, pp: 99 },
-          { name: 'c', disabled: true, pp: 0 },
-          { name: 'd', disabled: false, pp: 0 }]
+          { name: 'c', disabled: true, pp: 0 }]
         }
       }
     };
 
-    const result = randumb.onRequest(state);
+    const result = randumb.decide(state);
     expect(result.id.name).toEqual('b');
   });
 
@@ -46,7 +45,7 @@ describe('Randumb', () => {
           { name: 'bazmelion', condition: '0 fnt' }]
       }
     };
-    const result = randumb.onRequest(state);
+    const result = randumb.decide(state);
     expect(result instanceof(SWITCH)).toBe(true);
     expect(result.id.name).toEqual('foomander');
   });

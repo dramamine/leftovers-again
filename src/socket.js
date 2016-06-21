@@ -1,36 +1,82 @@
 import listener from './listener';
-import WebSocket from 'ws';
-import url from 'url';
 import Connection from './connection';
-import config from './config';
-import util from './util';
+import Log from './log';
 import https from 'https';
-import Chat from './chat';
+import WebSocket from 'ws';
 
 let ws;
-const requestUrl = url.parse(config.actionurl);
 
 class Socket extends Connection {
   constructor() {
     super();
   }
 
-  connect() {
-    // console.log('connection constructed.');
-    ws = new WebSocket('ws://localhost:8000/showdown/websocket');
+  connect({
+    actionHost = 'play.pokemonshowdown.com',
+    nickname = 'cyberdyne.thrall.' + Math.floor(Math.random() * 10000),
+    password = null,
+    chatroom = 'lobby',
+    server = 'localhost',
+    port = 8000,
+    format
+  }) {
+    this.actionurl = {
+      host: actionHost,
+      port: null,
+      path: `/~~${server}:${port}/action.php`
+    };
+
+    this.nickname = nickname;
+    this.password = password;
+    this.chatroom = chatroom;
+    this.format = format;
+
+    this.build(`ws://${server}:${port}/showdown/websocket`);
+
+    listener.subscribe('challstr', this._login.bind(this));
+    listener.subscribe('updateuser', this.onUpdateUser.bind(this));
+    listener.subscribe('popup', this._relayPopup);
+    // defined message type for calling from battles, etc.
+    listener.subscribe('_send', this.send);
+  }
+
+  /**
+   * Build your socket.
+   * @param  {String} addy The address of the socket.
+   */
+  build(addy) {
+    ws = new WebSocket(addy);
 
     ws.on('open', () => {
-      console.log('got open message from websocket');
+      Log.info('Got open message from server\'s websocket.');
     });
 
     ws.on('message', this._handleMessage);
 
-    listener.subscribe('challstr', this._respondToChallenge.bind(this));
-    listener.subscribe('popup', this._relayPopup);
-
-    this.chat = new Chat();
+    ws.on('error', (err) => {
+      if (err.code === 'ECONNREFUSED') {
+        Log.error(`ECONNREFUSED when trying to connect to server at:`);
+        Log.error(`${addy}`);
+        Log.error(`Are you sure a server is running there?`);
+        Log.error(`Make sure you have the official server installed and running.\n`);
+        Log.error(` Using git (preferred):\n`);
+        Log.error(`    git clone https://github.com/Zarel/Pokemon-Showdown.git`);
+        Log.error(`    cd Pokemon-Showdown`);
+        Log.error(`    npm start\n`);
+        Log.error(`Running this separately will reduce startup time and allow you to read`);
+        Log.error(`server logs for debugging.\n`);
+      }
+    });
   }
 
+  /**
+   * this function will relay ANYTHING to the server, hope your message is
+   * formatted right!
+   *
+   * @link https://github.com/Zarel/Pokemon-Showdown
+   *
+   * @param  {String} message [description]
+   */
   send(message) {
     ws.send(message);
   }
@@ -47,24 +93,25 @@ class Socket extends Connection {
     ws.close();
   }
 
-  _respondToChallenge(args) {
+  _login(args) {
     // console.log('responding to challenge.');
     const [id, str] = args;
     // console.log(id, str);
 
     const requestOptions = {
-      hostname: requestUrl.hostname,
-      port: requestUrl.port,
-      path: requestUrl.pathname,
+      hostname: this.actionurl.host,
+      port: this.actionurl.port,
+      path: this.actionurl.path,
       agent: false
     };
+    // console.log(requestOptions);
     let data = '';
-    if (!config.pass) {
+    if (!this.password) {
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + util.toId(config.nick) + '&challengekeyid=' + id + '&challenge=' + str;
+      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + id + '&challenge=' + str;
     } else {
       requestOptions.method = 'POST';
-      data = 'act=login&name=' + config.nick + '&pass=' + config.pass + '&challengekeyid=' + id + '&challenge=' + str;
+      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + id + '&challenge=' + str;
       requestOptions.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': data.length
@@ -78,24 +125,23 @@ class Socket extends Connection {
         chunks += chunk;
       });
       res.on('end', () => {
-        // console.log(chunks);
         if (chunks === ';') {
-          console.error('failed to log in; nick is registered - invalid or no password given');
+          Log.error('failed to log in; nick is registered - invalid or no password given');
           process.exit(-1);
         }
         if (chunks.length < 50) {
-          console.error('failed to log in: ' + chunks);
+          Log.error('failed to log in: ' + chunks);
           process.exit(-1);
         }
         if (chunks.indexOf('heavy load') !== -1) {
-          console.error('the login server is under heavy load; trying again in one minute');
+          Log.error('the login server is under heavy load; trying again in one minute');
           setTimeout( () => {
             return this._handleMessage(message);
           }, 60 * 1000);
           return;
         }
         if (chunks.substr(0, 16) === '<!DOCTYPE html>') {
-          console.error('Connection error 522; trying agian in one minute');
+          Log.error('Connection error 522; trying agian in one minute');
           setTimeout( () => {
             return this._handleMessage(message);
           }, 60 * 1000);
@@ -118,18 +164,41 @@ class Socket extends Connection {
           // probably nothing.
           // console.error('error trying to parse data:', err, chunks);
         }
-        this.send('|/trn ' + config.nick + ',0,' + chunks);
+        this.send('|/trn ' + this.nickname + ',0,' + chunks);
       });
     });
 
     req.on('error', (err) => {
-      return console.error('login error: ' + err.stack);
+      return Log.error('login error: ' + err.stack);
     });
 
     if (data) {
       req.write(data);
     }
     return req.end();
+  }
+
+  _relayPopup(args) {
+    Log.warn('Got a popup:');
+    Log.warn(args);
+  }
+
+  onUpdateUser(args) {
+    // this includes a 3rd parameter, i.e. "mysterycode". who knows.
+    const [nick, status] = args;
+    if (status !== '1') {
+      // console.error(`failed to log in, still guest (status code ${status})`);
+      return false;
+    }
+    if (nick !== this.nickname) {
+      console.error('nickname was ', nick, ' expecting ', this.nickname);
+      return false;
+    }
+
+    socket.send('|/join ' + this.chatroom);
+
+    // also try to join a room according to our battle format
+    if (this.format) socket.send('|/join ' + this.format);
   }
 
 }

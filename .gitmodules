@@ -1,0 +1,9 @@
+[submodule "deps/Pokemon-Showdown"]
+  path = deps/Pokemon-Showdown
+  url = https://github.com/dramamine/Pokemon-Showdown.git
+[submodule "deps/Pokemon-Showdown-Client"]
+  path = deps/Pokemon-Showdown-Client
+  url = https://github.com/Zarel/Pokemon-Showdown-Client.git
+[submodule "deps/honko-damagecalc"]
+  path = deps/honko-damagecalc
+  url = https://github.com/Zarel/honko-damagecalc.git
