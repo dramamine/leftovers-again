@@ -32,7 +32,6 @@ export default class Side {
    */
   digest(action) {
     const move = clean(action);
-    console.log(move);
     if (Object.keys(SideConditions).find( x => SideConditions[x] === move) ) {
       // if it's already set, AND it's a stacking move
       if (this.stuff[move] && STACKS[move]) {

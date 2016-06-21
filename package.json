@@ -3,6 +3,11 @@
   "version": "0.6.0",
   "description": "Pokemon Showdown - Bot Client",
   "main": "lib/main.js",
+  "files": [
+    "lib",
+    "templates",
+    "FAQ.md"
+  ],
   "scripts": {
     "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "clean": "rm -rf lib",

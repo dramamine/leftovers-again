@@ -20,6 +20,17 @@ const tryRequire = (file) => {
 };
 
 /**
+ * Try to make a directory without crashing out
+ */
+const tryMkdir = (file) => {
+  try {
+    return fs.mkdirSync(file);
+  } catch(e) {
+    return undefined;
+  }
+};
+
+/**
  * Parses a Handlebars template.
  * @param  {String} source The Handlebars template.
  * @param  {Object} vars   An object of variables for the template.
@@ -119,6 +130,7 @@ const writePackage = (source, more, destination) => {
  * @return {[type]}             [description]
  */
 const parseAndWrite = (source, destination, vars) => {
+  console.log('writing a file:', source, destination);
   const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii') );
   const parsed = tmplt(vars);
   if (destination) fs.writeFile(destination, parsed);
@@ -143,8 +155,8 @@ inquirer.prompt(questions).then((answers) => {
   ) );
   writePackage(existingPackage, addStuff, pkgLocation);
 
-  fs.mkdirSync(path.join(process.cwd(), 'log'));
-  fs.mkdirSync(path.join(process.cwd(), 'src'));
+  tryMkdir(path.join(process.cwd(), 'log'));
+  tryMkdir(path.join(process.cwd(), 'src'));
 
   const filez = glob.sync('**/*', {
     cwd: path.join(tmpltDir, lang),
@@ -155,7 +167,8 @@ inquirer.prompt(questions).then((answers) => {
     if (file === 'package.json') return;
     parseAndWrite(
       path.join(tmpltDir, lang, file),
-      path.join(process.cwd(), file),
+      // this line is a dumb workaround where npm doesn't include src subdirectories.
+      path.join(process.cwd(), file.replace('_src', 'src')),
       answers
     );
   });
