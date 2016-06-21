@@ -63,6 +63,7 @@ node node_modules/leftovers-again/lib/scripts/generate.js
 
 # afterwards, your bot is ready to go
 npm run server # in a separate window
+npm install
 npm start -- --opponent=randumb
 ```
 

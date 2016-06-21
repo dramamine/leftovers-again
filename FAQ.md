@@ -18,9 +18,22 @@ To create your first bot, run `node node_modules/leftovers-again/lib/scripts/gen
 Note that you'll want to have a good idea of [what format you'd like to compete in](http://pokemonforever.com/Thread-A-Beginner-s-Guide-to-Smogon). Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
 
 ### Your bot already works.
-Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary. Run the command `npm start -- --opponent=randumb` to run a battle and see what happens!
+Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary.
 
-You will probably lose.
+```bash
+npm install
+npm start -- --opponent=randumb
+```
+
+If you're not already running a server, you can set one up and start it by doing the following:
+
+```bash
+git clone https://github.com/dramamine/Pokemon-Showdown.git
+cd Pokemon-Showdown
+npm start
+```
+
+This downloads and installs a forked copy of the official Showdown server. The fork makes the server more bot-friendly by removing throttling on challenges and matches.
 
 ### Choosing the Team
 The `team()` function should return a string that matches the Smogon format. So, if you build a team on [Pokemon Showdown](http://play.pokemonshowdown.com/) using the Teambuilder, or if you copy Pokemon data from [Smogon](http://www.smogon.com/), you can paste it in this function.
