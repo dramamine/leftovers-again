@@ -227,6 +227,12 @@ class Damage {
    *                                   be in [0.9, 1, 1.1].
    */
   _calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
+    if (!mon.baseStats[stat]) {
+      console.error('missing the stat I need:' + stat);
+      console.error(mon.baseStats);
+    }
+
+
     const evBonus = Math.floor(evs / 4);
     const addThis = stat === 'hp' ? (mon.level + 10) : 5;
     const calculated = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
@@ -280,6 +286,11 @@ class Damage {
     } else if (!mon.hp) {
       mon.hp = mon.hppct || 100;
       mon.maxhp = 100;
+    }
+    if (isNaN(mon.hp)) {
+      Log.error('dude, assumeStats fucked up! cant let that happen.');
+      console.error(mon);
+      exit;
     }
     return mon;
   }

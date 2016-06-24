@@ -62,8 +62,10 @@ class Battle {
    * This is very undocumented (and lazy!) so don't use it.
    */
   getHelp() {
-    listener.relay('_send', this.bid + '|' +
-      JSON.stringify( this.bot.getHelp( this.store.data() ) ));
+    if (this.bot.getHelp) {
+      listener.relay('_send', this.bid + '|' +
+        JSON.stringify( this.bot.getHelp( this.store.data() ) ));
+    }
   }
 
 

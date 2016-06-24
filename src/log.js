@@ -20,8 +20,9 @@ class Log {
     // const out = new Date().toUTCString() + ' ' + msg + '\n';
     fs.appendFile( 'log/' + file, msg + '\n', (err) => {
       if (err) console.error(err);
+      return false;
     });
-    // console.log(colors.blue(msg));
+    return true;
   }
 
   /**
