@@ -35,7 +35,14 @@ ws.onopen = function() {
     console.log('received msg ', msg);
     $('.battle-log .inner').append('<p>' + msg.data + '</p>');
 
-    var proc = function(data) {
+    // consider relaying message.
+    console.log(msg.data, unsafeWindow.room.id);
+    if (msg.data && msg.data.indexOf(unsafeWindow.room.id) === 0) {
+      console.log('looks like this is a move command. lets do it!');
+      unsafeWindow.app.socket.send(msg.data);
+    }
+
+    var proc = function(data) {c
       console.log('proc called.');
       // check to see if the options are visible yet
       if ($('.switchmenu button:visible').length > 0) {
@@ -49,8 +56,6 @@ ws.onopen = function() {
       }
     }
     proc(JSON.parse(msg.data));
-
-
 
   };
 
