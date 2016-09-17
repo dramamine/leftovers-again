@@ -6,6 +6,7 @@ import defaults from './defaults';
 import BotManager from './botmanager';
 import BattleManager from './battlemanager';
 import Spawner from './spawner';
+import Interactive from './interactive';
 import Log from './log';
 // import {random} from './team';
 import {MOVE, SWITCH} from './decisions';
@@ -106,6 +107,11 @@ const start = (metadata, Bot) => {
 
   // connect to a server, or create one and start listening.
   myconnection.connect(args);
+
+  let interactive; // eslint-disable-line
+  if (args.interactive || args.i) {
+    interactive = new Interactive();
+  }
 
 
   // do something when app is closing
