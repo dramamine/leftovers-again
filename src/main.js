@@ -1,18 +1,20 @@
 import socket from './socket';
 import monkey from './monkey';
 import listener from './listener';
-import Challenger from './challenger';
 import defaults from './defaults';
 import BotManager from './botmanager';
 import BattleManager from './battlemanager';
 import Spawner from './spawner';
-import Interactive from './interactive';
+import Interactive from './interfaces/cli';
+import Challenger from './model/challenges';
+import Lobby from './model/lobby';
 import Log from './log';
 // import {random} from './team';
 import {MOVE, SWITCH} from './decisions';
 
 let challenger;
 let myconnection;
+let lobby;
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using
@@ -94,6 +96,7 @@ const start = (metadata, Bot) => {
     args[param] = args[param] || info[param] || defaults[param];
   });
 
+  lobby = new Lobby();
   // create some necessary classes
   challenger = new Challenger(myconnection, info, args);
 
@@ -110,7 +113,7 @@ const start = (metadata, Bot) => {
 
   let interactive; // eslint-disable-line
   if (args.interactive || args.i) {
-    interactive = new Interactive();
+    interactive = new Interactive(challenger);
   }
 
 

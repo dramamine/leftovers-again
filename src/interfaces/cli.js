@@ -1,5 +1,4 @@
-import challenger from './challenger';
-import listener from './listener';
+import listener from '../listener';
 import inquirer from 'inquirer';
 import colors from 'colors/safe';
 
@@ -11,7 +10,8 @@ const actions = {
 };
 
 class Interactive {
-  constructor() {
+  constructor(challenger) {
+    this.challenger = challenger;
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
   }
 
@@ -39,16 +39,37 @@ class Interactive {
         }
       ]
     }).then((response) => {
-      console.log(JSON.stringify(response, null, '  '));
       switch (response.lobby) {
       case actions.CHALLENGE:
-        console.log('gonna challenge');
+        this.challenge();
         break;
       case actions.EXIT:
       default:
         exit();
         return;
       }
+    });
+  }
+
+  challenge() {
+    console.log(this.challenger.users);
+    const available = [];
+    Object.keys(this.challenger.users).forEach((key) => {
+      if (this.challenger.users[key] === this.challenger.statuses.ACTIVE) {
+        available.push(key);
+      }
+    });
+    if (available.length === 0) {
+      console.log('lame, no opponents found');
+      return;
+    }
+    inquirer.prompt({
+      type: 'list',
+      name: 'opponent',
+      message: 'Who do you wish to challenge?',
+      choices: available
+    }).then((response) => {
+      console.log(JSON.stringify(response, null, '  '));
     });
   }
 
@@ -61,8 +82,6 @@ class Interactive {
    */
   onUpdateUser([nick, status]) {
     if (status === '1') {
-      console.log('interactive: logged in');
-      console.log(this);
       this.lobby();
     }
   }
