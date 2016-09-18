@@ -29,6 +29,7 @@ npm install -g forever
 
 # once you've got node sorted out...
 
+## Run your version of the server
 git clone https://github.com/dramamine/leftovers-again
 cd leftovers-again
 make
@@ -38,16 +39,19 @@ npm install --production
 npm uninstall babel
 npm install babel-cli
 
+### Check the config file
+You'll probably want to uncomment the line about exports.bindaddress
+
+### GET STARTED
 npm start --production
+or:
+cd /var/www/leftovers-again/deps/Pokemon-Showdown
+forever start --uid="srvr" -a app.js --production
 
-
-
-# run a bot on a server
-NODE_PATH=./:lib:lib/bots forever start lib/main.js
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/bravest
-
+forever start --uid="bots" -a -l /var/www/leftovers-again/log/bots.log bot-runner.json
 
 # stuff to run as admin. jk, this ends up saving stuff to the config files.
+
 /makechatroom randombattle
 /makechatroom ou
 /makechatroom ubers
@@ -76,24 +80,3 @@ n latest
 npm install
 npm run build
 
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- stonedbirdie
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- splashbot
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/bravest
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/rooster
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/trapper
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- research/sunnyday
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- randumb
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- whynotbaut
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- stabby
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- meetthefakers
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- la-fitness
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-drake
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-glacia
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-phoebe
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-sidney
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/oras-steven
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-diantha
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-drasna
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-malva
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-siebold
-NODE_PATH=./:lib:lib/bots forever start lib/main.js -- elitefour/xy-wikstrom
