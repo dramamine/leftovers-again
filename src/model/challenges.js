@@ -9,6 +9,9 @@ import util from '../pokeutil';
 
 let updateTimeout = null;
 
+const simultaneous = 5;
+let activeMatches = 0;
+
 /**
  * Used for managing challenges to other users.
  */
@@ -34,25 +37,30 @@ class Challenger {
     this.matches = matches;
     this.opponent = opponent;
 
+    if (!scrappy && !opponent) {
+      Log.info('Your bot is set to accept challenges only - it will not start any battles.');
+    }
 
-    listener.subscribe('lobby_update', this.lobbyUpdate.bind(this));
+    // sent by lobby.js
+    listener.subscribe('lobby_update', this.challengeSomeone.bind(this));
+
+    // @TODO this doesn't exist.
+    listener.subscribe('battle_started', this.onBattleStarted.bind(this));
+
     listener.subscribe('battlereport', this.onBattleReport.bind(this));
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
 
-
-    // this._challengeNext = this._challengeNext.bind(this);
-    // this.onUpdateChallenges = this.onUpdateChallenges.bind(this);
 
     // all the users we've seen
     this.users = {};
     this.challengesFrom = {};
     this.challengeTo = {};
-
-    this.hasChallenged = true;
   }
 
-  lobbyUpdate(users) {
+  challengeSomeone(users) {
     if (updateTimeout) return;
+    if (!this.opponent && !this.scrappy) return;
+    if (activeMatches >= simultaneous) return;
 
     updateTimeout = setTimeout(() => {
       console.log('inside my timeout.');
@@ -106,28 +114,8 @@ class Challenger {
     listener.unsubscribe('updateuser', this.onUpdateUser);
   }
 
-  /**
-   * Find the next active opponent and issue a challenge.
-   *
-   */
-  _challengeNext() {
-    let opponent = '';
-    Object.keys(this.users).some(user => {
-      const userid = util.toId(user);
-      if (this.users[userid] === Statuses.ACTIVE) {
-        opponent = userid;
-        return true;
-      }
-    });
-    if (opponent) {
-      if (this.challengesFrom[opponent] || this.challengeTo[opponent]) {
-        Log.info(`already have a challenge from this person: ${opponent}`);
-      } else {
-        this._challenge(opponent);
-      }
-      this.users[util.toId(opponent)] = Statuses.CHALLENGED;
-      this.timer = setTimeout(this._challengeNext, 1000);
-    }
+  onBattleStarted() {
+    activeMatches += 1;
   }
 
 /**
@@ -138,6 +126,7 @@ class Challenger {
  * @return {[type]}                  [description]
  */
   onBattleReport({winner, opponent}) {
+    activeMatches -= 1;
     Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you == opponent);
@@ -173,38 +162,38 @@ class Challenger {
     this.challengeTo = challengeTo || {};
     if (JSON.stringify(challengeTo) === '{}' ) {
       console.log('no outstanding challenges!');
+      console.log('MARTEN you really need to test this by looking at challenge objects');
       this.outstandingChallenge = false;
       if (scrappy) {
-
+        this.challengeSomeone();
       }
     }
     Object.keys(challengesFrom).forEach( (opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
       if (Challenger._acceptable(format, this.botmanager.accepts)) {
-        // this is the point at which we need to pick a team!
-        // team message is: /utm ('use team')
-
-        if (Challenger._requiresTeam(format)) {
-          const team = this.botmanager.team(opponent);
-          if (team) {
-            const utmString = new Team(team).asUtm();
-            Log.info('sending team msg...', utmString);
-
-            this.connection.send('|/utm ' + utmString);
-          } else {
-            Log.error('team required but couldnt get one!');
-          }
-        }
-
+        if (Challenger._requiresTeam(format)) this.sendTeam();
         this.connection.send('|/accept ' + opponent);
+        activeMatches += 1;
       }
     });
 
     // these were pre-existing challenges, so let's just pretend they
     // didn't happen.
-    if (this.challengeTo && this.challengeTo.to && !this.hasChallenged) {
+    if (this.challengeTo && this.challengeTo.to && !this.outstandingChallenge) {
       this.cancelOutstandingChallenges();
+    }
+  }
+
+  sendTeam() {
+    const team = this.botmanager.team(opponent);
+    if (team) {
+      const utmString = new Team(team).asUtm();
+      Log.info('sending team msg...', utmString);
+
+      this.connection.send('|/utm ' + utmString);
+    } else {
+      Log.error('team required but couldnt get one!');
     }
   }
 
@@ -253,14 +242,7 @@ class Challenger {
   _challenge(nick) {
     const format = this.format;
 
-    if (Challenger._requiresTeam(format)) {
-      const team = this.botmanager.team(nick);
-      if (team) {
-        const utmString = new Team(team).asUtm();
-        Log.info('sending utm...', utmString);
-        this.connection.send('|/utm ' + utmString);
-      }
-    }
+    if (Challenger._requiresTeam(format)) this.sendTeam();
 
     Log.info(`sending challenge... ${nick} ${format}`);
     // console.log(this.challengesFrom);
