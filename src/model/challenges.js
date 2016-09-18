@@ -27,12 +27,13 @@ class Challenger {
     const {format, scrappy, matches, opponent} = args;
     this.connection = connection;
     this.botmanager = botmanager;
+
     // if user provided opponent, challenge him
+    this.format = format;
     this.scrappy = scrappy;
+    this.matches = matches;
     this.opponent = opponent;
 
-    this.format = format;
-    this.matches = matches;
 
     listener.subscribe('lobby_update', this.lobbyUpdate.bind(this));
     listener.subscribe('battlereport', this.onBattleReport.bind(this));

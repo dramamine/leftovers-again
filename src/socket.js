@@ -13,10 +13,10 @@ class Socket extends Connection {
 
   connect({
     actionHost = 'play.pokemonshowdown.com',
-    nickname = 'cyberdyne.thrall.' + Math.floor(Math.random() * 10000),
+    nickname,
     password = null,
     chatroom = 'lobby',
-    server = 'localhost',
+    server,
     port = 8000,
     format
   }) {
@@ -31,6 +31,7 @@ class Socket extends Connection {
     this.chatroom = chatroom;
     this.format = format;
 
+    Log.info(`connecting to: ${server}:${port}`);
     this.build(`ws://${server}:${port}/showdown/websocket`);
 
     listener.subscribe('challstr', this._login.bind(this));

@@ -14,7 +14,7 @@ import {MOVE, SWITCH} from './decisions';
 
 let challenger;
 let myconnection;
-let lobby;
+let lobby; // eslint-disable-line
 
 /**
  * This is kind of crappy, but this helps out with testing. When you're using
@@ -53,6 +53,7 @@ Leftovers Again: interface for Pokemon Showdown bots
 -opponent [path]: Spawn a specific opponent via a child process.
 -scrappy:       Have your bot pick fights with anyone who's in the lobby or
                  who joins the lobby.
+-server=[path]: Connect to a specific server.
 `);
 }
 
@@ -90,8 +91,7 @@ const start = (metadata, Bot) => {
 
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
-  const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'port',
-    'matches'];
+  const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches'];
   params.forEach((param) => {
     args[param] = args[param] || info[param] || defaults[param];
   });
