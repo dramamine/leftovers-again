@@ -1,7 +1,7 @@
 /**
- * Cast spikes all the time.
+ * Cast boost moves all the time.
  *
- * npm run develop -- --bot=research/spikes
+ * npm run develop -- --bot=research/booster
  */
 
 import AI from 'leftovers-again/ai';
@@ -9,7 +9,7 @@ import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 const moveId = 'workup';
 
-export default class SunnyDay extends AI {
+class Booster extends AI {
   constructor() {
     super();
     this.meta = {
@@ -104,4 +104,4 @@ Adamant Nature
   }
 }
 
-export default SunnyDay;
+export default Booster;

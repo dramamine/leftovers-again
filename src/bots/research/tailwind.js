@@ -1,16 +1,16 @@
 /**
- * Summon Talonflames to cast 'Roost' over and over.
+ * Summon Talonflames to cast 'Tailwind' over and over.
  *
- * npm run develop -- --bot=anythinggoes/tester/rooster.js
+ * npm start -- research/tailwind
  */
 
 
 import AI from 'leftovers-again/ai';
 import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
-const moveId = 'roost';
+const moveId = 'tailwind';
 
-export default class Rooster extends AI {
+export default class Tailwind extends AI {
   constructor() {
     super();
     this.meta = {

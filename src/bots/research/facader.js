@@ -141,4 +141,3 @@ Serious Nature
     return true;
   }
 }
-export default Facader;

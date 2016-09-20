@@ -2,7 +2,7 @@
  * See if this guy mega-evolves. Or not! Check shouldMegaEvo to see what
  * you're doing
  *
- * npm run develop -- --bot=research/megaevo
+ * npm run develop -- --bot=research/troublemons
  */
 
 import AI from 'leftovers-again/ai';

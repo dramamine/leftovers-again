@@ -9,7 +9,7 @@ import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
 const moveId = 'spikes';
 
-export default class SunnyDay extends AI {
+export default class Spikes extends AI {
   constructor() {
     super();
     this.meta = {
@@ -106,5 +106,3 @@ Relaxed Nature
     return true;
   }
 }
-
-export default SunnyDay;

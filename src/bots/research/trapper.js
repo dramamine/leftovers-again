@@ -2,7 +2,7 @@
  * Use dudes that trap the opponent. Good for seeing if the bot can handle
  * this without crashing.
  *
- * npm start -- research/bravest
+ * npm start -- research/trapper
  */
 
 
@@ -107,5 +107,3 @@ Bold Nature
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }
-
-export default Trapper;

@@ -105,5 +105,3 @@ Careful Nature
     return true;
   }
 }
-
-export default RapidSpin;

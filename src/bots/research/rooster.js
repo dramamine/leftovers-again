@@ -111,5 +111,3 @@ Serious Nature
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }
-
-export default Rooster;
