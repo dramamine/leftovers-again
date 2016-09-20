@@ -1,6 +1,6 @@
 import listener from '../listener';
 import inquirer from 'inquirer';
-import colors from 'colors/safe';
+// import colors from 'colors/safe';
 
 const actions = {
   JOIN: 'join',
@@ -9,13 +9,23 @@ const actions = {
   EXIT: 'exit'
 };
 
+/**
+ * Commandline interaction for server activity.
+ *
+ */
 class Interactive {
-  constructor(challenger) {
+  constructor({challenger, lobby}) {
     this.challenger = challenger;
+    this.lobby = lobby;
+    console.log(this.lobby);
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
   }
 
-  lobby() {
+  /**
+   * Give the users some choices when they enter the lobby.
+   *
+   */
+  onLobbyEnter() {
     inquirer.prompt({
       type: 'list',
       name: 'lobby',
@@ -51,16 +61,14 @@ class Interactive {
     });
   }
 
+  /**
+   * Look through the list of opponents that we could challenge.
+   */
   challenge() {
-    console.log(this.challenger.users);
-    const available = [];
-    Object.keys(this.challenger.users).forEach((key) => {
-      if (this.challenger.users[key] === this.challenger.statuses.ACTIVE) {
-        available.push(key);
-      }
-    });
-    if (available.length === 0) {
-      console.log('lame, no opponents found');
+    const available = this.lobby.getUsers();
+    if (available.size === 0) {
+      Log.warn('lame, no opponents found');
+      process.exit(); // lol whatever just get out
       return;
     }
     inquirer.prompt({
@@ -69,7 +77,10 @@ class Interactive {
       message: 'Who do you wish to challenge?',
       choices: available
     }).then((response) => {
-      console.log(JSON.stringify(response, null, '  '));
+      if (!this.challenger.tryChallenge(response.opponent)) {
+        Log.warn('That opponent is not available.');
+        process.exit(); // lol whatever just get out
+      }
     });
   }
 
@@ -82,7 +93,7 @@ class Interactive {
    */
   onUpdateUser([nick, status]) {
     if (status === '1') {
-      this.lobby();
+      this.onLobbyEnter();
     }
   }
 }

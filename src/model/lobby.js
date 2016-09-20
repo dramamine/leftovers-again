@@ -109,8 +109,8 @@ class Lobby {
     }
   }
 
-  users() {
-    return this.users;
+  getUsers() {
+    return Array.from(this.users);
   }
 }
 

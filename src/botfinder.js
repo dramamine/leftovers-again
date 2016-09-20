@@ -13,6 +13,7 @@ const botFinder = (path) => {
   });
   if (!location) {
     Log.error(`couldnt find path! trying to require ${path} from ${__dirname}`);
+    process.exit();
     return {};
   }
 

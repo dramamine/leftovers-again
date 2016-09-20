@@ -108,6 +108,11 @@ npm start -- randumb --opponent=stabby
 
 
 ## NOTES
+9/17/2016
+- install babel-plugin-module-resolver
+- see if you can use other server names
+- see if Level is properly interpreted
+
 1/3/2016
 $ ENGINE WORK
 - need to fix bug with Basculin-Blue-Striped ("too many active pokemon") - crashes the bots when this is our active mon

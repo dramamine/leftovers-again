@@ -57,6 +57,13 @@ class Challenger {
     this.challengeTo = {};
   }
 
+  /**
+   * Find someone to challenge.
+   * Running this on a timeout so that we don't challenge too frequently, and
+   * so that we don't challenge multiple times if we get a burst of updates.
+   *
+   * @param  {Set} users The users set.
+   */
   challengeSomeone(users) {
     if (updateTimeout) return;
     if (!this.opponent && !this.scrappy) return;
@@ -71,11 +78,6 @@ class Challenger {
         return;
       }
       if (this.scrappy) {
-        // see if we have any users we should challenge
-        console.log('im just challenging everyfuckingone');
-        // 'some' returns as soon as a thing is true
-        console.log(users);
-
         for (const user of users) {
           if (this.tryChallenge(user)) {
             console.log('I challenged ', user);
@@ -89,15 +91,22 @@ class Challenger {
     }, 1000);
   }
 
-
+  /**
+   * Run some checks and then send a challenge.
+   *
+   * @param  {[type]} opponent The person to challenge.
+   * @return {[type]}          True if we sent the challenge, false otherwise.
+   */
   tryChallenge(opponent) {
-    if (this.outstandingChallenge) return false;
+    if (this.outstandingChallenge) {
+      Log.info(`Not challenging ${opponent} because I'm already challenging someone.`);
+      return false;
+    }
 
     if (this.challengesFrom[opponent] || this.challengeTo[opponent]) {
       Log.info(`already have a challenge from this person: ${opponent}`);
       return false;
     }
-
 
     this._challenge(opponent);
     return true;
@@ -185,6 +194,11 @@ class Challenger {
     }
   }
 
+  /**
+   * Send a message to the server containing our team data.
+   *
+   * @return {Boolean}  True if we did send the message; false otherwise
+   */
   sendTeam() {
     const team = this.botmanager.team(opponent);
     if (team) {
@@ -194,7 +208,9 @@ class Challenger {
       this.connection.send('|/utm ' + utmString);
     } else {
       Log.error('team required but couldnt get one!');
+      return false;
     }
+    return true;
   }
 
   /**

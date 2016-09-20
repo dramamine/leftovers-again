@@ -20,12 +20,7 @@
     "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src' nodemon --watch src --exec babel-node src/start.js",
     "start": "npm run clean && npm run build && node lib/start.js",
-    "start:quick": "babel-node src/start.js",
-    "start:nocompile": "node lib/start.js",
-    "start:old": "NODE_PATH='src:bots' babel-node src/start.js",
-    "spawn:old": "NODE_PATH='src:bots' babel-node scripts/spawn.js",
-    "battle:old": "NODE_PATH='src:bots' babel-node scripts/battle.js",
-    "generate:old": "NODE_PATH='src:bots' babel-node scripts/generate.js",
+    "start:quick": "node lib/start.js",
     "server": "cd deps/Pokemon-Showdown && node app.js",
     "client": "./scripts/open-client.sh",
     "generate": "./lib/scripts/generate.js"
