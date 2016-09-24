@@ -1,9 +1,0 @@
-{
-  "name": "stabby",
-  "version": "0.2.0",
-  "description": "A fckin bot",
-  "main": "stabby.js",
-  "format": "randombattle",
-  "accepts": "ALL",
-  "nickname": "Stabby ★marten★"
-}

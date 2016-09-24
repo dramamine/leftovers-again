@@ -182,4 +182,4 @@ Set --loglevel=[x] to whatever you'd like:
 Some stuff in the logs directory **TODO**
 
 ### Windows Limitations
-Some npm scripts don't run: build, release, test. Use 'npm run build:windows' to build and 'npm run start:quick' to run.
+leftovers-again should work fine on Windows, but development is more difficult. Some npm scripts don't run: `build, copy, release, test`. Use `npm run babel` to build and `npm run start:quick` to run.

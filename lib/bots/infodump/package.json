@@ -1,8 +1,0 @@
-{
-  "name": "infodump",
-  "version": "0.0.0",
-  "description": "A fckin bot",
-  "main": "infodump.js",
-  "format": "randombattle",
-  "accepts": "randombattle"
-}

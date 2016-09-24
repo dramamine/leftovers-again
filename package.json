@@ -11,9 +11,10 @@
     "FAQ.md"
   ],
   "scripts": {
-    "build": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R && ./build/copy-static-files.sh",
-    "build:windows": "babel src -d lib && babel scripts -d lib/scripts && cp src/data lib -R",
+    "babel": "babel src -d lib && babel scripts -d lib/scripts",
+    "build": "npm run babel && npm run copy",
     "clean": "rm -rf lib",
+    "copy": "cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "docs:update": "npm run docs:publish",

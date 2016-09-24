@@ -1,9 +1,0 @@
-{
-  "name": "Splashbot",
-  "version": "0.0.0",
-  "description": "",
-  "main": "splashbot.js",
-  "format": "anythinggoes",
-  "accepts": "ALL",
-  "nickname": "Splashbot ★marten★"
-}
