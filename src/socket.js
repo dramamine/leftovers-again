@@ -31,7 +31,7 @@ class Socket extends Connection {
     this.chatroom = chatroom;
     this.format = format;
 
-    Log.info(`connecting to: ${server}:${port}`);
+    Log.log(`connecting to: ${server}:${port}`);
     this.build(`ws://${server}:${port}/showdown/websocket`);
 
     listener.subscribe('challstr', this._login.bind(this));
@@ -49,7 +49,7 @@ class Socket extends Connection {
     ws = new WebSocket(addy);
 
     ws.on('open', () => {
-      Log.info('Got open message from server\'s websocket.');
+      Log.log('Got open message from server\'s websocket.');
     });
 
     ws.on('message', this._handleMessage);

@@ -104,5 +104,3 @@ Serious Nature
     return true;
   }
 }
-
-export default Rooster;

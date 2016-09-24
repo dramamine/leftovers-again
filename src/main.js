@@ -61,8 +61,15 @@ Leftovers Again: interface for Pokemon Showdown bots
  * argv: i.e., process.argv
  */
 const start = (metadata, Bot) => {
+  const info = new BotManager(metadata, Bot);
+
   // process cmdline args
   const args = require('minimist')(process.argv.slice(2));
+
+  let config = {};
+  if (args.config) {
+    config = require(args.config);
+  }
 
   if (args.help || args.h) {
     _displayHelp();
@@ -75,6 +82,20 @@ const start = (metadata, Bot) => {
     args.scrappy = true;
   }
 
+  // for everything else, check args, then bot info, then defaults.
+  // lots of these, you wouldn't really want them in bot info, but eh, whatever.
+  const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches',
+  'production', 'prodServer', 'loglevel'];
+  params.forEach((param) => {
+    args[param] = args[param] ||  metadata[param] || config[param] || defaults[param];
+  });
+
+  // use prodServer if user had --production flag
+  if (args.production) {
+    args.server = args.prodServer;
+  }
+
+  // connect to greasemonkey, or use websockets like a normal person
   if (args.monkey) {
     myconnection = monkey;
   } else {
@@ -84,17 +105,6 @@ const start = (metadata, Bot) => {
   if (args.loglevel) {
     Log.setLogLevel(args.loglevel);
   }
-
-  // const firstArg = (args._ && args._[0]) ? args._[0] : null;
-  // const botpath = args.bot || firstArg || defaults.bot;
-  const info = new BotManager(metadata, Bot);
-
-  // for everything else, check args, then bot info, then defaults.
-  // lots of these, you wouldn't really want them in bot info, but eh, whatever.
-  const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches'];
-  params.forEach((param) => {
-    args[param] = args[param] || info[param] || defaults[param];
-  });
 
   lobby = new Lobby();
   // create some necessary classes
@@ -106,7 +116,6 @@ const start = (metadata, Bot) => {
   // messages to the right battle instance.
   const battlemanager = new BattleManager(info.BotClass);
   listener.use(battlemanager);
-
 
   // connect to a server, or create one and start listening.
   myconnection.connect(args);

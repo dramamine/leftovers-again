@@ -38,7 +38,7 @@ class Challenger {
     this.opponent = opponent;
 
     if (!scrappy && !opponent) {
-      Log.info('Your bot is set to accept challenges only - it will not start any battles.');
+      Log.log('Your bot is set to accept challenges only - it will not start any battles.');
     }
 
     // sent by lobby.js

@@ -15,6 +15,7 @@ export default {
   matches: 3,
 
   server: 'localhost',
+  prodServer: 'metal-heart.org',
   port: 8000,
   format: 'randombattle'
 };

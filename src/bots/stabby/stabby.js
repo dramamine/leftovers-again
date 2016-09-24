@@ -7,7 +7,7 @@ import Damage from 'leftovers-again/game/damage';
 
 import {MOVE, SWITCH} from 'leftovers-again/decisions';
 
-class Stabby {
+export default class Stabby {
 
   decide(state) {
     if (state.forceSwitch) {
@@ -52,5 +52,3 @@ class Stabby {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }
-
-export default Stabby;
