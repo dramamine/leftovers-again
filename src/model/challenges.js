@@ -27,7 +27,7 @@ class Challenger {
    * @return Constructor
    */
   constructor(connection, botmanager, args) {
-    const {format, scrappy, matches, opponent} = args;
+    const {format, scrappy, matches, opponent, results} = args;
     this.connection = connection;
     this.botmanager = botmanager;
 
@@ -36,6 +36,7 @@ class Challenger {
     this.scrappy = scrappy;
     this.matches = matches;
     this.opponent = opponent;
+    this.results = results;
 
     if (!scrappy && !opponent) {
       Log.log('Your bot is set to accept challenges only - it will not start any battles.');
@@ -147,7 +148,7 @@ class Challenger {
         }, 1000);
       }
     }
-    Reporter.report(battles);
+    Reporter.report(battles, this.results);
   }
 
   /**

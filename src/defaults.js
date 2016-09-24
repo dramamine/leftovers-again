@@ -17,5 +17,7 @@ export default {
   server: 'localhost',
   prodServer: 'metal-heart.org',
   port: 8000,
-  format: 'randombattle'
+  format: 'randombattle',
+
+  results: 'results/results.csv'
 };
