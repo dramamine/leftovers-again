@@ -42,8 +42,8 @@ class Challenger {
     this.matches = matches;
 
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
-    listener.subscribe('battlereport', this.onBattleReport.bind(this));
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
+    listener.subscribe('_battleReport', this.onBattleReport.bind(this));
 
     if (scrappy) {
       // only issue challenges in non-spawned copies
@@ -71,9 +71,13 @@ class Challenger {
    */
   destroy() {
     listener.unsubscribe('updatechallenges', this.onUpdateChallenges);
-    listener.unsubscribe('users', this.gunzBlazing);
-    listener.unsubscribe('battlereport', this.onBattleReport);
     listener.unsubscribe('updateuser', this.onUpdateUser);
+    listener.unsubscribe('_battleReport', this.onBattleReport);
+    if (this.scrappy) {
+      listener.unsubscribe('users', this.gunzBlazing);
+      listener.unsubscribe('j', this.onUserJoin);
+      listener.unsubscribe('l', this.onUserLeave);
+    }
   }
 
   /**
@@ -82,12 +86,14 @@ class Challenger {
    * @param  {string} user The user who joined.
    */
   onUserJoin([user]) {
+    console.log('uh oh, deprecated function onUserJoin called.', user);
     const trimmed = util.toId(user);
     if (!this.users[trimmed] || this.users[trimmed] === Statuses.INACTIVE) {
       this.users[trimmed] = (trimmed === mynick
         ? Statuses.SELF
         : Statuses.ACTIVE);
       if (this.timer) clearTimeout(this.timer);
+      console.log('onUserJoin calling _challengeNext...');
       this.timer = setTimeout(this._challengeNext, 1000);
     }
   }
@@ -174,6 +180,7 @@ class Challenger {
    *
    */
   gunzBlazing([usersStr]) {
+    console.log('deprecated function called: params::gunzBlazing', usersStr);
     let opponent; // user for iterator
     const userList = usersStr.split(', ');
     // userlist[0] is just the count of users. skip it
@@ -183,6 +190,7 @@ class Challenger {
       if (this.users[opponent] !== Statuses.SELF) {
         this.users[opponent] = Statuses.ACTIVE;
         if (this.timer) clearTimeout(this.timer);
+        console.log('gunzBlazing::uh oh, setting a timer to challengeNext');
         this.timer = setTimeout(this._challengeNext, 1000);
       }
     }

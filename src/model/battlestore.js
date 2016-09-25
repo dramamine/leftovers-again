@@ -269,7 +269,8 @@ export default class BattleStore {
    * @param  {[type]} something  ignored
    */
   handlePlayer(id, name, something) { //eslint-disable-line
-    this.names[id] = name;
+    if (!name) return;
+    this.names[id] = util.toId(name);
   }
 
   /**

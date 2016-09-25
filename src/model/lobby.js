@@ -55,7 +55,7 @@ class Lobby {
     if (!this.users.has(cleaned)) {
       this.users.add(cleaned);
       console.log('joined: ', cleaned);
-      listener.relay('lobby_update', this.users);
+      listener.relay('_lobbyUpdate', this.users);
     }
   }
 
@@ -68,7 +68,7 @@ class Lobby {
     const cleaned = util.toId(user);
     if (this.users.delete(cleaned)) {
       console.log('left: ', cleaned);
-      listener.relay('lobby_update', this.users);
+      listener.relay('_lobbyUpdate', this.users);
     }
   }
 
@@ -80,7 +80,7 @@ class Lobby {
       opponent = util.toId(userList[i]);
       this.users.add(opponent);
     }
-    listener.relay('lobby_update', this.users);
+    listener.relay('_lobbyUpdate', this.users);
   }
 
   /**
@@ -100,7 +100,7 @@ class Lobby {
       if (this.users.has(mynick)) {
         console.warn('weird that users array had my nickname in it.');
         this.users.delete(mynick);
-        listener.relay('lobby_update', this.users);
+        listener.relay('_lobbyUpdate', this.users);
       }
       break;
     default:

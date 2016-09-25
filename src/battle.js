@@ -5,7 +5,7 @@ import {MOVE, SWITCH} from './decisions';
 import report from './report';
 import listener from './listener';
 import Reporter from './reporters/matchstatus';
-// import util from 'pokeutil';
+import util from 'pokeutil';
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -137,11 +137,12 @@ class Battle {
     this.decide();
   }
 
-  handleWin(winner) {
+  handleWin(nick) {
+    const winner = util.toId(nick);
     Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
     report.win(winner, this.store, this.bid);
 
-    listener.relay('battlereport', {
+    listener.relay('_battleReport', {
       winner,
       opponent: this.store.yourNick});
   }

@@ -42,14 +42,9 @@ class Challenger {
       Log.log('Your bot is set to accept challenges only - it will not start any battles.');
     }
 
-    // sent by lobby.js
-    listener.subscribe('lobby_update', this.challengeSomeone.bind(this));
-
-    // @TODO this doesn't exist.
-    listener.subscribe('battle_started', this.onBattleStarted.bind(this));
-
-    listener.subscribe('battlereport', this.onBattleReport.bind(this));
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
+    listener.subscribe('_battleReport', this.onBattleReport.bind(this));
+    listener.subscribe('_lobbyUpdate', this.challengeSomeone.bind(this));
 
 
     // all the users we've seen
@@ -119,13 +114,10 @@ class Challenger {
    */
   destroy() {
     listener.unsubscribe('updatechallenges', this.onUpdateChallenges);
-    listener.unsubscribe('users', this.gunzBlazing);
-    listener.unsubscribe('battlereport', this.onBattleReport);
     listener.unsubscribe('updateuser', this.onUpdateUser);
-  }
-
-  onBattleStarted() {
-    activeMatches += 1;
+    listener.unsubscribe('_battleReport', this.onBattleReport);
+    listener.unsubscribe('_battleStarted', this.onBattleStarted);
+    listener.unsubscribe('_lobbyUpdate', this.challengeSomeone);
   }
 
 /**
@@ -135,11 +127,13 @@ class Challenger {
  * @param  {[type]} options.opponent [description]
  * @return {[type]}                  [description]
  */
-  onBattleReport({winner, opponent}) {
+  onBattleReport(results) {
+    const winner = util.toId(results.winner);
+    const opponent = util.toId(results.opponent);
     activeMatches -= 1;
     Log.info('winner:', winner, 'loser:', opponent);
 
-    const battles = report.data().filter(match => match.you == opponent);
+    const battles = report.data().filter(match => match.you === opponent);
     if (battles.length < this.matches) {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
@@ -153,6 +147,11 @@ class Challenger {
 
   /**
    * Handle the updatechallenges message. Accept any challenges.
+   *
+   * When challenging:
+   * [ '{"challengesFrom":{},"challengeTo":{"to":"randumbmarten","format":"randombattle"}}' ]
+   * When challenge was accepted:
+   * [ '{"challengesFrom":{},"challengeTo":null}' ]
    *
    * @param  {String} msg A JSON string
    * @param {Object} msg.challengesFrom An object of received challenges.
@@ -265,6 +264,7 @@ class Challenger {
     // console.log(this.challengesFrom);
     // console.log(this.challengeTo);
     this.connection.send('|/challenge ' + nick + ', ' + format);
+    this.activeMatches += 1;
   }
 
 }
