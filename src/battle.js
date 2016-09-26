@@ -5,7 +5,7 @@ import {MOVE, SWITCH} from './decisions';
 import report from './report';
 import listener from './listener';
 import Reporter from './reporters/matchstatus';
-import util from 'pokeutil';
+import util from './pokeutil';
 
 /**
  * This class manages a single battle. It handles these tasks:

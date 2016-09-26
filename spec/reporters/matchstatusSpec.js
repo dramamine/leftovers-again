@@ -5,8 +5,8 @@ import Reporter from 'leftovers-again/reporters/matchstatus';
 describe('matchstatus reporter', () => {
   it('should report as I expect', () => {
     spyOn(console, 'log');
-    const res = Reporter.report(exampleState);
-    expect(res).toBe(undefined);
+    Reporter.report(exampleState);
+    expect(console.log).toHaveBeenCalled();
   });
   describe('pad left', () => {
     it('should pad left', () => {

@@ -54,7 +54,6 @@ class Lobby {
     if (cleaned === mynick) return;
     if (!this.users.has(cleaned)) {
       this.users.add(cleaned);
-      console.log('joined: ', cleaned);
       listener.relay('_lobbyUpdate', this.users);
     }
   }
@@ -67,7 +66,6 @@ class Lobby {
   onUserLeave([user]) {
     const cleaned = util.toId(user);
     if (this.users.delete(cleaned)) {
-      console.log('left: ', cleaned);
       listener.relay('_lobbyUpdate', this.users);
     }
   }
@@ -98,7 +96,7 @@ class Lobby {
       Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
       mynick = util.toId(nick);
       if (this.users.has(mynick)) {
-        console.warn('weird that users array had my nickname in it.');
+        Log.error('weird that users array had my nickname in it.');
         this.users.delete(mynick);
         listener.relay('_lobbyUpdate', this.users);
       }

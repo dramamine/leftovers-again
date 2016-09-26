@@ -51,6 +51,7 @@ Leftovers Again: interface for Pokemon Showdown bots
 -loglevel [1-5]: level of severity of logs to show. higher levels are more
                  verbose. default 3.
 -opponent [path]: Spawn a specific opponent via a child process.
+-opponents [paths]: Spawn multiple opponents, ex. randumb,stabby,../anotherbot
 -scrappy:       Have your bot pick fights with anyone who's in the lobby or
                  who joins the lobby.
 -server=[path]: Connect to a specific server.
@@ -78,7 +79,11 @@ const start = (metadata, Bot) => {
 
   if (args.opponent) {
     Spawner.spawn(args.opponent);
-    // auto-set scrappy
+    args.scrappy = true;
+  } else if (args.opponents) {
+    args.opponents.split(',').forEach(opponent => {
+      Spawner.spawn(opponent);
+    });
     args.scrappy = true;
   }
 
@@ -92,6 +97,10 @@ const start = (metadata, Bot) => {
 
   // use prodServer if user had --production flag
   if (args.production) {
+    if (args.scrappy) {
+      Log.error('Come on! You can\'t challenge EVERYONE on the PRODUCTION server.');
+      process.exit();
+    }
     args.server = args.prodServer;
   }
 

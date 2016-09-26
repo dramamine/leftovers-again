@@ -1,5 +1,5 @@
 import EndOfMatch from 'leftovers-again/reporters/endofmatch';
-
+import fs from 'fs';
 const exampleState = [
   {won: true, myAlive: 6, yourAlive: 3, mine: [], yours: []},
   {won: true, myAlive: 6, yourAlive: 0, mine: [], yours: []},
@@ -9,6 +9,8 @@ const exampleState = [
 describe('matchstatus reporter', () => {
   it('should report as I expect', () => {
     spyOn(console, 'log');
+    spyOn(fs, 'exists').and.returnValue(false);
+    spyOn(fs, 'appendFile');
     const res = EndOfMatch.report(exampleState);
     expect(res).toBe(undefined);
   });
