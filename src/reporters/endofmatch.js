@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import Log from '../log';
 
 const winSymbol = chalk.bold.green('✓');
 const loseSymbol = chalk.bold.red('X');
@@ -8,10 +9,10 @@ class EndOfMatch {
   report(state, path) {
     let xo = '';
     let matchup = '';
-    state.forEach(match => {
+    state.forEach((match) => {
       xo += (match.won) ? winSymbol : loseSymbol;
-      match.myDead = match.mine.filter( mon =>  mon.dead).length;
-      match.yourDead = match.yours.filter( mon =>  mon.dead).length;
+      match.myDead = match.mine.filter(mon => mon.dead).length;
+      match.yourDead = match.yours.filter(mon => mon.dead).length;
       matchup += match.yourDead + '-' + match.myDead + ' ';
     });
     console.log('WINS: ' + xo);
@@ -28,7 +29,9 @@ class EndOfMatch {
       }
       // don't worry, this creates files if they don't exist
       fs.appendFile(path, out, (err) => {
-        if (err) Log.error(err);
+        if (err) {
+          Log.error(err);
+        }
       });
     });
   }

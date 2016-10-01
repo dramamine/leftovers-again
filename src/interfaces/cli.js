@@ -1,5 +1,6 @@
-import listener from '../listener';
 import inquirer from 'inquirer';
+import listener from '../listener';
+import Log from '../log';
 // import colors from 'colors/safe';
 
 const actions = {
@@ -14,7 +15,7 @@ const actions = {
  *
  */
 class Interactive {
-  constructor({challenger, lobby}) {
+  constructor({ challenger, lobby }) {
     this.challenger = challenger;
     this.lobby = lobby;
     console.log(this.lobby);
@@ -50,13 +51,13 @@ class Interactive {
       ]
     }).then((response) => {
       switch (response.lobby) {
-      case actions.CHALLENGE:
-        this.challenge();
-        break;
-      case actions.EXIT:
-      default:
-        exit();
-        return;
+        case actions.CHALLENGE:
+          this.challenge();
+          break;
+        case actions.EXIT:
+        default:
+          process.exit();
+          return;
       }
     });
   }

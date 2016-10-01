@@ -10,13 +10,12 @@ class Connection {
   /**
    * Constructor for a Connection
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Connect to a thing.
    */
-  connect() {
+  connect() { // eslint-disable-line
     log.error('please override me.');
   }
 
@@ -28,7 +27,7 @@ class Connection {
    *
    * @param  {string} msg The message from the server.
    */
-  _handleMessage(msg) {
+  handleMessage(msg) {
     // console.log('received: %s', msg);
     const messages = msg.split('\n');
     let bid = null;

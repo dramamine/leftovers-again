@@ -1,7 +1,7 @@
 import BattleStore from './model/battlestore';
 
 import Log from './log';
-import {MOVE, SWITCH} from './decisions';
+import { MOVE, SWITCH } from './decisions';
 import report from './report';
 import listener from './listener';
 import Reporter from './reporters/matchstatus';
@@ -64,7 +64,7 @@ class Battle {
   getHelp() {
     if (this.bot.getHelp) {
       listener.relay('_send', this.bid + '|' +
-        JSON.stringify( this.bot.getHelp( this.store.data() ) ));
+        JSON.stringify(this.bot.getHelp(this.store.data())));
     }
   }
 
@@ -103,6 +103,8 @@ class Battle {
    * teamPreview: This is a team preview request
    * forceSwitch: Due to moves / feinting, we must switch our active mon
    * @param  {string} json The request JSON
+   *
+   * @return {Boolean}  True if we had to make a decision; false otherwise
    */
   handleRequest(json) {
     const data = JSON.parse(json);
@@ -125,7 +127,9 @@ class Battle {
 
     if (data.forceSwitch) {
       this.decide();
+      return true;
     }
+    return false;
   }
 
   /**
@@ -144,7 +148,8 @@ class Battle {
 
     listener.relay('_battleReport', {
       winner,
-      opponent: this.store.yourNick});
+      opponent: this.store.yourNick
+    });
   }
 
   handleCallback(desc, code) {
@@ -154,7 +159,7 @@ class Battle {
     if (desc === 'trapped') {
       console.log('runnin my lil trapped routine');
       const state = this.store.data();
-      state.self.reserve.forEach(mon => {
+      state.self.reserve.forEach((mon) => {
         mon.dead = true;
       });
       this.decide(state);
@@ -183,23 +188,23 @@ class Battle {
     const choice = this.myBot().decide(state);
     if (choice instanceof Promise) {
       // wait for promises to resolve
-      choice.then( (resolved) => {
-        const res = Battle._formatMessage(this.bid, resolved, state);
+      choice.then((resolved) => {
+        const res = Battle.formatMessage(this.bid, resolved, state);
         Log.info(res);
         listener.relay('_send', res);
         // saving this state for future reference
-        this.prevStates.unshift( this.abbreviateState(state) );
+        this.prevStates.unshift(this.abbreviateState(state));
       }, (err) => {
         Log.err('I think there was an error here.');
         Log.err(err);
       });
     } else {
       // message is ready to go
-      const res = Battle._formatMessage(this.bid, choice, state);
+      const res = Battle.formatMessage(this.bid, choice, state);
       Log.info(res);
       listener.relay('_send', res);
       // saving this state for future reference
-      this.prevStates.unshift( this.abbreviateState(state) );
+      this.prevStates.unshift(this.abbreviateState(state));
     }
   }
 
@@ -210,7 +215,7 @@ class Battle {
    * @param  {Object} state  The state object sent to bots.
    * @return {[type]}        Fewer fields of that state object.
    */
-  abbreviateState(state) {
+  static abbreviateState(state) {
     return {
       turn: state.turn,
       self: {
@@ -242,14 +247,14 @@ class Battle {
    *
    * @see __constructor
    */
-  static _formatMessage(bid, choice, state) {
+  static formatMessage(bid, choice, state) {
     let verb;
     if (choice instanceof MOVE) {
-      const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
+      const moveIdx = Battle.lookupMoveIdx(state.self.active.moves, choice.id);
 
       if (typeof moveIdx !== 'number' || moveIdx < 0) {
-        console.warn('[invalid move!!', choice, state.self.active.moves, 'invalid move yo.');
-        exit;
+        Log.error(`invalid move!!' ${choice}, ${state.self.active.moves}`);
+        process.exit();
       }
 
       verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
@@ -261,8 +266,8 @@ class Battle {
       verb = (state.teamPreview)
         ? '/team '
         : '/switch ';
-      const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
-      verb = verb + (monIdx + 1); // switch indexes for the server are [1..6]
+      const monIdx = Battle.lookupMonIdx(state.self.reserve, choice.id);
+      verb += (monIdx + 1); // switch indexes for the server are [1..6]
     }
     return `${bid}|${verb}|${state.rqid}`;
   }
@@ -277,16 +282,15 @@ class Battle {
    *
    * @return {number} The move index.
    */
-  static _lookupMoveIdx(moves, idx) {
-    if (typeof(idx) === 'number') {
+  static lookupMoveIdx(moves, idx) {
+    if (typeof (idx) === 'number') {
       return idx;
-    } else if (typeof(idx) === 'object') {
+    } else if (typeof (idx) === 'object') {
       return moves.indexOf(idx);
-    } else if (typeof(idx) === 'string') {
-      return moves.findIndex( (move) => {
-        return move.id === idx;
-      });
+    } else if (typeof (idx) === 'string') {
+      return moves.findIndex(move => move.id === idx);
     }
+    return -1;
   }
 
   /**
@@ -299,19 +303,19 @@ class Battle {
    *
    * @return {number} The switch index.
    */
-  static _lookupMonIdx(mons, idx) {
-    switch (typeof(idx)) {
-    case 'number':
-      return idx;
-    case 'object':
-      return mons.indexOf(idx);
-    case 'string':
-      return mons.findIndex( (mon) => {
-        return mon.species === idx || mon.id === idx;
-      });
-    default:
-      console.log('not a valid choice!', idx, mons);
+  static lookupMonIdx(mons, idx) {
+    switch (typeof (idx)) {
+      case 'number':
+        return idx;
+      case 'object':
+        return mons.indexOf(idx);
+      case 'string':
+        return mons.findIndex(mon => mon.species === idx || mon.id === idx
+        );
+      default:
+        console.log('not a valid choice!', idx, mons);
     }
+    return -1;
   }
 }
 

@@ -27,7 +27,7 @@ class Challenger {
    * @return Constructor
    */
   constructor(connection, botmanager, args) {
-    const {format, scrappy, matches, results} = args;
+    const { format, scrappy, matches, results } = args;
     this.connection = connection;
     this.botmanager = botmanager;
 
@@ -99,13 +99,13 @@ class Challenger {
       return false;
     }
 
-    if ( (this.challengesFrom && this.challengesFrom[opponent]) ||
-      (this.challengeTo && this.challengeTo[opponent]) ) {
+    if ((this.challengesFrom && this.challengesFrom[opponent]) ||
+      (this.challengeTo && this.challengeTo[opponent])) {
       Log.info(`already have a challenge from this person: ${opponent}`);
       return false;
     }
 
-    this._challenge(opponent);
+    this.challenge(opponent);
     return true;
   }
 
@@ -139,7 +139,7 @@ class Challenger {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
         setTimeout(() => {
-          this._challenge(util.toId(opponent));
+          this.challenge(util.toId(opponent));
         }, 1000);
       }
     }
@@ -166,12 +166,12 @@ class Challenger {
    */
   onUpdateChallenges(msg) {
     console.log('onUpdateChallenges:', msg);
-    const {challengesFrom, challengeTo} = JSON.parse(msg);
+    const { challengesFrom, challengeTo } = JSON.parse(msg);
     Log.debug('updated challenges: ' + msg);
     this.challengesFrom = challengesFrom || {};
     this.challengeTo = challengeTo;
     if (!challengeTo) {
-      Log.debug('no outstanding challenges.')
+      Log.debug('no outstanding challenges.');
       this.outstandingChallenge = false;
       if (this.scrappy) {
         this.challengeSomeone();
@@ -180,8 +180,8 @@ class Challenger {
     Object.keys(challengesFrom).forEach( (opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(format, this.botmanager.accepts)) {
-        if (Challenger._requiresTeam(format)) this.sendTeam(opponent);
+      if (Challenger.acceptable(format, this.botmanager.accepts)) {
+        if (Challenger.requiresTeam(format)) this.sendTeam(opponent);
         this.connection.send('|/accept ' + opponent);
         activeMatches.add(opponent);
       }
@@ -227,12 +227,12 @@ class Challenger {
   }
 
   /**
-   * [_acceptable description]
+   * [acceptable description]
    * @param  {String} challenge The match type we were challenged to
    * @param  {String} accepts  A comma-separated list of match types(?)
    * @return {Boolean} True if the bot will accept this challenge, false otherwise.
    */
-  static _acceptable(challenge, accepts) {
+  static acceptable(challenge, accepts) {
     if (accepts === 'ALL') return true;
     return accepts.includes(challenge);
   }
@@ -243,7 +243,7 @@ class Challenger {
    * @param  {[type]} format [description]
    * @return {[type]}               [description]
    */
-  static _requiresTeam(format) {
+  static requiresTeam(format) {
     if (format === 'randombattle') {
       return false;
     }
@@ -258,10 +258,10 @@ class Challenger {
    *
    * @param {String} The nickname to challenge.
    */
-  _challenge(nick) {
+  challenge(nick) {
     const format = this.format;
 
-    if (Challenger._requiresTeam(format)) this.sendTeam(nick);
+    if (Challenger.requiresTeam(format)) this.sendTeam(nick);
 
     Log.info(`sending challenge... ${nick} ${format}`);
     this.connection.send('|/challenge ' + nick + ', ' + format);

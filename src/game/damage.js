@@ -14,38 +14,32 @@ const STATS = [AT, DF, SA, SD, SP, HP];
 const ASSUME_LEVEL = 75;
 
 const NATURES = {
-  'adamant': [AT, SA],
-  'bashful': [null, null],
-  'bold': [DF, AT],
-  'brave': [AT, SP],
-  'calm': [SD, AT],
-  'careful': [SD, SA],
-  'docile': [null, null],
-  'gentle': [SD, DF],
-  'hardy': [null, null],
-  'hasty': [SP, DF],
-  'impish': [DF, SA],
-  'jolly': [SP, SA],
-  'lax': [DF, SD],
-  'lonely': [AT, DF],
-  'mild': [SA, DF],
-  'modest': [SA, AT],
-  'naive': [SP, SD],
-  'naughty': [AT, SD],
-  'quiet': [SA, SP],
-  'quirky': [null, null],
-  'rash': [SA, SD],
-  'relaxed': [DF, SP],
-  'sassy': [SD, SP],
-  'serious': [null, null],
-  'timid': [SP, AT]
+  adamant: [AT, SA],
+  bashful: [null, null],
+  bold: [DF, AT],
+  brave: [AT, SP],
+  calm: [SD, AT],
+  careful: [SD, SA],
+  docile: [null, null],
+  gentle: [SD, DF],
+  hardy: [null, null],
+  hasty: [SP, DF],
+  impish: [DF, SA],
+  jolly: [SP, SA],
+  lax: [DF, SD],
+  lonely: [AT, DF],
+  mild: [SA, DF],
+  modest: [SA, AT],
+  naive: [SP, SD],
+  naughty: [AT, SD],
+  quiet: [SA, SP],
+  quirky: [null, null],
+  rash: [SA, SD],
+  relaxed: [DF, SP],
+  sassy: [SD, SP],
+  serious: [null, null],
+  timid: [SP, AT]
 };
-
-
-// DO NOT WANT
-function buildDescription() {
-  return '';
-}
 
 class Damage {
   processPokemon(mon) {
@@ -121,7 +115,7 @@ class Damage {
     if (!mon.stats) {
       mon.stats = {};
     }
-    [AT, SA, DF, SD, SP, HP].forEach( stat => {
+    [AT, SA, DF, SD, SP, HP].forEach((stat) => {
       if (!mon.stats[stat]) {
         this._assumeStat(mon, stat);
       }
@@ -130,7 +124,7 @@ class Damage {
     if (!mon.boostedStats) {
       mon.boostedStats = {};
     }
-    [AT, SA, DF, SD, SP].forEach( stat => {
+    [AT, SA, DF, SD, SP].forEach((stat) => {
       mon.boostedStats[stat] = getModifiedStat(
         mon.stats[stat], mon.boosts[stat]);
     });

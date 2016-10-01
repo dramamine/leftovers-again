@@ -3,7 +3,7 @@
  *
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 import util from 'leftovers-again/pokeutil';
 
 
@@ -87,8 +87,8 @@ Bold Nature
    */
   decide(state) {
     if (state.forceSwitch || state.teamPreview) {
-      const myMon = this._pickOne(
-        state.self.reserve.filter( mon => !mon.dead )
+      const myMon = this.pickOne(
+        state.self.reserve.filter(mon => !mon.dead)
       );
       return new SWITCH(myMon);
     }
@@ -103,23 +103,23 @@ Bold Nature
     } else if (myHp < 25) {
       move = 'destinybond';
     } else {
-      move = this._pickMirrorCoatOrCounter(state);
+      move = this.pickMirrorCoatOrCounter(state);
     }
 
     return new MOVE(move);
   }
 
-  _pickMirrorCoatOrCounter(state) {
+  pickMirrorCoatOrCounter(state) {
     const theirMove = state.opponent.active.lastMove;
     if (theirMove) {
       const theirMoveObject = util.researchMoveById(theirMove);
       switch (theirMoveObject.category) {
-      case 'Physical':
-        return 'counter';
-      case 'Special':
-        return 'mirrorcoat';
-      default:
-        break;
+        case 'Physical':
+          return 'counter';
+        case 'Special':
+          return 'mirrorcoat';
+        default:
+          break;
       }
     }
 
@@ -129,7 +129,7 @@ Bold Nature
     return 'mirrorcoat';
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

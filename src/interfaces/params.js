@@ -1,11 +1,11 @@
 // import listener from './listener';
 // import socket from 'socket';
-import Team from './team';
-import Log from './log';
-import listener from './listener';
-import report from './report';
-import Reporter from './reporters/endofmatch';
-import util from './pokeutil';
+import Team from '../team';
+import Log from '../log';
+import listener from '../listener';
+import report from '../report';
+import Reporter from '../reporters/endofmatch';
+import util from '../pokeutil';
 
 // for tracking the status of users in the lobby
 const Statuses = {
@@ -33,7 +33,7 @@ class Challenger {
    * @return Constructor
    */
   constructor(connection, botmanager, args) {
-    const {format, scrappy, matches, opponent} = args;
+    const { format, scrappy, matches, opponent } = args;
     this.connection = connection;
     this.botmanager = botmanager;
     // if user provided opponent, challenge him
@@ -53,7 +53,7 @@ class Challenger {
       listener.subscribe('j', this.onUserJoin.bind(this));
       listener.subscribe('l', this.onUserLeave.bind(this));
     }
-    this._challengeNext = this._challengeNext.bind(this);
+    this.challengeNext = this.challengeNext.bind(this);
     this.onUpdateUser = this.onUpdateUser.bind(this);
     this.onUpdateChallenges = this.onUpdateChallenges.bind(this);
 
@@ -93,8 +93,8 @@ class Challenger {
         ? Statuses.SELF
         : Statuses.ACTIVE);
       if (this.timer) clearTimeout(this.timer);
-      console.log('onUserJoin calling _challengeNext...');
-      this.timer = setTimeout(this._challengeNext, 1000);
+      console.log('onUserJoin calling challengeNext...');
+      this.timer = setTimeout(this.challengeNext, 1000);
     }
   }
 
@@ -116,15 +116,15 @@ class Challenger {
    */
   onUpdateUser([nick, status]) { // eslint-disable-line
     switch (status) {
-    case '0':
-      break;
-    case '1':
-      Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
-      mynick = util.toId(nick);
-      break;
-    default:
-      Log.error(`Weird status when trying to log in: ${status} ${nick}`);
-      break;
+      case '0':
+        break;
+      case '1':
+        Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
+        mynick = util.toId(nick);
+        break;
+      default:
+        Log.error(`Weird status when trying to log in: ${status} ${nick}`);
+        break;
     }
   }
 
@@ -132,9 +132,9 @@ class Challenger {
    * Find the next active opponent and issue a challenge.
    *
    */
-  _challengeNext() {
+  challengeNext() {
     let opponent = '';
-    Object.keys(this.users).some(user => {
+    Object.keys(this.users).some((user) => {
       const userid = util.toId(user);
       if (this.users[userid] === Statuses.ACTIVE) {
         opponent = userid;
@@ -145,10 +145,10 @@ class Challenger {
       if (this.challengesFrom[opponent] || this.challengeTo[opponent]) {
         Log.info(`already have a challenge from this person: ${opponent}`);
       } else {
-        this._challenge(opponent);
+        this.challenge(opponent);
       }
       this.users[util.toId(opponent)] = Statuses.CHALLENGED;
-      this.timer = setTimeout(this._challengeNext, 1000);
+      this.timer = setTimeout(this.challengeNext, 1000);
     }
   }
 
@@ -159,7 +159,7 @@ class Challenger {
  * @param  {[type]} options.opponent [description]
  * @return {[type]}                  [description]
  */
-  onBattleReport({winner, opponent}) {
+  onBattleReport({ winner, opponent }) {
     Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you == opponent);
@@ -167,7 +167,7 @@ class Challenger {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
         setTimeout(() => {
-          this._challenge(util.toId(opponent));
+          this.challenge(util.toId(opponent));
         }, 1000);
       }
     }
@@ -191,7 +191,7 @@ class Challenger {
         this.users[opponent] = Statuses.ACTIVE;
         if (this.timer) clearTimeout(this.timer);
         console.log('gunzBlazing::uh oh, setting a timer to challengeNext');
-        this.timer = setTimeout(this._challengeNext, 1000);
+        this.timer = setTimeout(this.challengeNext, 1000);
       }
     }
   }
@@ -210,18 +210,18 @@ class Challenger {
    *
    */
   onUpdateChallenges(msg) {
-    const {challengesFrom, challengeTo} = JSON.parse(msg);
+    const { challengesFrom, challengeTo } = JSON.parse(msg);
     Log.debug('updated challenges: ' + msg);
     this.challengesFrom = challengesFrom || {};
     this.challengeTo = challengeTo || {};
-    Object.keys(challengesFrom).forEach( (opponent) => {
+    Object.keys(challengesFrom).forEach((opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
-      if (Challenger._acceptable(format, this.botmanager.accepts)) {
+      if (Challenger.acceptable(format, this.botmanager.accepts)) {
         // this is the point at which we need to pick a team!
         // team message is: /utm ('use team')
 
-        if (Challenger._requiresTeam(format)) {
+        if (Challenger.requiresTeam(format)) {
           const team = this.botmanager.team(opponent);
           if (team) {
             const utmString = new Team(team).asUtm();
@@ -255,12 +255,12 @@ class Challenger {
   }
 
   /**
-   * [_acceptable description]
+   * [acceptable description]
    * @param  {String} challenge The match type we were challenged to
    * @param  {String} accepts  A comma-separated list of match types(?)
    * @return {Boolean} True if the bot will accept this challenge, false otherwise.
    */
-  static _acceptable(challenge, accepts) {
+  static acceptable(challenge, accepts) {
     if (accepts === 'ALL') return true;
     return accepts.includes(challenge);
   }
@@ -271,7 +271,7 @@ class Challenger {
    * @param  {[type]} format [description]
    * @return {[type]}               [description]
    */
-  static _requiresTeam(format) {
+  static requiresTeam(format) {
     if (format === 'randombattle') {
       return false;
     }
@@ -286,7 +286,7 @@ class Challenger {
    *
    * @param {String} The nickname to challenge.
    */
-  _challenge(nick) {
+  challenge(nick) {
     Log.info(`challenge called. ${nick}`);
     if (nick === mynick) {
       Log.error('cant challenege myself.');
@@ -294,7 +294,7 @@ class Challenger {
     }
     const format = this.format;
 
-    if (Challenger._requiresTeam(format)) {
+    if (Challenger.requiresTeam(format)) {
       const team = this.botmanager.team(nick);
       if (team) {
         const utmString = new Team(team).asUtm();

@@ -1,10 +1,11 @@
-const spawn = require('child_process').spawn;
 import Log from './log';
+
+const spawn = require('child_process').spawn;
 
 let op;
 
 class Bot {
-  decide(json) {
+  static decide(json) {
     const res = (resolve) => {
       op.send(json);
       op.stdout.on('data', (data) => {

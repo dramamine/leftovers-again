@@ -128,7 +128,7 @@ export default class BattleStore {
       turn: this.turn,
       from: actingMon.species,
       frompos: actingMon.position,
-      move: move,
+      move,
       to: targetMon.species,
       topos: targetMon.position
     });
@@ -286,8 +286,8 @@ export default class BattleStore {
   handleTurn(x) {
     this.turn = parseInt(x, 10);
 
-    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
-    this.barn.all().filter(isactive).forEach( mon => {
+    const isactive = mon => !mon.dead && (!!mon.position || mon.active);
+    this.barn.all().filter(isactive).forEach((mon) => {
       this.statuses.push({
         turn: this.turn,
         position: mon.position,
@@ -426,10 +426,10 @@ export default class BattleStore {
       opponent: {}
     };
     // const output = _.clone(this.state, true);
-    const dataGetter = (mon) => { return mon.data(); };
-    const iamowner = (mon) => { return mon.owner === this.myId; };
-    const youareowner = (mon) => { return mon.owner !== this.myId; };
-    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
+    const dataGetter = mon => mon.data();
+    const iamowner = mon => mon.owner === this.myId;
+    const youareowner = mon => mon.owner !== this.myId;
+    const isactive = mon => !mon.dead && (!!mon.position || mon.active);
     const byPosition = (a, b) => b.position - a.position;
     const byOrder = (a, b) => a.order - b.order;
 
@@ -457,7 +457,7 @@ export default class BattleStore {
     if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
       Log.warn('stop the presses! pokemon with no owner.');
       Log.warn(output.opponent.active[0]);
-      exit();
+      process.exit(-1);
     }
 
     if (output.self.active.length > 1) {
@@ -473,11 +473,9 @@ export default class BattleStore {
         output.self.active.splice(output.self.active.indexOf(zoroark), 1);
 
         // mark the actual pokemon of ours as being Zoroark
-        output.self.active.map(mon => {
+        output.self.active.forEach((mon) => {
           mon.isZoroark = true;
         });
-
-
       } else {
         Log.warn('stop the presses! too many active pokemon');
         Log.warn(output.self.active);

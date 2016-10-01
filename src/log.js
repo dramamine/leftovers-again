@@ -9,16 +9,28 @@ let loglevel = 3;
  * important messages.
  */
 class Log {
-  debug(msg) { if (loglevel >= 5) console.log(chalk.green(msg)); }
-  info(msg) { if (loglevel >= 4)console.log(chalk.yellow(msg)); }
-  log(msg) { if (loglevel >= 3) console.log(chalk.cyan(msg)); }
-  warn(msg) { if (loglevel >= 2) console.log(chalk.magenta(msg)); }
-  err(msg) { if (loglevel >= 1) console.log(chalk.red(msg)); }
-  error(msg) { if (loglevel >= 1) console.error(chalk.red(msg)); }
+  debug(msg) {
+    if (loglevel >= 5) console.log(chalk.green(msg));
+  }
+  info(msg) {
+    if (loglevel >= 4) console.log(chalk.yellow(msg));
+  }
+  log(msg) {
+    if (loglevel >= 3) console.log(chalk.cyan(msg));
+  }
+  warn(msg) {
+    if (loglevel >= 2) console.log(chalk.magenta(msg));
+  }
+  err(msg) {
+    if (loglevel >= 1) console.log(chalk.red(msg));
+  }
+  error(msg) {
+    if (loglevel >= 1) console.error(chalk.red(msg));
+  }
 
   toFile(file, msg) {
     // const out = new Date().toUTCString() + ' ' + msg + '\n';
-    fs.appendFile( 'log/' + file, msg + '\n', (err) => {
+    fs.appendFile('log/' + file, msg + '\n', (err) => {
       if (err) console.error(err);
       return false;
     });

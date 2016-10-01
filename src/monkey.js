@@ -1,7 +1,7 @@
+import WebSocket from 'ws';
 import Connection from './connection';
 import log from './log';
 import listener from './listener';
-import WebSocket from 'ws';
 
 const PORT = 7331;
 
@@ -25,12 +25,14 @@ class Monkey extends Connection {
   connect() {
     log.info('connection constructing.');
     const WebSocketServer = WebSocket.Server;
-    const wss = new WebSocketServer({ port: PORT });
+    const wss = new WebSocketServer({
+      port: PORT
+    });
 
     wss.on('connection', (ws) => {
       log.info('connection established.');
       this.ws = ws;
-      ws.on('message', this._handleMessage);
+      ws.on('message', this.handleMessage);
     });
 
     listener.subscribe('_send', this.send.bind(this));

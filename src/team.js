@@ -19,11 +19,11 @@ export default class Team {
    * file to figure out what you need.
    */
   constructor(tm) {
-    if (Array.isArray(tm) && Team._seemsValid(tm)) {
+    if (Array.isArray(tm) && Team.seemsValid(tm)) {
       this.self = tm;
     } else if (typeof tm === 'string') {
       const team = Team.interpretSmogon(tm);
-      if (Team._seemsValid(team)) {
+      if (Team.seemsValid(team)) {
         this.self = team;
       }
     }
@@ -65,9 +65,9 @@ export default class Team {
     if (seed === undefined) {
       seed = Team._getNextSeed();
       if (!seed) {
-        seed = Math.floor( Math.random() * lines.length ); // eslint-disable-line
+        seed = Math.floor(Math.random() * lines.length); // eslint-disable-line
       }
-      //
+    //
     }
     Log.debug('random team seed: ' + seed, lines.length);
     if (seed > lines.length) {
@@ -97,7 +97,7 @@ export default class Team {
    * @param  {Array} tm The team array
    * @return {Boolean} True if the team seems valid; false otherwise
    */
-  static _seemsValid(tm) {
+  static seemsValid(tm) {
     let member;
     for (let i = 0; i < tm.length; i++) {
       member = tm[i];
@@ -127,7 +127,7 @@ export default class Team {
   static interpretSmogon(str) {
     const mons = str.split('\n\n');
     const team = [];
-    mons.forEach( (lines) => {
+    mons.forEach((lines) => {
       const mon = Team.interpretOneSmogon(lines);
       if (mon.species) {
         team.push(mon);
@@ -162,7 +162,7 @@ export default class Team {
 
         let numAndLabel;
         let evLabel;
-        evs.forEach( (ev) => { // eslint-disable-line
+        evs.forEach((ev) => { // eslint-disable-line
           numAndLabel = ev.trim().split(' ');
           evLabel = numAndLabel[1].trim().toLowerCase();
           if (['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel) === -1) {
@@ -177,7 +177,7 @@ export default class Team {
 
         let numAndLabel;
         let ivLabel;
-        ivs.forEach( (iv) => { // eslint-disable-line
+        ivs.forEach((iv) => { // eslint-disable-line
           numAndLabel = iv.trim().split(' ');
           ivLabel = numAndLabel[1].trim().toLowerCase();
           if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(ivLabel)) {
@@ -234,7 +234,9 @@ export default class Team {
 
     for (let i = 0; i < team.length; i++) {
       const set = team[i];
-      if (buf) buf += ']';
+      if (buf) {
+        buf += ']';
+      }
 
       // name
       buf += set.name || '';
@@ -278,11 +280,11 @@ export default class Team {
       let evs = '|';
       if (set.evs) {
         evs = '|' + (set.evs.hp || '') +
-        ',' + (set.evs.atk || '') +
-        ',' + (set.evs.def || '') +
-        ',' + (set.evs.spa || '') +
-        ',' + (set.evs.spd || '') +
-        ',' + (set.evs.spe || '');
+          ',' + (set.evs.atk || '') +
+          ',' + (set.evs.def || '') +
+          ',' + (set.evs.spa || '') +
+          ',' + (set.evs.spd || '') +
+          ',' + (set.evs.spe || '');
       }
       if (evs === '|,,,,,') {
         buf += '|';
@@ -334,10 +336,6 @@ export default class Team {
         buf += '|';
       }
     }
-
     return buf;
   }
-
-
 }
-

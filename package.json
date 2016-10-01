@@ -1,6 +1,6 @@
 {
   "name": "leftovers-again",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Pokemon Showdown - Bot Client",
   "main": "lib/main.js",
   "files": [
@@ -17,17 +17,15 @@
     "copy": "cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
-    "docs:update": "npm run docs:publish",
-    "lint": "./node_modules/eslint/bin/eslint.js src",
+    "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
-    "test:coverage": "NODE_PATH='src:bots:spec' istanbul cover  -x '**/spec/**' jasmine",
     "develop": "NODE_PATH='src' nodemon --watch src --exec babel-node src/start.js",
     "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "node lib/start.js",
     "server": "cd deps/Pokemon-Showdown && node app.js",
     "client": "./scripts/open-client.sh",
     "generate": "./lib/scripts/generate.js",
-    "release": "npm run clean && npm run build && npm run test:coverage && npm run docs && npm run docs:publish && echo 'Great! Now run npm version patch (or whatever) and npm publish'"
+    "release": "npm run clean && npm run build && npm run test && npm run docs && npm run docs:publish && echo 'Great! Now run npm version patch (or whatever) and npm publish'"
   },
   "repository": {
     "type": "git",
@@ -40,24 +38,26 @@
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "chalk": "^1.1.3",
     "cheerio": "^0.20.0",
     "glob": "^7.0.3",
     "handlebars": "^4.0.5",
-    "minimist": "~1.2.0",
     "inquirer": "^1.0.2",
     "lodash": "^4.6.1",
+    "minimist": "~1.2.0",
     "ws": "^1.0.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.8.0",
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^7.0.0",
     "babel-plugin-module-alias": "^1.4.0",
     "babel-resolve-relative-module": "^1.0.1",
     "esdoc": "^0.4.6",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.1.0",
-    "eslint-plugin-react": "^4.3.0",
+    "eslint": "^3.7.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^2.0.0",
     "jasmine-es6": "^0.1.10"
   },
   "engine": "node >= 4.2.1"

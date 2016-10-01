@@ -1,12 +1,10 @@
-import SideConditions from 'leftovers-again/constants/sideConditions';
-import Log from 'leftovers-again/log';
+import SideConditions from '../constants/sideConditions';
+import Log from '../log';
 
 /**
  * Clean an action string.
  */
-const clean = (x) => {
-  return x.replace(/move:/gi, '').replace(/ /g, '').toLowerCase();
-};
+const clean = x => x.replace(/move:/gi, '').replace(/ /g, '').toLowerCase();
 
 // some effects can stack multiple times.
 const STACKS = {
@@ -32,7 +30,7 @@ export default class Side {
    */
   digest(action) {
     const move = clean(action);
-    if (Object.keys(SideConditions).find( x => SideConditions[x] === move) ) {
+    if (Object.keys(SideConditions).find(x => SideConditions[x] === move)) {
       // if it's already set, AND it's a stacking move
       if (this.stuff[move] && STACKS[move]) {
         this.stuff[move] = Math.min(this.stuff[move] + 1, STACKS[move]);

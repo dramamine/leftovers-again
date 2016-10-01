@@ -30,7 +30,7 @@ class Listener {
     }
 
     if (!listeners[type]) return;
-    listeners[type].map( (callback) => {
+    listeners[type].forEach((callback) => {
       callback.call(null, params);
     });
   }

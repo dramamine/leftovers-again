@@ -19,9 +19,7 @@ class Pokebarn {
 
   find(ident) {
     const searchFor = util.identWithoutPosition(ident);
-    const matches = this.allmon.filter( (mon) => {
-      return searchFor === mon.ident;
-    });
+    const matches = this.allmon.filter(mon => mon.ident === searchFor);
     if (matches.length > 1) {
       Log.error('Found multiple mons with the same ident! o fuck');
       Log.error(matches);
@@ -66,7 +64,7 @@ class Pokebarn {
    * @return {Pokemon} The Pokemon object.
    */
   findByPos(pos) {
-    return this.allmon.find( (mon) => { return mon.position === pos; });
+    return this.allmon.find(mon => mon.position === pos);
   }
 
 }

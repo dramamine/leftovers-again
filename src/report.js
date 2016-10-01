@@ -39,22 +39,16 @@ class Report {
 
     // iterating over pokemon we've seen and damaged only. unseen pokemon
     // are undamaged.
-    const damageDone = state.opponent.reserve.reduce( (prev, curr) => {
-      return prev + 100 - (curr.hppct || 0);
-    }, 0);
-    const damageTaken = 600 - state.self.reserve.reduce( (prev, curr) => {
-      return prev + (curr.hppct || 0);
-    }, 0);
+    const damageDone = state.opponent.reserve.reduce((prev, curr) =>
+      prev + 100 - (curr.hppct || 0), 0);
+    const damageTaken = 600 - state.self.reserve.reduce((prev, curr) =>
+      prev + (curr.hppct || 0), 0);
 
-    const myAlive = state.opponent.reserve.filter( mon => {
-      return !mon.dead;
-    }).length;
-    const yourAlive = 6 - state.self.reserve.filter( mon => {
-      return !mon.dead;
-    }).length;
+    const myAlive = state.opponent.reserve.filter(mon => !mon.dead).length;
+    const yourAlive = 6 - state.self.reserve.filter(mon => !mon.dead).length;
 
     const result = {
-      matchid: matchid,
+      matchid,
       won: iwon,
       damageDone,
       damageTaken,

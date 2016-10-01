@@ -10,7 +10,7 @@ import Challenger from './model/challenges';
 import Lobby from './model/lobby';
 import Log from './log';
 // import {random} from './team';
-import {MOVE, SWITCH} from './decisions';
+import { MOVE, SWITCH } from './decisions';
 
 let challenger;
 let myconnection;
@@ -81,7 +81,7 @@ const start = (metadata, Bot) => {
     Spawner.spawn(args.opponent);
     args.scrappy = true;
   } else if (args.opponents) {
-    args.opponents.split(',').forEach(opponent => {
+    args.opponents.split(',').forEach((opponent) => {
       Spawner.spawn(opponent);
     });
     args.scrappy = true;
@@ -90,9 +90,9 @@ const start = (metadata, Bot) => {
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
   const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches',
-  'production', 'prodServer', 'loglevel', 'results'];
+    'production', 'prodServer', 'loglevel', 'results'];
   params.forEach((param) => {
-    args[param] = args[param] ||  metadata[param] || config[param] || defaults[param];
+    args[param] = args[param] || metadata[param] || config[param] || defaults[param];
   });
 
   // use prodServer if user had --production flag
@@ -131,18 +131,31 @@ const start = (metadata, Bot) => {
 
   let interactive; // eslint-disable-line
   if (args.interactive || args.i) {
-    interactive = new Interactive({challenger, lobby});
+    interactive = new Interactive({
+      challenger,
+      lobby
+    });
   }
 
 
   // do something when app is closing
-  process.on('exit', exitHandler.bind(null, {cleanup: true}));
+  process.on('exit', exitHandler.bind(null, {
+    cleanup: true
+  }));
 
   // catches ctrl+c event
-  process.on('SIGINT', exitHandler.bind(null, {exit: true}));
+  process.on('SIGINT', exitHandler.bind(null, {
+    exit: true
+  }));
 
   // catches uncaught exceptions
-  process.on('uncaughtException', exitHandler.bind(null, {exit: true}));
+  process.on('uncaughtException', exitHandler.bind(null, {
+    exit: true
+  }));
 };
 
-export default {start, MOVE, SWITCH};
+export default {
+  start,
+  MOVE,
+  SWITCH
+};

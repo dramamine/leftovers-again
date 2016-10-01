@@ -90,20 +90,20 @@ class Lobby {
    */
   onUpdateUser([nick, status]) { // eslint-disable-line
     switch (status) {
-    case '0':
-      break;
-    case '1':
-      Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
-      mynick = util.toId(nick);
-      if (this.users.has(mynick)) {
-        Log.error('weird that users array had my nickname in it.');
-        this.users.delete(mynick);
-        listener.relay('_lobbyUpdate', this.users);
-      }
-      break;
-    default:
-      Log.error(`Weird status when trying to log in: ${status} ${nick}`);
-      break;
+      case '0':
+        break;
+      case '1':
+        Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
+        mynick = util.toId(nick);
+        if (this.users.has(mynick)) {
+          Log.error('weird that users array had my nickname in it.');
+          this.users.delete(mynick);
+          listener.relay('_lobbyUpdate', this.users);
+        }
+        break;
+      default:
+        Log.error(`Weird status when trying to log in: ${status} ${nick}`);
+        break;
     }
   }
 

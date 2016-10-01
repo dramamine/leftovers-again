@@ -1,4 +1,4 @@
-import {spawn} from 'child_process';
+import { spawn } from 'child_process';
 import Log from './log';
 
 /**
@@ -8,9 +8,7 @@ import Log from './log';
 const children = [];
 
 class Spawner {
-  constructor() {
-
-  }
+  constructor() {}
 
   /**
    * Spawn a node instance that runs the given bot. Logs errors, but suppresses
@@ -79,7 +77,7 @@ class Spawner {
    * kill all your children...
    */
   kill() {
-    children.forEach( (child) => {
+    children.forEach((child) => {
       if (child.stdin) child.stdin.pause();
       child.kill();
     });

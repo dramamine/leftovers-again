@@ -1,8 +1,8 @@
+import https from 'https';
+import WebSocket from 'ws';
 import listener from './listener';
 import Connection from './connection';
 import Log from './log';
-import https from 'https';
-import WebSocket from 'ws';
 
 let ws;
 
@@ -34,9 +34,9 @@ class Socket extends Connection {
     Log.log(`connecting to: ${server}:${port}`);
     this.build(`ws://${server}:${port}/showdown/websocket`);
 
-    listener.subscribe('challstr', this._login.bind(this));
+    listener.subscribe('challstr', this.login.bind(this));
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
-    listener.subscribe('popup', this._relayPopup);
+    listener.subscribe('popup', this.relayPopup);
     // defined message type for calling from battles, etc.
     listener.subscribe('_send', this.send);
   }
@@ -52,20 +52,24 @@ class Socket extends Connection {
       Log.log('Got open message from server\'s websocket.');
     });
 
-    ws.on('message', this._handleMessage);
+    ws.on('message', this.handleMessage);
 
     ws.on('error', (err) => {
       if (err.code === 'ECONNREFUSED') {
-        Log.error(`ECONNREFUSED when trying to connect to server at:`);
-        Log.error(`${addy}`);
-        Log.error(`Are you sure a server is running there?`);
-        Log.error(`Make sure you have the official server installed and running.\n`);
-        Log.error(` Using git (preferred):\n`);
-        Log.error(`    git clone https://github.com/Zarel/Pokemon-Showdown.git`);
-        Log.error(`    cd Pokemon-Showdown`);
-        Log.error(`    npm start\n`);
-        Log.error(`Running this separately will reduce startup time and allow you to read`);
-        Log.error(`server logs for debugging.\n`);
+        Log.error(`ECONNREFUSED when trying to connect to server at:
+    ${addy}
+Are you sure a server is running there?
+Make sure you have the official server installed and running.
+
+ Using git (preferred):
+
+    git clone https://github.com/Zarel/Pokemon-Showdown.git
+    cd Pokemon-Showdown
+    npm start
+
+Running this separately will reduce startup time and allow you to read
+server logs for debugging.
+`);
       }
     });
   }
@@ -78,7 +82,7 @@ class Socket extends Connection {
    *
    * @param  {String} message [description]
    */
-  send(message) {
+  static end(message) {
     ws.send(message);
   }
 
@@ -90,11 +94,11 @@ class Socket extends Connection {
     }
   }
 
-  exit() {
+  static exit() {
     ws.close();
   }
 
-  _login(args) {
+  login(args) {
     // console.log('responding to challenge.');
     const [id, str] = args;
     // console.log(id, str);
@@ -135,21 +139,21 @@ class Socket extends Connection {
           process.exit(-1);
         }
         if (chunks.indexOf('heavy load') !== -1) {
-          Log.error('the login server is under heavy load; trying again in one minute');
-          setTimeout( () => {
-            return this._handleMessage(message);
-          }, 60 * 1000);
+          Log.error('the login server is under heavy load; exiting');
+          // setTimeout(() => {
+          //   return this.handleMessage(message);
+          // }, 60 * 1000);
           return;
         }
         if (chunks.substr(0, 16) === '<!DOCTYPE html>') {
-          Log.error('Connection error 522; trying agian in one minute');
-          setTimeout( () => {
-            return this._handleMessage(message);
-          }, 60 * 1000);
+          Log.error('Connection error 522; exiting');
+          // setTimeout(() => {
+          //   return this.handleMessage(message);
+          // }, 60 * 1000);
           return;
         }
         if (chunks.indexOf('|challstr|') >= 0) {
-          this._handleMessage(chunks);
+          this.handleMessage(chunks);
           return;
         }
         // getting desparate here...
@@ -158,7 +162,7 @@ class Socket extends Connection {
           if (chunks.actionsuccess) {
             chunks = chunks.assertion;
           } else {
-            error('could not log in; action was not successful: ' + JSON.stringify(chunks));
+            Log.error(`could not log in; action was not successful: ${JSON.stringify(chunks)}`);
             process.exit(-1);
           }
         } catch (err) {
@@ -169,9 +173,7 @@ class Socket extends Connection {
       });
     });
 
-    req.on('error', (err) => {
-      return Log.error('login error: ' + err.stack);
-    });
+    req.on('error', (err => Log.error('login error: ' + err.stack)));
 
     if (data) {
       req.write(data);
@@ -179,7 +181,7 @@ class Socket extends Connection {
     return req.end();
   }
 
-  _relayPopup(args) {
+  static relayPopup(args) {
     Log.warn('Got a popup:');
     Log.warn(args);
   }
@@ -200,8 +202,9 @@ class Socket extends Connection {
 
     // also try to join a room according to our battle format
     if (this.format) socket.send('|/join ' + this.format);
-  }
 
+    return true;
+  }
 }
 
 const socket = new Socket();

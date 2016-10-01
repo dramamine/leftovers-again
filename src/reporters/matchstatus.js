@@ -65,9 +65,9 @@ class MatchStatus {
 
   boostString(boosts = {}) {
     let out = '';
-    Object.keys(boosts).forEach(key => {
+    Object.keys(boosts).forEach((key) => {
       const mod = (boosts[key] > 0)
-        ? '+'.                                                                                                                repeat(boosts[key])
+        ? '+'.repeat(boosts[key])
         : '-'.repeat(-1 * boosts[key]);
       out += key + mod + ' ';
     });
@@ -75,12 +75,8 @@ class MatchStatus {
   }
 
   myReserve(reserve) {
-    const myAlive = reserve.filter( mon => {
-      return !mon.dead;
-    }).length;
-    const myDead = reserve.filter( mon => {
-      return mon.dead;
-    }).length;
+    const myAlive = reserve.filter(mon => !mon.dead).length;
+    const myDead = reserve.filter(mon => mon.dead).length;
 
     const stuff = MY_BACKGROUND( MY_TEXT(
       this.padLeft(DEAD_MON_ICON.repeat(myDead) + EXTRA_MON_ICON.repeat(myAlive), 6)
@@ -88,15 +84,12 @@ class MatchStatus {
     return stuff;
   }
   yourReserve(reserve) {
-    const yourAlive = reserve.filter( mon => {
-      return !mon.dead;
-    }).length;
-    const yourDead = reserve.filter( mon => {
-      return mon.dead;
-    }).length;
+    const yourAlive = reserve.filter(mon => !mon.dead).length;
+    const yourDead = reserve.filter(mon => mon.dead).length;
 
     const stuff = YOUR_BACKGROUND( YOUR_TEXT(
-      this.padRight(EXTRA_MON_ICON.repeat(yourAlive) + DEAD_MON_ICON.repeat(yourDead), 6, UNKNOWN_MON_ICON)
+      this.padRight(EXTRA_MON_ICON.repeat(yourAlive) + DEAD_MON_ICON.repeat(yourDead),
+        6, UNKNOWN_MON_ICON)
     ));
     return stuff;
   }
