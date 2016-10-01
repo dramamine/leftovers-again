@@ -1,3 +1,21 @@
+[0.7.1] - 2016-10-01
+- Necessary fixes to templates; now you can load templated bots from places other than their root directory
+- --results parameter, check results/results.csv by default
+
+[0.7.0] - 2016-09-30
+- Some stuff about the --interactive flag
+- Implement --server flag
+- Remove compiled lib files from git
+- Major cleanup of challenger class
+
+[0.6.4] - 2016-06-24
+- Fixes for npm modules
+
+[0.6.0] - 2016-06-20
+- Make this work with npm
+- `generate` script
+- Windows compatibility
+
 0.4.1 => 0.5.0
 - Fix teams that break the single species rule (via nicknames)
 - Old typechart method is deprecated, use Typechart.compare

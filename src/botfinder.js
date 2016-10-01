@@ -7,7 +7,14 @@ import Log from './log';
    */
 const botFinder = (path) => {
   let Bot;
-  const location = [path, './bots/' + path, '../bots/' + path].find((loc) => {
+  const location = [
+    path,
+    './' + path,
+    './bots/' + path,
+    '../' + path,
+    '../bots/' + path,
+    '../../' + path,
+  ].find((loc) => {
     Bot = tryRequire(loc);
     if (Bot) return true;
   });
@@ -47,6 +54,12 @@ const tryRequire = (path) => {
   try {
     return require(path);
   } catch(e) {
+    // suppress errors about not being able to find the path.
+    if (!(e.message.includes('Cannot find module') && e.message.includes(path))) {
+      Log.error(`Weird error when trying to require ${path}`);
+      Log.error(e);
+    }
+
     return undefined;
   }
 };
