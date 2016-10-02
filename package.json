@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "babel": "babel src -d lib && babel scripts -d lib/scripts",
+    "babel:watch": "babel src -d lib -w",
     "build": "npm run babel && npm run copy",
     "clean": "rm -rf lib",
     "copy": "cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
@@ -19,9 +20,10 @@
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
-    "develop": "NODE_PATH='src' nodemon --watch src --exec babel-node src/start.js",
+    "develop": "npm-run-all --parallel babel:watch start:watch",
     "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "node lib/start.js",
+    "start:watch": "nodemon -w lib --delay 1500ms lib/start.js",
     "server": "cd deps/Pokemon-Showdown && node app.js",
     "client": "./scripts/open-client.sh",
     "generate": "./lib/scripts/generate.js",
@@ -58,7 +60,9 @@
     "eslint-config-airbnb": "^12.0.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^2.0.0",
-    "jasmine-es6": "^0.1.10"
+    "jasmine-es6": "^0.1.10",
+    "nodemon": "^1.10.2",
+    "npm-run-all": "^3.1.0"
   },
   "engine": "node >= 4.2.1"
 }
