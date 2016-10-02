@@ -215,7 +215,7 @@ class Battle {
    * @param  {Object} state  The state object sent to bots.
    * @return {[type]}        Fewer fields of that state object.
    */
-  static abbreviateState(state) {
+  abbreviateState(state) {
     return {
       turn: state.turn,
       self: {

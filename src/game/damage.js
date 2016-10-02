@@ -117,7 +117,7 @@ class Damage {
     }
     [AT, SA, DF, SD, SP, HP].forEach((stat) => {
       if (!mon.stats[stat]) {
-        this._assumeStat(mon, stat);
+        this.assumeStat(mon, stat);
       }
     });
 
@@ -156,10 +156,10 @@ class Damage {
    *
    * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
    *
-   * @see _assumeStat
+   * @see assumeStat
    */
-  _maximizeStat(mon, stat) {
-    return this._assumeStat(mon, stat, 252, 1.1);
+  maximizeStat(mon, stat) {
+    return this.assumeStat(mon, stat, 252, 1.1);
   }
 
   /**
@@ -171,10 +171,10 @@ class Damage {
    *
    * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
    *
-   * @see _assumeStat
+   * @see assumeStat
    */
-  _minimizeStat(mon, stat) {
-    return this._assumeStat(mon, stat, 0, 0.9);
+  minimizeStat(mon, stat) {
+    return this.assumeStat(mon, stat, 0, 0.9);
   }
 
   /**
@@ -193,9 +193,9 @@ class Damage {
    *                                   mon doesn't have a nature set. Should
    *                                   be in [0.9, 1, 1.1].
    */
-  _assumeStat(mon, stat, evs = 85, natureMultiplier = 1) {
+  assumeStat(mon, stat, evs = 85, natureMultiplier = 1) {
     if (!mon.stats[stat]) {
-      mon.stats[stat] = this._calculateStat(mon, stat, evs, natureMultiplier);
+      mon.stats[stat] = this.calculateStat(mon, stat, evs, natureMultiplier);
     }
     return mon;
   }
@@ -220,7 +220,7 @@ class Damage {
    *                                   mon doesn't have a nature set. Should
    *                                   be in [0.9, 1, 1.1].
    */
-  _calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
+  calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
     if (!mon.baseStats[stat]) {
       console.error('missing the stat I need:' + stat);
       console.error(mon.baseStats);
@@ -233,7 +233,7 @@ class Damage {
       (mon.level / 100) + addThis);
 
     const nature = (mon.nature
-        ? this._getNatureMultiplier(mon.nature, stat)
+        ? this.getNatureMultiplier(mon.nature, stat)
         : natureMultiplier);
 
     return Math.floor(calculated * nature);
@@ -247,7 +247,7 @@ class Damage {
    * @return {Number} A number in [0.9, 1, 1.1]. 1 is returned for undefined
    * natures.
    */
-  _getNatureMultiplier(nature, stat) {
+  getNatureMultiplier(nature, stat) {
     if (!nature) return 1;
     if (!NATURES[nature]) {
       console.log('invalid nature! ' + nature);
@@ -269,7 +269,7 @@ class Damage {
     if (!mon.stats) mon.stats = {};
     [AT, SA, DF, SD, SP, HP].forEach( stat => {
       if (!mon.stats[stat]) {
-        mon.stats[stat] = this._calculateStat(mon, stat, 85, 1);
+        mon.stats[stat] = this.calculateStat(mon, stat, 85, 1);
       }
     });
 

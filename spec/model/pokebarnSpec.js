@@ -3,7 +3,7 @@ import Log from 'leftovers-again/log';
 
 describe('pokebarn', () => {
   let barn;
-  beforeEach( () => {
+  beforeEach(() => {
     barn = new Barn();
     for (let i = 0; i < 6; i++) {
       const res = barn.create('p1: Fakechu');

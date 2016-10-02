@@ -1,9 +1,10 @@
-import EndOfMatch from 'leftovers-again/reporters/endofmatch';
 import fs from 'fs';
+import EndOfMatch from 'leftovers-again/reporters/endofmatch';
+
 const exampleState = [
-  {won: true, myAlive: 6, yourAlive: 3, mine: [], yours: []},
-  {won: true, myAlive: 6, yourAlive: 0, mine: [], yours: []},
-  {won: false, myAlive: 0, yourAlive: 6, mine: [], yours: []},
+  { won: true, myAlive: 6, yourAlive: 3, mine: [], yours: [] },
+  { won: true, myAlive: 6, yourAlive: 0, mine: [], yours: [] },
+  { won: false, myAlive: 0, yourAlive: 6, mine: [], yours: [] },
 ];
 
 describe('matchstatus reporter', () => {

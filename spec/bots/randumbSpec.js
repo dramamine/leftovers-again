@@ -1,5 +1,6 @@
 import Randumb from 'bots/randumb';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
+
 const randumb = new Randumb();
 
 describe('Randumb', () => {

@@ -5,7 +5,7 @@
  */
 import Damage from 'leftovers-again/game/damage';
 
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 export default class Stabby {
 
@@ -18,7 +18,7 @@ export default class Stabby {
         if (mon.active) return false;
         return true;
       });
-      const myMon = this._pickOne(possibleMons);
+      const myMon = this.pickOne(possibleMons);
       return new SWITCH(myMon);
     }
 
@@ -26,7 +26,7 @@ export default class Stabby {
     let maxDamage = -1;
     let bestMove = 0;
 
-    state.self.active.moves.forEach( (move, idx) => {
+    state.self.active.moves.forEach((move, idx) => {
       if (move.disabled) return;
       let est = [];
       try {
@@ -48,7 +48,7 @@ export default class Stabby {
     return new MOVE(bestMove);
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

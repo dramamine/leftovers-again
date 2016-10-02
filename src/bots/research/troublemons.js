@@ -6,7 +6,7 @@
  */
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 export default class Trouble extends AI {
   constructor() {
@@ -57,14 +57,13 @@ Modest Nature
 // - Fusion Bolt
 // - Dragon Claw
 // - Ice Beam
-
   }
 
   decide(state) {
     if (state.forceSwitch || state.teamPreview || Math.random() < 0.2) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -75,11 +74,11 @@ Modest Nature
     }
     // pick a random move
     try {
-      const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
+      const possibleMoves = state.self.active.moves.filter(move => !move.disabled);
       const myMove = this.pickOne(possibleMoves);
       console.log('makin a move:', myMove.id);
       return new MOVE(myMove);
-    } catch(e) {
+    } catch (e) {
       console.log('broke when checking possible moves:', e);
       console.dir(state);
       return null;

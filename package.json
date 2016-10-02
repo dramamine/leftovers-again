@@ -20,7 +20,7 @@
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
-    "develop": "npm-run-all --parallel babel:watch 'start:watch -- {@}'",
+    "develop": "npm-run-all --parallel babel:watch 'start:watch -- {@}' --",
     "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "node lib/start.js",
     "start:watch": "nodemon -w lib --delay 1500ms lib/start.js",
@@ -45,7 +45,6 @@
     "glob": "^7.0.3",
     "handlebars": "^4.0.5",
     "inquirer": "^1.0.2",
-    "lodash": "^4.6.1",
     "minimist": "~1.2.0",
     "ws": "^1.0.1"
   },
@@ -60,7 +59,9 @@
     "eslint-config-airbnb": "^12.0.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-jasmine": "^1.8.1",
     "jasmine-es6": "^0.1.10",
+    "lodash": "^4.6.1",
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0"
   },

@@ -5,7 +5,7 @@ import sampleRequest from '../helpers/requestc';
 let store;
 
 describe('BattleStore', () => {
-  beforeEach( () => {
+  beforeEach(() => {
     store = new BattleStore();
     // spyOn(util, 'researchPokemonById').and.returnValue({});
   });

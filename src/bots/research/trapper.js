@@ -7,7 +7,7 @@
 
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 export default class Trapper extends AI {
   constructor() {
@@ -89,21 +89,21 @@ Bold Nature
     if (state.forceSwitch || state.teamPreview) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
       });
-      const myMon = this._pickOne(possibleMons);
+      const myMon = this.pickOne(possibleMons);
       return new SWITCH(myMon);
     }
     // pick a random move
-    const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
-    const myMove = this._pickOne(possibleMoves);
+    const possibleMoves = state.self.active.moves.filter(move => !move.disabled);
+    const myMove = this.pickOne(possibleMoves);
     return new MOVE(myMove);
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

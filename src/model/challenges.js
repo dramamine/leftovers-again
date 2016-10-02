@@ -135,6 +135,8 @@ class Challenger {
     Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you === opponent);
+    Reporter.report(battles, this.results);
+
     if (battles.length < this.matches) {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
@@ -143,7 +145,6 @@ class Challenger {
         }, 1000);
       }
     }
-    Reporter.report(battles, this.results);
   }
 
   /**

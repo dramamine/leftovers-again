@@ -8,10 +8,6 @@ import util from 'leftovers-again/pokeutil';
 
 
 class Whynotbaut extends AI {
-  constructor() {
-    super();
-  }
-
   team() {
     return `
 Whynaut (Wynaut) @ Berry Juice

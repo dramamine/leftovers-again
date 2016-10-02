@@ -71,13 +71,13 @@ Serious Nature
   decide(state) {
     // console.log(state);
     if (state.forceSwitch || state.teamPreview || !this.can(state)) {
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         if (mon.dead) return false;
         return true;
       });
-      const myMon = this._pickOne(possibleMons);
+      const myMon = this.pickOne(possibleMons);
       return new SWITCH(myMon);
     }
     return new MOVE(moveId);
@@ -91,7 +91,7 @@ Serious Nature
     return true;
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

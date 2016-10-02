@@ -115,6 +115,7 @@ server logs for debugging.
       requestOptions.method = 'GET';
       requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
     } else {
+      console.log('using pw / POST');
       requestOptions.method = 'POST';
       data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
       requestOptions.headers = {
@@ -150,20 +151,25 @@ server logs for debugging.
           this.handleMessage(chunks);
           return;
         }
-        // getting desparate here...
+
+        // GET requests: 'chunks' (the response) IS the assertion.
+        // POST requests return JSON that contains the assertion.
+        let assertion = chunks;
         try {
           chunks = JSON.parse(chunks.substr(1));
-          if (chunks.actionsuccess) {
-            chunks = chunks.assertion;
+          console.log(chunks);
+          if (chunks.actionsuccess && chunks.curuser.loggedin) {
+            assertion = chunks.assertion;
           } else {
-            Log.error(`could not log in; action was not successful: ${JSON.stringify(chunks)}`);
+            Log.error(`could not log in; action was not successful: ${chunks.assertion}`);
+            Log.debug(chunks);
             process.exit(-1);
           }
         } catch (err) {
-          // probably nothing.
+          // probably nothing - probably tried to parse a GET request that ain't JSON
           // console.error('error trying to parse data:', err, chunks);
         }
-        this.send('|/trn ' + this.nickname + ',0,' + chunks);
+        this.send('|/trn ' + this.nickname + ',0,' + assertion);
       });
     });
 

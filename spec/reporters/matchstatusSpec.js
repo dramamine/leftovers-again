@@ -1,6 +1,6 @@
-const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"lastMove":"Sandstorm","boosts":{"spd":-1},"statuses":["par", "poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"statuses":[],"boosts":{"atk":1},"species":"Arcanine","lastMove":"Roost"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}}; // eslint-disable-line
-
 import Reporter from 'leftovers-again/reporters/matchstatus';
+
+const exampleState = {"self":{"active":{"condition":"302/302","hppct":100,"lastMove":"Sandstorm","boosts":{"spd":-1},"statuses":["par", "poi"],"species":"Noctowl"},"reserve":[{},{},{"dead":true},{},{"dead":true},{}]},"opponent":{"active":{"condition":"85/100","hppct":85,"statuses":[],"boosts":{"atk":1},"species":"Arcanine","lastMove":"Roost"},"reserve":[{"dead":true},{"dead":true},{"dead":true},{}]}}; // eslint-disable-line
 
 describe('matchstatus reporter', () => {
   it('should report as I expect', () => {
@@ -29,7 +29,7 @@ describe('matchstatus reporter', () => {
   });
   describe('boost string', () => {
     it('should handle good & bad statuses', () => {
-      expect(Reporter.boostString({atk: 2, def: -1})).toEqual('atk++ def-');
+      expect(Reporter.boostString({ atk: 2, def: -1 })).toEqual('atk++ def-');
     });
   });
 });

@@ -62,7 +62,7 @@ describe('team', () => {
     });
   });
   it('should validate this one-mon team', () => {
-    expect(Team._seemsValid([oneMon])).toBe(true);
+    expect(Team.seemsValid([oneMon])).toBe(true);
   });
   it('should pack this team like the client does', () => {
     const packed = Team.packTeam([oneMon]);
@@ -93,5 +93,3 @@ describe('team', () => {
     expect(team.length).toEqual(6);
   });
 });
-
-

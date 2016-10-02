@@ -3,14 +3,10 @@
  *
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 
 class StonedBirdie extends AI {
-  constructor() {
-    super();
-  }
-
   team() {
     return `
 Tyranny (Tyranitar) @ Choice Band
@@ -80,19 +76,19 @@ Adamant Nature
   decide(state) {
     console.log(state);
     if (state.forceSwitch || state.teamPreview) {
-      const myMon = this._pickOne(
-        state.self.reserve.filter( mon => !mon.dead )
+      const myMon = this.pickOne(
+        state.self.reserve.filter(mon => !mon.dead)
       );
       return new SWITCH(myMon);
     }
 
-    // const myMove = this._pickOne(
+    // const myMove = this.pickOne(
     //   state.self.active.moves.filter( move => !move.disabled )
     // );
     return new MOVE('stoneedge');
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

@@ -6,7 +6,7 @@
 import AI from 'leftovers-again/ai';
 import Typechart from 'leftovers-again/game/typechart';
 
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end
@@ -68,7 +68,7 @@ export default class EliteFour extends AI {
     if (state.forceSwitch) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -84,7 +84,7 @@ export default class EliteFour extends AI {
 
     const fitness = {};
     const totalFitness = {};
-    state.self.active.moves.forEach( (move) => {
+    state.self.active.moves.forEach((move) => {
       if (move.disabled) return;
       fitness[move.id] = {};
 
@@ -98,11 +98,11 @@ export default class EliteFour extends AI {
       // as long as we didn't just try this move.
       if (move.category === 'Status' && move.id !== this.lastMove &&
       move.boosts) {
-        ['atk', 'spa', 'spd', 'spe', 'def'].forEach( (type) => {
+        ['atk', 'spa', 'spd', 'spe', 'def'].forEach((type) => {
           if (!move.boosts[type]) return;
 
-          if ( state.opponent.active.boosts && state.opponent.active.boosts[type] &&
-          state.opponent.active.boosts[type] < 0 ) return;
+          if (state.opponent.active.boosts && state.opponent.active.boosts[type] &&
+          state.opponent.active.boosts[type] < 0) return;
 
           // OK, we're in the clear here.
           fitness[move.id].unboost = true;
@@ -164,16 +164,16 @@ export default class EliteFour extends AI {
     for (const move in moveArr) {
       if ({}.hasOwnProperty.call(moveArr, move)) {
         weighted[move] = moveArr[move] >= 0
-          ?  Math.pow(moveArr[move], randomnessExponent)
+          ? Math.pow(moveArr[move], randomnessExponent)
           : 0;
-        total = total + weighted[move];
+        total += weighted[move];
       }
     }
     const myVal = Math.random() * total;
     let accum = 0;
     for (const move in weighted) {
       if ({}.hasOwnProperty.call(weighted, move)) {
-        accum = accum + weighted[move];
+        accum += weighted[move];
         if (accum > myVal) return move;
       }
     }

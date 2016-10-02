@@ -41,14 +41,14 @@ describe('damage calculator', () => {
       const boosted = Object.assign({}, attacker);
       boosted.stats = {};
       boosted.level = 75;
-      Damage._assumeStat(boosted, 'atk');
-      boosted.boosts = {atk: 1};
+      Damage.assumeStat(boosted, 'atk');
+      boosted.boosts = { atk: 1 };
 
       const raw = Object.assign({}, attacker);
       raw.stats = {};
       raw.level = 75;
-      Damage._assumeStat(raw, 'atk');
-      raw.stats.atk = raw.stats.atk * 1.5;
+      Damage.assumeStat(raw, 'atk');
+      raw.stats.atk *= 1.5;
       const boostedDmg = Damage.getDamageResult(boosted, 'geodude', 'bodyslam');
       const rawDmg = Damage.getDamageResult(raw, 'geodude', 'bodyslam');
       expect(boostedDmg).toEqual(rawDmg);
@@ -60,14 +60,14 @@ describe('damage calculator', () => {
       const boosted = Object.assign({}, attacker);
       boosted.stats = {};
       boosted.level = 75;
-      Damage._assumeStat(boosted, 'atk');
-      boosted.boosts = {atk: 2};
+      Damage.assumeStat(boosted, 'atk');
+      boosted.boosts = { atk: 2 };
 
       const raw = Object.assign({}, attacker);
       raw.stats = {};
       raw.level = 75;
-      Damage._assumeStat(raw, 'atk');
-      raw.stats.atk = raw.stats.atk * 2;
+      Damage.assumeStat(raw, 'atk');
+      raw.stats.atk *= 2;
       const boostedDmg = Damage.getDamageResult(boosted, 'geodude', 'bodyslam');
       const rawDmg = Damage.getDamageResult(raw, 'geodude', 'bodyslam');
       expect(boostedDmg).toEqual(rawDmg);
@@ -78,14 +78,14 @@ describe('damage calculator', () => {
       const boosted = Object.assign({}, defender);
       boosted.stats = {};
       boosted.level = 75;
-      Damage._assumeStat(boosted, 'def');
-      boosted.boosts = {def: 2};
+      Damage.assumeStat(boosted, 'def');
+      boosted.boosts = { def: 2 };
 
       const raw = Object.assign({}, defender);
       raw.stats = {};
       raw.level = 75;
-      Damage._assumeStat(raw, 'def');
-      raw.stats.def = raw.stats.def * 2;
+      Damage.assumeStat(raw, 'def');
+      raw.stats.def *= 2;
       const boostedDmg = Damage.getDamageResult('eevee', boosted, 'bodyslam');
       const rawDmg = Damage.getDamageResult('eevee', raw, 'bodyslam');
       expect(boostedDmg).toEqual(rawDmg);
@@ -93,55 +93,55 @@ describe('damage calculator', () => {
     it('should handle +2 boosted speed', () => {
       const unboosted = util.researchPokemonById('eevee');
       const boosted = Object.assign({}, unboosted);
-      boosted.boosts = {spd: 2};
+      boosted.boosts = { spd: 2 };
       Damage.calculateStats(unboosted);
       Damage.calculateStats(boosted);
 
       expect(unboosted.stats.spd * 2).toEqual(boosted.stats.spd);
     });
   });
-  describe('_getNatureMultiplier', () => {
+  describe('getNatureMultiplier', () => {
     it('should return 1 if nature is falsy', () => {
-      expect(Damage._getNatureMultiplier(false, 'atk')).toBe(1);
-      expect(Damage._getNatureMultiplier(undefined, 'atk')).toBe(1);
-      expect(Damage._getNatureMultiplier(null, null)).toBe(1);
+      expect(Damage.getNatureMultiplier(false, 'atk')).toBe(1);
+      expect(Damage.getNatureMultiplier(undefined, 'atk')).toBe(1);
+      expect(Damage.getNatureMultiplier(null, null)).toBe(1);
     });
     it('should return 1 if nature is invalid', () => {
       spyOn(console, 'log');
-      expect(Damage._getNatureMultiplier('dopey', 'atk')).toBe(1);
+      expect(Damage.getNatureMultiplier('dopey', 'atk')).toBe(1);
     });
     it('should give 10% boosts to boosted stats', () => {
-      expect(Damage._getNatureMultiplier('adamant', 'atk')).toBe(1.1);
-      expect(Damage._getNatureMultiplier('naughty', 'atk')).toBe(1.1);
-      expect(Damage._getNatureMultiplier('impish', 'def')).toBe(1.1);
+      expect(Damage.getNatureMultiplier('adamant', 'atk')).toBe(1.1);
+      expect(Damage.getNatureMultiplier('naughty', 'atk')).toBe(1.1);
+      expect(Damage.getNatureMultiplier('impish', 'def')).toBe(1.1);
     });
     it('should give 10% unboosts to unboosted stats', () => {
-      expect(Damage._getNatureMultiplier('adamant', 'spa')).toBe(0.9);
-      expect(Damage._getNatureMultiplier('naughty', 'spd')).toBe(0.9);
-      expect(Damage._getNatureMultiplier('lonely', 'def')).toBe(0.9);
+      expect(Damage.getNatureMultiplier('adamant', 'spa')).toBe(0.9);
+      expect(Damage.getNatureMultiplier('naughty', 'spd')).toBe(0.9);
+      expect(Damage.getNatureMultiplier('lonely', 'def')).toBe(0.9);
     });
     it('should return 1 for neutral stats', () => {
-      expect(Damage._getNatureMultiplier('bashful', 'atk')).toBe(1);
-      expect(Damage._getNatureMultiplier('bashful', 'def')).toBe(1);
-      expect(Damage._getNatureMultiplier('hardy', 'spa')).toBe(1);
-      expect(Damage._getNatureMultiplier('quirky', 'spd')).toBe(1);
-      expect(Damage._getNatureMultiplier('serious', 'spe')).toBe(1);
+      expect(Damage.getNatureMultiplier('bashful', 'atk')).toBe(1);
+      expect(Damage.getNatureMultiplier('bashful', 'def')).toBe(1);
+      expect(Damage.getNatureMultiplier('hardy', 'spa')).toBe(1);
+      expect(Damage.getNatureMultiplier('quirky', 'spd')).toBe(1);
+      expect(Damage.getNatureMultiplier('serious', 'spe')).toBe(1);
     });
   });
   describe('weather', () => {
     describe('Sunny Day', () => {
       it('should enhance fire moves', () => {
         const sunny = Damage.getDamageResult(
-          'eevee', 'meowth', 'overheat', {weather: 'SunnyDay'}, true);
+          'eevee', 'meowth', 'overheat', { weather: 'SunnyDay' }, true);
         const cloudy = Damage.getDamageResult(
-          'eevee', 'meowth', 'overheat', {weather: 'None'}, true);
+          'eevee', 'meowth', 'overheat', { weather: 'None' }, true);
         expect(cloudy * 1.5).toBeCloseTo(sunny);
       });
       it('should dehance water moves', () => {
         const sunny = Damage.getDamageResult(
-          'meowth', 'meowth', 'hydropump', {weather: 'SunnyDay'}, true);
+          'meowth', 'meowth', 'hydropump', { weather: 'SunnyDay' }, true);
         const cloudy = Damage.getDamageResult(
-          'meowth', 'meowth', 'hydropump', {weather: 'None'}, true);
+          'meowth', 'meowth', 'hydropump', { weather: 'None' }, true);
         expect(cloudy * 0.5).toBeCloseTo(sunny);
       });
     });
@@ -168,7 +168,7 @@ describe('damage calculator', () => {
     });
   });
 
-  describe('_assumeStat', () => {
+  describe('assumeStat', () => {
     const base = {
       stats: {},
       baseStats: {
@@ -178,66 +178,66 @@ describe('damage calculator', () => {
       level: 100
     };
     let mon;
-    beforeEach( () => {
+    beforeEach(() => {
       mon = {};
       Object.assign(mon, base);
       mon.stats = {}; // don't know why I have to do this, but I do
     });
     it('should get correct results for 0 EVs', () => {
-      Damage._assumeStat(mon, 'atk', 0);
+      Damage.assumeStat(mon, 'atk', 0);
       expect(mon.stats.atk).toEqual(38);
     });
     it('should get correct results for 252 EVs', () => {
-      Damage._assumeStat(mon, 'atk', 252);
+      Damage.assumeStat(mon, 'atk', 252);
       expect(mon.stats.atk).toEqual(38 + 63);
     });
     it('should get correct results for 252 EVs assuming good nature', () => {
       mon.nature = 'brave';
-      Damage._assumeStat(mon, 'atk', 252);
+      Damage.assumeStat(mon, 'atk', 252);
       expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 1.1));
     });
     it('should get correct results for 252 EVs with good nature', () => {
-      Damage._assumeStat(mon, 'atk', 252, 1.1);
+      Damage.assumeStat(mon, 'atk', 252, 1.1);
       expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 1.1));
     });
     it('should get correct results for 252 EVs assuming bad nature', () => {
       mon.nature = 'calm';
-      Damage._assumeStat(mon, 'atk', 252);
+      Damage.assumeStat(mon, 'atk', 252);
       expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 0.9));
     });
     it('should get correct results for 252 EVs with bad nature', () => {
-      Damage._assumeStat(mon, 'atk', 252, 0.9);
+      Damage.assumeStat(mon, 'atk', 252, 0.9);
       expect(mon.stats.atk).toEqual(Math.floor((38 + 63) * 0.9));
     });
     it('should get base HP for 0 EVs', () => {
-      Damage._assumeStat(mon, 'hp', 0);
+      Damage.assumeStat(mon, 'hp', 0);
       expect(mon.stats.hp).toEqual(33 + 100 + 10);
     });
     it('should get base HP for 252 EVs', () => {
-      Damage._assumeStat(mon, 'hp', 252);
+      Damage.assumeStat(mon, 'hp', 252);
       expect(mon.stats.hp).toEqual(33 + 63 + 100 + 10);
     });
     it('should get base HP for a lower level', () => {
       mon.level = 50;
-      Damage._assumeStat(mon, 'hp', 252);
+      Damage.assumeStat(mon, 'hp', 252);
       expect(mon.stats.hp).toEqual((33 + 63) * 0.5 + 50 + 10);
     });
-    it('should match this poliwrath math I\'m doing' , () => {
+    it('should match this poliwrath math I\'m doing', () => {
       mon.level = 81;
       mon.baseStats = {
-        'hp': 90,
-        'atk': 95,
-        'def': 95,
-        'spa': 70,
-        'spd': 90,
-        'spe': 70,
-      }
-      Damage._assumeStat(mon, 'hp', 85);
-      Damage._assumeStat(mon, 'atk', 85);
-      Damage._assumeStat(mon, 'def', 85);
-      Damage._assumeStat(mon, 'spa', 85);
-      Damage._assumeStat(mon, 'spd', 85);
-      Damage._assumeStat(mon, 'spe', 85);
+        hp: 90,
+        atk: 95,
+        def: 95,
+        spa: 70,
+        spd: 90,
+        spe: 70,
+      };
+      Damage.assumeStat(mon, 'hp', 85);
+      Damage.assumeStat(mon, 'atk', 85);
+      Damage.assumeStat(mon, 'def', 85);
+      Damage.assumeStat(mon, 'spa', 85);
+      Damage.assumeStat(mon, 'spd', 85);
+      Damage.assumeStat(mon, 'spe', 85);
       expect(mon.stats.hp).toBeCloseTo(278);
       expect(mon.stats.atk).toBeCloseTo(201);
       expect(mon.stats.def).toBeCloseTo(201);
