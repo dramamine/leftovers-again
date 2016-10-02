@@ -20,7 +20,7 @@
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
-    "develop": "npm-run-all --parallel babel:watch start:watch",
+    "develop": "npm-run-all --parallel babel:watch 'start:watch -- {@}'",
     "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "node lib/start.js",
     "start:watch": "nodemon -w lib --delay 1500ms lib/start.js",

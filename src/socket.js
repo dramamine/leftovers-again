@@ -7,10 +7,6 @@ import Log from './log';
 let ws;
 
 class Socket extends Connection {
-  constructor() {
-    super();
-  }
-
   connect({
     actionHost = 'play.pokemonshowdown.com',
     nickname,
@@ -57,7 +53,7 @@ class Socket extends Connection {
     ws.on('error', (err) => {
       if (err.code === 'ECONNREFUSED') {
         Log.error(`ECONNREFUSED when trying to connect to server at:
-    ${addy}
+${addy}
 Are you sure a server is running there?
 Make sure you have the official server installed and running.
 
@@ -82,7 +78,7 @@ server logs for debugging.
    *
    * @param  {String} message [description]
    */
-  static end(message) {
+  send(message) {
     ws.send(message);
   }
 
@@ -94,13 +90,17 @@ server logs for debugging.
     }
   }
 
-  static exit() {
+  exit() {
     ws.close();
   }
 
-  login(args) {
+  /**
+   * Logging in to the server
+   * @param  {[type]}
+   * @return {[type]}
+   */
+  login([challengekeyid, challenge]) {
     // console.log('responding to challenge.');
-    const [id, str] = args;
     // console.log(id, str);
 
     const requestOptions = {
@@ -113,10 +113,10 @@ server logs for debugging.
     let data = '';
     if (!this.password) {
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + id + '&challenge=' + str;
+      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
     } else {
       requestOptions.method = 'POST';
-      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + id + '&challenge=' + str;
+      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
       requestOptions.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': data.length
@@ -139,18 +139,12 @@ server logs for debugging.
           process.exit(-1);
         }
         if (chunks.indexOf('heavy load') !== -1) {
-          Log.error('the login server is under heavy load; exiting');
-          // setTimeout(() => {
-          //   return this.handleMessage(message);
-          // }, 60 * 1000);
-          return;
+          Log.error('the login server is under heavy load; trying again in one minute');
+          process.exit(-1);
         }
         if (chunks.substr(0, 16) === '<!DOCTYPE html>') {
-          Log.error('Connection error 522; exiting');
-          // setTimeout(() => {
-          //   return this.handleMessage(message);
-          // }, 60 * 1000);
-          return;
+          Log.error('Connection error 522; trying agian in one minute');
+          process.exit(-1);
         }
         if (chunks.indexOf('|challstr|') >= 0) {
           this.handleMessage(chunks);
@@ -173,7 +167,7 @@ server logs for debugging.
       });
     });
 
-    req.on('error', (err => Log.error('login error: ' + err.stack)));
+    req.on('error', err => Log.error('login error: ' + err.stack));
 
     if (data) {
       req.write(data);
@@ -181,14 +175,13 @@ server logs for debugging.
     return req.end();
   }
 
-  static relayPopup(args) {
+  relayPopup(args) {
     Log.warn('Got a popup:');
     Log.warn(args);
   }
 
-  onUpdateUser(args) {
+  onUpdateUser([nick, status]) {
     // this includes a 3rd parameter, i.e. "mysterycode". who knows.
-    const [nick, status] = args;
     if (status !== '1') {
       // console.error(`failed to log in, still guest (status code ${status})`);
       return false;
@@ -202,7 +195,6 @@ server logs for debugging.
 
     // also try to join a room according to our battle format
     if (this.format) socket.send('|/join ' + this.format);
-
     return true;
   }
 }

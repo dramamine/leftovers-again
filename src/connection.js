@@ -10,12 +10,13 @@ class Connection {
   /**
    * Constructor for a Connection
    */
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Connect to a thing.
    */
-  connect() { // eslint-disable-line
+  connect() {
     log.error('please override me.');
   }
 

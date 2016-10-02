@@ -17,7 +17,7 @@ class PokeUtil {
    * @param  {String} text The field to transform.
    * @return {String}      The ID.
    */
-  static toId(text) {
+  toId(text) {
     let name = '';
     if (!text) return name;
 
@@ -96,7 +96,7 @@ class PokeUtil {
    * @param  {Object} updates A boost object.
    * @return {Object}         A boost object.
    */
-  static boostCombiner(old = {}, updates = {}) {
+  boostCombiner(old = {}, updates = {}) {
     Object.keys(updates).forEach((boost) => {
       old[boost] = Math.min(6, Math.max(-6,
         (old[boost] || 0) + updates[boost]));
@@ -111,7 +111,7 @@ class PokeUtil {
    * @param  {Number} mod  The boost level, from -6 to 6.
    * @return {Number} The stat including the boost multiplier.
    */
-  static boostMultiplier(stat, mod = 0) {
+  boostMultiplier(stat, mod = 0) {
     return mod > 0 ? Math.floor(stat * (2 + mod) / 2)
       : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
         : stat;
@@ -122,7 +122,7 @@ class PokeUtil {
    * @param  {String} ident The Pokemon ident.
    * @return {String} The position.
    */
-  static identToPos(ident) {
+  identToPos(ident) {
     const posStr = ident.substr(0, ident.indexOf(':'));
     const position = (posStr.length === 3) ? posStr : null;
     return position;
@@ -133,16 +133,16 @@ class PokeUtil {
    * @param  {String} ident The Pokemon ident.
    * @return {String} The owner.
    */
-  static identToOwner(ident) {
+  identToOwner(ident) {
     return ident.substr(0, 2);
   }
 
-  static identWithoutPosition(ident) {
+  identWithoutPosition(ident) {
     const [player, nickname] = ident.split(':');
     return player.substr(0, 2) + ':' + nickname;
   }
 
-  static clone(x) {
+  clone(x) {
     return JSON.parse(JSON.stringify(x));
   }
 
