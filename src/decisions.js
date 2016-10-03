@@ -14,6 +14,7 @@ export class MOVE {
    *
    */
   constructor(id, target = null) {
+    this.type = 'move';
     this.id = id;
     this.target = target;
 
@@ -46,6 +47,7 @@ export class SWITCH {
    * battles, and currently not implemented.
    */
   constructor(id, target = null) {
+    this.type = 'switch';
     this.id = id;
     this.target = target;
   }

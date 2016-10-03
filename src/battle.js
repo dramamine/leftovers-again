@@ -249,25 +249,29 @@ class Battle {
    */
   static formatMessage(bid, choice, state) {
     let verb;
-    if (choice instanceof MOVE) {
-      const moveIdx = Battle.lookupMoveIdx(state.self.active.moves, choice.id);
 
+    // if you're wondering why this 'if' statement is so wonky... it's technical debt!
+    // in 0.7.7 and lower, you had to check instanceof. But that check doesn't work
+    // so well when it comes to cross-compatibility. So I added the 'type' property
+    // to 'choice' which is less error-prone.
+    if (choice instanceof MOVE || choice.type === 'move') {
+      const moveIdx = Battle.lookupMoveIdx(state.self.active.moves, choice.id);
       if (typeof moveIdx !== 'number' || moveIdx < 0) {
         Log.error(`invalid move!!' ${choice}, ${state.self.active.moves}`);
         process.exit();
       }
 
-      verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
+      verb = `/move ${moveIdx + 1}`; // move indexes for the server are [1..4]
 
       if (state.self.active.canMegaEvo && choice.shouldMegaEvo) {
         verb += ' mega';
       }
-    } else if (choice instanceof SWITCH) {
+    } else if (choice instanceof SWITCH || choice.type === 'switch') {
       verb = (state.teamPreview)
-        ? '/team '
-        : '/switch ';
+        ? '/team'
+        : '/switch';
       const monIdx = Battle.lookupMonIdx(state.self.reserve, choice.id);
-      verb += (monIdx + 1); // switch indexes for the server are [1..6]
+      verb = `${verb} ${monIdx + 1}`; // switch indexes for the server are [1..6]
     }
     return `${bid}|${verb}|${state.rqid}`;
   }
