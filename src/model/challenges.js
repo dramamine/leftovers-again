@@ -27,7 +27,7 @@ class Challenger {
    * @return Constructor
    */
   constructor(connection, botmanager, args) {
-    const { format, scrappy, matches, results } = args;
+    const { format, scrappy, matches, results, nickname } = args;
     this.connection = connection;
     this.botmanager = botmanager;
 
@@ -36,6 +36,7 @@ class Challenger {
     this.scrappy = scrappy;
     this.matches = matches;
     this.results = results;
+    this.nickname = util.toId(nickname);
 
     if (!scrappy) {
       Log.log('Your bot is set to accept challenges only - it will not start any battles.');
@@ -87,6 +88,10 @@ class Challenger {
    * @return {[type]}          True if we sent the challenge, false otherwise.
    */
   tryChallenge(opponent) {
+    if (util.toId(opponent) === this.nickname) {
+      Log.info(`Not challenging ${opponent} because that's me.`);
+      return false;
+    }
     if (this.outstandingChallenge) {
       Log.info(`Not challenging ${opponent} because I'm already challenging someone.`);
       return false;

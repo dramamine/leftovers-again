@@ -1,6 +1,6 @@
 {
   "name": "leftovers-again",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Pokemon Showdown - Bot Client",
   "main": "lib/main.js",
   "files": [
@@ -27,7 +27,7 @@
     "server": "cd deps/Pokemon-Showdown && node app.js",
     "client": "./scripts/open-client.sh",
     "generate": "./lib/scripts/generate.js",
-    "release": "npm run clean && npm run build && npm run test && npm run docs && npm run docs:publish && echo 'Great! Now run npm version patch (or whatever) and npm publish'"
+    "release": "npm-run-all build test docs docs:publish && echo '\n\nGreat! Now make sure you bumped version and run `npm publish`.'"
   },
   "repository": {
     "type": "git",
