@@ -66,13 +66,11 @@ class Challenger {
     if (activeMatches.size >= simultaneous) return;
 
     updateTimeout = setTimeout(() => {
-      console.log('inside my timeout.');
       if (this.outstandingChallenge) return;
 
       if (this.scrappy) {
         for (const user of users) {
           if (this.tryChallenge(user)) {
-            console.log('I challenged ', user);
             this.outstandingChallenge = true;
             break;
           }
@@ -166,7 +164,6 @@ class Challenger {
    *
    */
   onUpdateChallenges(msg) {
-    console.log('onUpdateChallenges:', msg);
     const { challengesFrom, challengeTo } = JSON.parse(msg);
     Log.debug('updated challenges: ' + msg);
     this.challengesFrom = challengesFrom || {};
@@ -178,7 +175,7 @@ class Challenger {
         this.challengeSomeone();
       }
     }
-    Object.keys(challengesFrom).forEach( (opponent) => {
+    Object.keys(challengesFrom).forEach((opponent) => {
       const format = challengesFrom[opponent];
       // only accept battles of the type we're designed for
       if (Challenger.acceptable(format, this.botmanager.accepts)) {

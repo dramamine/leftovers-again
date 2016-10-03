@@ -115,7 +115,6 @@ server logs for debugging.
       requestOptions.method = 'GET';
       requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
     } else {
-      console.log('using pw / POST');
       requestOptions.method = 'POST';
       data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
       requestOptions.headers = {
@@ -157,7 +156,6 @@ server logs for debugging.
         let assertion = chunks;
         try {
           chunks = JSON.parse(chunks.substr(1));
-          console.log(chunks);
           if (chunks.actionsuccess && chunks.curuser.loggedin) {
             assertion = chunks.assertion;
           } else {
@@ -193,7 +191,7 @@ server logs for debugging.
       return false;
     }
     if (nick !== this.nickname) {
-      console.error('nickname was ', nick, ' expecting ', this.nickname);
+      Log.error('nickname was ', nick, ' expecting ', this.nickname);
       return false;
     }
 

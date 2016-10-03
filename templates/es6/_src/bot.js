@@ -14,7 +14,7 @@ class {{Repo}} {
   team() {
     return `
 Magikarp @ Leftovers
-Ability: Rattled
+Ability: Swift Swim
 EVs: 252 HP / 4 Atk / 252 Spe
 Careful Nature
 - Celebrate

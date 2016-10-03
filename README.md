@@ -44,7 +44,7 @@ This project is mainly coded in Javascrpt / ES6, which I recommend for its ease 
 Languages currently supported:
 - jk nothing yet
 
-If you'd like to implement your favorite language: 
+If you'd like to implement your favorite language:
 
 
 ## Example Usage
@@ -73,24 +73,25 @@ npm run server # in a separate window
 npm start -- stabby --opponent=randumb
 ```
 
-### Build skeleton code for your bot:
-`npm run generate`
-
-### Battle against all the other bots included in this repo:
-`npm run gauntlet`
-
 ### Play against your bot, via your web browser
 ```bash
-npm run server # in a separate window 
-npm start 
+npm run server # in a separate window
+npm start
 # browse to: http://play.pokemonshowdown.com/?~~localhost:8000
 ```
 
 ### Launch your bot on Cyberdyne
+(@TODO temporary url)
 ```bash
 npm start -- --production
-# browse to: http://cyberdyne.psim.us/
+# browse to: http://metal-heart.org.psim.us/
 ```
+
+### Browse your potential opponents:
+(@TODO not implemented yet)
+`npm run gauntlet`
+
+
 
 ### Developer's Installation Guide
 Use this code if you'd like to contribute to this repo.
@@ -105,6 +106,10 @@ npm test
 npm start -- randumb --opponent=stabby
 ```
 
+Contribution guide [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+If you're interested in contributing but don't know where to start, shoot me an email. There are always some minor issues I could use some help with, but also some major features I can't do without help:
+- running tournaments (scripts, web design)
+- supporting other programming languages (ex. Python)
 
 
 ## NOTES
@@ -170,5 +175,3 @@ $ LAPTOP SETUP SHIT THAT DIDN'T WORK
 + needed a 'log' folder
 + needed to update node
 - setting up Tampermonkey didn't quite work...
-
-# If you can read this text on esdoc.org, then clearly your docs:publish script is working.

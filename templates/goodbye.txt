@@ -14,5 +14,10 @@ Run this command to play against your first opponent:
 
 Other useful commands:
 `npm run start:quick`: run with babel-node (skips transpiling step)
+
+`npm run develop`: watch src folder, compile on changes and re-run main.js
+(can be used with other flags, ex. `npm run develop -- --opponent=randumb`)
+
 `npm start -- --production`: connect to metal-heart.org.psim.us
+
 `npm start -- --help`: full list of commands for leftovers-again

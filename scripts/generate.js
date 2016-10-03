@@ -14,7 +14,7 @@ const languages = ['es6'];
 const tryRequire = (file) => {
   try {
     return require(file);
-  } catch(e) {
+  } catch (e) {
     return undefined;
   }
 };
@@ -25,7 +25,7 @@ const tryRequire = (file) => {
 const tryMkdir = (file) => {
   try {
     return fs.mkdirSync(file);
-  } catch(e) {
+  } catch (e) {
     return undefined;
   }
 };
@@ -37,7 +37,7 @@ const tryMkdir = (file) => {
  * @return {String}  The parsed template.
  */
 const parse = (source, vars) => {
-  const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii'));
+  const tmplt = Handlebars.compile(fs.readFileSync(source, 'ascii'));
   return tmplt(vars);
 };
 
@@ -68,7 +68,7 @@ const questions = [
         return match.toUpperCase();
       });
     }
-  },  {
+  }, {
     name: 'description',
     message: 'Write a description for your bot (optional)',
     default: existingPackage.description || 'the very best',
@@ -87,7 +87,7 @@ const questions = [
     name: 'accept',
     message: 'What battle format challenges will you accept?',
     type: 'checkbox',
-    choices: [{value: 'ALL', checked: true}].concat(formats),
+    choices: [{ value: 'ALL', checked: true }].concat(formats),
     validate: (answer) => {
       if (answer.length > 1 && answer.indexOf('ALL') >= 0) {
         return 'Please select only ALL, or pick individual formats.';
@@ -128,7 +128,7 @@ const writePackage = (source, more, destination) => {
  * @return {[type]}             [description]
  */
 const parseAndWrite = (source, destination, vars) => {
-  const tmplt = Handlebars.compile( fs.readFileSync(source, 'ascii') );
+  const tmplt = Handlebars.compile(fs.readFileSync(source, 'ascii'));
   const parsed = tmplt(vars);
   if (destination) fs.writeFile(destination, parsed);
   return parsed;
@@ -146,13 +146,14 @@ inquirer.prompt(questions).then((answers) => {
   // @TODO this goes to tmp but should eventually go to 'bots'
   // const folder = 'bots/' + answers.repo;
   // fs.mkdirSync(folder);
-  const addStuff = JSON.parse( parse(
+  const addStuff = JSON.parse(parse(
     path.join(tmpltDir, lang, 'package.json'),
     answers
-  ) );
+  ));
   writePackage(existingPackage, addStuff, pkgLocation);
 
   tryMkdir(path.join(process.cwd(), 'log'));
+  tryMkdir(path.join(process.cwd(), 'results'));
   tryMkdir(path.join(process.cwd(), 'src'));
 
   const filez = glob.sync('**/*', {
@@ -170,7 +171,7 @@ inquirer.prompt(questions).then((answers) => {
     );
   });
 
-  console.log( parseAndWrite(
+  console.log(parseAndWrite(
     path.join(tmpltDir, 'goodbye.txt'),
     null,
     answers
