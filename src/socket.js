@@ -135,7 +135,10 @@ server logs for debugging.
       });
       res.on('end', () => {
         if (chunks === ';') {
-          Log.error('failed to log in; nick is registered - invalid or no password given');
+          Log.error(`failed to log in; nick ${this.nickname} is registered - invalid or no password given.
+    Make sure the nickname in your package.json isn\'t already taken, or
+    Register your nickname on http://play.pokemonshowdown.com/ and add
+    "nickname" and "password" to your package.json file.`);
           process.exit(-1);
         }
         if (chunks.length < 50) {

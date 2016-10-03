@@ -3,10 +3,9 @@ OK, you're all set! Your core bot files are in the current directory.
 Before you begin, install your dependencies:
 `npm install`
 
-Your bot's already prepared for battle! First, open a new window and run the server locally:
+Your bot's already prepared for battle! First, open a new console and run the server locally:
     git clone https://github.com/dramamine/Pokemon-Showdown.git
-    cd Pokemon-Showdown
-    npm start
+    npm run server
 
 Run this command to play against your first opponent:
 

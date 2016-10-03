@@ -218,12 +218,12 @@ class Challenger {
   /**
    * Cancels outstanding challenges.
    */
-  // cancelOutstandingChallenges() {
-  //   if (this.challengeTo && this.challengeTo.to) {
-  //     Log.warn(' ~ cancelling a challenge with ' + this.challengeTo.to);
-  //     this.connection.send('|/cancelchallenge ' + this.challengeTo.to);
-  //   }
-  // }
+  cancelOutstandingChallenges() {
+    if (this.challengeTo && this.challengeTo.to) {
+      Log.warn(' ~ cancelling a challenge with ' + this.challengeTo.to);
+      this.connection.send('|/cancelchallenge ' + this.challengeTo.to);
+    }
+  }
 
   /**
    * [acceptable description]
