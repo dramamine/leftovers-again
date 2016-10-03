@@ -1,3 +1,8 @@
+[0.8.0] - 2016-10-02
+- Tons of linting-related updates and npm script updates
+- Better path handling for spawned opponents
+- Integration test for node module
+
 [0.7.1] - 2016-10-01
 - Necessary fixes to templates; now you can load templated bots from places other than their root directory
 - --results parameter, check results/results.csv by default

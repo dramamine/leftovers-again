@@ -130,10 +130,26 @@ const writePackage = (source, more, destination) => {
 const parseAndWrite = (source, destination, vars) => {
   const tmplt = Handlebars.compile(fs.readFileSync(source, 'ascii'));
   const parsed = tmplt(vars);
-  if (destination) fs.writeFile(destination, parsed);
+
+  // don't overwrite a file that exists
+  if (destination) {
+    try {
+      const stat = fs.statSync(destination);
+      if (stat.isFile()) {
+        console.log('file already exists, skipping ', destination);
+        return null;
+      }
+    } catch (e) {
+      // file probably doesn't exist.
+    }
+    fs.writeFile(destination, parsed);
+  }
   return parsed;
 };
 
+/**
+ * Stuff-doer
+ */
 inquirer.prompt(questions).then((answers) => {
   answers.accept = answers.accept.join(',');
   answers.repo = answers.Repo.toLowerCase();
