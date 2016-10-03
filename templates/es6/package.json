@@ -21,7 +21,7 @@
     "develop": "npm-run-all build --parallel babel:watch 'start:watch -- {@}' --",
     "start": "npm run build && node lib/main.js",
     "start:quick": "babel-node src/main.js",
-    "start:watch": "nodemon -w lib lib/start.js",
+    "start:watch": "nodemon -w lib lib/main.js",
     "server": "cd Pokemon-Showdown && npm start"
   },
   "format": "{{format}}",

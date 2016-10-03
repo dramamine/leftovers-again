@@ -39,6 +39,7 @@ class Socket extends Connection {
 
   /**
    * Build your socket.
+   *
    * @param  {String} addy The address of the socket.
    */
   build(addy) {
@@ -96,8 +97,11 @@ server logs for debugging.
 
   /**
    * Logging in to the server
-   * @param  {[type]}
-   * @return {[type]}
+   *
+   * @param  {challengekeyid} String  Needed as param to login server
+   * @param  {challenge} String  i.e. challengestr. Needed as param to login server
+   *
+   * @return null
    */
   login([challengekeyid, challenge]) {
     // console.log('responding to challenge.');

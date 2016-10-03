@@ -20,7 +20,7 @@ class Spawner {
    * @return {[type]}      [description]
    */
   spawn(botpath) {
-    Log.warn('spawning opponent with path ' + path);
+    Log.warn(`spawning opponent with path ${botpath}`);
 
     // start script
     const locations = [

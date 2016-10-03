@@ -188,7 +188,8 @@ class Challenger {
     // these were pre-existing challenges, so let's just pretend they
     // didn't happen.
     if (this.challengeTo && this.challengeTo.to && !this.outstandingChallenge) {
-      this.cancelOutstandingChallenges();
+      Log.debug('Deprecated code, did you want to cancel a preexisting challenge?');
+      // this.cancelOutstandingChallenges();
     }
   }
 
@@ -217,12 +218,12 @@ class Challenger {
   /**
    * Cancels outstanding challenges.
    */
-  cancelOutstandingChallenges() {
-    if (this.challengeTo && this.challengeTo.to) {
-      Log.warn(' ~ cancelling a challenge with ' + this.challengeTo.to);
-      this.connection.send('|/cancelchallenge ' + this.challengeTo.to);
-    }
-  }
+  // cancelOutstandingChallenges() {
+  //   if (this.challengeTo && this.challengeTo.to) {
+  //     Log.warn(' ~ cancelling a challenge with ' + this.challengeTo.to);
+  //     this.connection.send('|/cancelchallenge ' + this.challengeTo.to);
+  //   }
+  // }
 
   /**
    * [acceptable description]
