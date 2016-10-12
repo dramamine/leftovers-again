@@ -386,8 +386,9 @@ export default class BattleStore {
   }
 
   handleSideStart(side, action) {
+    console.log('got side effect!', side, action);
     // ex. 'p1' or 'p2'
-    const id = side.split(':').pop().trim();
+    const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
       this.sides[id] = new Side();
     }
@@ -396,7 +397,7 @@ export default class BattleStore {
 
   handleSideEnd(side, action) {
     // ex. 'p1' or 'p2'
-    const id = side.split(':').pop().trim();
+    const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
       return;
     }
@@ -516,11 +517,11 @@ export default class BattleStore {
     output.turn = this.turn;
     output.weather = this.weather;
 
-    if (this.sides[this.myNick]) {
-      output.self.side = this.sides[this.myNick].data();
+    if (this.sides[this.myId]) {
+      output.self.side = this.sides[this.myId].data();
     }
-    if (this.sides[this.yourNick]) {
-      output.opponent.side = this.sides[this.yourNick].data();
+    if (this.sides[this.yourId]) {
+      output.opponent.side = this.sides[this.yourId].data();
     }
 
     return output;

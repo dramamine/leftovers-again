@@ -1,6 +1,6 @@
 {
   "name": "leftovers-again",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Pokemon Showdown - Bot Client",
   "main": "lib/main.js",
   "files": [
@@ -15,7 +15,7 @@
     "babel:watch": "cd src && onchange '**/*.js' -v -- babel {{changed}} -d ../lib",
     "build": "npm-run-all clean babel copy",
     "clean": "rimraf lib",
-    "copy": "cp src/data lib -R && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
+    "copy": "cp -R src/data lib && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
