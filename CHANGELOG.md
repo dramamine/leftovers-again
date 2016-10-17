@@ -1,3 +1,11 @@
+[0.8.2] - 2016-10-16
+- Forfeit matches if your bot throws an error
+- Forfeit matches if you get a 'cant' message, and it 'cant' be helped
+- Fully implement 'matches' param
+
+[0.8.1] - 2016-10-12
+- Fix for side effects not being properly written
+
 [0.8.0] - 2016-10-02
 - Tons of linting-related updates and npm script updates
 - Better path handling for spawned opponents
