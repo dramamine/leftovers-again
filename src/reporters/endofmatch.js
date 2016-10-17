@@ -23,6 +23,7 @@ class EndOfMatch {
     let out = [last.matchid, last.me, last.you, last.won, last.yourDead, last.myDead];
     out = out.join(',') + '\n';
 
+    Log.debug('checking this path:', path);
     fs.exists(path, (exists) => {
       if (!exists) {
         out = 'matchid,me,you,won,yourDead,myDead\n' + out;

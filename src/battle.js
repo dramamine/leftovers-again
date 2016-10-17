@@ -163,6 +163,9 @@ class Battle {
         mon.dead = true;
       });
       this.decide(state);
+    } else {
+      Log.error('Bailing');
+      this.forfeit();
     }
   }
 
@@ -185,27 +188,41 @@ class Battle {
     // attach previous states
     state.prevStates = this.prevStates;
 
-    const choice = this.myBot().decide(state);
-    if (choice instanceof Promise) {
-      // wait for promises to resolve
-      choice.then((resolved) => {
-        const res = Battle.formatMessage(this.bid, resolved, state);
+    try {
+      const choice = this.myBot().decide(state);
+
+      if (choice instanceof Promise) {
+        // wait for promises to resolve
+        choice.then((resolved) => {
+          const res = Battle.formatMessage(this.bid, resolved, state);
+          Log.info(res);
+          listener.relay('_send', res);
+          // saving this state for future reference
+          this.prevStates.unshift(this.abbreviateState(state));
+        }, (err) => {
+          Log.err('I think there was an error here.');
+          Log.err(err);
+        });
+      } else {
+        // message is ready to go
+        const res = Battle.formatMessage(this.bid, choice, state);
         Log.info(res);
         listener.relay('_send', res);
         // saving this state for future reference
         this.prevStates.unshift(this.abbreviateState(state));
-      }, (err) => {
-        Log.err('I think there was an error here.');
-        Log.err(err);
-      });
-    } else {
-      // message is ready to go
-      const res = Battle.formatMessage(this.bid, choice, state);
-      Log.info(res);
-      listener.relay('_send', res);
-      // saving this state for future reference
-      this.prevStates.unshift(this.abbreviateState(state));
+      }
+    } catch (e) {
+      Log.error('Forfeiting because of the following error:');
+      Log.error(e);
+      this.forfeit();
     }
+  }
+
+  /**
+   * Give up.
+   */
+  forfeit() {
+    listener.relay('_send', this.bid + '|/forfeit');
   }
 
   /**

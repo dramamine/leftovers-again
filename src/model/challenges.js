@@ -126,27 +126,28 @@ class Challenger {
 
 /**
  * [onBattleReport description]
- * @param  {[type]} options.report   [description]
+ *
  * @param  {[type]} options.winner   [description]
  * @param  {[type]} options.opponent [description]
  * @return {[type]}                  [description]
  */
-  onBattleReport(results) {
-    const winner = util.toId(results.winner);
-    const opponent = util.toId(results.opponent);
-    activeMatches.delete(opponent);
+  onBattleReport({ winner, opponent }) {
     Log.info('winner:', winner, 'loser:', opponent);
 
     const battles = report.data().filter(match => match.you === opponent);
     Reporter.report(battles, this.results);
 
-    if (battles.length < this.matches) {
+    // haven't hit limit yet; will rechallenge dudes if we feel like it
+    if (this.matches === 0 || battles.length < this.matches) {
       if (this.scrappy) {
         Log.warn('rechallenging ' + opponent);
         setTimeout(() => {
           this.challenge(util.toId(opponent));
         }, 1000);
       }
+    } else {
+      Log.warn(`Exiting after ${this.matches} matches.`);
+      process.exit();
     }
   }
 
