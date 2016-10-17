@@ -1,3 +1,8 @@
+# first you must build
+npm run build
+
+# run 'npm run start:quick -- stabby' in another window
+# run one match with each bot, for testing
 npm run start:quick -- alice-abreu --scrappy --matches=1
 npm run start:quick -- anderson-leonardo-oliveira --scrappy --matches=1
 npm run start:quick -- claudio-junior --scrappy --matches=1
