@@ -4,7 +4,8 @@
     [
       "module-alias", [
         { "src": "./src/bots", "expose": "bots" },
-        { "src": "./src", "expose": "leftovers-again" }
+        { "src": "./src", "expose": "leftovers-again" },
+        { "src": "./lib", "expose": "leftovers-again/lib" }
       ]
     ]
   ]
