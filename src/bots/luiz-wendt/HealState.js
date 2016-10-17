@@ -1,11 +1,11 @@
-import Damage from 'leftovers-again/lib/game/Damage';
+import Damage from 'leftovers-again/lib/game/damage';
 import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
 
 function update(state, global) {
-    
+
     console.log("On Heal");
     var moves = state.self.active.moves;
-    
+
     for(var i in moves) {
         if(moves[i] == null)
             continue;
@@ -14,11 +14,11 @@ function update(state, global) {
         if(moves[i].heal) {
             global.lastHeal.turn = state.turn;
             global.lastHeal.pok = state.self.active.id;
-            
+
             return new MOVE(moves[i].id);
         }
     }
-    
+
     return -404;
 }
 
@@ -29,7 +29,7 @@ function transitionToState(state, global) {
     Damage.assumeStats(pok);
     if(((pok.hp) + pok.maxhp/2) < global.ourPokemons[pok.id].against[enem.id].bestMinE)
         return false;
-    
+
     for(var i in moves) {
         if(moves[i] == null)
             continue;
@@ -59,7 +59,7 @@ function transitionToState(state, global) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -70,7 +70,7 @@ function TransitionFromState(state, global) {
     Damage.assumeStats(pok);
     if(((pok.hp) + pok.maxhp/2) < global.ourPokemons[pok.id].against[enem.id].bestMinE)
         return true;
-    
+
     for(var i in moves) {
         if(moves[i] == null)
             continue;
@@ -100,7 +100,7 @@ function TransitionFromState(state, global) {
             return false;
         }
     }
-    
+
     return true;
 }
 

@@ -11,7 +11,7 @@
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0"
   },
-  "main": "lib/bot.js",
+  "main": "bot.js",
   "scripts": {
     "babel": "babel src -d lib",
     "babel:watch": "babel src/ -d lib -w",

@@ -1,4 +1,5 @@
 import BattleStore from './model/battlestore';
+import Timer from './model/timer';
 
 import Log from './log';
 import { MOVE, SWITCH } from './decisions';
@@ -6,6 +7,10 @@ import report from './report';
 import listener from './listener';
 import Reporter from './reporters/matchstatus';
 import util from './pokeutil';
+
+const timer = new Timer();
+// that's right...you're gonna forfeit if you don't decide in this amount of time
+const FORFEIT_TIMEOUT = 60000;
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -141,7 +146,14 @@ class Battle {
     this.decide();
   }
 
+  /**
+   * Handle a win
+   *
+   * @param  {String} nick  The nickname of the winner.
+   *
+   */
   handleWin(nick) {
+    timer.ping(); // don't worry about timeout anymore
     const winner = util.toId(nick);
     Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
     report.win(winner, this.store, this.bid);
@@ -153,14 +165,12 @@ class Battle {
   }
 
   handleCallback(desc, code) {
-    Log.error('FYI THE TRAPPED CALLBACK WAS CALLED');
-    Log.error('THIS IS NOT AN ERROR, IN FACT MAYBE ITS WORKING??');
-    Log.error(desc + ' ' + code);
+    Log.error(`cb: ${desc} ${code}`);
     if (desc === 'trapped') {
-      console.log('runnin my lil trapped routine');
       const state = this.store.data();
       state.self.reserve.forEach((mon) => {
-        mon.dead = true;
+        mon.dead = true; // this is kind of hacky...
+        mon.disabled = true; // better
       });
       this.decide(state);
     } else {
@@ -174,6 +184,8 @@ class Battle {
    *
    */
   decide(state) {
+    timer.ping();
+
     if (!state) {
       state = this.store.data();
     }
@@ -197,6 +209,7 @@ class Battle {
           const res = Battle.formatMessage(this.bid, resolved, state);
           Log.info(res);
           listener.relay('_send', res);
+
           // saving this state for future reference
           this.prevStates.unshift(this.abbreviateState(state));
         }, (err) => {
@@ -208,9 +221,14 @@ class Battle {
         const res = Battle.formatMessage(this.bid, choice, state);
         Log.info(res);
         listener.relay('_send', res);
+
         // saving this state for future reference
         this.prevStates.unshift(this.abbreviateState(state));
       }
+      timer.after(() => {
+        Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
+        this.forfeit();
+      }, FORFEIT_TIMEOUT);
     } catch (e) {
       Log.error('Forfeiting because of the following error:');
       Log.error(e);
@@ -334,7 +352,8 @@ class Battle {
         return mons.findIndex(mon => mon.species === idx || mon.id === idx
         );
       default:
-        console.log('not a valid choice!', idx, mons);
+        Log.error('looking up mon... not a valid choice!', idx, mons);
+        this.forfeit();
     }
     return -1;
   }

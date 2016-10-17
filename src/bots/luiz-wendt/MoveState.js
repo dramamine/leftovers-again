@@ -1,5 +1,5 @@
 import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
-import Damage from 'leftovers-again/lib/game/Damage';
+import Damage from 'leftovers-again/lib/game/damage';
 import Side from 'leftovers-again/lib/model/side';
 
 var Sideo = new Side();
@@ -46,9 +46,9 @@ function haveRecoil(moveID) {
         return true;
     if(moveID == 'woodhammer')
         return true;
-    
+
     return false
-    
+
 }
 
 function isEnemyWithStatus(enem, stateID) {
@@ -82,61 +82,61 @@ var Calcule = function(state, moveID, global) {
         return -404;
     if(move.pp == 0)
         return -404;
-    
-    
+
+
     var pok = state.self.active;
-    
+
     var dmg = Damage.getDamageResult(pok, enem, move);
-    
+
     var value = 0;
-    
+
     var dmgMin = dmg[0];
     var dmgMax = dmg[dmg.length -1];
-    
+
     var dmgMean = 0;
-    
+
     for(var i in dmg) {
         dmgMean += dmg[i];
     };
-    
+
     dmgMean /= dmg.length;
-    
-    
+
+
     var enemStats = Damage.assumeStats(enem);
     //var enemHP = (enem.hp/100) * (enemStats.hp);
     //console.log("HP: " + (enem.hp/100) + ", " + (enemStats.hp) + " = " + enemHP)
-    
+
     //Casos especiais
-    
+
     if(move.id == "substitute" && pok.hppct < 0.25)
         return -100;
-    
+
     if(move.id == "explosion"){
         if(pok.hppct > 0.2)
             value -= 100;
         else
             value -= 20;
     }
-    
-    
+
+
     if(move.id == "fakeout") {
         if((global.lastSwitch.turn + 1) != state.turn) // esse move só funciona na primeira vez. -.-
             return -404;
     }
-    
+
     if(move.id == "return") {
         value += 40;
     }
-    
+
     if(haveRecoil(move.id))
         value -= 50;
-    
+
     if(move.drain)
         value += 20;
-    
+
     if(move.flags.charge)
         value -= 100;
-    
+
     if(dmgMax >= enem.hp) {
         //console.log("hp : " + enem.hp);
         if(dmgMin >= enem.hp) {
@@ -151,7 +151,7 @@ var Calcule = function(state, moveID, global) {
 
     }
     else {
-        
+
         value += dmgMean;
         if(pok.hp <= against.bestMinE)
             value += move.priority * 20;
@@ -159,26 +159,26 @@ var Calcule = function(state, moveID, global) {
             value += move.priority * 2;
 
 
-       
+
         //EXCLUIR ISSO DEPOIS DE ADICIONAR STATE DE SIDE CONDITION
         if(move.sideCondition) {
             // Se for um side condition que diminue o dano do inimigo
             if(move.sideCondition == 'lightscreen' &&
-               move.sideCondition == 'luckychant' && 
+               move.sideCondition == 'luckychant' &&
                move.sideCondition == 'mist' &&
                move.sideCondition == 'reflect' &&
                move.sideCondition == 'safeguard' &&
                move.sideCondition == 'tailwind'
               ){
                 value += 40;
-                
+
                }
             else if(move.sideCondition == 'matblock') { // se for esse ataque aqui que eu não entendi
                 value += 15;
             }
-               
+
         }
-        
+
         if(move.boosts) {
             if(move.target == "normal") {
                 for (var i in move.boosts) {
@@ -192,18 +192,18 @@ var Calcule = function(state, moveID, global) {
                 }
             }
         }
-        
+
         if(move.self) {
             if(move.self.boosts) {
                 for(i in move.self.boosts)
                     value += move.self.boosts[i] * 10;
             }
         }
-        
-        
+
+
         if(move.secondary) {
             if(move.secondary.self) {
-                if(move.secondary.self.boosts) {  
+                if(move.secondary.self.boosts) {
                     if(move.secondary.chance) {
                         for(i in move.secondary.self.boosts) {
                             value += move.secondary.self.boosts[i] * 0.1 * move.secondary.chance;
@@ -215,7 +215,7 @@ var Calcule = function(state, moveID, global) {
                         }
                     }
                 }
-                 
+
             }
             if(move.secondary.status) {
                if(!isEnemyWithStatus(enem, move.secondary.status)) {
@@ -227,7 +227,7 @@ var Calcule = function(state, moveID, global) {
                       }
                }
             }
-            
+
             if(move.secondary.volatileStatus){
                 var bdo = false;
                 if(enem.volatileStatus) {
@@ -246,24 +246,24 @@ var Calcule = function(state, moveID, global) {
                         value += 50;
                     }
                 }
-                
+
             }
-            
+
         }
 
     }
-    
+
     if(move.accuracy > 20) {
             value *= move.accuracy;
             value /= 100;
     }
-    
+
     // console.log(move.id +" : " + dmgMin + ", " + dmgMean + ", " + dmgMax + " : " + value);
-    
+
     return value;
-          
+
 }
-    
+
 
 var Calcule0 = function(state, global) {
     return Calcule(state, 0, global);

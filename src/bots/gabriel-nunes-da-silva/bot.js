@@ -19,14 +19,14 @@ class GNunes08 {
    *
    * @return {Decision}     A decision object.
    */
-    decide(state) {         
+    decide(state) {
     // `forceSwitch` occurs if your Pokemon has just fainted, or other moves
         // that mean you need to switch out your Pokemon
         var __reservePokemon = state.self.reserve.filter(mon1 => !mon1.dead).filter(mon2 => !mon2.disabled);
         var __enemyTypes = state.opponent.active.types;
 
-        if (state.forceSwitch) {           
-                    
+        if (state.forceSwitch) {
+
             var __myMon = this.getEffectivePokemon(__enemyTypes, __reservePokemon);
                 if(__myMon!=null)
                 {
@@ -65,10 +65,10 @@ class GNunes08 {
                 return new SWITCH(myMon);
             }
         }
-       
+
 
         const myMove = this.pickOne(__myMoves);
-        return new MOVE(myMove);    
+        return new MOVE(myMove);
   }
 
   // randomly chooses an element from an array
@@ -77,7 +77,7 @@ class GNunes08 {
   }
 
   getEffectiveMove(p_activeMoves, p_types, p_effective)
-  {  
+  {
       var __newMove = null
       for(var i = 0; i < p_activeMoves.length;i++)
       {
@@ -92,11 +92,11 @@ class GNunes08 {
           else
           {
               if(Typechart.compare(p_activeMoves[i].type, p_types)==1 && p_activeMoves[i].basePower>=20)
-              {                  
+              {
                   if(__newMove!=null && p_activeMoves[i].basePower>__newMove.basePower) __newMove = p_activeMoves[i];
                   else if(__newMove==null) __newMove = p_activeMoves[i];
               }
-          }         
+          }
       }
       return __newMove;
   }
@@ -141,7 +141,7 @@ class GNunes08 {
               }
           }
       }
-      else if (Typechart.compare(p_enemy[0],p_pokemon.types) > 1) return true;     
+      else if (Typechart.compare(p_enemy[0],p_pokemon.types) > 1) return true;
       return false;
   }
 
