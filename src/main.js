@@ -45,16 +45,23 @@ function _displayHelp() {
 Leftovers Again: interface for Pokemon Showdown bots
 
 -bot [path]:     path to your bot class. REQUIRED.
+-config [path]: specify a config file (ex. "./package.json")
+-format:        specify a format for challenges (ex. "randombattle", "ou")
 -h, --help:      show this menu
 -ajax:           don't use this
 -monkey:         listen to userscripts instead of connecting to a server
+-matches [n]:  exit after n matches. default 0 means "don't exit"
+-nickname [name]  login name (for Smogon official login server)
+-password [pw]    account password (required for registered nicknames)
 -loglevel [1-5]: level of severity of logs to show. higher levels are more
                  verbose. default 3.
 -opponent [path]: Spawn a specific opponent via a child process.
 -opponents [paths]: Spawn multiple opponents, ex. randumb,stabby,../anotherbot
+-production:    Connect to Cyberdyne
+-results [path]  Specify a path for results.csv (W-L records for your bots)
 -scrappy:       Have your bot pick fights with anyone who's in the lobby or
-                 who joins the lobby.
--server=[path]: Connect to a specific server.
+                who joins the lobby.
+-server [path]: Connect to a specific server.
 `);
 }
 
