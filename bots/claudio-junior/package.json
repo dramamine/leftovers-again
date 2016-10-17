@@ -1,0 +1,20 @@
+{
+  "name": "pirata1010",
+  "version": "0.0.0",
+  "description": "teste",
+  "dependencies": {
+    "leftovers-again": "*",
+    "babel-cli": "*",
+    "babel-preset-es2015-node6": "*"
+  },
+  "main": "lib/bot.js",
+  "scripts": {
+    "build": "babel src/ -d lib",
+    "start:quick": "babel-node src/bot.js",
+    "start": "npm run build && node lib/bot.js",
+    "server": "printf `you fill this out! cd path/to/Pokemon-Showdown && npm start`"
+  },
+  "format": "randombattle",
+  "accepts": "ALL",
+  "nickname": "pirata1010"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "PokeTest",
+  "version": "0.0.0",
+  "description": "bot do fabio",
+  "dependencies": {
+    "leftovers-again": "*",
+    "babel-cli": "*",
+    "babel-preset-es2015-node6": "*"
+  },
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "babel src/ -d lib",
+    "start:quick": "babel-node src/main.js",
+    "start": "npm run build && node lib/main.js",
+    "server": "printf `you fill this out! cd path/to/Pokemon-Showdown && npm start`"
+  },
+  "format": "randombattle",
+  "accepts": "ALL",
+  "nickname": "Biodam"
+}
