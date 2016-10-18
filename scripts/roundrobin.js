@@ -86,7 +86,7 @@ inquirer.prompt([{
     for (let i = 0; i < chosen.length; i++) {
       for (let j = 0; j < chosen.length; j++) {
         if (i < j) {
-          const text = `npm start:quick -- ${chosen[i]} --opponent=${chosen[j]} ${parameters}\n`;
+          const text = `npm run start:quick -- ${chosen[i]} --opponent=${chosen[j]} ${parameters}\n`;
           console.log(text);
           stream.write(text);
         }
