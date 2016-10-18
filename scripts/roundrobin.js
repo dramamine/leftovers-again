@@ -28,9 +28,6 @@ const isValid = (bot, format) => {
   return false;
 };
 
-console.log( findPossibleBots('lib/bots/') );
-
-
 console.log(`
 This will generate a shell script for you to run a tournament.
 Fill out the prompts and run the script to produce a CSV of results for yourself.
@@ -41,26 +38,60 @@ want to filter out all losses, or something.
 This script searches for valid bots in lib/bots. Valid bots must be valid (duh)
 but also must accept battles of the chosen type.`);
 
-inquirer.prompt({
+inquirer.prompt([{
   name: 'format',
   message: 'What battle type are you running?',
   type: 'list',
-  default: 0,
+  default: 'randombattle',
   choices: types
-}).then(({ format }) => {
+},
+{
+  name: 'resultsfile',
+  message: 'Where should I record the results?',
+  type: 'input',
+  default: 'results/roundrobin.csv'
+}]
+).then(({ format, resultsfile }) => {
   const bots = findPossibleBots('lib/bots');
   const gtg = bots.filter(bot => isValid(bot, format));
-  inquirer.prompt({
-    name: 'chosen',
-    message: 'How does this bot list look?',
-    type: 'checkbox',
-    choices: [
-      new inquirer.Separator('==  ==  =='),
-      ...gtg,
-      new inquirer.Separator('  ==  ==')
-    ],
-    default: gtg
-  }).then(({ chosen }) => {
+  inquirer.prompt([
+    {
+      name: 'outfile',
+      message: 'Where should I record the tournament script?',
+      type: 'input',
+      default: 'roundrobin.sh'
+    },
+    {
+      name: 'chosen',
+      message: 'How does this bot list look?',
+      type: 'checkbox',
+      choices: [
+        new inquirer.Separator('==  ==  =='),
+        ...gtg,
+        new inquirer.Separator('  ==  ==')
+      ],
+      default: gtg
+    },
+    {
+      name: 'parameters',
+      message: 'Any other parameters?',
+      type: 'input',
+      default: `--matches=1 format=${format} results=${resultsfile}`
+    }
+  ]).then(({ chosen, outfile, parameters }) => {
     console.log('gr8');
+    const stream = fs.createWriteStream(outfile, {
+      flags: 'w' // erase and overwrite
+    });
+    for (let i = 0; i < chosen.length; i++) {
+      for (let j = 0; j < chosen.length; j++) {
+        if (i < j) {
+          const text = `npm run start:quick -- ${chosen[i]} --opponent=${chosen[j]} ${parameters}\n`;
+          console.log(text);
+          stream.write(text);
+        }
+      }
+    }
+    stream.end('\n\nThat should be it.');
   });
 });
