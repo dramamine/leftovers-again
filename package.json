@@ -67,7 +67,8 @@
     "lodash": "^4.6.1",
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0",
-    "onchange": "^3.0.2"
+    "onchange": "^3.0.2",
+    "underscore": "^1.8.3"
   },
   "engine": "node >= 6.0.0"
 }
