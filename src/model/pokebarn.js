@@ -54,7 +54,12 @@ class Pokebarn {
     }
 
     const updated = this.findOrCreate(ident, details);
-    updated.useCondition(condition);
+    if (!condition) {
+      updated.useCondition(condition);
+    } else {
+      log.err('pokebarn.replace: condition was empty? marten is trying to solve.');
+      log.err(ident, details, condition);
+    }
     return updated;
   }
 

@@ -39,7 +39,6 @@ export default class BattleStore {
       faint: this.handleFaint,
       heal: this.handleHeal,
       player: this.handlePlayer,
-      cant: this.handleCant,
       replace: this.handleReplace,
       '-fail': this.handleFail,
       '-miss': this.handleMiss,
@@ -136,36 +135,6 @@ export default class BattleStore {
     actingMon.recordMove(move);
   }
 
-  /**
-   * Handles the cant message.
-   *
-   * Sometimes we get this because the user chose an invalid option. This is
-   * bad and we want to let the user know.
-   *
-   * Sometimes we get this because the move failed. For this, we just log to
-   * events and do nothing. The server sends "reasons" and we keep a list of
-   * reasons that we're expecting in the normal course of play.
-   *
-   * @param  {[type]} target [description]
-   * @param  {[type]} reason [description]
-   * @return {[type]}        [description]
-   */
-  handleCant(target, reason) {
-    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) === -1) {
-      Log.error(`can't! ${target} ${reason}`);
-    } else {
-      Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
-    }
-    const targetMon = this.barn.find(target);
-    this.events.push({
-      type: 'cant',
-      turn: this.turn,
-      player: util.identToOwner(target),
-      from: targetMon.species,
-      frompos: targetMon.position,
-      reason
-    });
-  }
 
   handleReplace(ident, details, condition) {
     this.barn.replace(ident, details, condition);
