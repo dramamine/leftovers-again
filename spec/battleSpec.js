@@ -35,43 +35,43 @@ describe('battle', () => {
       spyOn(battle.store, 'data').and.returnValue(exampleState);
     });
     it('should format an integer-based move', () => {
-      const res = Battle.formatMessage(1, new MOVE(0), exampleState);
+      const res = battle.formatMessage(1, new MOVE(0), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format an object-based move', () => {
-      const res = Battle.formatMessage(1,
+      const res = battle.formatMessage(1,
         new MOVE(exampleState.self.active.moves[0]), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format a name-based move', () => {
-      const res = Battle.formatMessage(1,
+      const res = battle.formatMessage(1,
         new MOVE('niceone'), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     // note that we're changing exampleState in this one.
     it('should mega-evolve properly', () => {
       exampleState.self.active.canMegaEvo = true;
-      const res = Battle.formatMessage(1, new MOVE(0), exampleState);
+      const res = battle.formatMessage(1, new MOVE(0), exampleState);
       expect(res).toEqual('1|/move 1 mega|1');
     });
     it('should not mega-evolve is we opted out', () => {
       exampleState.self.active.canMegaEvo = true;
       const move = new MOVE(0);
       move.shouldMegaEvo = false;
-      const res = Battle.formatMessage(1, move, exampleState);
+      const res = battle.formatMessage(1, move, exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format an integer-based switch', () => {
-      const res = Battle.formatMessage(1, new SWITCH(0), exampleState);
+      const res = battle.formatMessage(1, new SWITCH(0), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
     it('should format an object-based switch', () => {
-      const res = Battle.formatMessage(1,
+      const res = battle.formatMessage(1,
         new SWITCH(exampleState.self.reserve[0]), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
     it('should format a name-based switch', () => {
-      const res = Battle.formatMessage(1,
+      const res = battle.formatMessage(1,
         new SWITCH('fakemon'), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
