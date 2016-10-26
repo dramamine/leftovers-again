@@ -1,5 +1,5 @@
 import BattleStore from './model/battlestore';
-// import Timer from './model/timer';
+import Timer from './model/timer';
 
 import Log from './log';
 import { MOVE, SWITCH } from './decisions';
@@ -8,9 +8,9 @@ import listener from './listener';
 import Reporter from './reporters/matchstatus';
 import util from './pokeutil';
 
-// const timer = new Timer();
+const timer = new Timer();
 // that's right...you're gonna forfeit if you don't decide in this amount of time
-// const FORFEIT_TIMEOUT = 180000;
+const FORFEIT_TIMEOUT = 180000;
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -154,7 +154,7 @@ class Battle {
    *
    */
   handleWin(nick) {
-    // timer.ping(); // don't worry about timeout anymore
+    timer.ping(); // don't worry about timeout anymore
     const winner = util.toId(nick);
     Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
     report.win(winner, this.store, this.bid);
@@ -201,10 +201,10 @@ class Battle {
    *
    */
   handleCant(target, reason, move) {
-    Log.warn(`got 'cant' msg back from server. target:${target} reason:${reason}`);
+    Log.info(`got 'cant' msg back from server. target:${target} reason:${reason}`);
     // 'soft' cants; don't need to do anything
-    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason.trim()) === -1) {
-      Log.warn('Normal-lookin reason');
+    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) >= 0) {
+      Log.info('Normal-lookin reason');
       return;
     }
 
@@ -212,22 +212,46 @@ class Battle {
     // Log.error('I think this guy was the target?');
     // Log.error(JSON.stringify(targetMon));
 
-    if (!move && targetMon.disabled) {
-      Log.error(`You tried to switch into ${target} but 'disabled' was true.`);
-      Log.error('Check that property before you switch!');
-    } else if (!move && targetMon.dead) {
-      Log.error(`You tried to switch into ${target} but 'dead' was true.`);
-      Log.error('Check that property before you switch!');
-    } else if (move) {
-      Log.error(`Move ${move} was unusable by ${target}.`);
-      const targetMove = targetMon.moves.find(mv => mv.id.indexOf(move) >= 0);
-      if (targetMove) {
-        Log.error(JSON.stringify(targetMove));
-        // @TODO disabling
+//  HEAD
+//     if (!move && targetMon.disabled) {
+//       Log.error(`You tried to switch into ${target} but 'disabled' was true.`);
+//       Log.error('Check that property before you switch!');
+//     } else if (!move && targetMon.dead) {
+//       Log.error(`You tried to switch into ${target} but 'dead' was true.`);
+//       Log.error('Check that property before you switch!');
+//     } else if (move) {
+//       Log.error(`Move ${move} was unusable by ${target}.`);
+//       const targetMove = targetMon.moves.find(mv => mv.id.indexOf(move) >= 0);
+//       if (targetMove) {
+//         Log.error(JSON.stringify(targetMove));
+//         // @TODO disabling
+//       }
+//     }
+//     Log.error('forfeiting due to cant.');
+//     this.forfeit();
+// =======
+
+    if (this.store.myId === targetMon.owner) {
+      if (move) {
+        Log.error(`Move ${move} was unusable by ${target}.`);
+        const targetMove = targetMon.moves.find(mv => mv.id.indexOf(move) >= 0);
+        if (targetMove) {
+          Log.error(JSON.stringify(targetMove));
+          // @TODO disabling
+          // eh, just gonna forfeit.
+          this.forfeit();
+        }
+      } else if (targetMon.disabled) {
+        Log.error(`You tried to switch into ${target} but 'disabled' was true.`);
+        Log.error('Check that property before you switch!');
+        this.forfeit();
+      } else if (targetMon.dead) {
+        Log.error(`You tried to switch into ${target} but 'dead' was true.`);
+        Log.error('Check that property before you switch!');
+        this.forfeit();
       }
     }
-    Log.error('forfeiting due to cant.');
-    this.forfeit();
+    return;
   }
 
 
@@ -236,7 +260,7 @@ class Battle {
    *
    */
   decide(state) {
-    // timer.ping();
+    timer.ping();
 
     if (!state) {
       state = this.store.data();
@@ -281,12 +305,13 @@ class Battle {
         // saving this state for future reference
         this.prevStates.unshift(this.abbreviateState(state));
       }
-      // timer.after(() => {
-      //   // @TODO fuck this
-      //   // Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
-      //   // this.forfeit();
-      //   // process.exit();
-      // }, FORFEIT_TIMEOUT);
+
+      timer.after(() => {
+        // @TODO fuck this
+        Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
+        this.forfeit();
+        // process.exit();
+      }, FORFEIT_TIMEOUT);
     } catch (e) {
       Log.error('Forfeiting because of the following error:');
       Log.error(e);
@@ -416,9 +441,7 @@ class Battle {
    * @return {number} The switch index.
    */
   lookupMonIdx(mons, idx) {
-    // Log.debug('mons:', mons);
-    // Log.debug('idx:', idx);
-    // Log.debug('rq:', JSON.stringify(rq));
+
 
     let answer;
     switch (typeof (idx)) {
@@ -438,6 +461,7 @@ class Battle {
     }
 
     const storeGuy = mons[answer];
+
     if (storeGuy.dead) {
       Log.error('You cant pick a dead guy.');
       return -1;

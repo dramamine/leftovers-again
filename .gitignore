@@ -14,3 +14,4 @@ leftovers-again.sublime-project
 bots/predictor/
 tmp/
 results/results.csv
+yarn.lock
