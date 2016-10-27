@@ -366,6 +366,12 @@ export default class Pokemon {
       const hps = condition.split('/');
       if (hps.length === 2) {
         this.hp = parseInt(hps[0], 10);
+        if (isNaN(this.hp)) {
+          log.error('bailing out, hp wasnt a number');
+          log.error('condition: ' + condition);
+          log.error('hp:' + hps[0]);
+          process.exit();
+        }
         // array with max hp at 0 and other stuff at 1+
         const maxHpAndStatuses = hps[1].split(' ');
         this.maxhp = parseInt(maxHpAndStatuses[0], 10);

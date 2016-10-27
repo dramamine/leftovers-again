@@ -51,7 +51,9 @@ export default class BattleStore {
       // @TODO rocks, weather, etc.
       // |-sidestart|p1: 5nowden4189|move: Stealth Rock
       '-sidestart': this.handleSideStart,
-      '-sideend': this.handleSideEnd
+      '-sideend': this.handleSideEnd,
+      '-formechange': this.handleFormeChange,
+      '-detailschange': this.handleDetailsChange
     };
 
     // NOT sent to user. temporary storage.
@@ -371,6 +373,17 @@ export default class BattleStore {
       return;
     }
     this.sides[id].remove(action);
+  }
+
+  handleFormeChange(pokemon, species, hpstatus) {
+    console.warn('forme change!', pokemon, species, hpstatus);
+    this.handleDetailsChange(pokemon, species, hpstatus);
+  }
+
+  handleDetailsChange(pokemon, details, hpstatus) {
+    console.warn('details change: updating ', pokemon, ' with ', details);
+    console.warn('not doing anything with ', hpstatus);
+    this.barn.find(pokemon).useDetails(details);
   }
 
 

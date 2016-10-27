@@ -46,6 +46,7 @@ class Pokebarn {
     const replaced = this.findByPos(pos);
     const idx = this.allmon.indexOf(replaced);
     if (idx >= 0) {
+      Log.warn('replace call:', ident, details, condition);
       Log.warn('Found zoroark! replacing him!');
       this.allmon.splice(idx, 1);
     } else {
@@ -57,8 +58,8 @@ class Pokebarn {
     if (!condition) {
       updated.useCondition(condition);
     } else {
-      log.err('pokebarn.replace: condition was empty? marten is trying to solve.');
-      log.err(ident, details, condition);
+      Log.error('pokebarn.replace: condition was empty? marten is trying to solve.');
+      Log.error(ident, details, condition);
     }
     return updated;
   }
