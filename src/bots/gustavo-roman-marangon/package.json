@@ -1,0 +1,20 @@
+{
+  "name": "HOUNDOOM_BOT",
+  "version": "0.0.3",
+  "description": "A bot that strives to perform better than LAPRAS_BOT",
+  "dependencies": {
+    "leftovers-again": "*",
+    "babel-cli": "*",
+    "babel-preset-es2015-node6": "*"
+  },
+  "main": "bot.js",
+  "scripts": {
+    "build": "babel src/ -d lib",
+    "start:quick": "babel-node src/main.js",
+    "start": "npm run build && node lib/main.js",
+    "server": "printf `you fill this out! cd path/to/Pokemon-Showdown && npm start`"
+  },
+  "format": "randombattle",
+  "accepts": "ALL",
+  "nickname": "HOUNDOOM_BOT"
+}

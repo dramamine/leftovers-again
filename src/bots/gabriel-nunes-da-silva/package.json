@@ -1,0 +1,26 @@
+{
+  "name": "GNunes08",
+  "version": "0.0.0",
+  "description": "TGA-IA",
+  "dependencies": {
+    "leftovers-again": "0.*",
+    "babel-cli": "*",
+    "babel-preset-es2015-node6": "*"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2",
+    "npm-run-all": "^3.1.0"
+  },
+  "main": "bot.js",
+  "scripts": {
+    "babel": "babel src -d lib",
+    "babel:watch": "babel src/ -d lib -w",
+    "start:quick": "babel-node src/main.js",
+    "start": "npm run babel && node lib/main.js",
+    "develop": "npm-run-all --parallel babel:watch 'start:watch -- {@}' --",
+    "server": "cd Pokemon-Showdown && npm start"
+  },
+  "format": "randombattle",
+  "accepts": "ALL",
+  "nickname": "GNunes08"
+}

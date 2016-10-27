@@ -1,0 +1,30 @@
+{
+  "name": "Ryujin",
+  "version": "0.0.0",
+  "description": "King of Bots",
+  "dependencies": {
+    "leftovers-again": "0.*",
+    "babel-cli": "*",
+    "babel-preset-es2015-node6": "*"
+  },
+  "devDependencies": {
+    "nodemon": "*",
+    "npm-run-all": "*",
+    "onchange": "*"
+  },
+  "main": "bot.js",
+  "scripts": {
+    "babel": "babel src -d lib",
+    "babel:watch": "cd src && onchange '**/*.js' -v -- babel  -d ../lib",
+    "build": "npm-run-all clean babel",
+    "clean": "rimraf lib",
+    "develop": "npm-run-all build --parallel babel:watch 'start:watch -- {@}' --",
+    "start": "npm run build && node lib/main.js",
+    "start:quick": "babel-node src/main.js",
+    "start:watch": "nodemon -w lib lib/main.js",
+    "server": "cd Pokemon-Showdown && npm start"
+  },
+  "format": "randombattle",
+  "accepts": "ALL",
+  "nickname": "RyujinBot"
+}
