@@ -216,14 +216,12 @@ export default class Pokemon {
    */
   static updateMoveList(moves) {
     return moves.map((move) => {
-      // console.log('old:', move);
       const research = util.researchMoveById(move);
       const out = {};
       ['accuracy', 'basePower', 'category', 'id', 'name', 'volatileStatus',
       'priority', 'flags', 'heal', 'self', 'target', 'type', 'pp', 'maxpp'].forEach((field) => {
         if (research[field]) out[field] = research[field];
       });
-      // console.log('returning ', out);
       return out;
     });
   }
@@ -233,11 +231,9 @@ export default class Pokemon {
    * 'level', and 'gender'.
    *
    * @param  {[type]} details The details, ex. 'Pikachu, L99, F'
+   * @param  {Boolean} force  True if you want to allow for species/id updates
    */
-  useDetails(details) {
-    // this stuff never changes, so we only need to process once.
-    if (this.level && this.gender) return;
-
+  useDetails(details, force = false) {
     if (this.details && this.details !== details) {
       log.warn(`details changed. ${this.details}, ${details}`);
     }
@@ -245,14 +241,20 @@ export default class Pokemon {
     this.details = details;
     try {
       const deets = details.split(', ');
-
-      if (!this.species) {
-        // log.warn('weird, learning about species from deets.');
+      if (!this.species || force) {
         this.species = deets[0];
         this.id = util.toId(deets[0]);
+        this.ident = `${this.owner}: ${this.species}`;
+      } else if (!this.species) {
+        log.warn('pokemon.useDetails: yea, sometimes i call useDetails when this.species is true');
+        log.warn('pokemon.useDetails: looks like this:', deets[0], this.species);
       }
       if (deets[1]) {
-        this.level = parseInt(deets[1].substr(1), 10);
+        const lvlUpdate = parseInt(deets[1].substr(1), 10);
+        // sometimes we didnt have a level, so.. dont.
+        if (!isNaN(lvlUpdate)) {
+          this.level = lvlUpdate;
+        }
       }
       this.gender = deets[2] || 'M';
     } catch (e) {
@@ -366,6 +368,12 @@ export default class Pokemon {
       const hps = condition.split('/');
       if (hps.length === 2) {
         this.hp = parseInt(hps[0], 10);
+        if (isNaN(this.hp)) {
+          log.error('bailing out, hp wasnt a number');
+          log.error('condition: ' + condition);
+          log.error('hp:' + hps[0]);
+          process.exit();
+        }
         // array with max hp at 0 and other stuff at 1+
         const maxHpAndStatuses = hps[1].split(' ');
         this.maxhp = parseInt(maxHpAndStatuses[0], 10);

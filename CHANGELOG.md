@@ -1,3 +1,11 @@
+[0.9.0] - 2016-10-27
+- Handle mega-evolutions and forme changes
+
+[0.8.3] - 2016-10-25
+- timer functionality (very hacky, not sure if its worth using)
+- Forfeit on invalid decisions
+- roundrobin.js script for running tourneys
+
 [0.8.2] - 2016-10-16
 - Forfeit matches if your bot throws an error
 - Forfeit matches if you get a 'cant' message, and it 'cant' be helped

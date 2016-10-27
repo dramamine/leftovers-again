@@ -51,4 +51,13 @@ describe('BattleStore', () => {
       expect(result.opponent.active.species).toEqual('Guardechu');
     });
   });
+  describe('handleDetailsChange', () => {
+    it('should follow mega-evolution', () => {
+      store.myId = 'p1';
+      // p2a: Charizard|Charizard-Mega-X, M
+      store.barn.create('p1a: Charizard', 'Charizard, L83, M');
+      store.handleDetailsChange('p1a: Charizard', 'Charizard-Mega-X, M');
+      expect(store.barn.find('p1a: Charizard-Mega-X')).toBeTruthy();
+    });
+  });
 });

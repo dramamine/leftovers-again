@@ -87,7 +87,7 @@ Serious Nature
   }
 
   decide(state) {
-    if (state.forceSwitch || !this.canRoost(state)) {
+    if (state.forceSwitch || !this.can(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
 

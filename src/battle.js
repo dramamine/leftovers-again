@@ -10,7 +10,7 @@ import util from './pokeutil';
 
 const timer = new Timer();
 // that's right...you're gonna forfeit if you don't decide in this amount of time
-const FORFEIT_TIMEOUT = 180000;
+let forfeitTimeout;
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -29,7 +29,8 @@ class Battle {
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, bot) {
+  constructor(bid, bot, timeout = 0) {
+    forfeitTimeout = timeout;
     // battle ID
     this.bid = bid;
 
@@ -306,12 +307,15 @@ class Battle {
         this.prevStates.unshift(this.abbreviateState(state));
       }
 
-      timer.after(() => {
-        // @TODO fuck this
-        Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
-        this.forfeit();
-        // process.exit();
-      }, FORFEIT_TIMEOUT);
+      // only if user set a timeout
+      if (forfeitTimeout) {
+        timer.after(() => {
+          // @TODO fuck this
+          Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
+          this.forfeit();
+          // process.exit();
+        }, forfeitTimeout);
+      }
     } catch (e) {
       Log.error('Forfeiting because of the following error:');
       Log.error(e);
