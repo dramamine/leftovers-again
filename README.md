@@ -37,6 +37,10 @@ With one quick script, you can see how your bot fares against any number of oppo
 Writing a Pokemon bot is a small, low-risk project where you can create something rewarding without a huge time investment. You don't have to create the next 'Deep Blue'! Just come up with a creative team and strategy, then set easy goals for yourself, like [beating all the Elite Four and Champions from 6th Generation]().
 
 
+## Already In Use In Classrooms
+This software has been used for college-level game AI courses, where classes have run tournaments using students' submissions.
+
+
 ## Write in Any Language You Want
 
 This project is mainly coded in Javascrpt / ES6, which I recommend for its ease of use. However, you can write code in any language you want.

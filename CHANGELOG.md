@@ -1,3 +1,6 @@
+[0.9.4] - 2016-10-27
+- Change match-display to look a little nicer
+
 [0.9.3] - 2016-10-27
 - Fix issue with finding your Pokemon after forme/details change
 - Clean up logging a bit
