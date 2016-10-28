@@ -59,10 +59,11 @@ class Pokebarn {
     const updated = this.findOrCreate(ident, details);
     if (condition) {
       updated.useCondition(condition);
-    } else {
+    } else if (replaced.condition) {
+      // condition was null, so we probs got details / forme change
+      // in that case, use the condition we had before? hppct/conditions
+      // probably did not change, but maxhp probably did.
       updated.useCondition(replaced.condition);
-      Log.error('pokebarn.replace: condition was empty? marten is trying to solve.');
-      Log.error(`wanna copy hp over? ${JSON.stringify(replaced)} ${JSON.stringify(updated)}`);
     }
 
     return updated;
