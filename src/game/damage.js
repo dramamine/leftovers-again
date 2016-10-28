@@ -527,7 +527,6 @@ class Damage {
         break;
       case 'Eruption':
       case 'Water Spout':
-        console.log('trying to calc based on attackers hp:', attacker);
         basePower = Math.max(1, Math.floor(150 * attacker.hp / attacker.maxhp));
         console.log('bp: ', basePower);
         description.moveBP = basePower;
