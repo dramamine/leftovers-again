@@ -47,11 +47,12 @@ export default class BattleStore {
       '-status': this.handleStatus,
       '-curestatus': this.handleCureStatus,
       '-weather': this.handleWeather,
-      // @TODO why don't we track field effects??
-      // @TODO rocks, weather, etc.
-      // |-sidestart|p1: 5nowden4189|move: Stealth Rock
       '-sidestart': this.handleSideStart,
-      '-sideend': this.handleSideEnd
+      '-sideend': this.handleSideEnd,
+
+      // same signature
+      '-formechange': this.handleDetailsChange,
+      'detailschange': this.handleDetailsChange
     };
 
     // NOT sent to user. temporary storage.
@@ -120,6 +121,12 @@ export default class BattleStore {
    */
   handleMove(actor, move, target) {
     const actingMon = this.barn.find(actor);
+
+    if (!actingMon) {
+      Log.error('battlestore.handleMove: couldnt find ' + actor + ' in this haystack:');
+      this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
+    }
+
     const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
@@ -354,8 +361,13 @@ export default class BattleStore {
     this.weather = weather;
   }
 
+  /**
+   * ex. |-sidestart|p1: 5nowden4189|move: Stealth Rock
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
   handleSideStart(side, action) {
-    console.log('got side effect!', side, action);
+    Log.warn('got side effect!', side, action);
     // ex. 'p1' or 'p2'
     const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
@@ -364,6 +376,10 @@ export default class BattleStore {
     this.sides[id].digest(action);
   }
 
+  /**
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
   handleSideEnd(side, action) {
     // ex. 'p1' or 'p2'
     const id = side.split(':').shift().trim();
@@ -371,6 +387,22 @@ export default class BattleStore {
       return;
     }
     this.sides[id].remove(action);
+  }
+
+  /**
+   * Forme change! This came up a lot with castform, probs some other pokes too.
+   * ex: |-formechange|p2a: Castform|Castform-Sunny|[msg]|[from] ability: Forecast
+   * ex: |detailschange|p2a: Charizard|Charizard-Mega-X, M
+   *
+   * @param  {String} pokemon  The id of the pokemon
+   * @param  {String} species  The pokemon's new species
+   * @param  {String} hpstatus Not sure, always seems to be [msg]
+   * @param  {String} reason  Why did these details change?
+   */
+  handleDetailsChange(pokemon, details, hpstatus, reason) {
+    Log.info(`details change: ${pokemon}|${details}|${hpstatus}|${reason}`);
+
+    this.barn.replace(pokemon, details, null);
   }
 
 
