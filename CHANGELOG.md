@@ -1,3 +1,7 @@
+[0.9.3] - 2016-10-27
+- Fix issue with finding your Pokemon after forme/details change
+- Clean up logging a bit
+
 [0.9.0] - 2016-10-27
 - Handle mega-evolutions and forme changes
 

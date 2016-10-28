@@ -57,7 +57,7 @@ describe('BattleStore', () => {
       // p2a: Charizard|Charizard-Mega-X, M
       store.barn.create('p1a: Charizard', 'Charizard, L83, M');
       store.handleDetailsChange('p1a: Charizard', 'Charizard-Mega-X, M');
-      expect(store.barn.find('p1a: Charizard-Mega-X')).toBeTruthy();
+      expect(store.barn.find('p1: Charizard-Mega-X')).toBeTruthy();
     });
   });
 });

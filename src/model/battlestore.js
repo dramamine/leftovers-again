@@ -121,6 +121,12 @@ export default class BattleStore {
    */
   handleMove(actor, move, target) {
     const actingMon = this.barn.find(actor);
+
+    if (!actingMon) {
+      Log.error('battlestore.handleMove: couldnt find ' + actor + ' in this haystack:');
+      this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
+    }
+
     const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
@@ -394,11 +400,9 @@ export default class BattleStore {
    * @param  {String} reason  Why did these details change?
    */
   handleDetailsChange(pokemon, details, hpstatus, reason) {
-    Log.warn('details change:', pokemon, details, hpstatus, reason);
-    const mon = this.barn.find(pokemon);
+    Log.info(`details change: ${pokemon}|${details}|${hpstatus}|${reason}`);
 
-    // 'true' here forces updating species
-    mon.useDetails(details, true);
+    this.barn.replace(pokemon, details, null);
   }
 
 
