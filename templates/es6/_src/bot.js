@@ -34,6 +34,9 @@ Careful Nature
    * @return {Decision}     A decision object.
    */
   decide(state) { {{#if team}}
+    // you're probably gonna turn this on. alternately, use the flag --loglevel=5
+    // console.log(state);
+
     // `teamPreview` means the game hasn't started and you're choosing who to
     // send out first. {{/if}}
     // `forceSwitch` occurs if your Pokemon has just fainted, or other moves

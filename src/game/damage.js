@@ -306,28 +306,28 @@ class Damage {
     // dmg percent multiplier. 0-1
     let factor = 0;
     switch (move.id) {
-    case 'headcharge':
-    case 'submission':
-    case 'takedown':
-    case 'wildcharge':
-      factor = 0.25;
-      break;
+      case 'headcharge':
+      case 'submission':
+      case 'takedown':
+      case 'wildcharge':
+        factor = 0.25;
+        break;
 
-    case 'bravebird':
-    case 'doubleedge':
-    case 'flareblitz':
-    case 'volttackle':
-    case 'woodhammer':
-      factor = 0.33;
-      break;
-    case 'headsmash':
-      factor = 0.5;
-      break;
-    case 'explosion':
-      cumulative += attacker.maxhp;
-      break;
-    default:
-      break;
+      case 'bravebird':
+      case 'doubleedge':
+      case 'flareblitz':
+      case 'volttackle':
+      case 'woodhammer':
+        factor = 0.33;
+        break;
+      case 'headsmash':
+        factor = 0.5;
+        break;
+      case 'explosion':
+        cumulative += attacker.maxhp;
+        break;
+      default:
+        break;
     }
 
     if (attacker.ability === 'reckless') factor = factor * 2;
@@ -470,88 +470,89 @@ class Damage {
     // //////////////////////////////
     let basePower;
     switch (move.name) {
-    case 'Payback':
-      basePower = turnOrder === 'LAST' ? 100 : 50;
-      description.moveBP = basePower;
-      break;
-    case 'Electro Ball':
-      const r = Math.floor(attacker.boostedStats[SP] / defender.boostedStats[SP]);
-      basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
-      description.moveBP = basePower;
-      break;
-    case 'Gyro Ball':
-      basePower = Math.min(150, Math.floor(25 * defender.boostedStats[SP] / attacker.boostedStats[SP]));
-      description.moveBP = basePower;
-      break;
-    case 'Punishment':
-      basePower = Math.min(200, 60 + 20 * countBoosts(defender.boosts));
-      description.moveBP = basePower;
-      break;
-    case 'Low Kick':
-    case 'Grass Knot':
-      const w = defender.weight;
-      basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
-      description.moveBP = basePower;
-      break;
-    case 'Hex':
-      // this used to check for 'Healthy', but this str will be empty for our system
-      basePower = move.bp * (defender.status !== '' ? 2 : 1);
-      description.moveBP = basePower;
-      break;
-    case 'Heavy Slam':
-    case 'Heat Crash':
-      const wr = attacker.weight / defender.weight;
-      basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
-      description.moveBP = basePower;
-      break;
-    case 'Stored Power':
-      basePower = 20 + 20 * countBoosts(attacker.boosts);
-      description.moveBP = basePower;
-      break;
-    case 'Acrobatics':
-      basePower = attacker.item === 'Flying Gem' || attacker.item === '' ? 110 : 55;
-      description.moveBP = basePower;
-      break;
-    case 'Wake-Up Slap':
-      basePower = move.bp * (defender.status === 'Asleep' ? 2 : 1);
-      description.moveBP = basePower;
-      break;
-    case 'Weather Ball':
-      basePower = field.weather !== '' ? 100 : 50;
-      description.moveBP = basePower;
-      break;
-    case 'Fling':
-      basePower = getFlingPower(attacker.item);
-      description.moveBP = basePower;
-      description.attackerItem = attacker.item;
-      break;
-    case 'Eruption':
-    case 'Water Spout':
-      basePower = Math.max(1, Math.floor(150 * attacker.curHP / attacker.maxHP));
-      description.moveBP = basePower;
-      break;
-    case 'Flail':
-    case 'Reversal':
-      const p = Math.floor(48 * attacker.curHP / attacker.maxHP);
-      basePower = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
-      description.moveBP = basePower;
-      break;
-    case 'Earthquake':
-      basePower = (field.terrain === 'Grassy') ? move.bp / 2 : move.bp;
-      description.terrain = field.terrain;
-      break;
-    case 'Nature Power':
-      basePower = (field.terrain === 'Electric' || field.terrain === 'Grassy') ? 90 : (field.terrain === 'Misty') ? 95 : 80;
-      break;
-    case 'Venoshock':
-      basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
-      description.moveBP = basePower;
-      break;
-    case 'Return':
-      basePower = 102; // assume max happiness
-      break;
-    default:
-      basePower = move.bp;
+      case 'Payback':
+        basePower = turnOrder === 'LAST' ? 100 : 50;
+        description.moveBP = basePower;
+        break;
+      case 'Electro Ball':
+        const r = Math.floor(attacker.boostedStats[SP] / defender.boostedStats[SP]);
+        basePower = r >= 4 ? 150 : r >= 3 ? 120 : r >= 2 ? 80 : 60;
+        description.moveBP = basePower;
+        break;
+      case 'Gyro Ball':
+        basePower = Math.min(150, Math.floor(25 * defender.boostedStats[SP] / attacker.boostedStats[SP]));
+        description.moveBP = basePower;
+        break;
+      case 'Punishment':
+        basePower = Math.min(200, 60 + 20 * countBoosts(defender.boosts));
+        description.moveBP = basePower;
+        break;
+      case 'Low Kick':
+      case 'Grass Knot':
+        const w = defender.weight;
+        basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
+        description.moveBP = basePower;
+        break;
+      case 'Hex':
+        // this used to check for 'Healthy', but this str will be empty for our system
+        basePower = move.bp * (defender.status !== '' ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case 'Heavy Slam':
+      case 'Heat Crash':
+        const wr = attacker.weight / defender.weight;
+        basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
+        description.moveBP = basePower;
+        break;
+      case 'Stored Power':
+        basePower = 20 + 20 * countBoosts(attacker.boosts);
+        description.moveBP = basePower;
+        break;
+      case 'Acrobatics':
+        basePower = attacker.item === 'Flying Gem' || attacker.item === '' ? 110 : 55;
+        description.moveBP = basePower;
+        break;
+      case 'Wake-Up Slap':
+        basePower = move.bp * (defender.status === 'Asleep' ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case 'Weather Ball':
+        basePower = field.weather !== '' ? 100 : 50;
+        description.moveBP = basePower;
+        break;
+      case 'Fling':
+        basePower = getFlingPower(attacker.item);
+        description.moveBP = basePower;
+        description.attackerItem = attacker.item;
+        break;
+      case 'Eruption':
+      case 'Water Spout':
+        basePower = Math.max(1, Math.floor(150 * attacker.hp / attacker.maxhp));
+        console.log('bp: ', basePower);
+        description.moveBP = basePower;
+        break;
+      case 'Flail':
+      case 'Reversal':
+        const p = Math.floor(48 * attacker.curHP / attacker.maxHP);
+        basePower = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
+        description.moveBP = basePower;
+        break;
+      case 'Earthquake':
+        basePower = (field.terrain === 'Grassy') ? move.bp / 2 : move.bp;
+        description.terrain = field.terrain;
+        break;
+      case 'Nature Power':
+        basePower = (field.terrain === 'Electric' || field.terrain === 'Grassy') ? 90 : (field.terrain === 'Misty') ? 95 : 80;
+        break;
+      case 'Venoshock':
+        basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case 'Return':
+        basePower = 102; // assume max happiness
+        break;
+      default:
+        basePower = move.bp;
     }
 
     const bpMods = [];
@@ -895,7 +896,11 @@ class Damage {
       if (maxOnly) return final;
       damage[i] = final;
     }
-    // console.log('returning result:', damage);
+    if (damage[0] && isNaN(damage[0])) {
+      console.log('cant believe getDamageResult is tryna return NaN');
+      console.log(baseDamage, finalMod, typeEffectiveness, stabMod);
+      exit();
+    }
     return damage;
   }
 
