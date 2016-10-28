@@ -1,6 +1,6 @@
 {
   "name": "leftovers-again",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Pokemon Showdown - Bot Client",
   "main": "lib/main.js",
   "files": [
