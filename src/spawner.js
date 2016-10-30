@@ -57,7 +57,9 @@ I looked here: ${locations}`);
     // });
 
     op.on('close', (code) => {
-      Log.err('child process exited with code ' + code);
+      Log.err(`child process for ${botpath} exited with code ${code}`);
+      Log.err('We shouldn\'t go on if our opponent is gone.');
+      process.exit();
     });
 
     children.push(op);
