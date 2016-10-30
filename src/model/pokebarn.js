@@ -19,12 +19,13 @@ class Pokebarn {
 
   find(ident) {
     const searchFor = util.identWithoutPosition(ident);
-    const matches = this.allmon.filter( (mon) => {
-      return searchFor === mon.ident;
-    });
+
+    const matches = this.allmon.filter(mon => mon.ident.indexOf(searchFor) === 0);
     if (matches.length > 1) {
       Log.error('Found multiple mons with the same ident! o fuck');
       Log.error(matches);
+    } else if (matches[0] && matches[0].ident !== searchFor) {
+      Log.debug(`fuzzy matched: ${matches[0].ident} matched for ${searchFor}`);
     }
     return matches[0];
   }
@@ -44,19 +45,27 @@ class Pokebarn {
    * @return {[type]}           [description]
    */
   replace(ident, details, condition) {
+    Log.warn(`replace call: ${ident}|${details}|${condition}`);   
     const pos = util.identToPos(ident);
     const replaced = this.findByPos(pos);
     const idx = this.allmon.indexOf(replaced);
     if (idx >= 0) {
-      Log.warn('Found zoroark! replacing him!');
+      // Log.warn('Found zoroark! replacing him!');
       this.allmon.splice(idx, 1);
     } else {
       Log.error('Couldnt find the thing we want to replace.');
-      Log.error(ident, details, condition);
     }
 
     const updated = this.findOrCreate(ident, details);
-    updated.useCondition(condition);
+    if (condition) {
+      updated.useCondition(condition);
+    } else if (replaced.condition) {
+      // condition was null, so we probs got details / forme change
+      // in that case, use the condition we had before? hppct/conditions
+      // probably did not change, but maxhp probably did.
+      updated.useCondition(replaced.condition);
+    }
+
     return updated;
   }
 
@@ -66,7 +75,7 @@ class Pokebarn {
    * @return {Pokemon} The Pokemon object.
    */
   findByPos(pos) {
-    return this.allmon.find( (mon) => { return mon.position === pos; });
+    return this.allmon.find(mon => mon.position === pos);
   }
 
 }

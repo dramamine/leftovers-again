@@ -1,4 +1,6 @@
-import {spawn} from 'child_process';
+import { spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 import Log from './log';
 
 /**
@@ -8,10 +10,6 @@ import Log from './log';
 const children = [];
 
 class Spawner {
-  constructor() {
-
-  }
-
   /**
    * Spawn a node instance that runs the given bot. Logs errors, but suppresses
    * stdout.
@@ -21,10 +19,32 @@ class Spawner {
    * modules (other bots, or modules in src/).
    * @return {[type]}      [description]
    */
-  spawn(path) {
-    Log.log('spawning opponent with path ' + path);
-    const op = spawn('node', [__dirname + '/../lib/start',
-      `${path}`, '--loglevel=0'
+  spawn(botpath) {
+    Log.warn(`spawning opponent with path ${botpath}`);
+
+    // start script
+    const locations = [
+      path.join(__dirname, '../lib/start.js'),
+      'node_modules/leftovers-again/lib/start.js'
+    ];
+
+    let stat;
+    const script = locations.find((location) => {
+      try {
+        stat = fs.statSync(location);
+        return stat.isFile();
+      } catch (e) {
+        return false;
+      }
+    });
+
+    if (!script) {
+      Log.error(`Couldn't find start.js script, which is needed to spawn new instances.
+I looked here: ${locations}`);
+    }
+
+    const op = spawn('node', [script,
+      `${botpath}`, '--loglevel=0'
     ], {
       cwd: './'
     });
@@ -37,7 +57,9 @@ class Spawner {
     // });
 
     op.on('close', (code) => {
-      Log.err('child process exited with code ' + code);
+      Log.err(`child process for ${botpath} exited with code ${code}`);
+      Log.err('We shouldn\'t go on if our opponent is gone.');
+      process.exit();
     });
 
     children.push(op);
@@ -79,7 +101,7 @@ class Spawner {
    * kill all your children...
    */
   kill() {
-    children.forEach( (child) => {
+    children.forEach((child) => {
       if (child.stdin) child.stdin.pause();
       child.kill();
     });

@@ -1,11 +1,27 @@
 {
-  "extends": "airbnb/base",
+  "extends": "airbnb-base",
+  "plugins": [
+    "jasmine"
+  ],
+  "env": {
+    "jasmine": true
+  },
   "rules": {
     "comma-dangle": 0,
     "no-console": 0,
     "no-use-before-define": 0,
     "no-nested-ternary": 0,
     "prefer-template": 0,
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "no-mixed-operators": 0,
+    "import/no-dynamic-require": 0,
+    "global-require": 0,
+    "no-useless-constructor": 1,
+    "no-plusplus": 0,
+    "class-methods-use-this": 0,
+    "jasmine/no-focused-tests": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0
   }
 }

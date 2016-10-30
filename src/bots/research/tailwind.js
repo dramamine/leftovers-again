@@ -1,16 +1,16 @@
 /**
- * Summon Talonflames to cast 'Roost' over and over.
+ * Summon Talonflames to cast 'Tailwind' over and over.
  *
- * npm run develop -- --bot=anythinggoes/tester/rooster.js
+ * npm start -- research/tailwind
  */
 
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
-const moveId = 'roost';
+const moveId = 'tailwind';
 
-export default class Rooster extends AI {
+export default class Tailwind extends AI {
   constructor() {
     super();
     this.meta = {
@@ -87,7 +87,7 @@ Serious Nature
   }
 
   decide(state) {
-    if (state.forceSwitch || !this.canRoost(state)) {
+    if (state.forceSwitch || !this.can(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
 
@@ -104,5 +104,3 @@ Serious Nature
     return true;
   }
 }
-
-export default Rooster;

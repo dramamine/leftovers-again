@@ -39,7 +39,6 @@ export default class BattleStore {
       faint: this.handleFaint,
       heal: this.handleHeal,
       player: this.handlePlayer,
-      cant: this.handleCant,
       replace: this.handleReplace,
       '-fail': this.handleFail,
       '-miss': this.handleMiss,
@@ -48,11 +47,12 @@ export default class BattleStore {
       '-status': this.handleStatus,
       '-curestatus': this.handleCureStatus,
       '-weather': this.handleWeather,
-      // @TODO why don't we track field effects??
-      // @TODO rocks, weather, etc.
-      // |-sidestart|p1: 5nowden4189|move: Stealth Rock
       '-sidestart': this.handleSideStart,
-      '-sideend': this.handleSideEnd
+      '-sideend': this.handleSideEnd,
+
+      // same signature
+      '-formechange': this.handleDetailsChange,
+      'detailschange': this.handleDetailsChange
     };
 
     // NOT sent to user. temporary storage.
@@ -121,6 +121,12 @@ export default class BattleStore {
    */
   handleMove(actor, move, target) {
     const actingMon = this.barn.find(actor);
+
+    if (!actingMon) {
+      Log.error('battlestore.handleMove: couldnt find ' + actor + ' in this haystack:');
+      this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
+    }
+
     const targetMon = this.barn.find(target);
     this.events.push({
       type: 'move',
@@ -128,7 +134,7 @@ export default class BattleStore {
       turn: this.turn,
       from: actingMon.species,
       frompos: actingMon.position,
-      move: move,
+      move,
       to: targetMon.species,
       topos: targetMon.position
     });
@@ -136,36 +142,6 @@ export default class BattleStore {
     actingMon.recordMove(move);
   }
 
-  /**
-   * Handles the cant message.
-   *
-   * Sometimes we get this because the user chose an invalid option. This is
-   * bad and we want to let the user know.
-   *
-   * Sometimes we get this because the move failed. For this, we just log to
-   * events and do nothing. The server sends "reasons" and we keep a list of
-   * reasons that we're expecting in the normal course of play.
-   *
-   * @param  {[type]} target [description]
-   * @param  {[type]} reason [description]
-   * @return {[type]}        [description]
-   */
-  handleCant(target, reason) {
-    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) === -1) {
-      Log.error(`can't! ${target} ${reason}`);
-    } else {
-      Log.debug(`got 'cant' msg back from server: ${target} ${reason}`);
-    }
-    const targetMon = this.barn.find(target);
-    this.events.push({
-      type: 'cant',
-      turn: this.turn,
-      player: util.identToOwner(target),
-      from: targetMon.species,
-      frompos: targetMon.position,
-      reason
-    });
-  }
 
   handleReplace(ident, details, condition) {
     this.barn.replace(ident, details, condition);
@@ -269,7 +245,8 @@ export default class BattleStore {
    * @param  {[type]} something  ignored
    */
   handlePlayer(id, name, something) { //eslint-disable-line
-    this.names[id] = name;
+    if (!name) return;
+    this.names[id] = util.toId(name);
   }
 
   /**
@@ -285,8 +262,8 @@ export default class BattleStore {
   handleTurn(x) {
     this.turn = parseInt(x, 10);
 
-    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
-    this.barn.all().filter(isactive).forEach( mon => {
+    const isactive = mon => !mon.dead && (!!mon.position || mon.active);
+    this.barn.all().filter(isactive).forEach((mon) => {
       this.statuses.push({
         turn: this.turn,
         position: mon.position,
@@ -384,22 +361,48 @@ export default class BattleStore {
     this.weather = weather;
   }
 
+  /**
+   * ex. |-sidestart|p1: 5nowden4189|move: Stealth Rock
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
   handleSideStart(side, action) {
+    Log.warn('got side effect!', side, action);
     // ex. 'p1' or 'p2'
-    const id = side.split(':').pop().trim();
+    const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
       this.sides[id] = new Side();
     }
     this.sides[id].digest(action);
   }
 
+  /**
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
   handleSideEnd(side, action) {
     // ex. 'p1' or 'p2'
-    const id = side.split(':').pop().trim();
+    const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
       return;
     }
     this.sides[id].remove(action);
+  }
+
+  /**
+   * Forme change! This came up a lot with castform, probs some other pokes too.
+   * ex: |-formechange|p2a: Castform|Castform-Sunny|[msg]|[from] ability: Forecast
+   * ex: |detailschange|p2a: Charizard|Charizard-Mega-X, M
+   *
+   * @param  {String} pokemon  The id of the pokemon
+   * @param  {String} species  The pokemon's new species
+   * @param  {String} hpstatus Not sure, always seems to be [msg]
+   * @param  {String} reason  Why did these details change?
+   */
+  handleDetailsChange(pokemon, details, hpstatus, reason) {
+    Log.info(`details change: ${pokemon}|${details}|${hpstatus}|${reason}`);
+
+    this.barn.replace(pokemon, details, null);
   }
 
 
@@ -425,10 +428,10 @@ export default class BattleStore {
       opponent: {}
     };
     // const output = _.clone(this.state, true);
-    const dataGetter = (mon) => { return mon.data(); };
-    const iamowner = (mon) => { return mon.owner === this.myId; };
-    const youareowner = (mon) => { return mon.owner !== this.myId; };
-    const isactive = (mon) => { return !mon.dead && (!!mon.position || mon.active); };
+    const dataGetter = mon => mon.data();
+    const iamowner = mon => mon.owner === this.myId;
+    const youareowner = mon => mon.owner !== this.myId;
+    const isactive = mon => !mon.dead && (!!mon.position || mon.active);
     const byPosition = (a, b) => b.position - a.position;
     const byOrder = (a, b) => a.order - b.order;
 
@@ -456,7 +459,7 @@ export default class BattleStore {
     if (output.opponent.active.length > 0 && !output.opponent.active[0].owner) {
       Log.warn('stop the presses! pokemon with no owner.');
       Log.warn(output.opponent.active[0]);
-      exit();
+      process.exit(-1);
     }
 
     if (output.self.active.length > 1) {
@@ -472,11 +475,9 @@ export default class BattleStore {
         output.self.active.splice(output.self.active.indexOf(zoroark), 1);
 
         // mark the actual pokemon of ours as being Zoroark
-        output.self.active.map(mon => {
+        output.self.active.forEach((mon) => {
           mon.isZoroark = true;
         });
-
-
       } else {
         Log.warn('stop the presses! too many active pokemon');
         Log.warn(output.self.active);
@@ -517,11 +518,11 @@ export default class BattleStore {
     output.turn = this.turn;
     output.weather = this.weather;
 
-    if (this.sides[this.myNick]) {
-      output.self.side = this.sides[this.myNick].data();
+    if (this.sides[this.myId]) {
+      output.self.side = this.sides[this.myId].data();
     }
-    if (this.sides[this.yourNick]) {
-      output.opponent.side = this.sides[this.yourNick].data();
+    if (this.sides[this.yourId]) {
+      output.opponent.side = this.sides[this.yourId].data();
     }
 
     return output;

@@ -1,11 +1,16 @@
 import BattleStore from './model/battlestore';
+import Timer from './model/timer';
 
 import Log from './log';
-import {MOVE, SWITCH} from './decisions';
+import { MOVE, SWITCH } from './decisions';
 import report from './report';
 import listener from './listener';
 import Reporter from './reporters/matchstatus';
-// import util from 'pokeutil';
+import util from './pokeutil';
+
+const timer = new Timer();
+// that's right...you're gonna forfeit if you don't decide in this amount of time
+let forfeitTimeout;
 
 /**
  * This class manages a single battle. It handles these tasks:
@@ -24,7 +29,8 @@ class Battle {
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, bot) {
+  constructor(bid, bot, timeout = 0) {
+    forfeitTimeout = timeout;
     // battle ID
     this.bid = bid;
 
@@ -36,6 +42,7 @@ class Battle {
       turn: this.handleTurn,
       win: this.handleWin,
       callback: this.handleCallback,
+      cant: this.handleCant,
 
       // special function for auditing yrself.
       ask4help: this.getHelp
@@ -62,8 +69,10 @@ class Battle {
    * This is very undocumented (and lazy!) so don't use it.
    */
   getHelp() {
-    listener.relay('_send', this.bid + '|' +
-      JSON.stringify( this.bot.getHelp( this.store.data() ) ));
+    if (this.bot.getHelp) {
+      listener.relay('_send', this.bid + '|' +
+        JSON.stringify(this.bot.getHelp(this.store.data())));
+    }
   }
 
 
@@ -101,6 +110,8 @@ class Battle {
    * teamPreview: This is a team preview request
    * forceSwitch: Due to moves / feinting, we must switch our active mon
    * @param  {string} json The request JSON
+   *
+   * @return {Boolean}  True if we had to make a decision; false otherwise
    */
   handleRequest(json) {
     const data = JSON.parse(json);
@@ -123,7 +134,9 @@ class Battle {
 
     if (data.forceSwitch) {
       this.decide();
+      return true;
     }
+    return false;
   }
 
   /**
@@ -135,34 +148,121 @@ class Battle {
     this.decide();
   }
 
-  handleWin(winner) {
+  /**
+   * Handle a win
+   *
+   * @param  {String} nick  The nickname of the winner.
+   *
+   */
+  handleWin(nick) {
+    timer.ping(); // don't worry about timeout anymore
+    const winner = util.toId(nick);
     Log.log(`${winner} won. ${winner === this.store.myNick ? '(that\'s you!)' : ''}`);
     report.win(winner, this.store, this.bid);
 
-    listener.relay('battlereport', {
+    listener.relay('_battleReport', {
       winner,
-      opponent: this.store.yourNick});
+      opponent: this.store.yourNick
+    });
   }
 
   handleCallback(desc, code) {
-    Log.error('FYI THE TRAPPED CALLBACK WAS CALLED');
-    Log.error('THIS IS NOT AN ERROR, IN FACT MAYBE ITS WORKING??');
-    Log.error(desc + ' ' + code);
+    Log.error(`cb: ${desc} ${code}`);
     if (desc === 'trapped') {
-      console.log('runnin my lil trapped routine');
       const state = this.store.data();
-      state.self.reserve.forEach(mon => {
-        mon.dead = true;
+      state.self.reserve.forEach((mon) => {
+        mon.dead = true; // this is kind of hacky...
+        mon.disabled = true; // better
       });
       this.decide(state);
+    } else {
+      Log.error('Bailing');
+      this.forfeit();
     }
   }
+
+
+  /**
+   * Handles the cant message.
+   *
+   * Sometimes we get this because the user chose an invalid option. This is
+   * bad and we want to let the user know.
+   *
+   * Sometimes we get this because the move failed. For this, we just log to
+   * events and do nothing. The server sends "reasons" and we keep a list of
+   * reasons that we're expecting in the normal course of play.
+   *
+   * > The Pokémon `POKEMON` could not perform a move because of the indicated
+   * > `REASON` (such as paralysis, Disable, etc). Sometimes, the move it was
+   * > trying to use is given.
+   *
+   * @param  {String} target [description]
+   * @param  {String} reason [description]
+   * @param  {String} move [description]
+   *
+   */
+  handleCant(target, reason, move) {
+    Log.info(`got 'cant' msg back from server. target:${target} reason:${reason}`);
+    // 'soft' cants; don't need to do anything
+    if (['slp', 'par', 'flinch', 'frz', 'Truant'].indexOf(reason) >= 0) {
+      Log.info('Normal-lookin reason');
+      return;
+    }
+
+    const targetMon = this.store.barn.find(target);
+    // Log.error('I think this guy was the target?');
+    // Log.error(JSON.stringify(targetMon));
+
+//  HEAD
+//     if (!move && targetMon.disabled) {
+//       Log.error(`You tried to switch into ${target} but 'disabled' was true.`);
+//       Log.error('Check that property before you switch!');
+//     } else if (!move && targetMon.dead) {
+//       Log.error(`You tried to switch into ${target} but 'dead' was true.`);
+//       Log.error('Check that property before you switch!');
+//     } else if (move) {
+//       Log.error(`Move ${move} was unusable by ${target}.`);
+//       const targetMove = targetMon.moves.find(mv => mv.id.indexOf(move) >= 0);
+//       if (targetMove) {
+//         Log.error(JSON.stringify(targetMove));
+//         // @TODO disabling
+//       }
+//     }
+//     Log.error('forfeiting due to cant.');
+//     this.forfeit();
+// =======
+
+    if (this.store.myId === targetMon.owner) {
+      if (move) {
+        Log.error(`Move ${move} was unusable by ${target}.`);
+        const targetMove = targetMon.moves.find(mv => mv.id.indexOf(move) >= 0);
+        if (targetMove) {
+          Log.error(JSON.stringify(targetMove));
+          // @TODO disabling
+          // eh, just gonna forfeit.
+          this.forfeit();
+        }
+      } else if (targetMon.disabled) {
+        Log.error(`You tried to switch into ${target} but 'disabled' was true.`);
+        Log.error('Check that property before you switch!');
+        this.forfeit();
+      } else if (targetMon.dead) {
+        Log.error(`You tried to switch into ${target} but 'dead' was true.`);
+        Log.error('Check that property before you switch!');
+        this.forfeit();
+      }
+    }
+    return;
+  }
+
 
   /**
    * Asks the AI to make a decision, then sends it to the server.
    *
    */
   decide(state) {
+    timer.ping();
+
     if (!state) {
       state = this.store.data();
     }
@@ -177,27 +277,58 @@ class Battle {
     // attach previous states
     state.prevStates = this.prevStates;
 
-    const choice = this.myBot().decide(state);
-    if (choice instanceof Promise) {
-      // wait for promises to resolve
-      choice.then( (resolved) => {
-        const res = Battle._formatMessage(this.bid, resolved, state);
-        Log.info(res);
-        listener.relay('_send', res);
+    try {
+      const choice = this.myBot().decide(state);
+
+      if (choice instanceof Promise) {
+        // wait for promises to resolve
+        choice.then((resolved) => {
+          const res = this.formatMessage(this.bid, resolved, state);
+          if (res) {
+            Log.info(res);
+            listener.relay('_send', res);
+          }
+
+          // saving this state for future reference
+          this.prevStates.unshift(this.abbreviateState(state));
+        }, (err) => {
+          Log.err('I think there was an error here.');
+          Log.err(err);
+        });
+      } else {
+        // message is ready to go
+        const res = this.formatMessage(this.bid, choice, state);
+        if (res) {
+          Log.info(res);
+          listener.relay('_send', res);
+        }
+
         // saving this state for future reference
-        this.prevStates.unshift( this.abbreviateState(state) );
-      }, (err) => {
-        Log.err('I think there was an error here.');
-        Log.err(err);
-      });
-    } else {
-      // message is ready to go
-      const res = Battle._formatMessage(this.bid, choice, state);
-      Log.info(res);
-      listener.relay('_send', res);
-      // saving this state for future reference
-      this.prevStates.unshift( this.abbreviateState(state) );
+        this.prevStates.unshift(this.abbreviateState(state));
+      }
+
+      // only if user set a timeout
+      if (forfeitTimeout) {
+        timer.after(() => {
+          // @TODO fuck this
+          Log.error('Haven\'t heard from the server in forever! Cowardly bailing');
+          this.forfeit();
+          // process.exit();
+        }, forfeitTimeout);
+      }
+    } catch (e) {
+      Log.error('Forfeiting because of the following error:');
+      Log.error(e);
+      this.forfeit();
     }
+  }
+
+  /**
+   * Give up.
+   */
+  forfeit() {
+    Log.log('Forfeiting this match:', this.bid);
+    listener.relay('_send', this.bid + '|/forfeit');
   }
 
   /**
@@ -239,27 +370,36 @@ class Battle {
    *
    * @see __constructor
    */
-  static _formatMessage(bid, choice, state) {
+  formatMessage(bid, choice, state) {
+    Log.debug('choice: ' + JSON.stringify(choice));
     let verb;
-    if (choice instanceof MOVE) {
-      const moveIdx = Battle._lookupMoveIdx(state.self.active.moves, choice.id);
 
-      if (typeof moveIdx !== 'number' || moveIdx < 0) {
-        console.warn('[invalid move!!', choice, state.self.active.moves, 'invalid move yo.');
-        exit;
+    // if you're wondering why this 'if' statement is so wonky... it's technical debt!
+    // in 0.7.7 and lower, you had to check instanceof. But that check doesn't work
+    // so well when it comes to cross-compatibility. So I added the 'type' property
+    // to 'choice' which is less error-prone.
+    if (choice instanceof MOVE || choice.type === 'move') {
+      const moveIdx = this.lookupMoveIdx(state.self.active.moves, choice.id);
+      if (moveIdx < 0) {
+        this.forfeit();
+        return '';
       }
 
-      verb = '/move ' + (moveIdx + 1); // move indexes for the server are [1..4]
+      verb = `/move ${moveIdx + 1}`; // move indexes for the server are [1..4]
 
       if (state.self.active.canMegaEvo && choice.shouldMegaEvo) {
         verb += ' mega';
       }
-    } else if (choice instanceof SWITCH) {
+    } else if (choice instanceof SWITCH || choice.type === 'switch') {
       verb = (state.teamPreview)
-        ? '/team '
-        : '/switch ';
-      const monIdx = Battle._lookupMonIdx(state.self.reserve, choice.id);
-      verb = verb + (monIdx + 1); // switch indexes for the server are [1..6]
+        ? '/team'
+        : '/switch';
+      const monIdx = this.lookupMonIdx(state.self.reserve, choice.id);
+      if (monIdx < 0) {
+        this.forfeit();
+        return '';
+      }
+      verb = `${verb} ${monIdx + 1}`; // switch indexes for the server are [1..6]
     }
     return `${bid}|${verb}|${state.rqid}`;
   }
@@ -274,16 +414,24 @@ class Battle {
    *
    * @return {number} The move index.
    */
-  static _lookupMoveIdx(moves, idx) {
-    if (typeof(idx) === 'number') {
-      return idx;
-    } else if (typeof(idx) === 'object') {
-      return moves.indexOf(idx);
-    } else if (typeof(idx) === 'string') {
-      return moves.findIndex( (move) => {
-        return move.id === idx;
-      });
+  lookupMoveIdx(moves, idx) {
+    Log.debug('moves:', moves);
+    Log.debug('idx:', idx);
+
+    let answer = -1;
+    if (typeof (idx) === 'number') {
+      answer = idx;
+    } else if (typeof (idx) === 'object') {
+      answer = moves.indexOf(idx);
+    } else if (typeof (idx) === 'string') {
+      answer = moves.findIndex(move => move.id === idx);
     }
+
+    if (moves[answer].disabled) {
+      Log.error(`You cant use the move ${moves[answer].id} because it is disabled!`);
+      return -1;
+    }
+    return answer;
   }
 
   /**
@@ -296,19 +444,41 @@ class Battle {
    *
    * @return {number} The switch index.
    */
-  static _lookupMonIdx(mons, idx) {
-    switch (typeof(idx)) {
-    case 'number':
-      return idx;
-    case 'object':
-      return mons.indexOf(idx);
-    case 'string':
-      return mons.findIndex( (mon) => {
-        return mon.species === idx || mon.id === idx;
-      });
-    default:
-      console.log('not a valid choice!', idx, mons);
+  lookupMonIdx(mons, idx) {
+
+
+    let answer;
+    switch (typeof (idx)) {
+      case 'number':
+        answer = idx;
+        break;
+      case 'object':
+        answer = mons.indexOf(idx);
+        break;
+
+      case 'string':
+        answer = mons.findIndex(mon => mon.species === idx || mon.id === idx);
+        break;
+      default:
+        Log.error('looking up mon... not a valid choice!', idx, mons);
+        return -1;
     }
+
+    const storeGuy = mons[answer];
+
+    if (storeGuy.dead) {
+      Log.error('You cant pick a dead guy.');
+      return -1;
+    }
+    if (storeGuy.disabled) {
+      Log.error('You cant pick a disabled guy.');
+      return -1;
+    }
+    if (storeGuy.active) {
+      Log.error('You cant pick your active guy.');
+      return -1;
+    }
+    return answer;
   }
 }
 

@@ -5,7 +5,7 @@
  */
 import AI from 'leftovers-again/ai';
 import team from 'leftovers-again/game/team';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 export default class Predetermined extends AI {
   constructor() {
@@ -26,7 +26,7 @@ export default class Predetermined extends AI {
     if (state.forceSwitch || state.teamPreview) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -36,7 +36,7 @@ export default class Predetermined extends AI {
     }
     // pick a random move
     try {
-      const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
+      const possibleMoves = state.self.active.moves.filter(move => !move.disabled);
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
     } catch (e) {
@@ -50,5 +50,3 @@ export default class Predetermined extends AI {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }
-
-export default Predetermined;

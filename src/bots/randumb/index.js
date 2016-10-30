@@ -5,7 +5,7 @@
  *
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 import team from 'leftovers-again/team';
 
 class Randumb extends AI {
@@ -16,7 +16,8 @@ class Randumb extends AI {
       format: 'randombattle',
       team: null,
       version: 'alpha',
-      nickname: 'Randumb ★marten★'
+      nickname: 'la-randumb',
+      password: 'KkhT4pReAhGyswTCFob4rG6TV'
     };
   }
 
@@ -30,7 +31,7 @@ class Randumb extends AI {
     if (state.forceSwitch || state.teamPreview) {
       // our pokemon died :(
       // choose a random one
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -40,10 +41,10 @@ class Randumb extends AI {
     }
     // pick a random move
     try {
-      const possibleMoves = state.self.active.moves.filter( move => !move.disabled );
+      const possibleMoves = state.self.active.moves.filter(move => !move.disabled);
       const myMove = this.pickOne(possibleMoves);
       return new MOVE(myMove);
-    } catch(e) {
+    } catch (e) {
       console.log('broke when checking possible moves:', e);
       console.dir(state);
       return null;

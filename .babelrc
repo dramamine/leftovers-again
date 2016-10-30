@@ -1,10 +1,11 @@
 {
-  "presets": ["es2015-node6"],
+  "presets": ["es2015"],
   "plugins": [
     [
       "module-alias", [
         { "src": "./src/bots", "expose": "bots" },
-        { "src": "./src", "expose": "leftovers-again" }
+        { "src": "./src", "expose": "leftovers-again" },
+        { "src": "./lib", "expose": "leftovers-again/lib" }
       ]
     ]
   ]

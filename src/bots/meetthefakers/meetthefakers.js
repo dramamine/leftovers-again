@@ -3,16 +3,12 @@
  *
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 import Typechart from 'leftovers-again/game/typechart';
 import Damage from 'leftovers-again/game/damage';
 
 
 class MeetTheFakers extends AI {
-  constructor() {
-    super();
-  }
-
   team() {
     return `
 Medicham @ Medichamite
@@ -75,27 +71,28 @@ EVs: 136 Atk / 120 SpA / 252 Spe
    */
   decide(state) {
     if (state.forceSwitch || state.teamPreview) {
-      const myMon = this._pickOne(
-        state.self.reserve.filter( mon => !mon.dead )
+      const myMon = this.pickOne(
+        state.self.reserve.filter(mon => !mon.dead)
       );
       return new SWITCH(myMon);
     }
 
     switch (state.self.active.species) {
-    case 'Medicham':
-      return this.chooseForMedicham(state);
-    case 'Hitmonlee':
-      return this.chooseForHitmonlee(state);
-    case 'Jynx':
-      return this.chooseForJynx(state);
-    case 'Ludicolo':
-      return this.chooseForLudicolo(state);
-    case 'Weavile':
-      return this.chooseForWeavile(state);
-    case 'Infernape':
-      return this.chooseForInfernape(state);
-    default:
-      break;
+      case 'Medicham':
+        return this.chooseForMedicham(state);
+      case 'Hitmonlee':
+        return this.chooseForHitmonlee(state);
+      case 'Jynx':
+        return this.chooseForJynx(state);
+      case 'Ludicolo':
+        return this.chooseForLudicolo(state);
+      case 'Weavile':
+        return this.chooseForWeavile(state);
+      case 'Infernape':
+        return this.chooseForInfernape(state);
+      default:
+        console.error('mon not found!');
+        return process.exit(-1);
     }
   }
 
@@ -256,7 +253,7 @@ EVs: 136 Atk / 120 SpA / 252 Spe
     let maxDamage = -1;
     let bestMove = 0;
 
-    state.self.active.moves.forEach( (move, idx) => {
+    state.self.active.moves.forEach((move, idx) => {
       if (move.disabled) return;
       let est = [];
       try {
@@ -278,7 +275,7 @@ EVs: 136 Atk / 120 SpA / 252 Spe
     return new MOVE(bestMove);
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

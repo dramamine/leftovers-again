@@ -1,5 +1,5 @@
 import Battle from 'leftovers-again/battle';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 import util from 'leftovers-again/pokeutil';
 import Reporter from 'leftovers-again/reporters/matchstatus';
 
@@ -7,7 +7,7 @@ import Reporter from 'leftovers-again/reporters/matchstatus';
 import sampleRequest from './helpers/requestb';
 
 describe('battle', () => {
-  describe('_formatMessage', () => {
+  describe('formatMessage', () => {
     let battle;
     const exampleState = {
       rqid: 1,
@@ -29,49 +29,49 @@ describe('battle', () => {
         ]
       }
     };
-    beforeEach( () => {
+    beforeEach(() => {
       battle = new Battle();
       spyOn(util, 'researchPokemonById').and.returnValue({});
       spyOn(battle.store, 'data').and.returnValue(exampleState);
     });
     it('should format an integer-based move', () => {
-      const res = Battle._formatMessage(1, new MOVE(0), exampleState);
+      const res = battle.formatMessage(1, new MOVE(0), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format an object-based move', () => {
-      const res = Battle._formatMessage(1,
+      const res = battle.formatMessage(1,
         new MOVE(exampleState.self.active.moves[0]), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format a name-based move', () => {
-      const res = Battle._formatMessage(1,
+      const res = battle.formatMessage(1,
         new MOVE('niceone'), exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     // note that we're changing exampleState in this one.
     it('should mega-evolve properly', () => {
       exampleState.self.active.canMegaEvo = true;
-      const res = Battle._formatMessage(1, new MOVE(0), exampleState);
+      const res = battle.formatMessage(1, new MOVE(0), exampleState);
       expect(res).toEqual('1|/move 1 mega|1');
     });
     it('should not mega-evolve is we opted out', () => {
       exampleState.self.active.canMegaEvo = true;
       const move = new MOVE(0);
       move.shouldMegaEvo = false;
-      const res = Battle._formatMessage(1, move, exampleState);
+      const res = battle.formatMessage(1, move, exampleState);
       expect(res).toEqual('1|/move 1|1');
     });
     it('should format an integer-based switch', () => {
-      const res = Battle._formatMessage(1, new SWITCH(0), exampleState);
+      const res = battle.formatMessage(1, new SWITCH(0), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
     it('should format an object-based switch', () => {
-      const res = Battle._formatMessage(1,
+      const res = battle.formatMessage(1,
         new SWITCH(exampleState.self.reserve[0]), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
     it('should format a name-based switch', () => {
-      const res = Battle._formatMessage(1,
+      const res = battle.formatMessage(1,
         new SWITCH('fakemon'), exampleState);
       expect(res).toEqual('1|/switch 1|1');
     });
@@ -81,9 +81,7 @@ describe('battle', () => {
       spyOn(Reporter, 'report');
       const battle = new Battle();
       battle.bot = {
-        decide: () => {
-          return '/move 1';
-        }
+        decide: () => '/move 1'
       };
 
       expect(battle.prevStates.length).toBe(0);
@@ -100,7 +98,7 @@ describe('battle', () => {
   });
   describe('store integration', () => {
     let battle;
-    beforeEach( () => {
+    beforeEach(() => {
       spyOn(console, 'log');
       battle = new Battle();
     });

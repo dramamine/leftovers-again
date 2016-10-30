@@ -1,15 +1,15 @@
 /**
- * Cast spikes all the time.
+ * Cast boost moves all the time.
  *
- * npm run develop -- --bot=research/spikes
+ * npm run develop -- --bot=research/booster
  */
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 const moveId = 'workup';
 
-export default class SunnyDay extends AI {
+class Booster extends AI {
   constructor() {
     super();
     this.meta = {
@@ -86,7 +86,7 @@ Adamant Nature
 
   decide(state) {
     console.log(state.self.reserve);
-    if (state.forceSwitch || state.teamPreview || !this._can(state)) {
+    if (state.forceSwitch || state.teamPreview || !this.can(state)) {
       this.ctr = this.ctr + 1;
       // will crash out when ctr >= 7;
 
@@ -95,7 +95,7 @@ Adamant Nature
     return new MOVE(moveId);
   }
 
-  _can(state) {
+  can(state) {
     if (!state.self.active) return false;
     if (!state.self.active.moves) return false;
     const move = state.self.active.moves.find(m => m.id === moveId);
@@ -104,4 +104,4 @@ Adamant Nature
   }
 }
 
-export default SunnyDay;
+export default Booster;

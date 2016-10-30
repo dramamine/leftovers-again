@@ -2,7 +2,7 @@
  * AI class. Extend this when creating your bot.
  */
 export default class AI {
-  constructor() {}
+  constructor() {} // eslint-disable-line
 
   /**
    * Abstract function that must be overridden.
@@ -13,7 +13,7 @@ export default class AI {
    * @return {String}   A Showdown-formatted team string.
    */
   team(opponent) { // eslint-disable-line
-    return this.meta.team || ``;
+    return this.meta.team || '';
   }
 
   /**

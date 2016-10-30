@@ -12,9 +12,13 @@ export default {
 
   bot: 'randumb',
 
-  matches: 3,
+  // limit the number of matches you play. 0 means don't limit
+  matches: 0,
 
   server: 'localhost',
+  prodServer: 'metal-heart.org',
   port: 8000,
-  format: 'randombattle'
+  format: 'randombattle',
+
+  results: 'results/results.csv'
 };

@@ -4,7 +4,7 @@ import Log from 'leftovers-again/log';
 
 let side;
 describe('Side', () => {
-  beforeEach( () => {
+  beforeEach(() => {
     side = new Side();
   });
   it('should handle a true-false effect', () => {

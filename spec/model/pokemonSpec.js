@@ -11,7 +11,7 @@ describe('Pokemon', () => {
   // });
   describe('useDetails', () => {
     let mon;
-    beforeEach( () => {
+    beforeEach(() => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
       mon = new Pokemon('p1a: Fakechu', 'Fakechu, L83, M');
     });
@@ -28,7 +28,7 @@ describe('Pokemon', () => {
   });
   describe('useCondition', () => {
     let mon;
-    beforeEach( () => {
+    beforeEach(() => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
       mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });
@@ -82,7 +82,7 @@ describe('Pokemon', () => {
   });
   describe('data', () => {
     let mon;
-    beforeEach( () => {
+    beforeEach(() => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
       mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });
@@ -98,8 +98,8 @@ describe('Pokemon', () => {
   describe('stat handling', () => {
     it('should process boosted stats', () => {
       spyOn(util, 'researchPokemonById').and.returnValue({
-        stats: {atk: 100},
-        boosts: {atk: 2}
+        stats: { atk: 100 },
+        boosts: { atk: 2 }
       });
       const mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
       const res = mon.data();
@@ -146,7 +146,7 @@ describe('Pokemon', () => {
   });
   describe('useBoost', () => {
     let mon;
-    beforeEach( () => {
+    beforeEach(() => {
       spyOn(util, 'researchPokemonById').and.returnValue({});
       mon = new Pokemon('p1a: Fakechu', 'Talonflame, L83, M');
     });

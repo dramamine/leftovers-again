@@ -2,9 +2,9 @@
  * Utility functions.
  *
  */
-import BattleMovedex from './data/moves';
-import HonkoMovedex from './data/moves-ext';
-import BattlePokedex from './data/pokedex';
+import BattleMovedex from './data/moves.json';
+import HonkoMovedex from './data/moves-ext.json';
+import BattlePokedex from './data/pokedex.json';
 import log from './log';
 
 class PokeUtil {
@@ -22,14 +22,16 @@ class PokeUtil {
     if (!text) return name;
 
     // most lines copied from server code..
-    name = ('' + text).replace(/[\|\s\[\]\,\']+/g, '').toLowerCase().trim();
+    name = ('' + text).replace(/[\|\s\[\],']+/g, '').toLowerCase().trim();
 
     // these lines are not! but I needed them.
-    name = name.replace(/[\-\.\ ]+/g, '');
+    name = name.replace(/[\-\. ]+/g, '');
 
     name = name.replace(/[^a-z0-9]/gi, '');
 
-    if (name.length > 18) name = name.substr(0, 18).trim();
+    if (name.length > 18) {
+      name = name.substr(0, 18).trim();
+    }
     return name;
   }
 
@@ -45,11 +47,14 @@ class PokeUtil {
     // hidden power moves end with '60'. hidden power ground comes out as
     // hiddenpowerground6 due to the 18-character limit. it's kept as
     // hiddenpowerground in our data.
-    id = this.toId(id).replace(/6[0]?$/,''); // eslint-disable-line
+    id = this.toId(id).replace(/6[0]?$/, ''); // eslint-disable-line
 
     if (!BattleMovedex[id]) {
-      log.warn('couldn\'t find my move ' + id );
-      return {name: id, id: this.toId(id)};
+      log.warn(`couldn't find my move ${id}`);
+      return {
+        name: id,
+        id: this.toId(id)
+      };
     }
 
     const battleData = BattleMovedex[id] || {};
@@ -75,8 +80,11 @@ class PokeUtil {
       return res;
     }
 
-    log.warn('couldn\'t find my pokemon ' + id );
-    return {name: id, id};
+    log.warn(`couldn't find my pokemon ${id}`);
+    return {
+      name: id,
+      id
+    };
   }
 
   /**
@@ -89,7 +97,7 @@ class PokeUtil {
    * @return {Object}         A boost object.
    */
   boostCombiner(old = {}, updates = {}) {
-    Object.keys(updates).forEach(boost => {
+    Object.keys(updates).forEach((boost) => {
       old[boost] = Math.min(6, Math.max(-6,
         (old[boost] || 0) + updates[boost]));
     });
@@ -105,8 +113,8 @@ class PokeUtil {
    */
   boostMultiplier(stat, mod = 0) {
     return mod > 0 ? Math.floor(stat * (2 + mod) / 2)
-    : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
-      : stat;
+      : mod < 0 ? Math.floor(stat * 2 / (2 - mod))
+        : stat;
   }
 
   /**

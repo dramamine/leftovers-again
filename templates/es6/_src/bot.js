@@ -2,7 +2,7 @@
  * {{Repo}}
  *
  */
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/lib/decisions';
 
 /**
  * Your code is pre-built with a very simple bot that chooses a team, then
@@ -14,7 +14,7 @@ class {{Repo}} {
   team() {
     return `
 Magikarp @ Leftovers
-Ability: Rattled
+Ability: Swift Swim
 EVs: 252 HP / 4 Atk / 252 Spe
 Careful Nature
 - Celebrate
@@ -34,12 +34,15 @@ Careful Nature
    * @return {Decision}     A decision object.
    */
   decide(state) { {{#if team}}
+    // you're probably gonna turn this on. alternately, use the flag --loglevel=5
+    // console.log(state);
+
     // `teamPreview` means the game hasn't started and you're choosing who to
     // send out first. {{/if}}
     // `forceSwitch` occurs if your Pokemon has just fainted, or other moves
     // that mean you need to switch out your Pokemon
     if ({{#if team}} state.teamPreview || {{/if}}state.forceSwitch) {
-      const myMon = this._pickOne(
+      const myMon = this.pickOne(
         // filter through your reserve of Pokemon for ones that aren't dead
         state.self.reserve.filter( mon => !mon.dead )
       );
@@ -49,7 +52,7 @@ Careful Nature
     }
 
 
-    const myMove = this._pickOne(
+    const myMove = this.pickOne(
       // filter through your active Pokemon's moves for a move that isn't disabled
       state.self.active.moves.filter( move => !move.disabled )
     );
@@ -59,7 +62,7 @@ Careful Nature
   }
 
   // randomly chooses an element from an array
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

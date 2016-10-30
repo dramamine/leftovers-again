@@ -1,15 +1,16 @@
 import util from 'leftovers-again/pokeutil';
+
 describe('pokeutil', () => {
   describe('boostCombiner', () => {
     it('should add some boosts to nothing', () => {
-      expect(util.boostCombiner({}, {atk: 1})).toEqual({atk: 1});
+      expect(util.boostCombiner({}, { atk: 1 })).toEqual({ atk: 1 });
     });
     it('should respect min and maxes', () => {
-      expect(util.boostCombiner({atk: 5}, {atk: 2})).toEqual({atk: 6});
-      expect(util.boostCombiner({atk: -5}, {atk: -2})).toEqual({atk: -6});
+      expect(util.boostCombiner({ atk: 5 }, { atk: 2 })).toEqual({ atk: 6 });
+      expect(util.boostCombiner({ atk: -5 }, { atk: -2 })).toEqual({ atk: -6 });
     });
     it('should preserve other keys', () => {
-      expect(util.boostCombiner({atk: 3}, {def: 2})).toEqual({atk: 3, def: 2});
+      expect(util.boostCombiner({ atk: 3 }, { def: 2 })).toEqual({ atk: 3, def: 2 });
     });
   });
   describe('boostMultiplier', () => {

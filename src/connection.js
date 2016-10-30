@@ -28,7 +28,7 @@ class Connection {
    *
    * @param  {string} msg The message from the server.
    */
-  _handleMessage(msg) {
+  handleMessage(msg) {
     // console.log('received: %s', msg);
     const messages = msg.split('\n');
     let bid = null;

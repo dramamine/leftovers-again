@@ -11,13 +11,9 @@ import Formats from 'leftovers-again/data/formats';
 import Log from 'leftovers-again/log';
 import util from 'leftovers-again/pokeutil';
 
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 class Infodump extends AI {
-  constructor() {
-    super();
-  }
-
   decide(state) {
     Log.info('infodumps state:: ', state);
     Damage.assumeStats(state.opponent.active);
@@ -25,7 +21,7 @@ class Infodump extends AI {
       // our pokemon died :(
       // choose a random one
       //
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -39,7 +35,7 @@ class Infodump extends AI {
     let maxDamage = 0;
     let bestMove = 0;
 
-    state.self.active.moves.forEach( (move, idx) => {
+    state.self.active.moves.forEach((move, idx) => {
       if (move.disabled) return;
       if (move.pp === 0) return;
       let est = -1;
@@ -71,13 +67,13 @@ class Infodump extends AI {
     const extra = {};
 
     try {
-      extra.moves = this._moves(state);
+      extra.moves = this.moves(state);
     } catch (e) {
       Log.error(e);
       Log.error(JSON.stringify(state));
     }
     try {
-      extra.switches = this._switches(state);
+      extra.switches = this.switches(state);
     } catch (e) {
       Log.error(e);
       Log.error(JSON.stringify(state));
@@ -86,7 +82,7 @@ class Infodump extends AI {
     return extra;
   }
 
-  _moves(state) {
+  moves(state) {
     const extra = [];
     // this'll be null during forceSwitch
     if (state.self.active && state.self.active.moves) {
@@ -118,7 +114,7 @@ class Infodump extends AI {
     return extra;
   }
 
-  _switches(state) {
+  switches(state) {
     Log.log('input:');
     Log.log(JSON.stringify(state));
     // query for moves
@@ -131,9 +127,9 @@ class Infodump extends AI {
       };
     }
     // for each of my pokemons...
-    const results = state.self.reserve.map( (mon) => {
+    const results = state.self.reserve.map((mon) => {
       // see how the opponent would fare against this mon of mine.
-      const yourMoves = possibleMoves.map( move => {
+      const yourMoves = possibleMoves.map(move => {
         // check damage from each of the opponent's moves against this mon.
         let est = [-1];
         try {
@@ -151,10 +147,10 @@ class Infodump extends AI {
           dmg: est,
           against: mon
         };
-      }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
+      }).sort((a, b) => a.dmg[0] < b.dmg[0]);
 
       // see how my moves would fare against the opponent's current mon.
-      const myMoves = mon.moves.map( move => {
+      const myMoves = mon.moves.map(move => {
         let est = [-1];
         try {
           est = Damage.getDamageResult(
@@ -174,15 +170,15 @@ class Infodump extends AI {
           dmg: est,
           against: state.opponent.active
         };
-      }).sort( (a, b) => a.dmg[0] < b.dmg[0] );
+      }).sort((a, b) => a.dmg[0] < b.dmg[0]);
 
       // also check type advantage of mons in general
       let strength = false;
       let weakness = false;
       const attacks = [];
       const defenses = [];
-      state.opponent.active.types.forEach( yourtype => {
-        mon.types.forEach( mytype => {
+      state.opponent.active.types.forEach((yourtype) => {
+        mon.types.forEach((mytype) => {
           attacks.push(Typechart.compare(mytype, yourtype));
           defenses.push(Typechart.compare(yourtype, mytype));
         });

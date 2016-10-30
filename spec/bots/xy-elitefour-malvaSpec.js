@@ -10,7 +10,7 @@ const moves = [
   { move: 'Wild Charge', id: 'wildcharge', disabled: false },
 ];
 
-moves.forEach( (move) => {
+moves.forEach((move) => {
   Object.assign(move, util.researchMoveById(move.id));
 });
 
@@ -54,7 +54,7 @@ describe('xy-elitefour-malva', () => {
 
   describe('pickMoveByFitness', () => {
     let arr;
-    beforeEach( () => {
+    beforeEach(() => {
       arr = {
         cry: 1,
         poke: 10,

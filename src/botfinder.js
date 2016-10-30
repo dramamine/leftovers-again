@@ -1,18 +1,26 @@
 import Log from './log';
 
-  /**
-   * Sets up important stuff like the bot location, class, and metadata.
-   *
-   * @param {String} path  The user-inputted path to the bot.
-   */
+/**
+ * Sets up important stuff like the bot location, class, and metadata.
+ *
+ * @param {String} path  The user-inputted path to the bot.
+ */
 const botFinder = (path) => {
   let Bot;
-  const location = [path, './bots/' + path, '../bots/' + path].find((loc) => {
+  const location = [
+    path,
+    './' + path,
+    './bots/' + path,
+    '../' + path,
+    '../bots/' + path,
+    '../../' + path,
+  ].find((loc) => {
     Bot = tryRequire(loc);
-    if (Bot) return true;
+    return !!Bot;
   });
   if (!location) {
     Log.error(`couldnt find path! trying to require ${path} from ${__dirname}`);
+    process.exit();
     return {};
   }
 
@@ -25,15 +33,18 @@ const botFinder = (path) => {
   } catch (e) {
     // nested try-catch, u mad brah?
     try {
-      const bot = Bot.default ? new Bot.default() : new Bot();
+      const bot = Bot.default ? new Bot.default() : new Bot(); // eslint-disable-line
       metadata = bot.meta;
     } catch (x) {
       Log.error('No metadata found! Expected to find the file in node_path '
-       + path);
+        + path);
       Log.error(x);
     }
   }
-  return {metadata, Bot};
+  return {
+    metadata,
+    Bot
+  };
 };
 
 /**
@@ -45,7 +56,13 @@ const botFinder = (path) => {
 const tryRequire = (path) => {
   try {
     return require(path);
-  } catch(e) {
+  } catch (e) {
+    // suppress errors about not being able to find the path.
+    if (!(e.message.includes('Cannot find module') && e.message.includes(path))) {
+      Log.error(`Weird error when trying to require ${path}`);
+      Log.error(e);
+    }
+
     return undefined;
   }
 };

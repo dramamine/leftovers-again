@@ -6,7 +6,7 @@
 
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 const moveId = 'roost';
 
@@ -88,8 +88,7 @@ Serious Nature
 
   decide(state) {
     if (state.forceSwitch || state.teamPreview || !this.can(state)) {
-
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         return true;
@@ -111,5 +110,3 @@ Serious Nature
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }
-
-export default Rooster;

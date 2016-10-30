@@ -1,4 +1,9 @@
+ISSUES:
+File an issue here: https://github.com/dramamine/leftovers-again/issues
+Or just email me at marten@metal-heart.org
+
+
+Yes, I would love your help from submitting pull requests!
+
 - Follow linting & style rules
-- Write unit tests for your code
-- Don't cause tests to fail
-- Write to me before making any breaking changes
+- Don't break 'npm test'

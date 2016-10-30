@@ -5,7 +5,7 @@ import sampleRequest from '../helpers/requestc';
 let store;
 
 describe('BattleStore', () => {
-  beforeEach( () => {
+  beforeEach(() => {
     store = new BattleStore();
     // spyOn(util, 'researchPokemonById').and.returnValue({});
   });
@@ -49,6 +49,15 @@ describe('BattleStore', () => {
       store.handleSwitch('p1a: Guardechu', 'Guardechu, L1', '1/1');
       const result = store.data();
       expect(result.opponent.active.species).toEqual('Guardechu');
+    });
+  });
+  describe('handleDetailsChange', () => {
+    it('should follow mega-evolution', () => {
+      store.myId = 'p1';
+      // p2a: Charizard|Charizard-Mega-X, M
+      store.barn.create('p1a: Charizard', 'Charizard, L83, M');
+      store.handleDetailsChange('p1a: Charizard', 'Charizard-Mega-X, M');
+      expect(store.barn.find('p1: Charizard-Mega-X')).toBeTruthy();
     });
   });
 });

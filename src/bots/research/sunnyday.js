@@ -4,7 +4,7 @@
  * npm run develop -- --bot=research/sunnyday
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 export default class SunnyDay extends AI {
   constructor() {
@@ -101,5 +101,3 @@ Serious Nature
     return true;
   }
 }
-
-export default SunnyDay;

@@ -19,7 +19,7 @@
  */
 
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 import Damage from 'leftovers-again/game/damage';
 import Log from 'leftovers-again/log';
 
@@ -141,4 +141,3 @@ Serious Nature
     return true;
   }
 }
-export default Facader;

@@ -3,7 +3,7 @@
  *
  */
 import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+import { MOVE, SWITCH } from 'leftovers-again/decisions';
 
 
 class SplashBot extends AI {
@@ -68,17 +68,17 @@ Timid Nature
    */
   decide(state) {
     // console.log(state);
-    console.log('how many alive?' + state.self.reserve.filter( mon => !mon.dead).length);
-    console.log('how many dead?' + state.self.reserve.filter( mon => mon.dead).length);
+    console.log('how many alive?' + state.self.reserve.filter(mon => !mon.dead).length);
+    console.log('how many dead?' + state.self.reserve.filter(mon => mon.dead).length);
     if (state.forceSwitch || state.teamPreview || state.self.active.length === 0) {
       this.ctr++;
-      const possibleMons = state.self.reserve.filter( (mon) => {
+      const possibleMons = state.self.reserve.filter((mon) => {
         if (mon.condition === '0 fnt') return false;
         if (mon.active) return false;
         if (mon.dead) return false;
         return true;
       });
-      const myMon = this._pickOne(possibleMons);
+      const myMon = this.pickOne(possibleMons);
       console.log('switching to: ', myMon);
       console.log(JSON.stringify(state));
       return new SWITCH(this.ctr);
@@ -88,7 +88,7 @@ Timid Nature
     return new MOVE(0); // splash
   }
 
-  _pickOne(arr) {
+  pickOne(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 }

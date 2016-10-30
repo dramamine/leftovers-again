@@ -147,7 +147,7 @@ class KO {
 
     for (let i = 1; i <= 5; i++) {
       // console.log('using hits counter ' + i);
-      const c = KO._getKOChance(damage, defender.hp - hazards, eot, i, defender.maxhp, toxicCounter);
+      const c = KO.getKOChance(damage, defender.hp - hazards, eot, i, defender.maxhp, toxicCounter);
       if (c > 0 && c <= 1) {
         return {
           turns: i,
@@ -161,13 +161,13 @@ class KO {
     };
   }
 
-  static _getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
-    // console.log('_getKOChance:', damage, hp, eot, hits, maxHP, toxicCounter);
+  static getKOChance(damage, hp, eot, hits, maxHP, toxicCounter) {
+    // console.log('getKOChance:', damage, hp, eot, hits, maxHP, toxicCounter);
     if ( isNaN(hp) || hp < 0 || isNaN(hits) || hits < 0 || isNaN(maxHP) || maxHP < 0) {
       console.error('bailing out!', damage.length, hp, eot, hits, maxHP, toxicCounter);
       return 0;
     }
-    // console.log('_getKOChance called.', damage.length, hp, eot, hits, maxHP, toxicCounter);
+    // console.log('getKOChance called.', damage.length, hp, eot, hits, maxHP, toxicCounter);
     const n = damage.length;
     const minDamage = damage[0];
     const maxDamage = damage[damage.length - 1];
@@ -182,9 +182,9 @@ class KO {
         }
       }
     }
-    if (KO._predictTotal(maxDamage, eot, hits, toxicCounter, maxHP) < hp) {
+    if (KO.predictTotal(maxDamage, eot, hits, toxicCounter, maxHP) < hp) {
       return 0;
-    } else if (KO._predictTotal(minDamage, eot, hits, toxicCounter, maxHP) >= hp) {
+    } else if (KO.predictTotal(minDamage, eot, hits, toxicCounter, maxHP) >= hp) {
       return 1;
     }
 
@@ -195,7 +195,7 @@ class KO {
     }
     let sum = 0;
     for (i = 0; i < n; i++) {
-      const c = KO._getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
+      const c = KO.getKOChance(damage, hp - damage[i] + eot - toxicDamage, eot,
         hits - 1, maxHP, toxicCounter);
       if (c === 1) {
         sum += (n - i);
@@ -208,7 +208,7 @@ class KO {
     return sum / n;
   }
 
-  static _predictTotal(damage, eot, hits, toxicCounter, maxHP) {
+  static predictTotal(damage, eot, hits, toxicCounter, maxHP) {
     let toxicDamage = 0;
     if (toxicCounter > 0) {
       for (let i = 0; i < hits - 1; i++) {

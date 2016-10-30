@@ -118,7 +118,7 @@ Make sure you're only choosing valid choices.
 You can change the logging level when running the bot using '--loglevel=[x]'. 1 returns only errors, 5 shows debug info
 
 Server messages get logged to `log/replays/{{timestamp}}-{{battleid}}`
-States get logged to `log/states/{{timestamp}}-{{battleid}}`. These can be extremely useful for unit tests and debugging crashes (you can easily call decide() on these JSON objects). **TODO:** logging isn't like this yet. 
+States get logged to `log/states/{{timestamp}}-{{battleid}}`. These can be extremely useful for unit tests and debugging crashes (you can easily call decide() on these JSON objects). **TODO:** logging isn't like this yet.
 
 
 
@@ -180,3 +180,6 @@ Set --loglevel=[x] to whatever you'd like:
 
 ### What else gets logged?
 Some stuff in the logs directory **TODO**
+
+### Windows Limitations
+leftovers-again should work fine on Windows, but development is more difficult. Some npm scripts don't run: `build, copy, release, test`. Use `npm run babel` to build and `npm run start:quick` to run.
