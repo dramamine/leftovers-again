@@ -21,6 +21,7 @@
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
     "develop": "npm-run-all build --parallel babel:watch 'start:watch -- {@}' --",
+    "develop:scripts": "babel scripts -d lib/scripts && onchange 'scripts/*.js' -v -- babel {{changed}} -d lib",
     "start": "npm run clean && npm run build && node lib/start.js",
     "start:quick": "node lib/start.js",
     "start:watch": "nodemon -w lib lib/start.js",

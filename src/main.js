@@ -62,6 +62,7 @@ Leftovers Again: interface for Pokemon Showdown bots
 -scrappy:       Have your bot pick fights with anyone who's in the lobby or
                 who joins the lobby.
 -server [path]: Connect to a specific server.
+-test:          Log decisions but don't send them to the server.
 -timeout [ms]:  Time out the bot after x milliseconds. (default 0, disabled)
 `);
 }
@@ -98,7 +99,7 @@ const start = (metadata, Bot) => {
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
   const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches',
-    'production', 'prodServer', 'loglevel', 'results', 'timeout'];
+    'production', 'prodServer', 'loglevel', 'results', 'test', 'timeout'];
   params.forEach((param) => {
     args[param] = args[param] || metadata[param] || config[param] || defaults[param];
   });
@@ -131,7 +132,7 @@ const start = (metadata, Bot) => {
   // for each one, it creates a new instance of a battle and of our AI class.
   // listener needs to know about the BattleManager to properly relay battle
   // messages to the right battle instance.
-  const battlemanager = new BattleManager(info.BotClass, args.timeout);
+  const battlemanager = new BattleManager(info.BotClass, args);
   listener.use(battlemanager);
 
   // connect to a server, or create one and start listening.

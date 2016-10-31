@@ -29,10 +29,11 @@ class Battle {
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, bot, timeout = 0) {
-    forfeitTimeout = timeout;
+  constructor(bid, bot, args) {
+    forfeitTimeout = args.timeout || 0;
     // battle ID
     this.bid = bid;
+    this.args = args;
 
     // Messages we want to handle, and their handlers.
     this.handlers = {
@@ -283,11 +284,7 @@ class Battle {
       if (choice instanceof Promise) {
         // wait for promises to resolve
         choice.then((resolved) => {
-          const res = this.formatMessage(this.bid, resolved, state);
-          if (res) {
-            Log.info(res);
-            listener.relay('_send', res);
-          }
+          this.sendResponse( this.formatMessage(this.bid, resolved, state) );
 
           // saving this state for future reference
           this.prevStates.unshift(this.abbreviateState(state));
@@ -297,11 +294,8 @@ class Battle {
         });
       } else {
         // message is ready to go
-        const res = this.formatMessage(this.bid, choice, state);
-        if (res) {
-          Log.info(res);
-          listener.relay('_send', res);
-        }
+        this.sendResponse( this.formatMessage(this.bid, choice, state) );
+
 
         // saving this state for future reference
         this.prevStates.unshift(this.abbreviateState(state));
@@ -320,6 +314,16 @@ class Battle {
       Log.error('Forfeiting because of the following error:');
       Log.error(e);
       this.forfeit();
+    }
+  }
+
+  sendResponse(res) {
+    if (res) {
+      Log.info(res);
+      // don't send decisions in 'test' mode
+      if (!this.args.test) {
+        listener.relay('_send', res);
+      }
     }
   }
 
