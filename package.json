@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "babel": "babel src -d lib && babel scripts -d lib/scripts",
-    "babel:watch": "cd src && onchange '**/*.js' -v -- babel {{changed}} -d ../lib",
+    "babel:watch": "onchange 'src/**/*.js' -v -- ./build/rebuild.sh {{changed}}",
     "build": "npm-run-all clean babel copy",
     "clean": "rimraf lib",
     "copy": "cp -R src/data lib && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
