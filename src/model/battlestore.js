@@ -338,11 +338,10 @@ export default class BattleStore {
         const mon = data.side.pokemon[i];
         const ref = this.barn.findOrCreate(mon.ident, mon.details);
         ref.assimilate(mon);
-        ref.active = mon.active || false;
         ref.order = i;
       }
     }
-
+    
     // need to know these later. update to false to replace stale info.
     this.forceSwitch = data.forceSwitch || false;
     this.teamPreview = data.teamPreview || false;
@@ -442,6 +441,11 @@ export default class BattleStore {
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
+    // @TODO thinking about trying this. why are there actives during teamPreview?
+    // if (this.teamPreview) {
+    //   output.self.active = [];
+    // }
+
     output.opponent.active = this.barn.all()
       .filter(youareowner)
       .filter(isactive)
