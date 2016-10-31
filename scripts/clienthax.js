@@ -38,6 +38,9 @@ const proc = (data) => {
     if (data.moves) {
       handleMoves(data.moves);
     }
+    if (data.switches) {
+      handleSwitches(data.switches);
+    }
     // if (data.opponent) onOpponentData(data.opponent);
     // if (data.switches) onSwitchData(data.switches);
   } else {
@@ -51,7 +54,7 @@ ws.onopen = () => {
   console.log('websocket opened.');
 
   ws.onmessage = (msg) => {
-    console.log('received msg ', msg);
+    // console.log('received msg ', msg);
     $('.battle-log .inner').append('<p>' + msg.data + '</p>');
 
     // consider relaying message.
@@ -159,6 +162,21 @@ const onOpponentData = (opponent) => {
 
   $('.statbar.lstatbar strong')
     .after(arrows);
+};
+
+const handleSwitches = (switches) => {
+  for (let i = 0; i < switches.length; i++) {
+    let searchVal = (switches[i].active)
+      ? switches[i].species + ',active'
+      : i;
+    // hack for fixing Kyurem-White and probably some other dudes
+    if (searchVal.indexOf('-') > 0) {
+      searchVal = searchVal.substr(0, searchVal.indexOf('-'));
+    }
+
+    $(`.switchmenu button[value="${searchVal}"] span.hpbar`)
+      .before(switches[i].html);
+  }
 };
 
 const onSwitchData = (switches) => {

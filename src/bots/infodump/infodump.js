@@ -100,7 +100,6 @@ class Infodump extends AI {
             Log.error(e);
           }
         }
-        console.log('predicting ' + move.name + 'against ' + state.opponent.active.species);
         const ko = KO.predictKO(est, state.opponent.active);
         const data = {
           name: move.name,
@@ -131,8 +130,6 @@ class Infodump extends AI {
   }
 
   switches(state) {
-    Log.log('input:');
-    Log.log(JSON.stringify(state));
     // query for moves
     const formatData = Formats[util.toId(state.opponent.active.species)];
     const possibleMoves = formatData.randomBattleMoves;
@@ -218,6 +215,12 @@ class Infodump extends AI {
       const myKO = KO.predictKO(myBest.dmg, myBest.against);
 
 
+      let descriptor = '';
+      if (mon.active) {
+        descriptor = 'my active mon';
+      } else if (mon.dead) {
+        descriptor = 'pretty dead';
+      }
       return {
         species: mon.species,
         active: mon.active,
@@ -236,11 +239,13 @@ class Infodump extends AI {
           koChance: myKO.chance
         },
         strength,
-        weakness
+        weakness,
+        html: `
+<p class="lgn">${mon.species}</p>
+<span>${descriptor}</span>`
       };
     });
-    Log.log('output:');
-    Log.log(results);
+
     return results;
   }
 
