@@ -1,3 +1,11 @@
+[0.9.5] - 2016-10-30
+- Switch module resolver
+- Fix the 'develop' script to put files in the right directories
+- Disconnect on opponent error
+- Fix 'active mon during teamPreview' bug
+- Update generate.js templates
+- Fix watch commands for myself and for generate.js templates
+
 [0.9.4] - 2016-10-27
 - Change match-display to look a little nicer
 
