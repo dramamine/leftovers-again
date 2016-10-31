@@ -33,6 +33,11 @@ describe('damage calculator', () => {
       expect(ghosttype[0]).toEqual(0);
       expect(ghosttype[ghosttype.length - 1]).toEqual(0);
     });
+    it('should calculate damage for Return', () => {
+      const retty = Damage.getDamageResult(
+        'eevee', 'meowth', 'return');
+      expect(retty[0]).toBeGreaterThan(0);
+    });
   });
   describe('boosts', () => {
     it('should handle +1 boosted attack', () => {
@@ -244,6 +249,12 @@ describe('damage calculator', () => {
       expect(mon.stats.spa).toBeCloseTo(160);
       expect(mon.stats.spd).toBeCloseTo(192);
       expect(mon.stats.spe).toBeCloseTo(160);
+    });
+    it('should not crash out bc of undefined things', () => {
+      const driffy = JSON.parse('{"condition":"100/100","statuses":[],"id":"drifblim","species":"Drifblim","level":83,"gender":"M","hp":385,"maxhp":385,"hppct":100,"active":true,"types":["Ghost","Flying"],"baseStats":{"hp":150,"atk":80,"def":44,"spa":90,"spd":54,"spe":80},"abilities":{"0":"Aftermath","1":"Unburden","H":"Flare Boost"},"position":"p1a","owner":"p1","prevMoves":[],"nickname":"Drifblim","seenMoves":[],"stats":{"atk":180,"spa":197,"def":121,"spd":137,"spe":180,"hp":385},"type1":"Ghost","type2":"Flying","nature":"serious","status":"","ability":"Aftermath","item":""}');
+      const updated = Damage.calculateStats(driffy);
+      expect(updated.stats.atk).toBeDefined();
+      expect(updated.boostedStats.atk).toBeDefined();
     });
   });
 });

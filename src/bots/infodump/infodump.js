@@ -86,7 +86,7 @@ class Infodump extends AI {
     const extra = [];
     // this'll be null during forceSwitch
     if (state.self.active && state.self.active.moves) {
-      state.self.active.moves.forEach( (move) => {
+      state.self.active.moves.forEach((move) => {
         let est = [-1];
         if (!move.disabled) {
           try {
@@ -102,12 +102,28 @@ class Infodump extends AI {
         }
         console.log('predicting ' + move.name + 'against ' + state.opponent.active.species);
         const ko = KO.predictKO(est, state.opponent.active);
-        extra.push({
+        const data = {
           name: move.name,
           dmgMin: est[0],
           dmgMax: est[est.length - 1],
           koTurns: ko.turns || null,
           koChance: ko.chance || null
+        };
+        const html = `
+<p class="lgn damage">
+  ${data.dmgMin} - ${data.dmgMax}
+</p>
+<p class="lgn smaller">
+  ${data.koChance}% for ${data.koTurns}HKO
+</p>
+<p class="lgn">
+  (move was ${data.name})
+</p>
+`;
+        extra.push({
+          name: move.name,
+          id: move.id,
+          html
         });
       });
     }

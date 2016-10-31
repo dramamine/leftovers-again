@@ -221,22 +221,29 @@ class Damage {
    *                                   be in [0.9, 1, 1.1].
    */
   calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
-    if (!mon.baseStats[stat]) {
-      console.error('missing the stat I need:' + stat);
-      console.error(mon.baseStats);
+    try {
+      if (!mon.baseStats[stat]) {
+        console.error('missing the stat I need:' + stat);
+        console.error(mon.baseStats);
+      }
+
+
+      const evBonus = Math.floor(evs / 4);
+      const addThis = stat === 'hp' ? (mon.level + 10) : 5;
+      const calculated = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
+        (mon.level / 100) + addThis);
+
+      const nature = (mon.nature
+          ? this.getNatureMultiplier(mon.nature, stat)
+          : natureMultiplier);
+
+      return Math.floor(calculated * nature);
+    } catch (e) {
+      console.error(e);
+      console.log('calculateStat call failed.');
+      console.log(mon, stat, evs, natureMultiplier);
+      process.exit();
     }
-
-
-    const evBonus = Math.floor(evs / 4);
-    const addThis = stat === 'hp' ? (mon.level + 10) : 5;
-    const calculated = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
-      (mon.level / 100) + addThis);
-
-    const nature = (mon.nature
-        ? this.getNatureMultiplier(mon.nature, stat)
-        : natureMultiplier);
-
-    return Math.floor(calculated * nature);
   }
 
   /**
@@ -368,7 +375,7 @@ class Damage {
       return [40];
     }
 
-    if (move.bp === 0) {
+    if (move.bp === 0 && move.name !== 'Return') {
       return [0];
     }
 
@@ -533,7 +540,7 @@ class Damage {
         break;
       case 'Flail':
       case 'Reversal':
-        const p = Math.floor(48 * attacker.curHP / attacker.maxHP);
+        const p = Math.floor(48 * attacker.hp / attacker.maxhp);
         basePower = p <= 1 ? 200 : p <= 4 ? 150 : p <= 9 ? 100 : p <= 16 ? 80 : p <= 32 ? 40 : 20;
         description.moveBP = basePower;
         break;

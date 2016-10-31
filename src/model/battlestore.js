@@ -324,7 +324,15 @@ export default class BattleStore {
    * last turn, they need to choose a mon to send in. This is unused.
    */
   handleRequest(json) {
-    const data = JSON.parse(json);
+    let data;
+    try {
+      data = JSON.parse(json);
+    } catch (e) {
+      Log.error(e);
+      Log.error(json);
+      return;
+    }
+
     // requests are the first place we figure out who we are.
     // -- plato
     if (!this.myId) {

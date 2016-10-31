@@ -19,7 +19,8 @@ console.log('hello from clienthax.js!');
 /* eslint new-cap: 0 */
 GM_addStyle('.switchmenu button { width: 150px; }');
 GM_addStyle('span.hpbar { width: 92px; margin: auto; }');
-GM_addStyle('.movemenu button { width: 306px; }');
+GM_addStyle('.movemenu button { width: 306px; height: inherit; }');
+GM_addStyle('.battlecontrols p { margin: 2px 0 0 0; }');
 GM_addStyle('.lgn.bad { color: red }');
 GM_addStyle('.lgn.good { color: green }');
 GM_addStyle('.lgn.smaller { font-size: smaller }');
@@ -27,6 +28,23 @@ GM_addStyle('.lgn.smaller { font-size: smaller }');
 const ws = new unsafeWindow.WebSocket('ws://localhost:7331');
 let isOpen = false;
 const msgQueue = [];
+
+
+const proc = (data) => {
+  console.log('proc called.');
+  // check to see if the options are visible yet
+  if ($('.switchmenu button:visible').length > 0) {
+    console.log('found it.');
+    if (data.moves) {
+      handleMoves(data.moves);
+    }
+    // if (data.opponent) onOpponentData(data.opponent);
+    // if (data.switches) onSwitchData(data.switches);
+  } else {
+    console.log('setting timeout since buttons werent there yet');
+    setTimeout(proc, 1000, data);
+  }
+};
 
 // set up listeners and send off queued messages
 ws.onopen = () => {
@@ -39,24 +57,15 @@ ws.onopen = () => {
     // consider relaying message.
     console.log(msg.data, unsafeWindow.room.id);
     if (msg.data && msg.data.indexOf(unsafeWindow.room.id) === 0) {
-      console.log('looks like this is a move command. lets do it!');
-      unsafeWindow.app.socket.send(msg.data);
-    }
-
-    const proc = (data) => {
-      console.log('proc called.');
-      // check to see if the options are visible yet
-      if ($('.switchmenu button:visible').length > 0) {
-        console.log('found it.');
-        if (data.moves) onMoveData(data.moves);
-        if (data.opponent) onOpponentData(data.opponent);
-        if (data.switches) onSwitchData(data.switches);
-      } else {
-        console.log('setting timeout...');
-        setTimeout(proc, 1000, data);
+      if (msg.data.indexOf('/choose') >= 0) {
+        console.log('forwarding this decision onward...', msg.data);
+        unsafeWindow.app.socket.send(msg.data);
+      } else if (msg.data.indexOf('yrwelcome') > 0) {
+        const goods = msg.data.split('|').pop();
+        console.log('proccin the goods..', goods);
+        proc(JSON.parse(goods));
       }
-    };
-    proc(JSON.parse(msg.data));
+    }
   };
 
   isOpen = true;
@@ -90,6 +99,7 @@ const listen = () => {
   // preserve current behavior
   const souper = unsafeWindow.app.socket.onmessage;
   unsafeWindow.app.socket.onmessage = (msg) => {
+    console.log('onmessage: ', msg.data);
     souper(msg);
 
     if (isOpen) {
@@ -114,6 +124,15 @@ const listen = () => {
       $('button.lgnclear').click(clear);
     }
   };
+};
+
+const handleMoves = (moves) => {
+  for (let i = 0; i < moves.length; i++) {
+    console.log('.movemenu button[value=' + (i + 1) + '] small', moves[i].html);
+    $('.movemenu button[value=' + (i + 1) + '] small')
+      .first()
+      .after(moves[i].html);
+  }
 };
 
 const onMoveData = (moves) => {

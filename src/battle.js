@@ -29,7 +29,7 @@ class Battle {
    * grabs will be found at leftovers-again/bots/[botpath].js
    *
    */
-  constructor(bid, bot, args) {
+  constructor(bid, bot, args = {}) {
     forfeitTimeout = args.timeout || 0;
     // battle ID
     this.bid = bid;
@@ -71,7 +71,7 @@ class Battle {
    */
   getHelp() {
     if (this.bot.getHelp) {
-      listener.relay('_send', this.bid + '|' +
+      listener.relay('_send', this.bid + '|yrwelcome|' +
         JSON.stringify(this.bot.getHelp(this.store.data())));
     }
   }
@@ -115,7 +115,14 @@ class Battle {
    * @return {Boolean}  True if we had to make a decision; false otherwise
    */
   handleRequest(json) {
-    const data = JSON.parse(json);
+    let data;
+    try {
+      data = JSON.parse(json);
+    } catch (e) {
+      Log.error(e);
+      Log.error(json);
+      return false;
+    }
 
     // this is not a request, just data.
     // @TODO probably unnecessary
@@ -284,7 +291,7 @@ class Battle {
       if (choice instanceof Promise) {
         // wait for promises to resolve
         choice.then((resolved) => {
-          this.sendResponse( this.formatMessage(this.bid, resolved, state) );
+          this.sendResponse(this.formatMessage(this.bid, resolved, state));
 
           // saving this state for future reference
           this.prevStates.unshift(this.abbreviateState(state));
@@ -294,7 +301,7 @@ class Battle {
         });
       } else {
         // message is ready to go
-        this.sendResponse( this.formatMessage(this.bid, choice, state) );
+        this.sendResponse(this.formatMessage(this.bid, choice, state));
 
 
         // saving this state for future reference
