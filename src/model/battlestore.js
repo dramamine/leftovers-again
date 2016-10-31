@@ -337,6 +337,12 @@ export default class BattleStore {
       for (let i = 0; i < data.side.pokemon.length; i++) {
         const mon = data.side.pokemon[i];
         const ref = this.barn.findOrCreate(mon.ident, mon.details);
+        // first round, we shouldn't have any active mon yet!
+        // but the request DOES set the first pokemon in Reserve to active!
+        // it's a property of the mon.
+        // I think this is handled quite differently in the web client.
+        if (data.teamPreview) delete mon.active;
+
         ref.assimilate(mon);
         ref.order = i;
       }
