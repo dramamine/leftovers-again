@@ -192,10 +192,10 @@ export default class BattleStore {
     move.damage = move.prevhp - move.nexthp;
     move.damagepct = Math.round(100 * move.damage / mon.maxhp);
 
-    if (mon.maxhp !== 100 && move.damage > 20) {
-      // console.log(move.damage, target, condition, explanation);
-      Log.toFile('damagerangetest', move.damage + ',');
-    }
+    // think I was using this to validate damage numbers
+    // if (mon.maxhp !== 100 && move.damage > 20) {
+    //   Log.toFile('damagerangetest', move.damage + ',');
+    // }
 
     if (explanation && explanation.indexOf('[from] item:') >= 0) {
       const item = explanation.replace('[from] item: ', '');
@@ -384,16 +384,15 @@ export default class BattleStore {
    * Forme change! This came up a lot with castform, probs some other pokes too.
    * ex: |-formechange|p2a: Castform|Castform-Sunny|[msg]|[from] ability: Forecast
    * ex: |detailschange|p2a: Charizard|Charizard-Mega-X, M
+   * ex. |detailschange|p2a: Sabbs|Sableye-Mega, M
    *
-   * @param  {String} pokemon  The id of the pokemon
+   * @param  {String} ident  The id of the pokemon
    * @param  {String} species  The pokemon's new species
    * @param  {String} hpstatus Not sure, always seems to be [msg]
    * @param  {String} reason  Why did these details change?
    */
-  handleDetailsChange(pokemon, details, hpstatus, reason) {
-    Log.info(`details change: ${pokemon}|${details}|${hpstatus}|${reason}`);
-
-    this.barn.replace(pokemon, details, null);
+  handleDetailsChange(ident, details, hpstatus, reason) {
+    const updated = this.barn.replace(ident, details, null);
   }
 
 

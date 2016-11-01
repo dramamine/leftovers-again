@@ -35,12 +35,10 @@ class Pokebarn {
   find(ident) {
     const searchFor = util.identWithoutPosition(ident);
 
-    const matches = this.allmon.filter(mon => mon.ident.indexOf(searchFor) === 0);
+    const matches = this.allmon.filter(mon => mon.ident === searchFor);
     if (matches.length > 1) {
       Log.error('Found multiple mons with the same ident! o fuck');
       Log.error(matches);
-    } else if (matches[0] && matches[0].ident !== searchFor) {
-      Log.debug(`fuzzy matched: ${matches[0].ident} matched for ${searchFor}`);
     }
     return matches[0];
   }
@@ -56,19 +54,20 @@ class Pokebarn {
   findOrCreate(ident, details) {
     const mon = this.find(ident);
     if (mon) return mon;
+    console.log('creating this guy:', ident, details);
     return this.create(ident, details);
   }
 
   /**
    * Sometimes Pokemon get replaced. Like when Zoroark comes to town.
    *
-   * @param  {[type]} ident     [description]
-   * @param  {[type]} details   [description]
+   * @param  {[type]} ident     The ident, ex. 'p2a: Sabbs'
+   * @param  {[type]} details   The details, ex. 'Sableye-Mega, M'
    * @param  {[type]} condition [description]
    * @return {[type]}           [description]
    */
   replace(ident, details, condition) {
-    Log.warn(`replace call: ${ident}|${details}|${condition}`);   
+    // Log.debug(`replace call: ${ident}|${details}|${condition}`);
     const pos = util.identToPos(ident);
     const replaced = this.findByPos(pos);
     const idx = this.allmon.indexOf(replaced);
@@ -80,6 +79,7 @@ class Pokebarn {
     }
 
     const updated = this.findOrCreate(ident, details);
+
     if (condition) {
       updated.useCondition(condition);
     } else if (replaced.condition) {
@@ -87,6 +87,10 @@ class Pokebarn {
       // in that case, use the condition we had before? hppct/conditions
       // probably did not change, but maxhp probably did.
       updated.useCondition(replaced.condition);
+    }
+
+    if (details) {
+      updated.useDetails(details, true);
     }
 
     return updated;

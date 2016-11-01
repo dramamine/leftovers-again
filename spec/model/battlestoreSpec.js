@@ -55,9 +55,9 @@ describe('BattleStore', () => {
     it('should follow mega-evolution', () => {
       store.myId = 'p1';
       // p2a: Charizard|Charizard-Mega-X, M
-      store.barn.create('p1a: Charizard', 'Charizard, L83, M');
-      store.handleDetailsChange('p1a: Charizard', 'Charizard-Mega-X, M');
-      expect(store.barn.find('p1: Charizard-Mega-X')).toBeTruthy();
+      store.barn.create('p1a: Charzizzy', 'Charizard, L83, M');
+      store.handleDetailsChange('p1a: Charzizzy', 'Charizard-Mega-X, M');
+      expect(store.barn.find('p1: Charzizzy')).toBeTruthy();
     });
   });
 });
