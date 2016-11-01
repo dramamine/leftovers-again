@@ -1,3 +1,8 @@
+[0.9.6] - 2016-10-31
+- Fixing gross issues with 'replace' and updating idents
+- Really confident Zoroark & detailschange & formechange work
+- Updated unit tests
+
 [0.9.5] - 2016-10-30
 - Switch module resolver
 - Fix the 'develop' script to put files in the right directories
