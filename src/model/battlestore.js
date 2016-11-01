@@ -458,25 +458,8 @@ export default class BattleStore {
     }
 
     if (output.self.active.length > 1) {
-      const zoroark = output.self.active.find(mon => mon.id === 'zoroark');
-      if (zoroark) {
-        Log.warn('OK, found my zoroark.');
-
-        // in reserves, pretend this guy is not actually active.
-        output.self.reserve.push(zoroark);
-        zoroark.active = false;
-
-        // remove from active
-        output.self.active.splice(output.self.active.indexOf(zoroark), 1);
-
-        // mark the actual pokemon of ours as being Zoroark
-        output.self.active.forEach((mon) => {
-          mon.isZoroark = true;
-        });
-      } else {
-        Log.warn('stop the presses! too many active pokemon');
-        Log.warn(output.self.active);
-      }
+      Log.warn('stop the presses! too many active pokemon');
+      Log.warn(output.self.active);
     }
 
     // this was causing some errors before. could use some more research...

@@ -54,7 +54,6 @@ class Pokebarn {
   findOrCreate(ident, details) {
     const mon = this.find(ident);
     if (mon) return mon;
-    console.log('creating this guy:', ident, details);
     return this.create(ident, details);
   }
 
@@ -72,7 +71,9 @@ class Pokebarn {
     const replaced = this.findByPos(pos);
     const idx = this.allmon.indexOf(replaced);
     if (idx >= 0) {
-      // Log.warn('Found zoroark! replacing him!');
+      // just remove this guy for now. it's kinda too complicated to
+      // try to remember the old info that we're losing (ex. if it
+      // was Zoroark, you know the id of an unseen Pokemon)
       this.allmon.splice(idx, 1);
     } else {
       Log.error('Couldnt find the thing we want to replace.');
