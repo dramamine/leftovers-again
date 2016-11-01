@@ -11,12 +11,27 @@ class Pokebarn {
     return this.allmon;
   }
 
+  /**
+   * Create a new Pokemon and save it to this.allmon
+   * 
+   * @param  {String} ident  The ident
+   * @param  {String} details  The details
+   * 
+   * @return {Object<Pokemon>}  The mon you've created
+   */
   create(ident, details) {
     const res = new Pokemon(ident, details);
     this.allmon.push(res);
     return res;
   }
 
+  /**
+   * Get a specific mon from your barn.
+   * 
+   * @param  {String} ident  The ident
+   * 
+   * @return {Object<Pokemon>}  The mon you're looking for
+   */
   find(ident) {
     const searchFor = util.identWithoutPosition(ident);
 
@@ -30,6 +45,14 @@ class Pokebarn {
     return matches[0];
   }
 
+  /**
+   * Get a specific mon from your barn, or create it.
+   * 
+   * @param  {String} ident  The ident
+   * @param  {String} details  The details
+   * 
+   * @return {Object<Pokemon>}  The mon you're looking for
+   */
   findOrCreate(ident, details) {
     const mon = this.find(ident);
     if (mon) return mon;

@@ -121,27 +121,13 @@ export default class BattleStore {
    */
   handleMove(actor, move, target) {
     const actingMon = this.barn.find(actor);
-
     if (!actingMon) {
       Log.error('battlestore.handleMove: couldnt find ' + actor + ' in this haystack:');
       this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
-    }
-
-    const targetMon = this.barn.find(target);
-    this.events.push({
-      type: 'move',
-      player: util.identToOwner(actor),
-      turn: this.turn,
-      from: actingMon.species,
-      frompos: actingMon.position,
-      move,
-      to: targetMon.species,
-      topos: targetMon.position
-    });
-
-    actingMon.recordMove(move);
+    } else {
+      actingMon.recordMove(move);
+    }    
   }
-
 
   handleReplace(ident, details, condition) {
     this.barn.replace(ident, details, condition);
