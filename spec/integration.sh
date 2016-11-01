@@ -2,13 +2,13 @@
 # it works. By the end you've got a server spun up and should challenge
 # randumb to a battle.
 
-rm -rf lib src node_modules package.json
+rm -rf lib src node_modules package.json .babelrc
 npm install leftovers-again
 
 # wish I could automate this
 node node_modules/leftovers-again/lib/scripts/generate.js
 
 # post-generation...
-npm install
+yarn
 git clone https://github.com/dramamine/Pokemon-Showdown.git
-./node_modules/.bin/npm-run-all --parallel server 'develop -- --opponent=randumb --loglevel=4'
+./node_modules/.bin/npm-run-all --parallel server 'develop -- --matches=3 --opponent=randumb --loglevel=4'
