@@ -8,12 +8,14 @@ export default class Glacia extends EliteFour {
 }
 
 const meta = {
-  format: 'anythinggoes',
+  format: 'uu',
   accepts: 'ALL',
-  nickname: 'EliteFour Glacia x',
+  nickname: 'oras-glacia',
   team: `
 Abomasnow
 Ability: Snow Warning
+EVs: 248 HP / 252 Atk / 8 SpA
+Lonely Nature
 - Blizzard
 - Wood Hammer
 - Ice Shard
@@ -21,6 +23,8 @@ Ability: Snow Warning
 
 Beartic
 Ability: Snow Cloak
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
 - Icicle Crash
 - Slash
 - Shadow Claw
@@ -28,6 +32,8 @@ Ability: Snow Cloak
 
 Froslass
 Ability: Snow Cloak
+EVs: 252 SpA / 4 SpD / 252 Spe
+Timid Nature
 - Draining Kiss
 - Blizzard
 - Hail
@@ -35,20 +41,26 @@ Ability: Snow Cloak
 
 Vanilluxe
 Ability: Ice Body
+EVs: 252 HP / 252 SpA / 4 SpD
+Modest Nature
 - Ice Beam
 - Mirror Coat
 - Freeze-Dry
 - Signal Beam
 
-Walrein
+Walrein @ Leftovers
 Ability: Thick Fat
+EVs: 248 HP / 8 Atk / 252 SpA
+Mild Nature
 - Surf
 - Body Slam
 - Blizzard
-- Sheer Cold
+- Toxic
 
 Glalie @ Glalitite
 Ability: Inner Focus
+EVs: 248 HP / 8 Atk / 252 SpD
+Gentle Nature
 - Protect
 - Ice Shard
 - Hail

@@ -6,4 +6,4 @@
   url = https://github.com/Zarel/Pokemon-Showdown-Client.git
 [submodule "deps/honko-damagecalc"]
   path = deps/honko-damagecalc
-  url = https://github.com/Zarel/honko-damagecalc.git
+  url = https://github.com/dramamine/honko-damagecalc.git

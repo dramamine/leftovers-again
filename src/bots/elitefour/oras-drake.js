@@ -8,9 +8,9 @@ export default class Drake extends EliteFour {
 }
 
 const meta = {
-  format: 'anythinggoes',
+  format: 'ubers',
   accepts: 'ALL',
-  nickname: 'EliteFour Drake x',
+  nickname: 'oras-drake',
   description: 'If you\'re reading this it\'s too late.',
   team: `
 Altaria
