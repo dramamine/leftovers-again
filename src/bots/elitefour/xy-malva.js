@@ -8,9 +8,9 @@ export default class Malva extends EliteFour {
 }
 
 const meta = {
-  format: 'anythinggoes',
+  format: 'ou',
   accepts: 'ALL',
-  nickname: 'EliteFour Malva x',
+  nickname: 'xy-malva',
   team: `
 Pyroar
 Ability: Rivalry

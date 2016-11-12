@@ -10,7 +10,7 @@ export default class Wikstrom extends EliteFour {
 const meta = {
   format: 'anythinggoes',
   accepts: 'ALL',
-  nickname: 'EliteFouroWikstrom',
+  nickname: 'xy-wikstrom',
   team: `
 Klefki
 Ability: Prankster

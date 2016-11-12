@@ -16,8 +16,7 @@ class Randumb extends AI {
       format: 'randombattle',
       team: null,
       version: 'alpha',
-      nickname: 'la-randumb',
-      password: 'KkhT4pReAhGyswTCFob4rG6TV'
+      nickname: 'randumb-bot'
     };
   }
 

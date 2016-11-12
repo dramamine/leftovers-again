@@ -8,9 +8,9 @@ export default class Steven extends EliteFour {
 }
 
 const meta = {
-  format: 'anythinggoes',
+  format: 'ou',
   accepts: 'ALL',
-  nickname: 'EliteFour Steven x',
+  nickname: 'oras-steeven',
   team: `
 Skarmory
 Ability: Sturdy

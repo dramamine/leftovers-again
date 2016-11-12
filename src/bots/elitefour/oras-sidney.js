@@ -7,9 +7,9 @@ export default class Sidney extends EliteFour {
   }
 }
 const meta = {
-  format: 'anythinggoes',
+  format: 'uu',
   accepts: 'ALL',
-  nickname: 'EliteFour Sidney x',
+  nickname: 'oras-sidney',
   team: `
 Scrafty
 Ability: Moxie

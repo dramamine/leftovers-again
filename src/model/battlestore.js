@@ -121,27 +121,13 @@ export default class BattleStore {
    */
   handleMove(actor, move, target) {
     const actingMon = this.barn.find(actor);
-
     if (!actingMon) {
       Log.error('battlestore.handleMove: couldnt find ' + actor + ' in this haystack:');
       this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
-    }
-
-    const targetMon = this.barn.find(target);
-    this.events.push({
-      type: 'move',
-      player: util.identToOwner(actor),
-      turn: this.turn,
-      from: actingMon.species,
-      frompos: actingMon.position,
-      move,
-      to: targetMon.species,
-      topos: targetMon.position
-    });
-
-    actingMon.recordMove(move);
+    } else {
+      actingMon.recordMove(move);
+    }    
   }
-
 
   handleReplace(ident, details, condition) {
     this.barn.replace(ident, details, condition);
@@ -206,10 +192,10 @@ export default class BattleStore {
     move.damage = move.prevhp - move.nexthp;
     move.damagepct = Math.round(100 * move.damage / mon.maxhp);
 
-    if (mon.maxhp !== 100 && move.damage > 20) {
-      // console.log(move.damage, target, condition, explanation);
-      Log.toFile('damagerangetest', move.damage + ',');
-    }
+    // think I was using this to validate damage numbers
+    // if (mon.maxhp !== 100 && move.damage > 20) {
+    //   Log.toFile('damagerangetest', move.damage + ',');
+    // }
 
     if (explanation && explanation.indexOf('[from] item:') >= 0) {
       const item = explanation.replace('[from] item: ', '');
@@ -345,12 +331,17 @@ export default class BattleStore {
       for (let i = 0; i < data.side.pokemon.length; i++) {
         const mon = data.side.pokemon[i];
         const ref = this.barn.findOrCreate(mon.ident, mon.details);
+        // first round, we shouldn't have any active mon yet!
+        // but the request DOES set the first pokemon in Reserve to active!
+        // it's a property of the mon.
+        // I think this is handled quite differently in the web client.
+        if (data.teamPreview) delete mon.active;
+
         ref.assimilate(mon);
-        ref.active = mon.active || false;
         ref.order = i;
       }
     }
-
+    
     // need to know these later. update to false to replace stale info.
     this.forceSwitch = data.forceSwitch || false;
     this.teamPreview = data.teamPreview || false;
@@ -401,16 +392,15 @@ export default class BattleStore {
    * Forme change! This came up a lot with castform, probs some other pokes too.
    * ex: |-formechange|p2a: Castform|Castform-Sunny|[msg]|[from] ability: Forecast
    * ex: |detailschange|p2a: Charizard|Charizard-Mega-X, M
+   * ex. |detailschange|p2a: Sabbs|Sableye-Mega, M
    *
-   * @param  {String} pokemon  The id of the pokemon
+   * @param  {String} ident  The id of the pokemon
    * @param  {String} species  The pokemon's new species
    * @param  {String} hpstatus Not sure, always seems to be [msg]
    * @param  {String} reason  Why did these details change?
    */
-  handleDetailsChange(pokemon, details, hpstatus, reason) {
-    Log.info(`details change: ${pokemon}|${details}|${hpstatus}|${reason}`);
-
-    this.barn.replace(pokemon, details, null);
+  handleDetailsChange(ident, details, hpstatus, reason) {
+    const updated = this.barn.replace(ident, details, null);
   }
 
 
@@ -450,6 +440,11 @@ export default class BattleStore {
       .filter(isactive)
       .map(dataGetter)
       .sort(byPosition);
+    // @TODO thinking about trying this. why are there actives during teamPreview?
+    // if (this.teamPreview) {
+    //   output.self.active = [];
+    // }
+
     output.opponent.active = this.barn.all()
       .filter(youareowner)
       .filter(isactive)
@@ -471,25 +466,8 @@ export default class BattleStore {
     }
 
     if (output.self.active.length > 1) {
-      const zoroark = output.self.active.find(mon => mon.id === 'zoroark');
-      if (zoroark) {
-        Log.warn('OK, found my zoroark.');
-
-        // in reserves, pretend this guy is not actually active.
-        output.self.reserve.push(zoroark);
-        zoroark.active = false;
-
-        // remove from active
-        output.self.active.splice(output.self.active.indexOf(zoroark), 1);
-
-        // mark the actual pokemon of ours as being Zoroark
-        output.self.active.forEach((mon) => {
-          mon.isZoroark = true;
-        });
-      } else {
-        Log.warn('stop the presses! too many active pokemon');
-        Log.warn(output.self.active);
-      }
+      Log.warn('stop the presses! too many active pokemon');
+      Log.warn(output.self.active);
     }
 
     // this was causing some errors before. could use some more research...

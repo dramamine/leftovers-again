@@ -44,13 +44,12 @@ Careful Nature
     if ({{#if team}} state.teamPreview || {{/if}}state.forceSwitch) {
       const myMon = this.pickOne(
         // filter through your reserve of Pokemon for ones that aren't dead
-        state.self.reserve.filter( mon => !mon.dead )
+        state.self.reserve.filter( mon => !mon.active && !mon.dead )
       );
       // return a Decision object. SWITCH takes Pokemon objects, Pokemon names,
       // and the reserve index [0-5] of the Pokemon you're switching into.
       return new SWITCH(myMon);
     }
-
 
     const myMove = this.pickOne(
       // filter through your active Pokemon's moves for a move that isn't disabled

@@ -7,9 +7,9 @@ export default class Phoebe extends EliteFour {
   }
 }
 const meta = {
-  format: 'anythinggoes',
+  format: 'ou',
   accepts: 'ALL',
-  nickname: 'EliteFour Phoebe x',
+  nickname: 'oras-phoebe',
   team: `
 Banette
 Ability: Frisk

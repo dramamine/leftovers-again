@@ -16,7 +16,7 @@ export default class Rooster extends AI {
     this.meta = {
       accepts: 'anythinggoes',
       format: 'anythinggoes',
-      nickname: 'Rooster ★marten★'
+      nickname: 'rooster-bot'
     };
 
     this.ctr = -1;

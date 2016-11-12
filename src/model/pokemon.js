@@ -244,7 +244,7 @@ export default class Pokemon {
       if (!this.species || force) {
         this.species = deets[0];
         this.id = util.toId(deets[0]);
-        this.ident = `${this.owner}: ${this.species}`;
+        this.ident = `${this.owner}: ${this.nickname}`;
       } else if (!this.species) {
         log.warn('pokemon.useDetails: yea, sometimes i call useDetails when this.species is true');
         log.warn('pokemon.useDetails: looks like this:', deets[0], this.species);
