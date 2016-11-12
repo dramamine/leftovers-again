@@ -10,7 +10,7 @@ export default class Diantha extends EliteFour {
 const meta = {
   format: 'ou',
   accepts: 'ALL',
-  nickname: 'xy-diantha',
+  nickname: 'la-xy-diantha',
   team: `
 Hawlucha
 Ability: Limber

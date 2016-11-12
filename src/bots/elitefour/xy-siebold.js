@@ -10,7 +10,7 @@ export default class Siebold extends EliteFour {
 const meta = {
   format: 'ou',
   accepts: 'ALL',
-  nickname: 'xy-siebold',
+  nickname: 'la-xy-siebold',
   team: `
 Clawitzer
 Ability: Mega Launcher
