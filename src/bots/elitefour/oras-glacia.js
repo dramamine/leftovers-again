@@ -10,7 +10,7 @@ export default class Glacia extends EliteFour {
 const meta = {
   format: 'uu',
   accepts: 'ALL',
-  nickname: 'la-oras-glacia',
+  nickname: 'oras-glacia',
   team: `
 Abomasnow
 Ability: Snow Warning

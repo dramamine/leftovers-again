@@ -10,7 +10,7 @@ export default class Drasna extends EliteFour {
 const meta = {
   format: 'uu',
   accepts: 'ALL',
-  nickname: 'la-xy-drasna',
+  nickname: 'xy-drasna',
   team: `
 Dragalge
 Ability: Poison Point
