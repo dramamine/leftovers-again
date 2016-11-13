@@ -37,6 +37,7 @@ class Listener {
 
   /**
    * Subscribe to this type of message.
+   *
    * @param  {String}   type     The message type.
    * @param  {Function} callback The function to call, when we get a message
    *                             of 'type'. Will be called with whatever

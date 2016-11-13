@@ -4,7 +4,8 @@
 // @version      0.6
 // @description  enter something useful
 // @author       marten
-// @include        http://play.pokemonshowdown.com/*
+// @include      http://play.pokemonshowdown.com/*
+// @include      http://*.psim.us/*
 // @include      file:///*/Pokemon-Showdown-Client/*
 // @grant        GM_addStyle
 // @grant        unsafeWindow
@@ -29,20 +30,20 @@ const ws = new unsafeWindow.WebSocket('ws://localhost:7331');
 let isOpen = false;
 const msgQueue = [];
 
+// console.warn('marten double-checking');
 
 const proc = (data) => {
-  console.log('proc called.');
   // check to see if the options are visible yet
   if ($('.switchmenu button:visible').length > 0) {
-    console.log('found it.');
     if (data.moves) {
       handleMoves(data.moves);
     }
     if (data.switches) {
       handleSwitches(data.switches);
     }
-    // if (data.opponent) onOpponentData(data.opponent);
-    // if (data.switches) onSwitchData(data.switches);
+    if (data.opponent) {
+      handleOpponent(data.opponent);
+    }
   } else {
     console.log('setting timeout since buttons werent there yet');
     setTimeout(proc, 1000, data);
@@ -65,7 +66,7 @@ ws.onopen = () => {
         unsafeWindow.app.socket.send(msg.data);
       } else if (msg.data.indexOf('yrwelcome') > 0) {
         const goods = msg.data.split('|').pop();
-        console.log('proccin the goods..', goods);
+        // console.log('proccin the goods..', goods);
         proc(JSON.parse(goods));
       }
     }
@@ -74,7 +75,7 @@ ws.onopen = () => {
   isOpen = true;
 
   while (msgQueue.length) {
-    console.log('sending from queue:', msgQueue[0]);
+    // console.log('sending from queue:', msgQueue[0]);
     ws.send(msgQueue.shift());
   }
 };
@@ -103,13 +104,14 @@ const listen = () => {
   const souper = unsafeWindow.app.socket.onmessage;
   unsafeWindow.app.socket.onmessage = (msg) => {
     console.log('onmessage: ', msg.data);
-    souper(msg);
 
     if (isOpen) {
       ws.send(msg.data);
     } else {
       msgQueue.push(msg.data);
     }
+
+
 
     if (msg.data.indexOf('|turn') > 0) {
       console.log('calling home...');
@@ -126,10 +128,14 @@ const listen = () => {
       $('.battle-options div').prepend(clearButton);
       $('button.lgnclear').click(clear);
     }
+
+    // doing this last, so that client bugs don't crash our shit!
+    souper(msg);
   };
 };
 
 const handleMoves = (moves) => {
+  console.log('handleMoves working with:', JSON.stringify(moves));
   for (let i = 0; i < moves.length; i++) {
     console.log('.movemenu button[value=' + (i + 1) + '] small', moves[i].html);
     $('.movemenu button[value=' + (i + 1) + '] small')
@@ -165,19 +171,23 @@ const onOpponentData = (opponent) => {
 };
 
 const handleSwitches = (switches) => {
+  console.log('handleSwitches working with:', JSON.stringify(switches));
   for (let i = 0; i < switches.length; i++) {
-    let searchVal = (switches[i].active)
-      ? switches[i].species + ',active'
-      : i;
+    let searchVal = switches[i].species;
     // hack for fixing Kyurem-White and probably some other dudes
     if (searchVal.indexOf('-') > 0) {
       searchVal = searchVal.substr(0, searchVal.indexOf('-'));
     }
 
-    $(`.switchmenu button[value="${searchVal}"] span.hpbar`)
+    $(`.switchmenu button:contains("${searchVal}") span.hpbar`)
       .before(switches[i].html);
   }
 };
+
+const handleOpponent = (opponent) => {
+  console.log('handleOpponent working with:', JSON.stringify(opponent));
+  $(`.rightbar .teamicons`).after(opponent.html);
+}
 
 const onSwitchData = (switches) => {
   // value seems to be 0-5
