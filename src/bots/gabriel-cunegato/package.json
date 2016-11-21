@@ -21,7 +21,7 @@
   },
   "format": "randombattle",
   "accepts": "ALL",
-  "nickname": "RED531",
+  "nickname": "LA-RED531",
   "devDependencies": {
     "nodemon": "*",
     "npm-run-all": "*",
