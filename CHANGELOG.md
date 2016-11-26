@@ -1,3 +1,6 @@
+[0.9.8] - 2016-11-20
+- Add the top two Brazillian bots
+
 [0.9.6] - 2016-10-31
 - Fixing gross issues with 'replace' and updating idents
 - Really confident Zoroark & detailschange & formechange work
