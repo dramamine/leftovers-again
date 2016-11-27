@@ -7,7 +7,7 @@ const SA = 'spa';
 const SD = 'spd';
 const SP = 'spe';
 const HP = 'hp';
-const gen = 6;
+const gen = 7;
 
 const STATS = [AT, DF, SA, SD, SP, HP];
 
@@ -363,7 +363,7 @@ class Damage {
       'defenderName': defender.species
     };
 
-    // console.log(description);
+
     if (move.name === 'Dragon Rage') {
       return [40];
     }
@@ -402,12 +402,19 @@ class Damage {
       description.moveBP = move.bp;
       description.moveType = move.type;
     } else if (move.name === 'Nature Power') {
-      move.type = field.terrain === 'Electric' ? 'Electric' : field.terrain === 'Grassy' ? 'Grass' : field.terrain === 'Misty' ? 'Fairy' : 'Normal';
+      move.type = field.terrain === 'Electric' ? 'Electric' :
+      field.terrain === 'Grassy' ? 'Grass' :
+      field.terrain === 'Misty' ? 'Fairy' :
+      field.terrain === 'Psychic' ? 'Psychic' :
+      'Normal';
     }
 
     const isAerilate = attacker.ability === 'Aerilate' && move.type === 'Normal';
     const isPixilate = attacker.ability === 'Pixilate' && move.type === 'Normal';
     const isRefrigerate = attacker.ability === 'Refrigerate' && move.type === 'Normal';
+    const isGalvanize = attacker.ability === 'Galvanize' && move.type === 'Normal';
+    const isLiquidVoice = attacker.ability === 'Liquid Voice' && move.isSound;
+
     if (isAerilate) {
       move.type = 'Flying';
     } else if (isPixilate) {
@@ -422,6 +429,11 @@ class Damage {
     const typeEffect1 = getMoveEffectiveness(move, defender.type1, attacker.ability === 'Scrappy' || field.isForesight, field.isGravity);
     const typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, attacker.ability === 'Scrappy' || field.isForesight, field.isGravity) : 1;
     let typeEffectiveness = typeEffect1 * typeEffect2;
+    const priorityImmune = move.hasPriority &&
+      (defAbility === 'Queenly Majesty' || defAbility === 'Dazzling') &&
+      (['Mold Breaker', 'Teravolt', 'Turboblaze'].indexOf(attacker.ability) !== -1)
+      || (move.givesHealth && attacker.ability === 'triage');
+
 
     if (typeEffectiveness === 0) {
       return [0];
@@ -433,7 +445,7 @@ class Damage {
       (move.type === 'Electric' && ['Lightning Rod', 'Lightningrod', 'Motor Drive', 'Volt Absorb'].indexOf(defAbility) !== -1) ||
       (move.type === 'Ground' && !field.isGravity && defAbility === 'Levitate') ||
       (move.isBullet && defAbility === 'Bulletproof') ||
-      (move.isSound && defAbility === 'Soundproof')) {
+      (move.isSound && defAbility === 'Soundproof') || priorityImmune) {
       description.defenderAbility = defAbility;
       return [0];
     }
@@ -464,6 +476,7 @@ class Damage {
 
 
     const turnOrder = attacker.boostedStats[SP] > defender.boostedStats[SP] ? 'FIRST' : 'LAST';
+
 
     // //////////////////////////////
     // //////// BASE POWER //////////
@@ -581,7 +594,14 @@ class Damage {
     } else if (defAbility === 'Dry Skin' && move.type === 'Fire') {
       bpMods.push(0x1400);
       description.defenderAbility = defAbility;
+    } else if (defAbility === 'Fluffy' && move.makesContact && move.type === 'Fire') {
+       bpMods.push(0x2000);
+       description.defenderAbility = defAbility;
+    } else if (defAbility === 'Fluffy' && (move.makesContact && !attacker.ability === 'Long Reach')) {
+       bpMods.push(0x800);
+       description.defenderAbility = defAbility;
     }
+
 
     if (attacker.ability === 'Sheer Force' && move.hasSecondaryEffect) {
       bpMods.push(0x14CD);
@@ -627,14 +647,15 @@ class Damage {
       description.isHelpingHand = true;
     }
 
-    if (isAerilate || isPixilate || isRefrigerate) {
+    if (isAerilate || isPixilate || isRefrigerate || isGalvanize) {
       bpMods.push(0x14CD);
       description.attackerAbility = attacker.ability;
     } else if ((attacker.ability === 'Mega Launcher' && move.isPulse) ||
       (attacker.ability === 'Strong Jaw' && move.isBite)) {
       bpMods.push(0x1800);
       description.attackerAbility = attacker.ability;
-    } else if (attacker.ability === 'Tough Claws' && move.makesContact) {
+    } else if (attacker.ability === 'Tough Claws' && move.makesContact &&
+      attacker.ability !== 'Long Reach') {
       bpMods.push(0x1547);
       description.attackerAbility = attacker.ability;
     }
@@ -657,6 +678,8 @@ class Damage {
       }
     }
     basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
+
+
 
     // //////////////////////////////
     // //////// (SP)ATTACK //////////
@@ -722,7 +745,7 @@ class Damage {
       (attacker.item === 'Light Ball' && attacker.species === 'Pikachu')) {
       atMods.push(0x2000);
       description.attackerItem = attacker.item;
-    } else if ((attacker.item === 'Soul Dew' && (attacker.species === 'Latios' || attacker.species === 'Latias') && move.category === 'Special') ||
+    } else if ((gen < 7 && attacker.item === 'Soul Dew' && (attacker.species === 'Latios' || attacker.species === 'Latias') && move.category === 'Special') ||
       (attacker.item === 'Choice Band' && move.category === 'Physical') ||
       (attacker.item === 'Choice Specs' && move.category === 'Special')) {
       atMods.push(0x1800);
@@ -751,6 +774,7 @@ class Damage {
     // }
     defense = defender.boostedStats[defenseStat];
 
+
     // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
     if (field.weather === 'Sand' && (defender.type1 === 'Rock' || defender.type2 === 'Rock') && !hitsPhysical) {
       defense = pokeRound(defense * 3 / 2);
@@ -769,7 +793,7 @@ class Damage {
 
     if ((defender.item === 'Deep Sea Scale' && defender.species === 'Clamperl' && !hitsPhysical) ||
       (defender.item === 'Metal Powder' && defender.species === 'Ditto') ||
-      (defender.item === 'Soul Dew' && (defender.species === 'Latios' || defender.species === 'Latias') && !hitsPhysical) ||
+      (gen < 7 && defender.item === 'Soul Dew' && (defender.species === 'Latios' || defender.species === 'Latias') && !hitsPhysical) ||
       (defender.item === 'Assault Vest' && !hitsPhysical) || defender.item === 'Eviolite') {
       dfMods.push(0x1800);
       description.defenderItem = defender.item;
@@ -781,6 +805,7 @@ class Damage {
     }
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
+
     // //////////////////////////////
     // ////////// DAMAGE ////////////
     // //////////////////////////////
@@ -833,6 +858,7 @@ class Damage {
       stabMod = 0x1800;
       description.attackerAbility = attacker.ability;
     }
+
     const applyBurn = (attacker.status === 'Burned' && move.category === 'Physical' && attacker.ability !== 'Guts' && !move.ignoresBurn);
     description.isBurned = applyBurn;
     const finalMods = [];
@@ -843,18 +869,33 @@ class Damage {
       finalMods.push(field.format !== 'Singles' ? 0xA8F : 0x800);
       description.isLightScreen = true;
     }
-    if (defAbility === 'Multiscale' && defender.curHP === defender.maxHP) {
+    if ((defAbility === 'Multiscale' || defAbility === 'Shadow Shield') && defender.curHP === defender.maxHP) {
       finalMods.push(0x800);
       description.defenderAbility = defAbility;
     }
     if (attacker.ability === 'Tinted Lens' && typeEffectiveness < 1) {
       finalMods.push(0x2000);
       description.attackerAbility = attacker.ability;
-    } else if (attacker.ability === 'Sniper' && isCritical) {
+    }
+
+
+
+
+    if (attacker.ability === 'Steelworker' && move.type === 'Steel') {
       finalMods.push(0x1800);
       description.attackerAbility = attacker.ability;
     }
-    if ((defAbility === 'Solid Rock' || defAbility === 'Filter') && typeEffectiveness > 1) {
+    if (field.isFriendGuard) {
+      finalMods.push(0xC00);
+      description.isFriendGuard = true;
+    }
+    if (attacker.ability === 'Sniper' && isCritical) {
+      finalMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    }
+
+    if ((defAbility === 'Solid Rock' || defAbility === 'Filter' ||
+      defAbility === 'Prism Armor') && typeEffectiveness > 1) {
       finalMods.push(0xC00);
       description.defenderAbility = defAbility;
     }
@@ -870,11 +911,10 @@ class Damage {
       finalMods.push(0x800);
       description.defenderItem = defender.item;
     }
+
+
+
     const finalMod = chainMods(finalMods);
-    // console.log('final mods:', finalMod);
-    // console.log('other things:', baseDamage, stabMod, typeEffectiveness, attacker.ability, move.hits, field.format);
-
-
     const damage = [];
     let i = 0;
     if (maxOnly) i = 15;
@@ -888,6 +928,14 @@ class Damage {
       final = Math.max(1, final);
       final = pokeRound(final * finalMod / 0x1000);
 
+      // deal with Parental Bond
+      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat multiplier until I know the specifics
+      if (attacker.ability === 'Parental Bond' && move.hits === 1 && (field.format === 'Singles' || !move.isSpread)) {
+        const bondFactor = gen < 7 ? 3/2 : 5/4; // in gen 7, 2nd hit was reduced from 50% to 25%
+        damage[i] = Math.floor(damage[i] * bondFactor);
+        description.attackerAbility = attacker.ability;
+      }
+
       // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
       if (attacker.ability === 'Parental Bond' && move.hits === 1 &&
         (field.format === 'Singles' || !move.isSpread)) {
@@ -896,6 +944,7 @@ class Damage {
       if (maxOnly) return final;
       damage[i] = final;
     }
+
     if (damage[0] && isNaN(damage[0])) {
       console.log('cant believe getDamageResult is tryna return NaN');
       console.log(baseDamage, finalMod, typeEffectiveness, stabMod);
@@ -930,13 +979,6 @@ class Damage {
 
 const damage = new Damage();
 export default damage;
-
-// function appendIfSet(str, toAppend) {
-//   if (toAppend) {
-//     return str + toAppend + ' ';
-//   }
-//   return str;
-// }
 
 function chainMods(mods) {
   let M = 0x1000;
@@ -1011,7 +1053,7 @@ function checkIntimidate(source, target) {
   if (source.ability === 'Intimidate') {
     if (target.ability === 'Contrary' || target.ability === 'Defiant') {
       target.boosts[AT] = Math.min(6, target.boosts[AT] + 1);
-    } else if (['Clear Body', 'White Smoke', 'Hyper Cutter'].indexOf(target.ability) !== -1) {
+    } else if (['Clear Body', 'White Smoke', 'Hyper Cutter', 'Full Metal Body'].indexOf(target.ability) !== -1) {
       return;
     } else if (target.ability === 'Simple') {
       target.boosts[AT] = Math.max(-6, target.boosts[AT] - 2);
@@ -1177,7 +1219,7 @@ function getFlingPower(item) {
     : ['Adamant Orb', 'Lustrous Orb', 'Macho Brace', 'Stick'].indexOf(item) !== -1 ? 60
     : item === 'Sharp Beak' ? 50
     : item === 'Eviolite' ? 40
-    : ['Black Belt', 'Black Sludge', 'Black Glasses', 'Charcoal', 'Deep Sea Scale', 'Flame Orb', "King's Rock",
+    : ['Black Belt', 'Black Sludge', 'Black Glasses', 'Charcoal', 'Deep Sea Scale', 'Flame Orb', 'King\'s Rock',
         'Life Orb', 'Light Ball', 'Magnet', 'Metal Coat', 'Miracle Seed', 'Mystic Water', 'Never-Melt Ice',
         'Razor Fang', 'Soul Dew', 'Spell Tag', 'Toxic Orb', 'Twisted Spoon'].indexOf(item) !== -1 ? 30
     : 10;
@@ -1246,29 +1288,29 @@ const defaultField = {
 };
 
 // function Field() {
-//     var format = $("input:radio[name='format']:checked").val();
-//     var isGravity = $("#gravity").prop("checked");
-//     var isSR = [$("#srL").prop("checked"), $("#srR").prop("checked")];
+//     var format = $('input:radio[name='format']:checked').val();
+//     var isGravity = $('#gravity').prop('checked');
+//     var isSR = [$('#srL').prop('checked'), $('#srR').prop('checked')];
 //     var weather;
 //     var spikes;
 //     if (gen === 2) {
-//         spikes = [$("#gscSpikesL").prop("checked") ? 1 : 0, $("#gscSpikesR").prop("checked") ? 1 : 0];
-//         weather = $("input:radio[name='gscWeather']:checked").val();
+//         spikes = [$('#gscSpikesL').prop('checked') ? 1 : 0, $('#gscSpikesR').prop('checked') ? 1 : 0];
+//         weather = $('input:radio[name='gscWeather']:checked').val();
 //     } else {
-//         weather = $("input:radio[name='weather']:checked").val();
-//         spikes = [~~$("input:radio[name='spikesL']:checked").val(), ~~$("input:radio[name='spikesR']:checked").val()];
+//         weather = $('input:radio[name='weather']:checked').val();
+//         spikes = [~~$('input:radio[name='spikesL']:checked').val(), ~~$('input:radio[name='spikesR']:checked').val()];
 //     }
-//     var terrain = ($("input:checkbox[name='terrain']:checked").val()) ? $("input:checkbox[name='terrain']:checked").val() : "";
-//     var isReflect = [$("#reflectL").prop("checked"), $("#reflectR").prop("checked")];
-//     var isLightScreen = [$("#lightScreenL").prop("checked"), $("#lightScreenR").prop("checked")];
-//     var isForesight = [$("#foresightL").prop("checked"), $("#foresightR").prop("checked")];
-//     var isHelpingHand = [$("#helpingHandR").prop("checked"), $("#helpingHandL").prop("checked")]; // affects attacks against opposite side
+//     var terrain = ($('input:checkbox[name='terrain']:checked').val()) ? $('input:checkbox[name='terrain']:checked').val() : ';
+//     var isReflect = [$('#reflectL').prop('checked'), $('#reflectR').prop('checked')];
+//     var isLightScreen = [$('#lightScreenL').prop('checked'), $('#lightScreenR').prop('checked')];
+//     var isForesight = [$('#foresightL').prop('checked'), $('#foresightR').prop('checked')];
+//     var isHelpingHand = [$('#helpingHandR').prop('checked'), $('#helpingHandL').prop('checked')]; // affects attacks against opposite side
 
 //     this.getWeather = function() {
 //         return weather;
 //     };
 //     this.clearWeather = function() {
-//         weather = "";
+//         weather = ';
 //     };
 //     this.getSide = function(i) {
 //         return new Side(format, terrain, weather, isGravity, isSR[i], spikes[i], isReflect[i], isLightScreen[i], isForesight[i], isHelpingHand[i]);
