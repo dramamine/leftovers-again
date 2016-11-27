@@ -9,6 +9,9 @@ let loglevel = 3;
  * important messages.
  */
 class Log {
+  megadebug(msg) {
+    if (loglevel >= 6) console.log(msg);
+  }
   debug(msg) {
     if (loglevel >= 5) console.log(chalk.green(msg));
   }
