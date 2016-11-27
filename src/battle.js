@@ -71,8 +71,17 @@ class Battle {
    */
   getHelp() {
     if (this.bot.getHelp) {
-      listener.relay('_send', this.bid + '|yrwelcome|' +
-        JSON.stringify(this.bot.getHelp(this.store.data())));
+      const help = this.bot.getHelp(this.store.data());
+
+      if (help instanceof Promise) {
+        // help for promises to resolve
+        help.then((resolved) => {
+          listener.relay('_send', this.bid + '|yrwelcome|' + JSON.stringify(resolved));
+        });
+      } else {
+        listener.relay('_send', this.bid + '|yrwelcome|' +
+          JSON.stringify(help));
+      }
     }
   }
 

@@ -21,10 +21,11 @@ console.log('hello from clienthax.js!');
 GM_addStyle('.switchmenu button { width: 150px; }');
 GM_addStyle('span.hpbar { width: 92px; margin: auto; }');
 GM_addStyle('.movemenu button { width: 306px; height: inherit; }');
-GM_addStyle('.battlecontrols p { margin: 2px 0 0 0; }');
+GM_addStyle('.battle-controls p { margin: 2px 0 0 0; }');
 GM_addStyle('.lgn.bad { color: red }');
 GM_addStyle('.lgn.good { color: green }');
 GM_addStyle('.lgn.smaller { font-size: smaller }');
+GM_addStyle('.lgn.opponent { position: absolute; left: -20px; list-style: none; }');
 
 const ws = new unsafeWindow.WebSocket('ws://localhost:7331');
 let isOpen = false;
@@ -113,7 +114,7 @@ const listen = () => {
 
 
 
-    if (msg.data.indexOf('|turn') > 0) {
+    if (msg.data.indexOf('|turn') > 0 || msg.data.indexOf('"forceSwitch":[true]') > 0) {
       console.log('calling home...');
       callhome();
     }
@@ -136,12 +137,11 @@ const listen = () => {
 
 const handleMoves = (moves) => {
   console.log('handleMoves working with:', JSON.stringify(moves));
-  for (let i = 0; i < moves.length; i++) {
-    console.log('.movemenu button[value=' + (i + 1) + '] small', moves[i].html);
-    $('.movemenu button[value=' + (i + 1) + '] small')
+  moves.forEach((move) => {
+    $(`.movemenu button[data-move="${move.name}"] small`)
       .first()
-      .after(moves[i].html);
-  }
+      .after(move.html);
+  });
 };
 
 const onMoveData = (moves) => {
@@ -186,7 +186,8 @@ const handleSwitches = (switches) => {
 
 const handleOpponent = (opponent) => {
   console.log('handleOpponent working with:', JSON.stringify(opponent));
-  $(`.rightbar .teamicons`).after(opponent.html);
+  $(`.lgn.opponent`).remove();
+  $(`.rightbar .teamicons`).last().after(opponent.html);
 }
 
 const onSwitchData = (switches) => {
