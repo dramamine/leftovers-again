@@ -1,3 +1,7 @@
+[0.10.0] - 2016-11-27
+- Update datasets for Gen7
+- Implement Z-Moves
+
 [0.9.8] - 2016-11-20
 - Add the top two Brazillian bots
 
