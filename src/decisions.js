@@ -18,17 +18,31 @@ export class MOVE {
     this.id = id;
     this.target = target;
 
+    // assume yeah
     this.shouldMegaEvo = true;
+    this.shouldZMove = true;
   }
 
   /**
-   * Should this pokemon mega-evolve?
+   * Should this pokemon mega-evolve? (On by default; use this
+   * to turn it off.)
    *
    * @param {Boolean} should  True if it should, false otherwise.
    */
   setMegaEvo(should) {
     this.shouldMegaEvo = should;
   }
+
+  /**
+   * Should this pokemon use its Z-move when available? (On by default; use this
+   * to turn it off.)
+   *
+   * @param  {Boolean} should  True if it should, false otherwise.
+   */
+  useZMove(should) {
+    this.shouldZMove = should;
+  }
+
 }
 
 /**

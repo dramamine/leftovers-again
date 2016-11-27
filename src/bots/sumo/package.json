@@ -1,0 +1,9 @@
+{
+  "name": "Sumo (7th Gen Test)",
+  "version": "0.0.0",
+  "description": "Trying out some new Pokemon",
+  "main": "sumo.js",
+  "format": "gen7ou",
+  "accepts": "ALL",
+  "nickname": "la-sumo"
+}

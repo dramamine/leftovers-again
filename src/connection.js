@@ -29,7 +29,7 @@ class Connection {
    * @param  {string} msg The message from the server.
    */
   handleMessage(msg) {
-    // console.log('received: %s', msg);
+    log.megadebug(msg);
     const messages = msg.split('\n');
     let bid = null;
     if (messages[0].indexOf('>') === 0) {

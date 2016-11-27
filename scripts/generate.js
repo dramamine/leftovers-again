@@ -4,8 +4,12 @@ import glob from 'glob';
 import path from 'path';
 import Handlebars from 'handlebars';
 
-const formats = ['anythinggoes', 'randombattle', 'ubers', 'ou', 'monotype'];
-const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'monotype'];
+// valid formats involving choosing your team
+const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'gen7ou', 'pu', 'nu', 'lc', 'monotype'];
+
+// formats without teams, plus the above
+const formats = ['randombattle', 'gen6randombattle'].concat(formatsWithTeams);
+
 const languages = ['es6'];
 
 /**
