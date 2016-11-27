@@ -476,6 +476,7 @@ export default class BattleStore {
           this.activeData[i].canZMove.forEach((name, zIndex) => {
             if (name) {
               updated[zIndex].canZMove = true;
+              updated[zIndex].zMove = util.researchMoveById(util.toId(name));
             }
           });
         }

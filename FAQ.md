@@ -96,6 +96,34 @@ Say you just cast Swords Dance, which raises your attack by 2 levels. You should
 ### How can I tell it's the first turn of the match?
 `state.teamPreview = true`. When this is set, you need to SWITCH (MOVE decisions are not valid).
 
+### How can I have my Pokemon mega-evolve?
+If you Pokemon is able to mega-evolve, it will do so by default.
+```javascript
+// see if your Pokemon is able to mega-evolve
+if (state.self.active.canMegaEvo)
+{
+  // this will keep your Pokemon from mega-evolving this turn
+  const decision = new MOVE("Brave Bird")
+  decision.shouldMegaEvo = false
+  return decision
+}
+```
+
+### How can I have my Pokemon use its Z-Move?
+If you Pokemon is able to use its Z-Move, it will do so by default when you select the "base move" for that Z-Move.
+```javascript
+// see if your Pokemon is able to use a Z-Move
+if (state.self.active.canZMove)
+{
+  const zMoveable = state.self.active.moves.find(move => move.zMove)
+  console.log(zMoveable.name)       // ex. "Scald"
+  console.log(zMoveable.zMove.name) // ex. "Hydro Vortex"
+  var decision = new MOVE(zMoveable)
+  decision.shouldZMove = false      // don't use Z-Move this turn
+  return decision
+}
+```
+
 ### How can I tell if my active Pokemon feinted?
 `state.forceSwitch = true`, which is an indication that you need to SWITCH instead of MOVE. This can happen in other situations too, due to moves such as Volt Switch or Whirlwind. Make sure you handle this!
 

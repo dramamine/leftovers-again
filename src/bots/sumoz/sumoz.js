@@ -39,6 +39,7 @@ Impish Nature
       const move = new MOVE(zMove);
       if (zMove.canZMove) {
         console.log('it even sez that it can z-move');
+        console.log(zMove.zMove);
       }
       return move;
     }
