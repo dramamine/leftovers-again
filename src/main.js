@@ -40,7 +40,7 @@ function exitHandler(options, err) {
 /**
  * Show the help menu.
  */
-function _displayHelp() {
+function displayHelp() {
   console.log(`
 Leftovers Again: interface for Pokemon Showdown bots
 
@@ -53,8 +53,8 @@ Leftovers Again: interface for Pokemon Showdown bots
 -matches [n]:  exit after n matches. default 0 means "don't exit"
 -nickname [name]  login name (for Smogon official login server)
 -password [pw]    account password (required for registered nicknames)
--loglevel [1-5]: level of severity of logs to show. higher levels are more
-                 verbose. default 3.
+-loglevel [1-6]: level of severity of logs to show. higher levels are more
+                 verbose. default 3. all server messages shown at 6.
 -opponent [path]: Spawn a specific opponent via a child process.
 -opponents [paths]: Spawn multiple opponents, ex. randumb,stabby,../anotherbot
 -production:    Connect to Cyberdyne
@@ -82,7 +82,7 @@ const start = (metadata, Bot) => {
   }
 
   if (args.help || args.h) {
-    _displayHelp();
+    displayHelp();
     process.exit();
   }
 

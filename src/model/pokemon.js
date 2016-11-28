@@ -42,6 +42,11 @@ export default class Pokemon {
  * @property {Object} boosts An object with properties set for boosts and unboosts.
  *           For example, if this mon has cast Swords Dance, you will have
  *           boosts = {atk: 2}. Boost values range from -6 to 6.
+ * @property {Boolean} canMegaEvo  True if this Pokemon can mega-evolve. This is
+ *           set on active Pokemon only, not Pokemon in your reserve.
+ * @property {Array} canZMove  Exists if this Pokemon can use a Z-move. This is
+ *           set on active Pokemon only, not Pokemon in your reserve. Z-move stuff
+ *           is set on the Move itself as well.
  * @property {String} condition  a condition in Showdown format, ex. '100/100 par poi',
  *            '0/100 fnt' etc.
  * @property {boolean} dead  True if the mon is dead, undefined otherwise
@@ -79,7 +84,7 @@ export default class Pokemon {
  * @property {Array<String>} statuses  an array of status conditions, ex. ['par', 'poi'].
  * @property {Number} weightkg  The mon's weight, in kg.
  *
- * @see Status conditions: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/statuses.js.html
+ * @see https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/statuses.js.html
  */
 
   /**
@@ -151,6 +156,7 @@ export default class Pokemon {
  * @property {Boolean} flags.bite Power is multiplied by 1.5 when used by a
  * Pokemon with the Ability Strong Jaw.
  * @property {Boolean} flags.bullet Has no effect on Pokemon with the Ability Bulletproof.
+ * @property {Boolean} canZMove True if this move has an available Z-move.
  * @property {Boolean} flags.charge The user is unable to make a move between turns.
  * @property {Boolean} flags.contact Makes contact.
  * @property {Boolean} flags.defrost Thaws the user if executed successfully
@@ -198,6 +204,7 @@ export default class Pokemon {
  *       one type.
  * @property {String} volatileStatus  A volatile status, if there is one. (ex.
  * 'protect' or 'taunt').
+ * @property {MoveData} zMove The Z-move move data.
  *
  * @see Volatile statuses: https://doc.esdoc.org/github.com/dramamine/leftovers-again/docs/file/src/constants/volatileStatuses.js.html
  */

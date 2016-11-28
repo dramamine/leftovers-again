@@ -1,0 +1,9 @@
+{
+  "name": "Sumoz (7th Gen Test)",
+  "version": "0.0.0",
+  "description": "Does some Z-moves",
+  "main": "sumoz.js",
+  "format": "gen7ou",
+  "accepts": "ALL",
+  "nickname": "la-sumoz"
+}

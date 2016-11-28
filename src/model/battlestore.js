@@ -126,7 +126,7 @@ export default class BattleStore {
       this.barn.allmon.forEach(mon => Log.error(mon.ident + '|' + mon.details));
     } else {
       actingMon.recordMove(move);
-    }    
+    }
   }
 
   handleReplace(ident, details, condition) {
@@ -341,7 +341,7 @@ export default class BattleStore {
         ref.order = i;
       }
     }
-    
+
     // need to know these later. update to false to replace stale info.
     this.forceSwitch = data.forceSwitch || false;
     this.teamPreview = data.teamPreview || false;
@@ -479,6 +479,16 @@ export default class BattleStore {
         const updated = movesArr.map( (move) => { // eslint-disable-line
           return Object.assign(move, util.researchMoveById(move.id));
         });
+
+        if (this.activeData[i].canZMove) {
+          this.activeData[i].canZMove.forEach((name, zIndex) => {
+            if (name) {
+              updated[zIndex].canZMove = true;
+              updated[zIndex].zMove = util.researchMoveById(util.toId(name));
+            }
+          });
+        }
+
         output.self.active[i].moves = updated;
 
         // for mega-evolution

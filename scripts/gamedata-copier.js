@@ -7,13 +7,13 @@
  * babel-node scripts/gamedata-copier.js
  */
 
-import {BattleMovedex} from 'pokemon-showdown/data/moves';
-import DamageCalcMovedex from '../deps/honko-damagecalc/js/data/movedata';
-import { BattlePokedex } from 'pokemon-showdown/data/pokedex';
-import { BattleFormatsData } from 'pokemon-showdown/data/formats-data';
 import fs from 'fs';
+import { BattleMovedex } from '../deps/Pokemon-Showdown/data/moves';
+import DamageCalcMovedex from '../deps/honko-damagecalc/js/data/movedata';
+import { BattlePokedex } from '../deps/Pokemon-Showdown/data/pokedex';
+import { BattleFormatsData } from '../deps/Pokemon-Showdown/data/formats-data';
 
-const destination = 'src/gamedata/';
+const destination = 'src/data/';
 
 function copyMoves() {
   const updated = {};
@@ -53,6 +53,7 @@ const copyOtherMoves = () => {
   const keysToCopy = [
     'alwaysCrit',
     'dealsPhysicalDamage',
+    'givesHealth',
     'hasRecoil',
     'hasSecondaryEffect',
     'ignoresDefenseBoosts',

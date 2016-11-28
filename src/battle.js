@@ -409,6 +409,9 @@ class Battle {
 
       if (state.self.active.canMegaEvo && choice.shouldMegaEvo) {
         verb += ' mega';
+      // ex. "canZMove":["","Hydro Vortex","",""]
+      } else if (state.self.active.moves[moveIdx].canZMove && choice.shouldZMove) {
+        verb += ' zmove';
       }
     } else if (choice instanceof SWITCH || choice.type === 'switch') {
       verb = (state.teamPreview)
@@ -465,8 +468,6 @@ class Battle {
    * @return {number} The switch index.
    */
   lookupMonIdx(mons, idx) {
-
-
     let answer;
     switch (typeof (idx)) {
       case 'number':
