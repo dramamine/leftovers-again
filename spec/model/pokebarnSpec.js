@@ -20,4 +20,9 @@ describe('pokebarn', () => {
     expect(barn.all().length).toEqual(6);
     expect(Log.error).toHaveBeenCalled();
   });
+  it('should work with mons with colons in their name', () => {
+    const mon = barn.findOrCreate('p1a: Type: Fake');
+    expect(barn.all().length).toEqual(7);
+    expect(mon.ident).toEqual('p1: Type: Fake');
+  });
 });
