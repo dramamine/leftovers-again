@@ -138,7 +138,9 @@ class PokeUtil {
   }
 
   identWithoutPosition(ident) {
-    const [player, nickname] = ident.split(':');
+    const splits = ident.split(':');
+    const player = splits[0];
+    const nickname = splits.slice(1).join(':')
     return player.substr(0, 2) + ':' + nickname;
   }
 
