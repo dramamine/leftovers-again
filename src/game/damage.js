@@ -441,7 +441,9 @@ class Damage {
       (['Mold Breaker', 'Teravolt', 'Turboblaze'].indexOf(attacker.ability) !== -1)
       || (move.givesHealth && attacker.ability === 'triage');
 
-
+    if (typeEffectiveness === 0 && move.name === 'Thousand Arrows') {
+      typeEffectiveness = 1;
+    }
     if (typeEffectiveness === 0) {
       return [0];
     }
@@ -461,7 +463,7 @@ class Damage {
       typeEffectiveness /= 2;
       description.weather = field.weather;
     }
-    if (move.type === 'Ground' && !field.isGravity && defender.item === 'Air Balloon') {
+    if (move.type === 'Ground' && move.name !== 'Thousand Arrows' && !field.isGravity && defender.item === 'Air Balloon') {
       description.defenderItem = defender.item;
       return [0];
     }
@@ -548,7 +550,6 @@ class Damage {
       case 'Eruption':
       case 'Water Spout':
         basePower = Math.max(1, Math.floor(150 * attacker.hp / attacker.maxhp));
-        console.log('bp: ', basePower);
         description.moveBP = basePower;
         break;
       case 'Flail':
@@ -563,6 +564,10 @@ class Damage {
         break;
       case 'Nature Power':
         basePower = (field.terrain === 'Electric' || field.terrain === 'Grassy') ? 90 : (field.terrain === 'Misty') ? 95 : 80;
+        break;
+      case 'Water Shuriken':
+        basePower = (attacker.name === 'Greninja-Ash') ? 20 : 15;
+        description.moveBP = basePower;
         break;
       case 'Venoshock':
         basePower = move.bp * (defender.status === 'Poisoned' ? 2 : 1);
@@ -655,15 +660,14 @@ class Damage {
     }
 
     if (isAerilate || isPixilate || isRefrigerate || isGalvanize) {
-      bpMods.push(0x14CD);
+      bpMods.push(gen >= 7 ? 0x1333 : 0x14CD);
       description.attackerAbility = attacker.ability;
     } else if ((attacker.ability === 'Mega Launcher' && move.isPulse) ||
       (attacker.ability === 'Strong Jaw' && move.isBite)) {
       bpMods.push(0x1800);
       description.attackerAbility = attacker.ability;
-    } else if (attacker.ability === 'Tough Claws' && move.makesContact &&
-      attacker.ability !== 'Long Reach') {
-      bpMods.push(0x1547);
+    } else if (attacker.ability === 'Tough Claws' && move.makesContact) {
+      bpMods.push(0x14CD);
       description.attackerAbility = attacker.ability;
     }
 
@@ -790,25 +794,34 @@ class Damage {
 
     const dfMods = [];
     if (defAbility === 'Marvel Scale' && defender.status !== 'Healthy' && hitsPhysical) {
-      dfMods.push(0x1800);
-      description.defenderAbility = defAbility;
+        dfMods.push(0x1800);
+        description.defenderAbility = defAbility;
     } else if (defAbility === 'Flower Gift' && field.weather.indexOf('Sun') !== -1 && !hitsPhysical) {
-      dfMods.push(0x1800);
-      description.defenderAbility = defAbility;
-      description.weather = field.weather;
+        dfMods.push(0x1800);
+        description.defenderAbility = defAbility;
+        description.weather = field.weather;
     }
 
-    if ((defender.item === 'Deep Sea Scale' && defender.species === 'Clamperl' && !hitsPhysical) ||
-      (defender.item === 'Metal Powder' && defender.species === 'Ditto') ||
-      (gen < 7 && defender.item === 'Soul Dew' && (defender.species === 'Latios' || defender.species === 'Latias') && !hitsPhysical) ||
-      (defender.item === 'Assault Vest' && !hitsPhysical) || defender.item === 'Eviolite') {
-      dfMods.push(0x1800);
-      description.defenderItem = defender.item;
+    if (field.terrain === 'Grassy' && defAbility === 'Grass Pelt' && hitsPhysical) {
+        dfMods.push(0x1800);
+        description.defenderAbility = defAbility;
+    }
+
+    if ((gen < 7 && defender.item === 'Soul Dew' && (defender.name === 'Latios' || defender.name === 'Latias') && !hitsPhysical) ||
+            (defender.item === 'Assault Vest' && !hitsPhysical) || defender.item === 'Eviolite') {
+        dfMods.push(0x1800);
+        description.defenderItem = defender.item;
+    }
+
+    if ((defender.item === 'Metal Powder' && defender.name === 'Ditto' && hitsPhysical) ||
+            (defender.item === 'Deep Sea Scale' && defender.name === 'Clamperl' && !hitsPhysical)) {
+        dfMods.push(0x2000);
+        description.defenderItem = defender.item;
     }
 
     if (defAbility === 'Fur Coat' && hitsPhysical) {
-      dfMods.push(0x2000);
-      description.defenderAbility = defAbility;
+        dfMods.push(0x2000);
+        description.defenderAbility = defAbility;
     }
 
     defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
@@ -884,10 +897,10 @@ class Damage {
       finalMods.push(0x2000);
       description.attackerAbility = attacker.ability;
     }
-
-
-
-
+    if (attacker.ability === 'Water Bubble' && move.type === 'Water') {
+        finalMods.push(0x2000);
+        description.attackerAbility = attacker.ability;
+    }
     if (attacker.ability === 'Steelworker' && move.type === 'Steel') {
       finalMods.push(0x1800);
       description.attackerAbility = attacker.ability;
@@ -1025,8 +1038,9 @@ function getFinalSpeed(pokemon, weather) {
     speed = Math.floor(speed / 2);
   }
   if ((pokemon.ability === 'Chlorophyll' && weather.indexOf('Sun') !== -1) ||
-    (pokemon.ability === 'Sand Rush' && weather === 'Sand') ||
-    (pokemon.ability === 'Swift Swim' && weather.indexOf('Rain') !== -1)) {
+    (pokemon.ability === "Sand Rush" && weather === "Sand") ||
+    (pokemon.ability === "Swift Swim" && weather.indexOf("Rain") !== -1) ||
+    (pokemon.ability === "Slush Rush" && weather.indexOf("Hail") !== -1)) {
     speed *= 2;
   }
   return speed;

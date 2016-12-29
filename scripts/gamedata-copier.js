@@ -125,6 +125,11 @@ const copyFormats = () => {
     });
   }
 
+  // castform is annoying. @TODO see if snowy ever happens. what even happens with castform??
+  updated['castform'].randomBattleMoves = BattleFormatsData['castformsunny']['randomBattleMoves']
+    .concat(BattleFormatsData['castformrainy']['randomBattleMoves']);
+  delete updated['castformsnowy'];
+
   fs.writeFile(destination + 'formats.json', JSON.stringify(updated));
 };
 
