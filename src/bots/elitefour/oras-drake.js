@@ -15,6 +15,7 @@ const meta = {
   team: `
 Altaria
 Ability: Natural Cure
+Serious Nature
 - Aerial Ace
 - Cotton Guard
 - Dragon Pulse
@@ -22,6 +23,7 @@ Ability: Natural Cure
 
 Dragalge
 Ability: Poison Point
+Serious Nature
 - Dragon Pulse
 - Hydro Pump
 - Sludge Wave
@@ -29,6 +31,7 @@ Ability: Poison Point
 
 Kingdra
 Ability: Swift Swim
+Serious Nature
 - Dragon Pulse
 - Surf
 - Yawn
@@ -36,6 +39,7 @@ Ability: Swift Swim
 
 Flygon
 Ability: Levitate
+Serious Nature
 - Flamethrower
 - Boomburst
 - Dragon Pulse
@@ -43,6 +47,7 @@ Ability: Levitate
 
 Haxorus
 Ability: Rivalry
+Serious Nature
 - Dragon Claw
 - Earthquake
 - X-Scissor
@@ -50,6 +55,7 @@ Ability: Rivalry
 
 Salamence @ Salamencite
 Ability: Intimidate
+Serious Nature
 - Dragon Rush
 - Zen Headbutt
 - Crunch

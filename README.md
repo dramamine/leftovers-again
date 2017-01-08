@@ -1,5 +1,7 @@
 ## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
 
+Live server running here. Fight against existing bots right now! http://cyberdyne.psim.us
+
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
 Full code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
 

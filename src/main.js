@@ -98,7 +98,7 @@ const start = (metadata, Bot) => {
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
   const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches',
-    'production', 'prodServer', 'loglevel', 'results', 'timeout'];
+    'production', 'prodServer', 'loglevel', 'results', 'test', 'timeout'];
   params.forEach((param) => {
     args[param] = args[param] || metadata[param] || config[param] || defaults[param];
   });
