@@ -16,8 +16,8 @@ export default {
   matches: 0,
 
   server: 'localhost',
-  prodServer: 'metal-heart.org',
   port: 8000,
+  prodServer: 'leftoversagain.net',
   format: 'randombattle',
 
   results: 'results/results.csv'
