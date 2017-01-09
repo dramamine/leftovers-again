@@ -4,7 +4,7 @@ export default class Hala extends EliteFour {
   constructor() {
     super();
     this.meta = {
-      format: 'gen7pokebankuu',
+      format: 'gen7pokebankuubeta',
       accepts: 'ALL',
       nickname: 'sm-hala',
       team: `
