@@ -470,6 +470,10 @@ class Damage {
       return [lv];
     }
 
+    if (move.name === 'Super Fang') {
+      return [Math.ceil(defender.hp / 2)];
+    }
+
     if (move.hits > 1) {
       description.hits = move.hits;
     }

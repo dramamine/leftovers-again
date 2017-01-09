@@ -430,6 +430,10 @@ class Battle {
       answer = moves.findIndex(move => move.id === idx);
     }
 
+    if (answer === -1) {
+      Log.error(`Could not find that move! Looked for ${idx} in: ${JSON.stringify(moves)}`);
+      return -1;
+    }
     if (moves[answer].disabled) {
       Log.error(`You cant use the move ${moves[answer].id} because it is disabled!`);
       return -1;
