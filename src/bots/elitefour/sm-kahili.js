@@ -6,7 +6,7 @@ export default class Kahili extends EliteFour {
     this.meta = {
       format: 'gen7pokebankou',
       accepts: 'ALL',
-      nickname: 'la-sm-kahili',
+      nickname: 'sm-kahili',
       team: `
 Skarmory
 Ability: Keen Eye

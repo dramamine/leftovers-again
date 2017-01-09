@@ -6,7 +6,7 @@ export default class Hala extends EliteFour {
     this.meta = {
       format: 'gen7pokebankuu',
       accepts: 'ALL',
-      nickname: 'la-sm-hala',
+      nickname: 'sm-hala',
       team: `
 Hariyama
 Ability: Thick Fat

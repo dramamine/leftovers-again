@@ -6,7 +6,7 @@ export default class Olivia extends EliteFour {
     this.meta = {
       format: 'gen7pokebankru',
       accepts: 'ALL',
-      nickname: 'la-sm-olivia',
+      nickname: 'sm-olivia',
       team: `
 Relicanth
 Ability: Swift Swim

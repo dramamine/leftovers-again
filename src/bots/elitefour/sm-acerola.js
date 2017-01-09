@@ -6,7 +6,7 @@ export default class Acerola extends EliteFour {
     this.meta = {
       format: 'gen7pokebankuu',
       accepts: 'ALL',
-      nickname: 'la-sm-acerola',
+      nickname: 'sm-acerola',
       team: `
 Sableye
 Ability: Keen Eye
