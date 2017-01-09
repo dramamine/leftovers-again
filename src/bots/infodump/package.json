@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "description": "A fckin bot",
   "main": "infodump.js",
-  "format": "randombattle",
-  "accepts": "randombattle"
+  "format": "gen7randombattle",
+  "accepts": "gen7randombattle"
 }

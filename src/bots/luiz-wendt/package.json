@@ -14,7 +14,7 @@
     "start": "npm run build && node lib/main.js",
     "server": "printf `you fill this out! cd path/to/Pokemon-Showdown && npm start`"
   },
-  "format": "randombattle",
+  "format": "gen7randombattle",
   "accepts": "ALL",
   "nickname": "LawpokeBot"
 }
