@@ -19,7 +19,7 @@
     "start:watch": "nodemon -w lib lib/main.js",
     "server": "cd Pokemon-Showdown && npm start"
   },
-  "format": "randombattle",
+  "format": "gen7randombattle",
   "accepts": "ALL",
   "nickname": "LA-RED531",
   "devDependencies": {

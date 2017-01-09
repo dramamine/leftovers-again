@@ -11,7 +11,7 @@ import Damage from 'leftovers-again/game/damage';
 class MeetTheFakers extends AI {
   team() {
     return `
-Medicham @ Medichamite
+Medicham @ Leftovers
 Ability: Pure Power
 EVs: 252 Atk / 4 Def / 252 Spe
 Jolly Nature

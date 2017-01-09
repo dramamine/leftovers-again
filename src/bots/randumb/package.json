@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Picks a random valid move.",
   "main": "index.js",
-  "format": "randombattle",
+  "format": "gen7randombattle",
   "accepts": "ALL",
   "nickname": "randumb-bot"
 }

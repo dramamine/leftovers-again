@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "A fckin bot",
   "main": "stabby.js",
-  "format": "randombattle",
+  "format": "gen7randombattle",
   "accepts": "ALL",
   "nickname": "la-stabby"
 }

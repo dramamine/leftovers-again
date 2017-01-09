@@ -13,7 +13,7 @@ class Randumb extends AI {
     super();
     this.meta = {
       accepts: 'ALL', // trying this out, fingers crossed
-      format: 'randombattle',
+      format: 'gen7randombattle',
       team: null,
       version: 'alpha',
       nickname: 'randumb-bot'

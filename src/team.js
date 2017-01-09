@@ -274,7 +274,7 @@ export default class Team {
       buf += '|' + set.moves.map(util.toId).join(',');
 
       // nature
-      buf += '|' + set.nature;
+      buf += '|' + (set.nature || 'Serious');
 
       // evs
       let evs = '|';
@@ -336,6 +336,7 @@ export default class Team {
         buf += '|';
       }
     }
+    console.log(buf);
     return buf;
   }
 }

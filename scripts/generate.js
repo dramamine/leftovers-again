@@ -5,10 +5,12 @@ import path from 'path';
 import Handlebars from 'handlebars';
 
 // valid formats involving choosing your team
-const formatsWithTeams = ['anythinggoes', 'ubers', 'ou', 'gen7ou', 'pu', 'nu', 'lc', 'monotype'];
+const formatsWithTeams = ['gen7pokebankanythinggoes', 'anythinggoes',
+  'gen7pokebankubers', 'ubers',
+  'gen7pokebankou', 'gen7ou', 'ou', 'pu', 'nu', 'lc', 'monotype'];
 
 // formats without teams, plus the above
-const formats = ['randombattle', 'gen6randombattle'].concat(formatsWithTeams);
+const formats = ['gen7randombattle', 'gen6randombattle'].concat(formatsWithTeams);
 
 const languages = ['es6'];
 

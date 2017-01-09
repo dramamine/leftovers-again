@@ -8,8 +8,8 @@ class Blank extends AI {
   constructor() {
     super();
     this.meta = {
-      accepts: 'randombattle',
-      format: 'randombattle',
+      accepts: 'gen7randombattle',
+      format: 'gen7randombattle',
       team: null,
       version: 'alpha',
       nickname: 'Blank ★marten★'
