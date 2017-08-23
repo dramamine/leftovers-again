@@ -1,7 +1,7 @@
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import Log from './log';
+const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const Log = require('./log');
 
 /**
  * Array of all spawned threads.
@@ -108,4 +108,4 @@ I looked here: ${locations}`);
   }
 }
 
-export default new Spawner();
+module.exports = new Spawner();

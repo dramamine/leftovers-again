@@ -77,4 +77,4 @@ class Report {
 }
 
 const report = new Report();
-export default report;
+module.exports = report;

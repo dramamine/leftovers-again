@@ -2,10 +2,10 @@
  * Utility functions.
  *
  */
-import BattleMovedex from './data/moves.json';
-import HonkoMovedex from './data/moves-ext.json';
-import BattlePokedex from './data/pokedex.json';
-import log from './log';
+const BattleMovedex = require('./data/moves.json');
+const HonkoMovedex = require('./data/moves-ext.json');
+const BattlePokedex = require('./data/pokedex.json');
+const log = require('./log');
 
 class PokeUtil {
   /**
@@ -151,4 +151,4 @@ class PokeUtil {
 }
 
 const util = new PokeUtil();
-export default util;
+module.exports = util;

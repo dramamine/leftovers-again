@@ -1,5 +1,5 @@
-import chalk from 'chalk';
-import fs from 'fs';
+const chalk = require('chalk');
+const fs = require('fs');
 
 // global log level. don't show messages below this severity
 let loglevel = 3;
@@ -49,4 +49,4 @@ class Log {
   }
 }
 const log = new Log();
-export default log;
+module.exports = log;

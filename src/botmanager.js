@@ -1,5 +1,5 @@
-import Log from './log';
-import foreigner from './foreigner';
+const Log = require('./log');
+const foreigner = require('./foreigner');
 
 class BotManager {
   constructor(metadata, Bot) {
@@ -55,4 +55,4 @@ class BotManager {
   }
 }
 
-export default BotManager;
+module.exports = BotManager;

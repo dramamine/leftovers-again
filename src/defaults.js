@@ -1,7 +1,7 @@
 /**
  * @TODO not sure I need this file anymore, or really want it.
  */
-export default {
+module.exports = {
   // bot name. hopefully no collisions, lol WHAT ARE THE CHANCES
   nickname: '5nowden' + Math.floor(Math.random() * 10000),
   // don't use a password

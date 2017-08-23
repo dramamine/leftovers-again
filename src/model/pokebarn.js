@@ -1,6 +1,6 @@
-import Pokemon from './pokemon';
-import Log from '../log';
-import util from '../pokeutil';
+const Pokemon = require('./pokemon');
+const Log = require('../log');
+const util = require('../pokeutil');
 
 class Pokebarn {
   constructor() {
@@ -13,10 +13,10 @@ class Pokebarn {
 
   /**
    * Create a new Pokemon and save it to this.allmon
-   * 
+   *
    * @param  {String} ident  The ident
    * @param  {String} details  The details
-   * 
+   *
    * @return {Object<Pokemon>}  The mon you've created
    */
   create(ident, details) {
@@ -27,9 +27,9 @@ class Pokebarn {
 
   /**
    * Get a specific mon from your barn.
-   * 
+   *
    * @param  {String} ident  The ident
-   * 
+   *
    * @return {Object<Pokemon>}  The mon you're looking for
    */
   find(ident) {
@@ -45,10 +45,10 @@ class Pokebarn {
 
   /**
    * Get a specific mon from your barn, or create it.
-   * 
+   *
    * @param  {String} ident  The ident
    * @param  {String} details  The details
-   * 
+   *
    * @return {Object<Pokemon>}  The mon you're looking for
    */
   findOrCreate(ident, details) {
@@ -108,4 +108,4 @@ class Pokebarn {
 
 }
 
-export default Pokebarn;
+module.exports = Pokebarn;

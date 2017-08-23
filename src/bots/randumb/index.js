@@ -4,9 +4,9 @@
  * it.
  *
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-import team from 'leftovers-again/team';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const team = require('leftovers-again/team');
 
 class Randumb extends AI {
   constructor() {
@@ -55,4 +55,4 @@ class Randumb extends AI {
   }
 }
 
-export default Randumb;
+module.exports = Randumb;

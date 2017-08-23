@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+const chalk = require('chalk');
 
 const HP_BAR_LENGTH = 10;
 const EXTRA_MON_ICON = 'O';
@@ -103,4 +103,4 @@ class MatchStatus {
   }
 }
 
-export default new MatchStatus();
+module.exports = new MatchStatus();

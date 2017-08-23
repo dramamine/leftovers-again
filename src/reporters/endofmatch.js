@@ -1,6 +1,6 @@
-import chalk from 'chalk';
-import fs from 'fs';
-import Log from '../log';
+const chalk = require('chalk');
+const fs = require('fs');
+const Log = require('../log');
 
 const winSymbol = chalk.bold.green('✓');
 const loseSymbol = chalk.bold.red('X');
@@ -39,4 +39,4 @@ class EndOfMatch {
 }
 
 const eom = new EndOfMatch();
-export default eom;
+module.exports = eom;

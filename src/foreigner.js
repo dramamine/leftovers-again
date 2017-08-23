@@ -1,6 +1,6 @@
-import Log from './log';
+const Log = require('./log');
 
-const spawn = require('child_process').spawn;
+const { spawn } = require('child_process');
 
 let op;
 
@@ -26,4 +26,4 @@ const foreigner = (script, args = [], opts = {}) => {
   return Bot;
 };
 
-export default foreigner;
+module.exports = foreigner;

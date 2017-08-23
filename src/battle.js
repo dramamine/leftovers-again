@@ -1,12 +1,12 @@
-import BattleStore from './model/battlestore';
-import Timer from './model/timer';
+const BattleStore = require('./model/battlestore');
+const Timer = require('./model/timer');
 
-import Log from './log';
-import { MOVE, SWITCH } from './decisions';
-import report from './report';
-import listener from './listener';
-import Reporter from './reporters/matchstatus';
-import util from './pokeutil';
+const Log = require('./log');
+const { MOVE, SWITCH } = require('./decisions');
+const report = require('./report');
+const listener = require('./listener');
+const Reporter = require('./reporters/matchstatus');
+const util = require('./pokeutil');
 
 const timer = new Timer();
 // that's right...you're gonna forfeit if you don't decide in this amount of time
@@ -487,4 +487,4 @@ class Battle {
   }
 }
 
-export default Battle;
+module.exports = Battle;

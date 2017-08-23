@@ -1,15 +1,15 @@
 // import Pokemon from 'model/pokemon';
-import Side from './side';
-import Barn from './pokebarn';
-import util from '../pokeutil';
-import Log from '../log';
-import Weather from '../constants/weather';
+const Side = require('./side');
+const Barn = require('./pokebarn');
+const util = require('../pokeutil');
+const Log = require('../log');
+const Weather = require('../constants/weather');
 
 /**
  * Store for tracking the status of the battle.
  *
  */
-export default class BattleStore {
+class BattleStore {
   constructor() {
     // The array of all Pokemons involved in the battle.
     this.allmon = [];
@@ -535,3 +535,5 @@ export default class BattleStore {
   }
 
 }
+
+module.exports = BattleStore;

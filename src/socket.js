@@ -1,8 +1,8 @@
-import https from 'https';
-import WebSocket from 'ws';
-import listener from './listener';
-import Connection from './connection';
-import Log from './log';
+const https = require('https');
+const WebSocket = require('ws');
+const listener = require('./listener');
+const Connection = require('./connection');
+const Log = require('./log');
 
 let ws;
 
@@ -211,4 +211,4 @@ server logs for debugging.
 }
 
 const socket = new Socket();
-export default socket;
+module.exports = socket;

@@ -1,7 +1,7 @@
 /**
  * The Move class, instantiated when the user wants to use a Move.
  */
-export class MOVE {
+class MOVE {
   /**
    * Move constructor.
    *
@@ -49,7 +49,7 @@ export class MOVE {
  * The Switch class, instantiated when the user wants to Switch into another
  * Pokemon.
  */
-export class SWITCH {
+class SWITCH {
   /**
    * Switch constructor.
    *
@@ -72,7 +72,7 @@ export class SWITCH {
  * action.
  *
  */
-export class Decision { // eslint-disable-line
+class Decision { // eslint-disable-line
   /**
    * Decision constructor (abstract)
    *
@@ -82,3 +82,9 @@ export class Decision { // eslint-disable-line
    */
   constructor(id, target) {} // eslint-disable-line
 }
+
+module.exports = {
+  MOVE,
+  SWITCH,
+  Decision
+};

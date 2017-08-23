@@ -29,6 +29,9 @@
     "generate": "./lib/scripts/generate.js",
     "release": "npm-run-all build test docs docs:publish && echo '\n\nGreat! Now make sure you bumped version and run `npm publish`.'"
   },
+  "_moduleAliases": {
+    "leftovers-again": "src"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dramamine/leftovers-again.git"
@@ -47,6 +50,7 @@
     "handlebars": "^4.0.5",
     "inquirer": "^1.0.2",
     "minimist": "~1.2.0",
+    "module-alias": "^2.0.1",
     "rimraf": "^2.5.4",
     "ws": "^1.0.1"
   },
