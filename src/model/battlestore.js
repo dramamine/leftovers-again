@@ -358,7 +358,7 @@ class BattleStore {
    * @param  {String} action What happened?
    */
   handleSideStart(side, action) {
-    Log.warn('got side effect!', side, action);
+    Log.warn(`got side effect! ${side}: ${action}`);
     // ex. 'p1' or 'p2'
     const id = side.split(':').shift().trim();
     if (!this.sides[id]) {

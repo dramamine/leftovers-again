@@ -247,7 +247,7 @@ class Challenger {
    * @return {[type]}               [description]
    */
   static requiresTeam(format) {
-    if (format === 'randombattle') {
+    if (format.indexOf('randombattle') >= 0) {
       return false;
     }
     return true;

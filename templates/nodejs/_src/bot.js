@@ -2,7 +2,7 @@
  * {{Repo}}
  *
  */
-import { MOVE, SWITCH } from 'leftovers-again/lib/decisions';
+const { MOVE, SWITCH } = require('leftovers-again/src/decisions');
 
 /**
  * Your code is pre-built with a very simple bot that chooses a team, then
@@ -66,4 +66,4 @@ Careful Nature
   }
 }
 
-export default {{Repo}};
+module.exports = {{Repo}};

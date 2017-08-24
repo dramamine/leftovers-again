@@ -24,8 +24,8 @@ class Spawner {
 
     // start script
     const locations = [
-      path.join(__dirname, '../lib/start.js'),
-      'node_modules/leftovers-again/lib/start.js'
+      path.join(__dirname, '../src/start.js'),
+      'node_modules/leftovers-again/src/start.js'
     ];
 
     let stat;

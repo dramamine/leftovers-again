@@ -1,0 +1,20 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.0",
+  "description": "{{description}}",
+  "dependencies": {
+    "leftovers-again": "^0.11.*"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "main": "src/bot.js",
+  "scripts": {
+    "develop": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "server": "cd Pokemon-Showdown && npm start"
+  },
+  "format": "{{format}}",
+  "accepts": "{{accept}}",
+  "nickname": "{{Repo}}"
+}
