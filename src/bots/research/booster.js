@@ -4,8 +4,8 @@
  * npm run develop -- --bot=research/booster
  */
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
 const moveId = 'workup';
 
@@ -104,4 +104,4 @@ Adamant Nature
   }
 }
 
-export default Booster;
+module.exports = Booster;

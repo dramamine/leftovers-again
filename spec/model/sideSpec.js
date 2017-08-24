@@ -1,6 +1,6 @@
-import SideConditions from 'leftovers-again/constants/sideConditions';
-import Side from 'leftovers-again/model/side';
-import Log from 'leftovers-again/log';
+const SideConditions = require('leftovers-again/constants/sideConditions');
+const Side = require('leftovers-again/model/side');
+const Log = require('leftovers-again/log');
 
 let side;
 describe('Side', () => {

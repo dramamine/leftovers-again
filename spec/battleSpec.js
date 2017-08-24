@@ -1,10 +1,10 @@
-import Battle from 'leftovers-again/battle';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-import util from 'leftovers-again/pokeutil';
-import Reporter from 'leftovers-again/reporters/matchstatus';
+const Battle = require('leftovers-again/battle');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const util = require('leftovers-again/pokeutil');
+// const Reporter = require('leftovers-again/reporters/matchstatus');
 
-// import sampleRequest from './helpers/request';
-import sampleRequest from './helpers/requestb';
+// const sampleRequest = require('./helpers/request';
+const sampleRequest = require('./helpers/requestb');
 
 describe('battle', () => {
   describe('formatMessage', () => {
@@ -77,7 +77,7 @@ describe('battle', () => {
     });
   });
 
-  // I don't think these are supported anymore??  
+  // I don't think these are supported anymore??
   // describe('decide', () => {
   //   it('should save previous states', () => {
   //     spyOn(Reporter, 'report');

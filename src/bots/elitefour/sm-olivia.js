@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Olivia extends EliteFour {
+module.exports = class Olivia extends EliteFour {
   constructor() {
     super();
     this.meta = {

@@ -3,11 +3,11 @@
  *
  * npm run develop -- --bot=predetermined-random
  */
-import AI from 'leftovers-again/ai';
-import team from 'leftovers-again/game/team';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const team = require('leftovers-again/game/team');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
-export default class Predetermined extends AI {
+module.exports = class Predetermined extends AI {
   constructor() {
     super();
     this.meta = {

@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Glacia extends EliteFour {
+module.exports = class Glacia extends EliteFour {
   constructor() {
     super();
     this.meta = meta;

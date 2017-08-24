@@ -1,4 +1,4 @@
-import KO from 'leftovers-again/game/kochance';
+const KO = require('leftovers-again/game/kochance');
 
 describe('KO', () => {
   describe('predictKO', () => {

@@ -1,8 +1,8 @@
-import Typechart from 'leftovers-again/lib/game/typechart';
-import Damage from 'leftovers-again/lib/game/damage';
+const Typechart = require('leftovers-again/game/typechart');
+const Damage = require('leftovers-again/game/damage');
 //Damage.getDamageResult(attacker, defender, move)
-import Moves from 'leftovers-again/lib/data/moves';
-import Side from 'leftovers-again/lib/model/side';
+const Moves = require('leftovers-again/game/moves');
+const Side = require('leftovers-again/model/side');
 
 var Fsm = require("./Base/FSM");
 

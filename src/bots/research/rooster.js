@@ -5,12 +5,12 @@
  */
 
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
 const moveId = 'roost';
 
-export default class Rooster extends AI {
+module.exports = class Rooster extends AI {
   constructor() {
     super();
     this.meta = {

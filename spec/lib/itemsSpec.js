@@ -1,4 +1,4 @@
-import Items from 'leftovers-again/game/items';
+const Items = require('leftovers-again/game/items');
 
 describe('Items', () => {
   describe('hasRequiredItem', () => {

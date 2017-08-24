@@ -5,12 +5,12 @@
  */
 
 
-import AI from 'leftovers-again/ai';
-import {MOVE, SWITCH} from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const {MOVE, SWITCH} = require('leftovers-again/decisions');
 
 const moveId = 'bravebird';
 
-export default class Bravest extends AI {
+module.exports = class Bravest extends AI {
   constructor() {
     super();
     this.meta = {

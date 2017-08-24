@@ -1,6 +1,6 @@
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
-import Damage from 'leftovers-again/lib/game/damage';
-import Side from 'leftovers-again/lib/model/side';
+const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
+const Damage = require('leftovers-again/game/damage');
+const Side = require('leftovers-again/model/side');
 
 var Sideo = new Side();
 

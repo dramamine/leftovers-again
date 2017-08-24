@@ -2,9 +2,9 @@
  * Sumobot
  *
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-// import util from 'leftovers-again/pokeutil';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
+// const util = require('leftovers-again/pokeutil');
 
 class Sumobot extends AI {
   team() {
@@ -90,4 +90,4 @@ Hasty Nature
   }
 }
 
-export default Sumobot;
+module.exports = Sumobot;

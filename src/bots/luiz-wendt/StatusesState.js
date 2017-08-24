@@ -1,4 +1,4 @@
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
 
 var StatusesEffectivity = require("./StatusesEffectivity");
 var State = require("./Base/State");
@@ -15,7 +15,7 @@ function updateStatus(state, global) {
             continue;
         if(pok.moves[i].pp <= 0)
             continue;
-        
+
         if(pok.moves[i].status) {
             if(StatusesEffectivity(state, pok.moves[i].status, pok.moves[i])) {
                 global.lastStateTry.status = pok.moves[i].status;
@@ -26,12 +26,12 @@ function updateStatus(state, global) {
             else
                 continue;
         }
-        
+
         if(pok.moves[i].volatileStatus) {
             if(pok.moves[i].volatileStatus != "leechseed" &&
                pok.moves[i].volatileStatus != "confusion")
                 continue;
-            
+
             if(StatusesEffectivity(state, pok.moves[i].status, pok.moves[i])) {
                 global.lastStateTry.status = pok.moves[i].status;
                 global.lastStateTry.enem = state.opponent.active.id;
@@ -40,7 +40,7 @@ function updateStatus(state, global) {
             }
             else
                 continue;
-            
+
         }
 
     }
@@ -49,18 +49,18 @@ function updateStatus(state, global) {
 
 
 function transitionToState(state, global) {
-    
-  
+
+
     if(global.hitKill)
         return false;
-    
+
     var pok = state.self.active;
     if(pok == null)
         return false;
-    
+
     if(this.myMonsAlive == 1)
         return false;
-    
+
     for(var i in pok.moves) {
         if(pok.moves[i] == null)
             continue;
@@ -68,7 +68,7 @@ function transitionToState(state, global) {
             continue;
         if(pok.moves[i].pp <= 0)
             continue;
-        
+
         if(pok.moves[i].status) {
             if(StatusesEffectivity(state, pok.moves[i].status, pok.moves[i])) {
                 if(global.lastStateTry.enem == state.opponent.active.id) {
@@ -79,17 +79,17 @@ function transitionToState(state, global) {
                     }
                 }
                 return true;
-               
+
             }
             else
                 continue;
         }
-        
+
         if(pok.moves[i].volatileStatus) {
             if(pok.moves[i].volatileStatus != "leechseed" &&
                pok.moves[i].volatileStatus != "confusion")
                 continue;
-            
+
             if(StatusesEffectivity(state, pok.moves[i].status, pok.moves[i])) {
                 if(global.lastStateTry.enem == state.opponent.active.id) {
                     if(global.lastStateTry.status == pok.moves[i].status) {
@@ -102,18 +102,18 @@ function transitionToState(state, global) {
             }
             else
                 continue;
-            
+
         }
     }
     return false;
 }
 
 function transitionFromState(state, global) {
-    
+
     var pok = state.self.active;
     if(pok == null)
         return true;
-    
+
     for(var i in pok.moves) {
         if(pok.moves[i] == null)
             continue;
@@ -121,7 +121,7 @@ function transitionFromState(state, global) {
             continue;
         if(pok.moves[i].pp <= 0)
             continue;
-        
+
         if(pok.moves[i].status) {
             if(StatusesEffectivity(state, pok.moves[i].status, pok.moves[i])){
                 if(global.lastStateTry.status == pok.moves[i].status)

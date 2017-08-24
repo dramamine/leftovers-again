@@ -18,12 +18,12 @@
  * npm run develop -- --bot=anythinggoes/tester/facader.js
  */
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-import Damage from 'leftovers-again/game/damage';
-import Log from 'leftovers-again/log';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const Damage = require('leftovers-again/game/damage');
+const Log = require('leftovers-again/log');
 
-export default class Facader extends AI {
+module.exports = class Facader extends AI {
   constructor() {
     super();
     this.meta = {

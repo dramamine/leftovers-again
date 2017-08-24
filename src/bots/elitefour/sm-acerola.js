@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Acerola extends EliteFour {
+module.exports = class Acerola extends EliteFour {
   constructor() {
     super();
     this.meta = {

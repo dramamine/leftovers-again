@@ -1,5 +1,5 @@
-import Damage from 'leftovers-again/lib/game/damage';
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+const Damage = require('leftovers-again/game/damage');
+const { MOVE, SWITCH } = require('leftovers-again/lib/decisions');
 
 function update(state, global) {
 

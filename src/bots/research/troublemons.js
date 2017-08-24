@@ -5,10 +5,10 @@
  * npm run develop -- --bot=research/troublemons
  */
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
-export default class Trouble extends AI {
+module.exports = class Trouble extends AI {
   constructor() {
     super();
     this.meta = {

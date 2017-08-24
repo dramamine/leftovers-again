@@ -1,5 +1,5 @@
-import Elite from 'bots/elitefour/xy-malva';
-import util from 'leftovers-again/pokeutil';
+const Elite = require('leftovers-again/bots/elitefour/xy-malva');
+const util = require('leftovers-again/pokeutil');
 
 const elite = new Elite();
 
@@ -28,9 +28,7 @@ describe('xy-elitefour-malva', () => {
     it('handles functiony values', () => {
       elite.weights.math = {
         weight: 10,
-        value: () => {
-          return 10;
-        }
+        value: () => 10,
       };
       const fit = {
         math: 10

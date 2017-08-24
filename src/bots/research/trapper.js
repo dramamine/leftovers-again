@@ -6,10 +6,10 @@
  */
 
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
-export default class Trapper extends AI {
+module.exports = class Trapper extends AI {
   constructor() {
     super();
     this.meta = {

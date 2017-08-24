@@ -3,15 +3,15 @@
  *
  */
 
-import AI from 'leftovers-again/ai';
-import Damage from 'leftovers-again/game/damage';
-import KO from 'leftovers-again/game/kochance';
-import Typechart from 'leftovers-again/game/typechart';
-import Formats from 'leftovers-again/data/formats';
-import Log from 'leftovers-again/log';
-import util from 'leftovers-again/pokeutil';
+const AI = require('leftovers-again/ai');
+const Damage = require('leftovers-again/game/damage');
+const KO = require('leftovers-again/game/kochance');
+const Typechart = require('leftovers-again/game/typechart');
+const Formats = require('leftovers-again/data/formats');
+const Log = require('leftovers-again/log');
+const util = require('leftovers-again/pokeutil');
 
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
 
 class Infodump extends AI {
   decide(state) {
@@ -231,4 +231,4 @@ class Infodump extends AI {
   }
 }
 
-export default Infodump;
+module.exports = Infodump;

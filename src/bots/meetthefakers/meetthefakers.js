@@ -2,10 +2,10 @@
  * MeetTheFakers
  *
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-import Typechart from 'leftovers-again/game/typechart';
-import Damage from 'leftovers-again/game/damage';
+const AI = require('leftovers-again/ai');
+const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const Typechart = require('leftovers-again/game/typechart');
+const Damage = require('leftovers-again/game/damage');
 
 
 class MeetTheFakers extends AI {
@@ -280,4 +280,4 @@ EVs: 136 Atk / 120 SpA / 252 Spe
   }
 }
 
-export default MeetTheFakers;
+module.exports = MeetTheFakers;

@@ -1,5 +1,5 @@
-import Lobby from 'leftovers-again/model/lobby';
-import listener from 'leftovers-again/listener';
+const Lobby = require('leftovers-again/model/lobby');
+const listener = require('leftovers-again/listener');
 
 let lobby;
 describe('lobby', () => {

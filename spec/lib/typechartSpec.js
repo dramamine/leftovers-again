@@ -1,5 +1,5 @@
-import Typechart from 'leftovers-again/game/typechart';
-import Log from 'leftovers-again/log';
+const Typechart = require('leftovers-again/game/typechart');
+const Log = require('leftovers-again/log');
 
 describe('typechart', () => {
   describe('compare', () => {

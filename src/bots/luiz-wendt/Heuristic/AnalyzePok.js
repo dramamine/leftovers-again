@@ -1,7 +1,7 @@
-import Typechart from 'leftovers-again/lib/game/typechart';
-import Damage from 'leftovers-again/lib/game/damage';
-import Moves from 'leftovers-again/lib/data/moves';
-import Side from 'leftovers-again/lib/model/side';
+const Typechart = require('leftovers-again/game/typechart');
+const Damage = require('leftovers-again/game/damage');
+const Moves = require('leftovers-again/game/moves');
+const Side = require('leftovers-again/model/side');
 
 var EvaluateEnemy = require("./EvaluateEnemy");
 
