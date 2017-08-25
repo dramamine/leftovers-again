@@ -2,7 +2,7 @@
 
 
 ### How do I get started?
-First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node). If you're using Windows, I recommend you use the node Windows installer for the Current version (not LTS), and that you install Git for Windows and use git command shell that comes with it (MinGW).
+First, make sure you have installed [node and npm](https://docs.npmjs.com/getting-started/installing-node). If you're using Windows, I recommend you use the node Windows installer, and that you install Git for Windows and use git command shell that comes with it (MinGW).
 
 ```bash
 node -v
@@ -25,20 +25,22 @@ npm install
 npm start -- --opponent=randumb
 ```
 
+If you want a more challenging opponent, use `--opponent=stabby` - a bot who chooses moves that will do the most damage to you. [Check the source code](https://github.com/dramamine/leftovers-again/tree/master/src/bots) for more included opponents.
+
+
 If you're not already running a server, you can set one up and start it by doing the following:
 
 ```bash
 git clone https://github.com/dramamine/Pokemon-Showdown.git
-cd Pokemon-Showdown
-npm start
+npm run server
 ```
 
 This downloads and installs a forked copy of the official Showdown server. The fork makes the server more bot-friendly by removing throttling on challenges and matches.
 
-### Choosing the Team
+### Choosing Your Team
 The `team()` function should return a string that matches the Smogon format. So, if you build a team on [Pokemon Showdown](http://play.pokemonshowdown.com/) using the Teambuilder, or if you copy Pokemon data from [Smogon](http://www.smogon.com/), you can paste it in this function.
 
-The `team()` takes team data in other formats - see the [code documentation](https://doc.esdoc.org/github.com/dramamine/leftovers-again/class/src/lib/team.js~Team.html) for more details
+The `team()` takes team data in other formats - see the [code documentation](https://doc.esdoc.org/github.com/dramamine/leftovers-again/class/src/lib/team.js~Team.html) for more details.
 
 Note that if you're playing the `randombattle` format, you don't need to define `team()`.
 
@@ -78,11 +80,11 @@ Seriously, read the docs!
 `state.self.active.dead = true`
 
 ### How do I check if a move gets STAB?
-`mon.types.indexOf(move.type) >= 0`
+`[your pokemon].types.indexOf(move.type) >= 0`
 
 ## How do I check if a move will be super-effective?
 ```javascript
-import Typechart from 'lib/typechart';
+const Typechart = require('lib/typechart');
 Typechart.compare('Normal', 'Fighting'); // 0.5
 Typechart.compare('Fire', 'Grass'); // 2
 
@@ -97,7 +99,7 @@ Say you just cast Swords Dance, which raises your attack by 2 levels. You should
 `state.teamPreview = true`. When this is set, you need to SWITCH (MOVE decisions are not valid).
 
 ### How can I have my Pokemon mega-evolve?
-If you Pokemon is able to mega-evolve, it will do so by default.
+If your Pokemon is able to mega-evolve, it will do so by default.
 ```javascript
 // see if your Pokemon is able to mega-evolve
 if (state.self.active.canMegaEvo)
@@ -151,15 +153,14 @@ States get logged to `log/states/{{timestamp}}-{{battleid}}`. These can be extre
 
 
 
-### How do I run my bot against live humans on the official server?
-Message marten@metal-heart.org if you're interested in doing this. Only do this if your bot is **great** (i.e. can beat all of the bots I wrote).
+### How do I run my bot against live humans?
+`npm start -- --production` will connect you to the leftovers-again bot server at http://cyberdyne.psim.us. From there, you can play against humans and
 
 ### How do I submit my bot to be included in the AI competition?
-You need to publish your bot on NPM, GitHub, or some other git hosting service. I'm manually maintaining these lists for now, so just message marten@metal-heart.org with installation instructions for me.
+You need to publish your bot on NPM, GitHub, or some other git hosting service. I'm manually maintaining these lists for now, so just message marten@metal-heart.org and we'll work from there.
 
 ### I'd like to contribute code to this project!
 [Read the contribution guide](./CONTRIBUTING.md).
-
 
 
 ### Something is wrong, and it's your fault.
@@ -175,11 +176,21 @@ Probably every singles format is functional. Doubles formats aren't implemented 
 
 
 ## #How do I use the damage calculator?
-Included in here is library code for the [Pokemon Damage Calculator](http://pokemonshowdown.com/damagecalc/). I adapted it to work with our bot code. To use it, simply call: **TODO**
+Included in here is library code for the [Pokemon Damage Calculator](http://pokemonshowdown.com/damagecalc/). I adapted it to work with our bot code.
+
+```javascript
+const Damage = require('leftovers-again/src/game/damage')
+const estimatedDamage = Damage.getDamageResult(
+  state.self.active,
+  state.opponent.active,
+  move
+)
+
+[More sample code here.](https://github.com/dramamine/leftovers-again/blob/master/src/bots/stabby/stabby.js)
 
 ## Development Tips
 
-* Want to continuously run battles as you develop code? Use `npm run develop -- {{your bot's name}} [other cmdline args]`, which watches the bots/ and src/ directory and refreshes when those files chage.
+* Want to continuously run battles as you develop code? Use `npm run develop -- {{your bot's name}} [other cmdline args]`, which watches src/ directory and refreshes when those files chage.
 * Want to run battles faster? Keep the server and your opponent running instead of restarting them each time. For example, I would keep three tabs open with these commands running:
 ```bash
 npm run server     # in separate tab
@@ -208,6 +219,3 @@ Set --loglevel=[x] to whatever you'd like:
 
 ### What else gets logged?
 Some stuff in the logs directory **TODO**
-
-### Windows Limitations
-leftovers-again should work fine on Windows, but development is more difficult. Some npm scripts don't run: `build, copy, release, test`. Use `npm run babel` to build and `npm run start:quick` to run.

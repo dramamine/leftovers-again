@@ -62,6 +62,7 @@ Make sure you have the official server installed and running.
 
     git clone https://github.com/Zarel/Pokemon-Showdown.git
     cd Pokemon-Showdown
+    npm install
     npm start
 
 Running this separately will reduce startup time and allow you to read
