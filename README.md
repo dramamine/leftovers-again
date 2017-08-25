@@ -9,11 +9,7 @@ This is the official repository for an ongoing AI competition for Pokemon battle
 
 Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
 
-1997: Deep Blue defeats Kasparov at chess.
-
-2016: AlphaGo annihilates the world's greatest Go players.
-
-20XX: AI overtakes humans at the greatest game of all, Pokemon.
+1997: Deep Blue defeats Kasparov at chess. 2016: AlphaGo annihilates the world's greatest Go players. 20XX: AI overtakes human players at the greatest game of all, Pokemon.
 
 ## Designed with Simplicity and Accessibility in Mind
 
@@ -24,9 +20,11 @@ That work is *already done for you*.
 You can have a working bot up and running in minutes. Read the [Getting Started guide](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md) to see how easy it is.
 
 ![generate](https://user-images.githubusercontent.com/1554498/29701153-de0017b0-891e-11e7-80fc-60c7f7157a7e.gif)
+
 _generating your first bot_
 
 ![run bot](https://user-images.githubusercontent.com/1554498/29701154-de093c0a-891e-11e7-9251-80f3d72c12d9.gif)
+
 _running your first match
 
 ## Get Useful Feedback. Quickly Iterate on Your Design.
