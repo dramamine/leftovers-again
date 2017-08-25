@@ -3,7 +3,7 @@
 Live server running here. Fight against existing bots right now! http://cyberdyne.psim.us
 
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
-Full code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+Full code documentation [here](http://metal-heart.org/leftovers-again/docs/).
 
 This is the official repository for an ongoing AI competition for Pokemon battles.
 
@@ -95,6 +95,6 @@ npm start -- --production
 
 
 FAQ/Getting started guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
-Code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+Code documentation [here](http://metal-heart.org/leftovers-again/docs/).
 Contribution guide [here](https://github.com/dramamine/leftovers-again/blob/master/CONTRIBUTING.md).
 Changelog [here](https://github.com/dramamine/leftovers-again/blob/master/CHANGELOG.md).
