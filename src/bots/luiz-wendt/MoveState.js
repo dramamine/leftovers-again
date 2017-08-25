@@ -1,6 +1,6 @@
-const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
-const Damage = require('leftovers-again/game/damage');
-const Side = require('leftovers-again/model/side');
+const {MOVE, SWITCH} = require('@la/decisions');
+const Damage = require('@la/game/damage');
+const Side = require('@la/model/side');
 
 var Sideo = new Side();
 

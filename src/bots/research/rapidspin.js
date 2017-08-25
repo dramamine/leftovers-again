@@ -3,8 +3,8 @@
  *
  * npm run develop -- --bot=research/rapidspin
  */
-const AI = require('leftovers-again/ai');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'recover';
 

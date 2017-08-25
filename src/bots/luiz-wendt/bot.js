@@ -2,9 +2,9 @@
  * LawpokeBot
  *
  */
-const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
+const {MOVE, SWITCH} = require('@la/decisions');
 
-const Typechart = require('leftovers-again/game/typechart');
+const Typechart = require('@la/game/typechart');
 
 var State = require("./Base/State");
 

@@ -1,6 +1,6 @@
 
-const util = require('leftovers-again/pokeutil');
-const log = require('leftovers-again/log');
+const util = require('@la/pokeutil');
+const log = require('@la/log');
 
 /**
  * Pokemon class, for tracking information and status of each Pokemon.

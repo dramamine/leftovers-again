@@ -148,7 +148,9 @@ const parseAndWrite = (source, destination, vars) => {
     } catch (e) {
       // file probably doesn't exist.
     }
-    fs.writeFile(destination, parsed);
+    fs.writeFile(destination, parsed, (err) => {
+      if (err) console.error('Error writing file:', destination, parsed, err);
+    });
   }
   return parsed;
 };

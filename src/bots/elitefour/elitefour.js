@@ -3,10 +3,10 @@
  *
  */
 
-const AI = require('leftovers-again/ai');
-const Typechart = require('leftovers-again/game/typechart');
+const AI = require('@la/ai');
+const Typechart = require('@la/game/typechart');
 
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end

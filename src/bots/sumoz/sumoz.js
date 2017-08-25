@@ -2,9 +2,9 @@
  * Sumobot
  *
  */
-const AI = require('leftovers-again/ai');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
-// const util = require('leftovers-again/pokeutil');
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
+// const util = require('@la/pokeutil');
 
 class Sumozbot extends AI {
   team() {

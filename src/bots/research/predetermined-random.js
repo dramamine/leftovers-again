@@ -3,9 +3,9 @@
  *
  * npm run develop -- --bot=predetermined-random
  */
-const AI = require('leftovers-again/ai');
-const team = require('leftovers-again/game/team');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const AI = require('@la/ai');
+const team = require('@la/game/team');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 module.exports = class Predetermined extends AI {
   constructor() {

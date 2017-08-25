@@ -2,11 +2,11 @@
  * MilkBot531
  *
  */
-const KO = require('leftovers-again/lib/game/kochance');
-const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
-const Damage = require('leftovers-again/lib/game/damage');
-const Typechart = require('leftovers-again/lib/game/typechart');
-var _damage = require('leftovers-again/lib/game/damage');
+const KO = require('@la/game/kochance');
+const {MOVE, SWITCH} = require('@la/decisions');
+const Damage = require('@la/game/damage');
+const Typechart = require('@la/game/typechart');
+var _damage = require('@la/game/damage');
 var _damage2 = _interopRequireDefault(_damage);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

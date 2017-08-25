@@ -1,7 +1,7 @@
-const Typechart = require('leftovers-again/game/typechart');
-const Damage = require('leftovers-again/game/damage');
-const Moves = require('leftovers-again/game/moves');
-const Side = require('leftovers-again/model/side');
+const Typechart = require('@la/game/typechart');
+const Damage = require('@la/game/damage');
+const Moves = require('@la/game/moves');
+const Side = require('@la/model/side');
 
 var EvaluateEnemy = require("./EvaluateEnemy");
 

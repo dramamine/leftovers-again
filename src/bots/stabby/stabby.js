@@ -3,9 +3,9 @@
  * switch out, though.
  *
  */
-const Damage = require('leftovers-again/game/damage');
+const Damage = require('@la/game/damage');
 
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 module.exports = class Stabby {
 

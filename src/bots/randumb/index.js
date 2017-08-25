@@ -4,9 +4,9 @@
  * it.
  *
  */
-const AI = require('leftovers-again/ai');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
-const team = require('leftovers-again/team');
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
+const team = require('@la/team');
 
 class Randumb extends AI {
   constructor() {

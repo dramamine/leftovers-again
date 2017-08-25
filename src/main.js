@@ -1,3 +1,4 @@
+require('module-alias').addAlias('@la', __dirname);
 const socket = require('./socket');
 const monkey = require('./monkey');
 const listener = require('./listener');

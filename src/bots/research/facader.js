@@ -18,10 +18,10 @@
  * npm run develop -- --bot=anythinggoes/tester/facader.js
  */
 
-const AI = require('leftovers-again/ai');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
-const Damage = require('leftovers-again/game/damage');
-const Log = require('leftovers-again/log');
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
+const Damage = require('@la/game/damage');
+const Log = require('@la/log');
 
 module.exports = class Facader extends AI {
   constructor() {

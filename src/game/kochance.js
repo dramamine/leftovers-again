@@ -1,5 +1,5 @@
-const Typechart = require('leftovers-again/game/typechart');
-const Damage = require('leftovers-again/game/damage');
+const Typechart = require('@la/game/typechart');
+const Damage = require('@la/game/damage');
 
 class KO {
   /**

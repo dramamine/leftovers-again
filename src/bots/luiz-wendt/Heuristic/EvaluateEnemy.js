@@ -1,8 +1,8 @@
-const Typechart = require('leftovers-again/game/typechart');
-const Damage = require('leftovers-again/game/damage');
+const Typechart = require('@la/game/typechart');
+const Damage = require('@la/game/damage');
 //Damage.getDamageResult(attacker, defender, move)
-const Moves = require('leftovers-again/game/moves');
-const Side = require('leftovers-again/model/side');
+const Moves = require('@la/game/moves');
+const Side = require('@la/model/side');
 
 module.exports = function (pokObj, str, pok) {
     // max -> maximum damage against the enemy

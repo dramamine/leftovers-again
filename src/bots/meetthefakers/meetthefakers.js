@@ -2,10 +2,10 @@
  * MeetTheFakers
  *
  */
-const AI = require('leftovers-again/ai');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
-const Typechart = require('leftovers-again/game/typechart');
-const Damage = require('leftovers-again/game/damage');
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
+const Typechart = require('@la/game/typechart');
+const Damage = require('@la/game/damage');
 
 
 class MeetTheFakers extends AI {

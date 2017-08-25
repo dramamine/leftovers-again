@@ -1,4 +1,4 @@
-const {MOVE, SWITCH} = require('leftovers-again/lib/decisions');
+const {MOVE, SWITCH} = require('@la/decisions');
 
 var StatusesEffectivity = require("./StatusesEffectivity");
 var State = require("./Base/State");
