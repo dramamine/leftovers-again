@@ -39,6 +39,7 @@ class Battle {
       // from the normal server
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
+      start: this.handleStart,
       turn: this.handleTurn,
       win: this.handleWin,
       callback: this.handleCallback,
@@ -137,6 +138,17 @@ class Battle {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Don't actually need to do anything here, but let's log what Pokemon are
+   * around to make it clear to the user what's happening.
+   *
+   */
+  handleStart() {
+    const myMons = this.store.barn.all().map(mon => mon.nickname).join(', ');
+    Log.log(`Match started! ${this.store.myNick} vs. ${this.store.yourNick}`);
+    Log.log(`Your team is: ${myMons}`);
   }
 
   /**

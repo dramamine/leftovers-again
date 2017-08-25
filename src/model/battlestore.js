@@ -30,7 +30,6 @@ class BattleStore {
 
     this.handlers = {
       '-damage': this.handleDamage,
-      teampreview: this.handleTeamPreview,
       move: this.handleMove,
       switch: this.handleSwitch,
       drag: this.handleSwitch,

@@ -1,5 +1,5 @@
-const Lobby = require('leftovers-again/model/lobby');
-const listener = require('leftovers-again/listener');
+const Lobby = require('@la/model/lobby');
+const listener = require('@la/listener');
 
 let lobby;
 describe('lobby', () => {

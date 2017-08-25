@@ -1,5 +1,5 @@
-const Randumb = require('leftovers-again/bots/randumb');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
+const Randumb = require('@la/bots/randumb');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const randumb = new Randumb();
 

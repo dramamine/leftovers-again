@@ -1,5 +1,5 @@
-const Elite = require('leftovers-again/bots/elitefour/xy-malva');
-const util = require('leftovers-again/pokeutil');
+const Elite = require('@la/bots/elitefour/xy-malva');
+const util = require('@la/pokeutil');
 
 const elite = new Elite();
 

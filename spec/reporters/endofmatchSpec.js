@@ -1,5 +1,5 @@
 const fs = require('fs');
-const EndOfMatch = require('leftovers-again/reporters/endofmatch');
+const EndOfMatch = require('@la/reporters/endofmatch');
 
 const exampleState = [
   { won: true, myAlive: 6, yourAlive: 3, mine: [], yours: [] },

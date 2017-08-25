@@ -1,5 +1,5 @@
-const Barn = require('leftovers-again/model/pokebarn');
-const Log = require('leftovers-again/log');
+const Barn = require('@la/model/pokebarn');
+const Log = require('@la/log');
 
 describe('pokebarn', () => {
   let barn;

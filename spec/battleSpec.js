@@ -1,7 +1,7 @@
-const Battle = require('leftovers-again/battle');
-const { MOVE, SWITCH } = require('leftovers-again/decisions');
-const util = require('leftovers-again/pokeutil');
-// const Reporter = require('leftovers-again/reporters/matchstatus');
+const Battle = require('@la/battle');
+const { MOVE, SWITCH } = require('@la/decisions');
+const util = require('@la/pokeutil');
+// const Reporter = require('@la/reporters/matchstatus');
 
 // const sampleRequest = require('./helpers/request';
 const sampleRequest = require('./helpers/requestb');

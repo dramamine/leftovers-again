@@ -1,5 +1,5 @@
-const Log = require('leftovers-again/log');
-const Infodump = require('leftovers-again/bots/infodump');
+const Log = require('@la/log');
+const Infodump = require('@la/bots/infodump');
 const state = require('../helpers/randomstate');
 
 const infodump = new Infodump();

@@ -1,6 +1,6 @@
-const SideConditions = require('leftovers-again/constants/sideConditions');
-const Side = require('leftovers-again/model/side');
-const Log = require('leftovers-again/log');
+const SideConditions = require('@la/constants/sideConditions');
+const Side = require('@la/model/side');
+const Log = require('@la/log');
 
 let side;
 describe('Side', () => {

@@ -1,4 +1,4 @@
-const KO = require('leftovers-again/game/kochance');
+const KO = require('@la/game/kochance');
 
 describe('KO', () => {
   describe('predictKO', () => {

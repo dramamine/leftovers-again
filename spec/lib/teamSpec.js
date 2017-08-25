@@ -1,4 +1,4 @@
-const Team = require('leftovers-again/team');
+const Team = require('@la/team');
 // @TODO do we need lodash?
 const _ = require('lodash');
 

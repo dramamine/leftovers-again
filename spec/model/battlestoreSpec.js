@@ -1,5 +1,5 @@
-const BattleStore = require('leftovers-again/model/battlestore');
-const Barn = require('leftovers-again/model/pokebarn');
+const BattleStore = require('@la/model/battlestore');
+const Barn = require('@la/model/pokebarn');
 const sampleRequest = require('../helpers/requestc');
 
 let store;

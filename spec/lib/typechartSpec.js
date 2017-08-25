@@ -1,5 +1,5 @@
-const Typechart = require('leftovers-again/game/typechart');
-const Log = require('leftovers-again/log');
+const Typechart = require('@la/game/typechart');
+const Log = require('@la/log');
 
 describe('typechart', () => {
   describe('compare', () => {

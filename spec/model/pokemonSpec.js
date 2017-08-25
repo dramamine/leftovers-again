@@ -1,6 +1,6 @@
-const Pokemon = require('leftovers-again/model/pokemon');
-const util = require('leftovers-again/pokeutil');
-const log = require('leftovers-again/log');
+const Pokemon = require('@la/model/pokemon');
+const util = require('@la/pokeutil');
+const log = require('@la/log');
 
 log.setLogLevel(1);
 

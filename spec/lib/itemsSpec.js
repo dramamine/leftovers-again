@@ -1,4 +1,4 @@
-const Items = require('leftovers-again/game/items');
+const Items = require('@la/game/items');
 
 describe('Items', () => {
   describe('hasRequiredItem', () => {
