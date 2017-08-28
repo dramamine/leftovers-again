@@ -1,6 +1,6 @@
 const Typechart = require('@la/game/typechart');
 const Damage = require('@la/game/damage');
-const Moves = require('@la/game/moves');
+const Moves = require('@la/data/moves');
 const Side = require('@la/model/side');
 
 var EvaluateEnemy = require("./EvaluateEnemy");

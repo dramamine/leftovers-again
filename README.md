@@ -25,7 +25,7 @@ _generating your first bot_
 
 ![run bot](https://user-images.githubusercontent.com/1554498/29701154-de093c0a-891e-11e7-9251-80f3d72c12d9.gif)
 
-_running your first match
+_running your first match_
 
 ## Get Useful Feedback. Quickly Iterate on Your Design.
 
