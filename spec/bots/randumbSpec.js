@@ -1,5 +1,5 @@
-import Randumb from 'bots/randumb';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const Randumb = require('@la/bots/randumb');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const randumb = new Randumb();
 

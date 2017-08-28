@@ -1,4 +1,4 @@
-import util from 'leftovers-again/pokeutil';
+const util = require('@la/pokeutil');
 
 describe('pokeutil', () => {
   describe('boostCombiner', () => {

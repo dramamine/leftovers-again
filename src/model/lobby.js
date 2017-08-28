@@ -1,9 +1,7 @@
-// import listener from './listener';
-// import socket from 'socket';
-// import Team from './team';
-import Log from '../log';
-import listener from '../listener';
-import util from '../pokeutil';
+
+const Log = require('../log');
+const listener = require('../listener');
+const util = require('../pokeutil');
 
 let mynick = '';
 
@@ -112,4 +110,4 @@ class Lobby {
   }
 }
 
-export default Lobby;
+module.exports = Lobby;

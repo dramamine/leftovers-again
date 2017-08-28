@@ -1,6 +1,6 @@
-import BattleStore from 'leftovers-again/model/battlestore';
-import Barn from 'leftovers-again/model/pokebarn';
-import sampleRequest from '../helpers/requestc';
+const BattleStore = require('@la/model/battlestore');
+const Barn = require('@la/model/pokebarn');
+const sampleRequest = require('../helpers/requestc');
 
 let store;
 

@@ -1,11 +1,11 @@
 
-import util from '../pokeutil';
-import log from '../log';
+const util = require('@la/pokeutil');
+const log = require('@la/log');
 
 /**
  * Pokemon class, for tracking information and status of each Pokemon.
  */
-export default class Pokemon {
+class Pokemon {
   /**
    * Pokemon constructor.
    * @param  {String} ident  The ident of the Pokemon, ex. 'p1a: Nickname'
@@ -412,3 +412,5 @@ export default class Pokemon {
     this.order = order;
   }
 }
+
+module.exports = Pokemon;

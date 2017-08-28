@@ -2,9 +2,9 @@
  * Whynotbaut
  *
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
-import util from 'leftovers-again/pokeutil';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
+const util = require('@la/pokeutil');
 
 
 class Whynotbaut extends AI {
@@ -130,4 +130,4 @@ Bold Nature
   }
 }
 
-export default Whynotbaut;
+module.exports = Whynotbaut;

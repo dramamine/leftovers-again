@@ -1,8 +1,8 @@
-import inquirer from 'inquirer';
-import fs from 'fs';
-import glob from 'glob';
-import path from 'path';
-import Handlebars from 'handlebars';
+const inquirer = require('inquirer');
+const fs = require('fs');
+const glob = require('glob');
+const path = require('path');
+const Handlebars = require('handlebars');
 
 // valid formats involving choosing your team
 const formatsWithTeams = ['gen7pokebankanythinggoes', 'anythinggoes',
@@ -12,7 +12,7 @@ const formatsWithTeams = ['gen7pokebankanythinggoes', 'anythinggoes',
 // formats without teams, plus the above
 const formats = ['gen7randombattle', 'gen6randombattle'].concat(formatsWithTeams);
 
-const languages = ['es6'];
+const languages = ['nodejs'];
 
 /**
  * Try to 'require' stuff without crashing out
@@ -52,7 +52,7 @@ let tmpltDir = path.join(__dirname, '../..', 'templates');
 try {
   fs.accessSync(tmpltDir);
 } catch (e) {
-  // from scripts folder (ES6)
+  // from scripts folder (nodejs)
   tmpltDir = path.join(__dirname, '..', 'templates');
 }
 
@@ -148,7 +148,9 @@ const parseAndWrite = (source, destination, vars) => {
     } catch (e) {
       // file probably doesn't exist.
     }
-    fs.writeFile(destination, parsed);
+    fs.writeFile(destination, parsed, (err) => {
+      if (err) console.error('Error writing file:', destination, parsed, err);
+    });
   }
   return parsed;
 };
@@ -164,7 +166,7 @@ inquirer.prompt(questions).then((answers) => {
     answers.team = true;
   }
 
-  const lang = 'es6';
+  const lang = 'nodejs';
   // @TODO this goes to tmp but should eventually go to 'bots'
   // const folder = 'bots/' + answers.repo;
   // fs.mkdirSync(folder);

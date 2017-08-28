@@ -1,5 +1,5 @@
-import Typechart from '../game/typechart';
-import Damage from '../game/damage';
+const Typechart = require('@la/game/typechart');
+const Damage = require('@la/game/damage');
 
 class KO {
   /**
@@ -218,4 +218,5 @@ class KO {
     return (damage * hits) - (eot * (hits - 1)) + toxicDamage;
   }
 }
-export default KO;
+
+module.exports = KO;

@@ -1,6 +1,6 @@
-import util from './pokeutil';
-import Log from './log';
-import fs from 'fs';
+const util = require('./pokeutil');
+const Log = require('./log');
+const fs = require('fs');
 
 /**
  * Teams: so documented.
@@ -9,7 +9,7 @@ import fs from 'fs';
  *
  * @see http://play.pokemonshowdown.com/teambuilder
  */
-export default class Team {
+class Team {
   /**
    * Team constructor.
    *
@@ -241,7 +241,7 @@ export default class Team {
       // name
       buf += set.name || '';
 
-      const id = util.toId(set.species);
+      const id = util.toId(set.species || set.name);
 
       buf += '|' + id;
 
@@ -336,7 +336,8 @@ export default class Team {
         buf += '|';
       }
     }
-    console.log(buf);
     return buf;
   }
 }
+
+module.exports = Team;

@@ -1,5 +1,5 @@
-import listener from './listener';
-import log from './log';
+const listener = require('./listener');
+const log = require('./log');
 
 /**
  * Abstract class for managing connections. All connections are responsible
@@ -72,4 +72,4 @@ class Connection {
   exit() {}
 }
 
-export default Connection;
+module.exports = Connection;

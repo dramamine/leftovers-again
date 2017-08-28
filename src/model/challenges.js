@@ -1,11 +1,9 @@
-// import listener from './listener';
-// import socket from 'socket';
-import Team from '../team';
-import Log from '../log';
-import listener from '../listener';
-import report from '../report';
-import Reporter from '../reporters/endofmatch';
-import util from '../pokeutil';
+const Team = require('../team');
+const Log = require('../log');
+const listener = require('../listener');
+const report = require('../report');
+const Reporter = require('../reporters/endofmatch');
+const util = require('../pokeutil');
 
 let updateTimeout = null;
 
@@ -249,7 +247,7 @@ class Challenger {
    * @return {[type]}               [description]
    */
   static requiresTeam(format) {
-    if (format === 'randombattle') {
+    if (format.indexOf('randombattle') >= 0) {
       return false;
     }
     return true;
@@ -275,4 +273,4 @@ class Challenger {
 
 }
 
-export default Challenger;
+module.exports = Challenger;

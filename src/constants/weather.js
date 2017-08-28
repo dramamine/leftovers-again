@@ -1,7 +1,7 @@
 /**
  * Constants for weather.
  */
-export default {
+module.exports = {
   NONE: 'none',
   DESOLATE_LAND: 'DesolateLand',
   RAIN_DANCE: 'RainDance',

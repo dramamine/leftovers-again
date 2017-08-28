@@ -1,10 +1,10 @@
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+const {MOVE, SWITCH} = require('@la/decisions');
 var Transition = require("./Base/Transition");
 var State = require("./Base/State");
 
 function ProtectStateUpdate(state, global) {
     console.log("On Protect");
- 
+
     var pok = state.self.active;
     //console.log(pok.moves);
     for(var i in pok.moves) {
@@ -16,23 +16,23 @@ function ProtectStateUpdate(state, global) {
             }
         }
     }
-    
+
     return -404;
 }
 
 function TransitionToProtect(state, global) {
     var pok = state.self.active;
     var enem = state.opponent.active;
-    
+
     var check = false;
     if(enem.statuses) {
         for(var i in enem.statuses) {
             if(enem.statuses[i] == 'brn' || enem.statuses[i] == 'psn' || enem.statuses[i] == 'tox') {
                 check = true;
             }
-        }    
+        }
     }
-    
+
     if(check) {
         for(var i in pok.moves) {
             if(pok.moves[i]) {
@@ -44,23 +44,23 @@ function TransitionToProtect(state, global) {
             }
         }
     }
-    
+
     return false;
 }
 
 function TransitionFromProtect(state, global) {
     var pok = state.self.active;
     var enem = state.opponent.active;
-    
+
     var check = false;
     if(enem.statuses) {
         for(var i in enem.statuses) {
             if(enem.statuses[i] == 'brn' || enem.statuses[i] == 'psn' || enem.statuses[i] == 'tox') {
                 check = true;
             }
-        }    
+        }
     }
-    
+
     if(!check)
         return true;
 
@@ -73,8 +73,8 @@ function TransitionFromProtect(state, global) {
             }
         }
     }
-    
-    
+
+
     return true;
 }
 

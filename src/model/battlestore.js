@@ -1,15 +1,15 @@
 // import Pokemon from 'model/pokemon';
-import Side from './side';
-import Barn from './pokebarn';
-import util from '../pokeutil';
-import Log from '../log';
-import Weather from '../constants/weather';
+const Side = require('./side');
+const Barn = require('./pokebarn');
+const util = require('../pokeutil');
+const Log = require('../log');
+const Weather = require('../constants/weather');
 
 /**
  * Store for tracking the status of the battle.
  *
  */
-export default class BattleStore {
+class BattleStore {
   constructor() {
     // The array of all Pokemons involved in the battle.
     this.allmon = [];
@@ -30,7 +30,6 @@ export default class BattleStore {
 
     this.handlers = {
       '-damage': this.handleDamage,
-      teampreview: this.handleTeamPreview,
       move: this.handleMove,
       switch: this.handleSwitch,
       drag: this.handleSwitch,
@@ -358,7 +357,7 @@ export default class BattleStore {
    * @param  {String} action What happened?
    */
   handleSideStart(side, action) {
-    Log.warn('got side effect!', side, action);
+    Log.warn(`got side effect! ${side}: ${action}`);
     // ex. 'p1' or 'p2'
     const id = side.split(':').shift().trim();
     if (!this.sides[id]) {
@@ -535,3 +534,5 @@ export default class BattleStore {
   }
 
 }
+
+module.exports = BattleStore;

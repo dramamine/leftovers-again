@@ -2,7 +2,7 @@
  * Emptiest bot.
  *
  */
-import AI from 'leftovers-again/ai';
+const AI = require('@la/ai');
 
 class Blank extends AI {
   constructor() {
@@ -24,4 +24,4 @@ class Blank extends AI {
   }
 }
 
-export default Blank;
+module.exports = Blank;

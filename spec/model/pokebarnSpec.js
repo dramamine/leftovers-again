@@ -1,5 +1,5 @@
-import Barn from 'leftovers-again/model/pokebarn';
-import Log from 'leftovers-again/log';
+const Barn = require('@la/model/pokebarn');
+const Log = require('@la/log');
 
 describe('pokebarn', () => {
   let barn;

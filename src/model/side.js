@@ -1,5 +1,5 @@
-import SideConditions from '../constants/sideConditions';
-import Log from '../log';
+const SideConditions = require('../constants/sideConditions');
+const Log = require('../log');
 
 /**
  * Clean an action string.
@@ -15,7 +15,7 @@ const STACKS = {
 /**
  * @TODO documentation
  */
-export default class Side {
+class Side {
   /**
    * Side constructor.
    */
@@ -66,3 +66,5 @@ export default class Side {
     return this.stuff;
   }
 }
+
+module.exports = Side;

@@ -2,8 +2,8 @@
  * SplashBot
  *
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 
 class SplashBot extends AI {
@@ -93,4 +93,4 @@ Timid Nature
   }
 }
 
-export default SplashBot;
+module.exports = SplashBot;

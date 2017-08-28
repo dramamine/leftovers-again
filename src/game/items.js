@@ -1,4 +1,4 @@
-import Formats from '../data/formats.json';
+const Formats = require('../data/formats.json');
 
 class Items {
   static hasRequiredItem(id) {
@@ -48,4 +48,5 @@ class Items {
     ];
   }
 }
-export default Items;
+
+module.exports = Items;

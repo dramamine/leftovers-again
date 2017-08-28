@@ -3,10 +3,10 @@
  *
  */
 
-import AI from 'leftovers-again/ai';
-import Typechart from 'leftovers-again/game/typechart';
+const AI = require('@la/ai');
+const Typechart = require('@la/game/typechart');
 
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const { MOVE, SWITCH } = require('@la/decisions');
 
 /**
  * This is used in calculating randomness. If the exponent is 1, you'll end
@@ -55,7 +55,7 @@ const weights = {
 
 };
 
-export default class EliteFour extends AI {
+module.exports = class EliteFour extends AI {
   constructor(meta) {
     super(meta);
 

@@ -1,4 +1,4 @@
-import Log from './log';
+const Log = require('./log');
 
 /**
  * Sets up important stuff like the bot location, class, and metadata.
@@ -68,4 +68,4 @@ const tryRequire = (path) => {
 };
 
 
-export default botFinder;
+module.exports = botFinder;

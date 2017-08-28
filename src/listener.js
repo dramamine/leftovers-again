@@ -74,4 +74,4 @@ class Listener {
 }
 
 const listener = new Listener();
-export default listener;
+module.exports = listener;

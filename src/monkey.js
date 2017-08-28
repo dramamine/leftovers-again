@@ -1,7 +1,7 @@
-import WebSocket from 'ws';
-import Connection from './connection';
-import log from './log';
-import listener from './listener';
+const WebSocket = require('ws');
+const Connection = require('./connection');
+const log = require('./log');
+const listener = require('./listener');
 
 const PORT = 7331;
 
@@ -60,4 +60,4 @@ class Monkey extends Connection {
 }
 
 const monkey = new Monkey();
-export default monkey;
+module.exports = monkey;

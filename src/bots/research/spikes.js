@@ -4,12 +4,12 @@
  * npm run develop -- --bot=research/spikes
  */
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'spikes';
 
-export default class Spikes extends AI {
+module.exports = class Spikes extends AI {
   constructor() {
     super();
     this.meta = {

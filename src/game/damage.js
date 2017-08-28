@@ -1,5 +1,5 @@
-import Typechart from './typechart';
-import util from '../pokeutil';
+const Typechart = require('./typechart');
+const util = require('../pokeutil');
 
 const AT = 'atk';
 const DF = 'def';
@@ -468,6 +468,10 @@ class Damage {
         lv *= 2;
       }
       return [lv];
+    }
+
+    if (move.name === 'Super Fang') {
+      return [Math.ceil(defender.hp / 2)];
     }
 
     if (move.hits > 1) {
@@ -978,7 +982,7 @@ class Damage {
 }
 
 const damage = new Damage();
-export default damage;
+module.exports = damage;
 
 function chainMods(mods) {
   let M = 0x1000;

@@ -3,11 +3,11 @@
  * switch out, though.
  *
  */
-import Damage from 'leftovers-again/game/damage';
+const Damage = require('@la/game/damage');
 
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const { MOVE, SWITCH } = require('@la/decisions');
 
-export default class Stabby {
+module.exports = class Stabby {
 
   decide(state) {
     if (state.forceSwitch) {

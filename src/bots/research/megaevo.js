@@ -5,12 +5,12 @@
  * npm run develop -- --bot=research/megaevo
  */
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'scald';
 
-export default class MegaEvo extends AI {
+module.exports = class MegaEvo extends AI {
   constructor() {
     super();
     this.meta = {

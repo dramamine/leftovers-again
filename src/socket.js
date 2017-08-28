@@ -1,8 +1,8 @@
-import https from 'https';
-import WebSocket from 'ws';
-import listener from './listener';
-import Connection from './connection';
-import Log from './log';
+const https = require('https');
+const WebSocket = require('ws');
+const listener = require('./listener');
+const Connection = require('./connection');
+const Log = require('./log');
 
 let ws;
 
@@ -27,7 +27,7 @@ class Socket extends Connection {
     this.chatroom = chatroom;
     this.format = format;
 
-    Log.log(`connecting to: ${server}:${port}`);
+    Log.log(`connecting to: ${server}:${port} with name ${nickname}`);
     this.build(`ws://${server}:${port}/showdown/websocket`);
 
     listener.subscribe('challstr', this.login.bind(this));
@@ -62,6 +62,7 @@ Make sure you have the official server installed and running.
 
     git clone https://github.com/Zarel/Pokemon-Showdown.git
     cd Pokemon-Showdown
+    npm install
     npm start
 
 Running this separately will reduce startup time and allow you to read
@@ -117,10 +118,10 @@ server logs for debugging.
     let data = '';
     if (!this.password) {
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
+      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challstr=' + challengekeyid + '%7C' + challenge;
     } else {
       requestOptions.method = 'POST';
-      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
+      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challstr=' + challengekeyid + '%7C' + challenge;
       requestOptions.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': data.length
@@ -211,4 +212,4 @@ server logs for debugging.
 }
 
 const socket = new Socket();
-export default socket;
+module.exports = socket;

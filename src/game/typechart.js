@@ -1,5 +1,5 @@
-import Log from '../log';
-import data from '../data/typechart.json';
+const Log = require('../log');
+const data = require('../data/typechart.json');
 /**
  * Type chart, in the format [Attacker][Defender] = attack multiplier.
  * Derived from the official Gen 6 charts.
@@ -32,4 +32,4 @@ class Typechart {
   }
 }
 
-export default new Typechart();
+module.exports = new Typechart();

@@ -1,9 +1,9 @@
-import Battle from './battle';
-import Log from './log';
+const Battle = require('./battle');
+const Log = require('./log');
 
 let BotClass;
 
-export default class BattleManager {
+class BattleManager {
   constructor(Bot, timeout = 0) {
     if (!Bot) {
       Log.error('BattleManager called with no bot! That is bad.');
@@ -20,3 +20,5 @@ export default class BattleManager {
     return this.battles[id];
   }
 }
+
+module.exports = BattleManager;

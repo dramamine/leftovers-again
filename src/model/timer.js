@@ -2,7 +2,7 @@
 /**
  * @TODO documentation
  */
-export default class Timer {
+class Timer {
   constructor() {
     this.timeout = null;
   }
@@ -19,3 +19,5 @@ export default class Timer {
   }
 
 }
+
+module.exports = Timer;

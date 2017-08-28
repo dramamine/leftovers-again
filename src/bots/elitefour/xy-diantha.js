@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Diantha extends EliteFour {
+module.exports = class Diantha extends EliteFour {
   constructor() {
     super();
     this.meta = meta;

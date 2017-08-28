@@ -1,6 +1,6 @@
-import inquirer from 'inquirer';
-import listener from '../listener';
-import Log from '../log';
+const inquirer = require('inquirer');
+const listener = require('../listener');
+const Log = require('../log');
 // import colors from 'colors/safe';
 
 const actions = {
@@ -99,4 +99,4 @@ class Interactive {
   }
 }
 
-export default Interactive;
+module.exports = Interactive;

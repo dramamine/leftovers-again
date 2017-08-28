@@ -3,10 +3,10 @@
  *
  * npm run develop -- --bot=research/sunnyday
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
-export default class SunnyDay extends AI {
+module.exports = class SunnyDay extends AI {
   constructor() {
     super();
     this.meta = {

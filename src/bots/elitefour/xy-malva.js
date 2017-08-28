@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Malva extends EliteFour {
+module.exports = class Malva extends EliteFour {
   constructor() {
     super();
     this.meta = meta;

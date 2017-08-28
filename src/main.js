@@ -1,16 +1,16 @@
-import socket from './socket';
-import monkey from './monkey';
-import listener from './listener';
-import defaults from './defaults';
-import BotManager from './botmanager';
-import BattleManager from './battlemanager';
-import Spawner from './spawner';
-import Interactive from './interfaces/cli';
-import Challenger from './model/challenges';
-import Lobby from './model/lobby';
-import Log from './log';
-// import {random} from './team';
-import { MOVE, SWITCH } from './decisions';
+require('module-alias').addAlias('@la', __dirname);
+const socket = require('./socket');
+const monkey = require('./monkey');
+const listener = require('./listener');
+const defaults = require('./defaults');
+const BotManager = require('./botmanager');
+const BattleManager = require('./battlemanager');
+const Spawner = require('./spawner');
+const Interactive = require('./interfaces/cli');
+const Challenger = require('./model/challenges');
+const Lobby = require('./model/lobby');
+const Log = require('./log');
+const { MOVE, SWITCH } = require('./decisions');
 
 let challenger;
 let myconnection;
@@ -162,7 +162,7 @@ const start = (metadata, Bot) => {
   }));
 };
 
-export default {
+module.exports = {
   start,
   MOVE,
   SWITCH

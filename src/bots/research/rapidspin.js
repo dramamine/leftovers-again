@@ -3,12 +3,12 @@
  *
  * npm run develop -- --bot=research/rapidspin
  */
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'recover';
 
-export default class RapidSpin extends AI {
+module.exports = class RapidSpin extends AI {
   constructor() {
     super();
     this.meta = {

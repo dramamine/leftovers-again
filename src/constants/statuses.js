@@ -3,7 +3,7 @@
  *
  * @see http://bulbapedia.bulbagarden.net/wiki/Status_condition#Non-volatile_status
  */
-export default {
+module.exports = {
   BURN: 'brn',
   FROZEN: 'frz',
   PARALYSIS: 'par',

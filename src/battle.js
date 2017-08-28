@@ -1,12 +1,12 @@
-import BattleStore from './model/battlestore';
-import Timer from './model/timer';
+const BattleStore = require('./model/battlestore');
+const Timer = require('./model/timer');
 
-import Log from './log';
-import { MOVE, SWITCH } from './decisions';
-import report from './report';
-import listener from './listener';
-import Reporter from './reporters/matchstatus';
-import util from './pokeutil';
+const Log = require('./log');
+const { MOVE, SWITCH } = require('./decisions');
+const report = require('./report');
+const listener = require('./listener');
+const Reporter = require('./reporters/matchstatus');
+const util = require('./pokeutil');
 
 const timer = new Timer();
 // that's right...you're gonna forfeit if you don't decide in this amount of time
@@ -39,6 +39,7 @@ class Battle {
       // from the normal server
       teampreview: this.handleTeamPreview,
       request: this.handleRequest,
+      start: this.handleStart,
       turn: this.handleTurn,
       win: this.handleWin,
       callback: this.handleCallback,
@@ -137,6 +138,17 @@ class Battle {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Don't actually need to do anything here, but let's log what Pokemon are
+   * around to make it clear to the user what's happening.
+   *
+   */
+  handleStart() {
+    const myMons = this.store.barn.all().map(mon => mon.nickname).join(', ');
+    Log.log(`Match started! ${this.store.myNick} vs. ${this.store.yourNick}`);
+    Log.log(`Your team is: ${myMons}`);
   }
 
   /**
@@ -430,6 +442,10 @@ class Battle {
       answer = moves.findIndex(move => move.id === idx);
     }
 
+    if (answer === -1) {
+      Log.error(`Could not find that move! Looked for ${idx} in: ${JSON.stringify(moves)}`);
+      return -1;
+    }
     if (moves[answer].disabled) {
       Log.error(`You cant use the move ${moves[answer].id} because it is disabled!`);
       return -1;
@@ -483,4 +499,4 @@ class Battle {
   }
 }
 
-export default Battle;
+module.exports = Battle;

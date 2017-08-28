@@ -1,3 +1,10 @@
+[0.11.1] - 2017-08-24
+- Update documentation
+
+[0.11.0] - 2017-08-23
+- Move from Babel to plain Node
+- Log match starts better
+
 [0.10.0] - 2016-11-27
 - Update datasets for Gen7
 - Implement Z-Moves

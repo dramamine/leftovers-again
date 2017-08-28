@@ -5,12 +5,12 @@
  */
 
 
-import AI from 'leftovers-again/ai';
-import { MOVE, SWITCH } from 'leftovers-again/decisions';
+const AI = require('@la/ai');
+const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'tailwind';
 
-export default class Tailwind extends AI {
+module.exports = class Tailwind extends AI {
   constructor() {
     super();
     this.meta = {

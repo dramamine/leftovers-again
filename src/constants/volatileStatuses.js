@@ -3,7 +3,7 @@
  *
  * @see http://bulbapedia.bulbagarden.net/wiki/Status_condition#Volatile_status
  */
-export default {
+module.exports = {
   AQUARING: 'aquaring',
   ATTRACT: 'attract',
   AUTOTOMIZE: 'autotomize',

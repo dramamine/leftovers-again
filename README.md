@@ -3,17 +3,13 @@
 Live server running here. Fight against existing bots right now! http://cyberdyne.psim.us
 
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
-Full code documentation [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
+Full code documentation [here](http://metal-heart.org/static/docs/).
 
 This is the official repository for an ongoing AI competition for Pokemon battles.
 
 Coding your own Pokemon AI bot doesn't have to be a major, time-consuming project. You can have your own bot up and running with <100 lines of code!
 
-2016: Pokemon bots start spontaneously fighting amongst themselves.
-
-2017: With the knowledge of infinite matches in their memory banks, AIs begin winning matches against tournament-level players.
-
-20XX: The Human Pokemon Championships are won by a player using AI insights to crush her human opponents.
+1997: Deep Blue defeats Kasparov at chess. 2016: AlphaGo annihilates the world's greatest Go players. 20XX: AI overtakes human players at the greatest game of all, Pokemon.
 
 ## Designed with Simplicity and Accessibility in Mind
 
@@ -23,6 +19,13 @@ That work is *already done for you*.
 
 You can have a working bot up and running in minutes. Read the [Getting Started guide](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md) to see how easy it is.
 
+![generate](https://user-images.githubusercontent.com/1554498/29701153-de0017b0-891e-11e7-80fc-60c7f7157a7e.gif)
+
+_generating your first bot_
+
+![run bot](https://user-images.githubusercontent.com/1554498/29701154-de093c0a-891e-11e7-9251-80f3d72c12d9.gif)
+
+_running your first match
 
 ## Get Useful Feedback. Quickly Iterate on Your Design.
 
@@ -36,7 +39,7 @@ With one quick script, you can see how your bot fares against any number of oppo
 
 ## Love playing Pokemon but suck at programming?
 
-Writing a Pokemon bot is a small, low-risk project where you can create something rewarding without a huge time investment. You don't have to create the next 'Deep Blue'! Just come up with a creative team and strategy, then set easy goals for yourself, like [beating all the Elite Four and Champions from 6th Generation]().
+Writing a Pokemon bot is a small, low-risk project where you can create something rewarding without a huge time investment. You don't have to create the next 'Deep Blue'!
 
 
 ## Already In Use In Classrooms
@@ -48,9 +51,7 @@ This software has been used for college-level game AI courses, where classes hav
 This project is mainly coded in Javascrpt / ES6, which I recommend for its ease of use. However, you can write code in any language you want.
 
 Languages currently supported:
-- jk nothing yet
-
-If you'd like to implement your favorite language:
+- jk nothing else yet
 
 
 ## Example Usage
@@ -87,34 +88,13 @@ npm start
 ```
 
 ### Launch your bot on Cyberdyne
-(@TODO temporary url)
 ```bash
 npm start -- --production
-# browse to: http://metal-heart.org.psim.us/
+# browse to: http://cyberdyne.psim.us/
 ```
 
-### Browse your potential opponents:
-(@TODO not implemented yet)
-`npm run gauntlet`
 
-
-
-### Developer's Installation Guide
-Use this code if you'd like to contribute to this repo.
-```bash
-git clone git@github.com:dramamine/leftovers-again.git
-cd leftovers-again
-make
-
-# example usage
-npm run server # in a separate window
-npm test
-npm start -- randumb --opponent=stabby
-```
-
-Contribution guide [here](https://doc.esdoc.org/github.com/dramamine/leftovers-again/).
-If you're interested in contributing but don't know where to start, shoot me an email. There are always some minor issues I could use some help with, but also some major features I can't do without help:
-- running tournaments (scripts, web design)
-- supporting other programming languages (ex. Python)
-
+FAQ/Getting started guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
+Code documentation [here](http://metal-heart.org/static/docs/).
+Contribution guide [here](https://github.com/dramamine/leftovers-again/blob/master/CONTRIBUTING.md).
 Changelog [here](https://github.com/dramamine/leftovers-again/blob/master/CHANGELOG.md).

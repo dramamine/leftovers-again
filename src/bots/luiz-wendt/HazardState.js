@@ -1,5 +1,5 @@
-import Damage from 'leftovers-again/lib/game/damage';
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+const Damage = require('@la/game/damage');
+const {MOVE, SWITCH} = require('@la/decisions');
 
 /*
 if(move.sideCondition == 'lightscreen' &&

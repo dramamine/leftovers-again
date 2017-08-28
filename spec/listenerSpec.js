@@ -1,4 +1,4 @@
-import listener from 'leftovers-again/listener';
+const listener = require('@la/listener');
 
 describe('listener', () => {
   it('should load listener', () => {

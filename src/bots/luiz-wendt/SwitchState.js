@@ -1,4 +1,4 @@
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
+const {MOVE, SWITCH} = require('@la/decisions');
 var Transition = require("./Base/Transition");
 var State = require("./Base/State");
 
@@ -12,10 +12,10 @@ function getGoodDeffenders(myMon, enemy, pokI) {
         myMon[i].tDef = pokI[id].against[enemy].typeDefending;
         if(myMon[i].tDef.tDef >= 0) {
                 deff.push(myMon[i]);
-            
+
         }
     }
-    
+
     return deff;
 }
 
@@ -25,7 +25,7 @@ function calcBestDamage(id, pokI) {
     for(var i in pokI[id].against) {
         dmg += pokI[id].against[i].max;
     }
-    
+
     return dmg;
 }
 
@@ -51,22 +51,22 @@ function getBestAttackerAtAll(myMon, pokI) {
                 dmg += 50;
             if(pokI[id].haveStatus)
                 dmg += 10;
-            
+
             if(dmg > bestDamage) {
                 best = myMon[i];
                 bestDamage = dmg;
             }
         }
-        
+
     }
-    
+
     return best;
 }
 
 // get the mon that has the highest damage against the enemy
 function getBestAttackerAgainst(myMon, enemy, pokI) {
 
-    
+
     var best = null;
     var bestDamage = null;
     for(var i in myMon) {
@@ -88,11 +88,11 @@ function getBestAttackerAgainst(myMon, enemy, pokI) {
                 bestDamage = dmg;
             }
         }
-        
-    }
-    
 
-    
+    }
+
+
+
     return best;
 }
 
@@ -121,9 +121,9 @@ function getBestDeffenders(myMon, enemy, pokI) {
                 best.push(myMon[i]);
             }
         }
-        
+
     }
-    
+
     return best;
 }
 
@@ -138,53 +138,53 @@ function monsHaveDamage(mons, enemy, pokI) {
 
 // is there a chance of the enemy one hit kill this pok?
 function chanceOfOneHitKill(myMon, enemy, pokI) {
-    
+
     var deff = [];
     for(var i in myMon) {
         var id = myMon[i].id;
         if(pokI[id].against[enemy].maxE < myMon.maxhp) { // if there is no chance of one hit kill
-            deff.push(myMon[i]);       
+            deff.push(myMon[i]);
         }
     }
-    
+
     return deff;
-     
+
 }
 
 // is the last array of this array of array usefull?
 function checkIfLastArrayIsUseful(arrayofarraymons, enemy, pokI) {
     var last = arrayofarraymons[arrayofarraymons.length - 1];
-    if(last.length == 0) { // if there is none 
+    if(last.length == 0) { // if there is none
         //console.log("There are no Mon");
         return false;
         }
-    if(!monsHaveDamage(last,enemy, pokI)) {  
+    if(!monsHaveDamage(last,enemy, pokI)) {
         // check if the mons have any damage against that opponent
         //if there is none than we're not going to continue to use this array and just go with the other
         //console.log("Mons don't have damage");
         return false;
     }
     if(arrayofarraymons.length > 2) {
-       if(arrayofarraymons[arrayofarraymons.length - 2].length == last.length) 
+       if(arrayofarraymons[arrayofarraymons.length - 2].length == last.length)
            // if nothing has changed since the last update, nothing is useful here
            return false;
     }
-    
+
     return true;
-                
+
 }
 
 // update of the switch state
 function switchStateUpdate(state, global) {
     console.log("On Switch State");
-    
+
     var stackOfArrays = [];
     var pokI = global.ourPokemons;
-    
+
     var myMon = state.self.reserve.filter(mon => !mon.dead);
     myMon = myMon.filter(mon => !mon.active);
     myMon = myMon.filter(mon => !mon.disabled);
-    
+
     if(myMon.length == 1) {
         //console.log("It had just one");
         global.lastSwitch.enemy = state.opponent.active.id;
@@ -192,10 +192,10 @@ function switchStateUpdate(state, global) {
         global.lastSwitch.turn = state.turn;
         return new SWITCH(myMon[0].id);
     }
-    
+
     stackOfArrays.push(myMon);
 
-    
+
     var doWithoutEnemy = false;
     if(state.opponent.active == null) {
         doWithoutEnemy = true;
@@ -210,88 +210,88 @@ function switchStateUpdate(state, global) {
         global.lastSwitch.turn = state.turn;
         return SWITCH(mon);
     }
-    
+
     var enemy = state.opponent.active.id;
 
     stackOfArrays.push(getGoodDeffenders(stackOfArrays[stackOfArrays.length-1], enemy, pokI));
     if(!checkIfLastArrayIsUseful(stackOfArrays, enemy, pokI)) {
         stackOfArrays.pop();
     }
-    
+
     stackOfArrays.push(getBestDeffenders(stackOfArrays[stackOfArrays.length-1], enemy, pokI)); // try to get the best deffenders
     if(!checkIfLastArrayIsUseful(stackOfArrays, enemy, pokI)) {
         stackOfArrays.pop();
     }
-     
+
     var best = getBestAttackerAgainst(stackOfArrays[stackOfArrays.length-1], enemy, pokI);
-    
+
     global.lastSwitch.enemy = state.opponent.active.id;
     global.lastSwitch.pok = best.id;
     global.lastSwitch.turn = state.turn;
-    
+
     //console.log("lenght of the array: " + stackOfArrays.length );
     //console.log("choosed: " + best.id + " because the deffense was " +  best.tDef);
     return new SWITCH(best.id);
-    
+
 }
 
 var switchState = new State(switchStateUpdate, null);
 
 function switchTransFunc(state, global) {
-    
+
     if(state.forceSwitch)
         return false;
     if(state.opponent.active == null)
         return false;
     if(state.opponent.active.id == null)
         return false;
-    
+
     var pok = state.self.active;
     if(pok == null)
         return false;
     var enem = state.opponent.active;
     var doIt = false;
     var lastSwitch = global.lastSwitch;
-    
+
     if(lastSwitch.enemy != enem.id) {
         doIt = true;
     }
     else if((state.turn - lastSwitch.turn) > 3) {
         doIt = true;
     }
-    
+
     if(!doIt) {
         return false;
     }
-    
+
     var pokI = global.ourPokemons;
 
     var enemy = state.opponent.active.id;
     if(pokI[pok.id].against[enemy].typeDefending >= 0)
         return false;
-    
+
     var deffense = pokI[pok.id].against[enemy].typeDefending;
-    
+
     var stackOfArrays = [];
-    
+
     var Mons = state.self.reserve.filter(mon => !mon.dead);
     Mons = Mons.filter(mon => !mon.active);
     Mons = Mons.filter(mon => !mon.disabled);
-    
-    
+
+
     var last = getGoodDeffenders(Mons, enemy, pokI);
-    
+
     if(last.length == 0) // if there is none good deffender, stick with what you got
         return false;
-    if(!monsHaveDamage(last,enemy, pokI)) {  
+    if(!monsHaveDamage(last,enemy, pokI)) {
         // check if the mons have any damage against that opponent
         //  if there is none than why change?
         return false;
     }
- 
-    return true; 
-    
-    
+
+    return true;
+
+
 }
 
 
@@ -304,7 +304,7 @@ var forceSwitchTransition = new Transition(1000, switchState, forceSwitchTransFu
 module.exports = {
     state : switchState,
     forceSwitch : forceSwitchTransition,
-    
+
     update : switchStateUpdate,
     forceSwithFunc : forceSwitchTransFunc,
     switchTransFunc : switchTransFunc

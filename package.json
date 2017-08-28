@@ -1,33 +1,31 @@
 {
   "name": "leftovers-again",
-  "version": "0.10.1",
+  "version": "0.11.1",
   "description": "Pokemon Showdown - Bot Client",
-  "main": "lib/main.js",
+  "main": "src/main.js",
   "files": [
-    "lib",
+    "src",
+    "spec",
     "templates",
+    "scripts",
     "CONTRIBUTING.md",
     "README.md",
     "FAQ.md"
   ],
   "scripts": {
-    "babel": "babel src -d lib && babel scripts -d lib/scripts",
-    "babel:watch": "onchange 'src/**/*.js' -v -- ./build/rebuild.sh {{changed}}",
-    "build": "npm-run-all clean babel copy",
-    "clean": "rimraf lib",
-    "copy": "cp -R src/data lib && (cd src && find ./ -type f \\( -name '*.json' -o -name '*.txt' \\) | tar -cf - -T - | tar -xf - -C ../lib -v)",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
     "test": "jasmine",
-    "develop": "npm-run-all build --parallel babel:watch 'start:watch -- {@}' --",
-    "start": "npm run clean && npm run build && node lib/start.js",
-    "start:quick": "node lib/start.js",
-    "start:watch": "nodemon -w lib lib/start.js",
+    "develop": "nodemon src/app.js",
+    "start": "node src/app.js",
     "server": "cd deps/Pokemon-Showdown && node app.js",
     "client": "./scripts/open-client.sh",
-    "generate": "./lib/scripts/generate.js",
-    "release": "npm-run-all build test docs docs:publish && echo '\n\nGreat! Now make sure you bumped version and run `npm publish`.'"
+    "generate": "./src/scripts/generate.js",
+    "release": "npm-run-all test docs docs:publish && echo '\n\nGreat! Now make sure you bumped version and run `npm publish`.'"
+  },
+  "_moduleAliases": {
+    "leftovers-again": "src"
   },
   "repository": {
     "type": "git",
@@ -40,13 +38,14 @@
   "author": "marten",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "babel-plugin-module-resolver": "beta",
     "chalk": "^1.1.3",
     "cheerio": "^0.20.0",
     "glob": "^7.0.3",
     "handlebars": "^4.0.5",
     "inquirer": "^1.0.2",
+    "jasmine": "^2.7.0",
     "minimist": "~1.2.0",
+    "module-alias": "^2.0.1",
     "rimraf": "^2.5.4",
     "ws": "^1.0.1"
   },
@@ -56,6 +55,7 @@
     "babel-eslint": "^7.0.0",
     "babel-preset-latest": "^6.16.0",
     "esdoc": "^0.4.6",
+    "esdoc-node": "^1.0.2",
     "eslint": "^3.7.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-config-airbnb-base": "^8.0.0",
@@ -64,10 +64,9 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "jasmine-es6": "^0.1.10",
+    "jasmine-node": "^1.14.5",
     "lodash": "^4.6.1",
-    "nodemon": "^1.10.2",
-    "npm-run-all": "^3.1.0",
-    "onchange": "^3.0.2",
+    "npm-run-all": "^4.0.2",
     "underscore": "^1.8.3"
   },
   "engine": "node >= 6.0.0"

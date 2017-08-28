@@ -1,7 +1,7 @@
 /**
  * AI class. Extend this when creating your bot.
  */
-export default class AI {
+class AI {
   constructor() {} // eslint-disable-line
 
   /**
@@ -56,3 +56,5 @@ export default class AI {
     return false;
   }
 }
+
+module.exports = AI;

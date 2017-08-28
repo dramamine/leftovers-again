@@ -1,5 +1,5 @@
-import Damage from 'leftovers-again/game/damage';
-import util from 'leftovers-again/pokeutil';
+const Damage = require('@la/game/damage');
+const util = require('@la/pokeutil');
 
 describe('damage calculator', () => {
   describe('normal moves', () => {

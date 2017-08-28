@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   self: {
     active: {
       condition: '1/1',

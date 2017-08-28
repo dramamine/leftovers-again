@@ -1,6 +1,6 @@
-import Log from 'leftovers-again/log';
-import Infodump from 'bots/infodump';
-import state from '../helpers/randomstate';
+const Log = require('@la/log');
+const Infodump = require('@la/bots/infodump');
+const state = require('../helpers/randomstate');
 
 const infodump = new Infodump();
 

@@ -1,6 +1,7 @@
-import botfinder from './botfinder';
-import Main from './main';
-import defaults from './defaults';
+require('module-alias').addAlias('@la', __dirname);
+const botfinder = require('./botfinder');
+const Main = require('./main');
+const defaults = require('./defaults');
 
 // process cmdline args
 const args = require('minimist')(process.argv.slice(2));

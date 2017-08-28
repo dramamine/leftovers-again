@@ -1,6 +1,6 @@
-import EliteFour from './elitefour';
+const EliteFour = require('./elitefour');
 
-export default class Sidney extends EliteFour {
+module.exports = class Sidney extends EliteFour {
   constructor() {
     super();
     this.meta = meta;

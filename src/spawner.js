@@ -1,7 +1,7 @@
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import Log from './log';
+const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const Log = require('./log');
 
 /**
  * Array of all spawned threads.
@@ -24,8 +24,8 @@ class Spawner {
 
     // start script
     const locations = [
-      path.join(__dirname, '../lib/start.js'),
-      'node_modules/leftovers-again/lib/start.js'
+      path.join(__dirname, '../src/app.js'),
+      'node_modules/leftovers-again/src/app.js'
     ];
 
     let stat;
@@ -39,12 +39,12 @@ class Spawner {
     });
 
     if (!script) {
-      Log.error(`Couldn't find start.js script, which is needed to spawn new instances.
+      Log.error(`Couldn't find app.js script, which is needed to spawn new instances.
 I looked here: ${locations}`);
     }
 
     const op = spawn('node', [script,
-      `${botpath}`, '--loglevel=0'
+      `${botpath}`, '--loglevel=5'
     ], {
       cwd: './'
     });
@@ -108,4 +108,4 @@ I looked here: ${locations}`);
   }
 }
 
-export default new Spawner();
+module.exports = new Spawner();

@@ -2,11 +2,11 @@
  * MilkBot531
  *
  */
-import KO from 'leftovers-again/lib/game/kochance'
-import {MOVE, SWITCH} from 'leftovers-again/lib/decisions';
-import Damage from 'leftovers-again/lib/game/damage';
-import Typechart from 'leftovers-again/lib/game/typechart'
-var _damage = require('leftovers-again/lib/game/damage');
+const KO = require('@la/game/kochance');
+const {MOVE, SWITCH} = require('@la/decisions');
+const Damage = require('@la/game/damage');
+const Typechart = require('@la/game/typechart');
+var _damage = require('@la/game/damage');
 var _damage2 = _interopRequireDefault(_damage);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,25 +24,25 @@ var strat = { normal:1 , switch:2 , heal:3 , stall:4};
 var currentStrat = strat.normal;
 
 class MilkBot531 {
-    
-    
-  decide(state) { 
-     
+
+
+  decide(state) {
+
 
       var presumedStats = Damage.assumeStats(state.opponent.active);
-    
+
      // var opSpeed = Damage.calculateStat(state.opponent.active,state.opponent.active.stats.spe);
 
       turnControl(state);
-      
-      if (state.forceSwitch) 
+
+      if (state.forceSwitch)
       {
           const myMon = findBestAttacker(state);
           console.log(myMon.species);
           // return a Decision object. SWITCH takes Pokemon objects, Pokemon names,
           // and the reserve index [0-5] of the Pokemon you're switching into.
           lastHP = myMon.hppct;
-          return new SWITCH(myMon.species); 
+          return new SWITCH(myMon.species);
       }
 
       var bestMove = findBestMove(state);
@@ -57,10 +57,10 @@ class MilkBot531 {
           }
         console.log(koChancepls.chance + '% de KO em turnos: ' +koChancepls.turns );
         //if (maxDamage < 100 && state.self.active.hppct > 40 && koChancepls < 2)
-     
+
       if (state.self.active.statuses.indexOf('trapped') == -1) //Se não está TRAPPED
           {
-              
+
               if(state.self.active.hppct > 40 && koChancepls.turns > 2)
               {
                   var newBestMon = findBestAttacker(state);
@@ -90,8 +90,8 @@ class MilkBot531 {
     {
         return arr[Math.floor(Math.random() * arr.length)];
     }
-    
-    
+
+
 }
 
 function findBestAttacker(state)
@@ -111,7 +111,7 @@ function findBestAttacker(state)
         var monScores = [];
         for (var i = 0; i < myMons.length; i++)
         {
-            
+
             console.log('!!! Testando o PKMN: ' + myMons[i].species +' com speed: ' +myMons[i].stats.spe +' Contra oponente de speed ' + state.opponent.active.stats.spe);
             myMons[i].score = evaluateMon(state,myMons[i],state.opponent.active);
             if(myMons[i].score > optimalScore)
@@ -135,7 +135,7 @@ function findBestMove(state)
         var optimalPct = 0;
         var movePriori = -1;
         var optimalPriori = -1;
-        for (var idx = 0; idx < state.self.active.moves.length; idx++ )                             
+        for (var idx = 0; idx < state.self.active.moves.length; idx++ )
         {
             var move = state.self.active.moves[idx];
             if (move.disabled) continue;
@@ -161,7 +161,7 @@ function findBestMove(state)
                     numberOfTurnsKO = -5;
                     currentStrat = strat.normal;
                     //console.log('\u0007');
-                    
+
 
                 }
                 if (currentStrat == strat.stall)
@@ -181,20 +181,20 @@ function findBestMove(state)
 
                     }
 
-                
+
                 movePriori = move.priority;
                 console.log ('----------');
                 console.log('Move: ' + move.name + ' com KO em: ' + numberOfTurnsKO + ' Priori: ' + move.priority + ' TypeEff: ' + Typechart.compare(move.type,state.opponent.active.types));
                 console.log('Damage: ' + est);
-              
+
             }
-            catch (e) 
+            catch (e)
             {
                 console.log(e);
                 console.log(state.self.active, state.opponent.active, move);
             }
-            
-           // if (est[0] > maxDamage) 
+
+           // if (est[0] > maxDamage)
            // {
            //     maxDamage = est[0];
            //     bestMove = idx;
@@ -209,7 +209,7 @@ function findBestMove(state)
                             bestMove = idx;
                             optimalPriori = movePriori;
                         }
-                    
+
                     if (numberOfTurnsKO == optimalKO)
                         {
                             if(pctKO > optimalPct)
@@ -220,7 +220,7 @@ function findBestMove(state)
                                     optimalPriori = movePriori;
                                 }
                         }
-                        
+
                 }
                 if(movePriori > optimalPriori)
                 {
@@ -231,7 +231,7 @@ function findBestMove(state)
                                 bestMove = idx;
                                 optimalPriori = movePriori;
                         }
-                    
+
                          // if (numberOfTurnsKO == optimalKO)
                          // {
                          //     if(pctKO > optimalPct)
@@ -242,12 +242,12 @@ function findBestMove(state)
                          //         optimalPriori = movePriori;
                          //     }
                          // }
-                        
-                        
+
+
                 }
-            
+
         }
-    
+
     return bestMove;
 }
 
@@ -264,13 +264,13 @@ function turnControl(state)
     //Verifica se o PKMN tem algum tipo de cura.
     if (myMoves != undefined)
         {
-            
+
             for (var i = 0; i < myMoves.length; i++)
             {
-           
+
                 var move = myMoves[i];
                // if (move.disabled) continue;
-                if(healName.indexOf(move.name) !== -1)  
+                if(healName.indexOf(move.name) !== -1)
                     {
                         healMove = move.name;
                     }
@@ -283,7 +283,7 @@ function turnControl(state)
     ///
     if(stallMove != undefined)
         {
-            
+
             var bestMove = findBestMove(state);
             console.log ('passou best');
             var est = _damage2.default.getDamageResult(state.self.active, state.opponent.active, state.self.active.moves[bestMove]);
@@ -298,11 +298,11 @@ function turnControl(state)
                 currentStrat = strat.stall;
                 console.log('\u0007');
             }
-            
+
         }
     if(healMove != undefined && state.self.active.hppct < 65 && hpLost < 50)
         {
-            currentStrat = strat.heal;               
+            currentStrat = strat.heal;
         }
     if(lastPKMNInBattle == state.self.active.species)
     {
@@ -319,7 +319,7 @@ function turnControl(state)
       //  hpLost = 0;
        // lastHP = state.self.active.hppct;
         hpLost = lastHP - state.self.active.hppct;
-        
+
     }
     if(turnsInBattle > 0)
     {
@@ -328,8 +328,8 @@ function turnControl(state)
     }
     console.log(hpLost +'HP Perdido!');
     lastPKMNInBattle = state.self.active.species;
-    
-       
+
+
 }
 
 function dealWithExceptions(mov,a,d,prevDmg)
@@ -341,9 +341,9 @@ function dealWithExceptions(mov,a,d,prevDmg)
     var defender = d;
     var attacker = a;
     var typeEffectiveness;// = Typechart.compare(move,defender.types);
-    if (move.type === 'Ground' && defender.item === 'Air Balloon') 
+    if (move.type === 'Ground' && defender.item === 'Air Balloon')
     {
-        
+
         //description.defenderItem = defender.item;
         console.log('MANÉ DO BALÃO!!!!!!!!!!!!!!!!!!!!!!');
         return [0];
@@ -376,7 +376,7 @@ function evaluateMon(state,myMon,otherMon)
     var optimalPriori = -1;
     var presumedStats = Damage.assumeStats(state.opponent.active);
     //TESTA MOVES
-    for (var idx = 0; idx < myMon.moves.length; idx++ )                             
+    for (var idx = 0; idx < myMon.moves.length; idx++ )
     {
         var move = myMon.moves[idx];
         if (move.disabled) continue;
@@ -396,9 +396,9 @@ function evaluateMon(state,myMon,otherMon)
             }
             movePriori = move.priority;
             if (movePriori == undefined) movePriori = 0; //Não retorna 0 quando o pokemon está na reserve.
-          
+
         }
-        catch (e) 
+        catch (e)
         {
             console.log(e);
             console.log(myMon, oponente, move);
@@ -421,7 +421,7 @@ function evaluateMon(state,myMon,otherMon)
                                 bestMove = idx;
                                 optimalPriori = movePriori;
                             }
-                    } 
+                    }
             }
             if(movePriori > optimalPriori) //PRIORITY VEM PRIMEIRO. Se o PKMN matar na mesma quantia de turnos, melhor usar um ataque mais rápido.
             {
@@ -430,13 +430,13 @@ function evaluateMon(state,myMon,otherMon)
                             optimalKO = numberOfTurnsKO;
                             optimalPct = pctKO;
                             optimalPriori = movePriori;
-                    
+
                     }
-                    
-                    
+
+
             }
-        
-        
+
+
     }
     score = score + 3/optimalKO; console.log('Score de KO: +' + 2/optimalKO);
     score = score + pctKO/1000; console.log('Score de PCT: +' + pctKO/1000);
@@ -446,27 +446,27 @@ function evaluateMon(state,myMon,otherMon)
     }
     if (myMon.stats.spe > oponente.stats.spe)
     {
-        score = score+1; console.log('Score de Speed: +1');                                             
+        score = score+1; console.log('Score de Speed: +1');
     }
     var opoType1 = oponente.types[0];
 
-    
+
     var opoType2 = oponente.types[1];
     var eff1;
     eff1 = Typechart.compare(opoType1,myMon.types); console.log(opoType1 + ' ' +eff1);
     var eff2;
-    if (opoType2 != undefined) 
+    if (opoType2 != undefined)
     {
         eff2 = Typechart.compare(opoType2,myMon.types); console.log(opoType2 + ' ' +eff2);
     }
     else eff2 = 1;
     typeEffDef = 1 - ((eff1+eff2)/8);
-    score = score+typeEffDef; console.log('Score de Defesa de Type: ' + typeEffDef);  
+    score = score+typeEffDef; console.log('Score de Defesa de Type: ' + typeEffDef);
     console.log('SCORE FINAL: ' +score);
     return score;
 }
 
-export default MilkBot531;
+module.exports = MilkBot531;
 
 
 //Ability de absorb
