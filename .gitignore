@@ -16,3 +16,5 @@ tmp/
 results/results.csv
 private/
 yarn.lock
+notes/
+Pokemon-Showdown/

@@ -1,6 +1,6 @@
 ## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
 
-Live server running here. Fight against existing bots right now! http://cyberdyne.psim.us
+Live server running here: http://cyberdyne.psim.us
 
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
 Full code documentation [here](http://metal-heart.org/static/docs/).
@@ -69,20 +69,21 @@ npm install leftovers-again
 node node_modules/leftovers-again/lib/scripts/generate.js
 
 # afterwards, your bot is ready to go
-npm run server # in a separate window
+```bash
+npm run server                          # in a separate window
 npm install
 npm start -- --opponent=randumb
 ```
 
 ### Run a `randombattle` between two bots:
 ```bash
-npm run server # in a separate window
+npm run server                          # in a separate window
 npm start -- stabby --opponent=randumb
 ```
 
 ### Play against your bot, via your web browser
 ```bash
-npm run server # in a separate window
+npm run server                          # in a separate window
 npm start
 # browse to: http://play.pokemonshowdown.com/?~~localhost:8000
 ```
@@ -95,6 +96,9 @@ npm start -- --production
 
 
 FAQ/Getting started guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
+
 Code documentation [here](http://metal-heart.org/static/docs/).
+
 Contribution guide [here](https://github.com/dramamine/leftovers-again/blob/master/CONTRIBUTING.md).
+
 Changelog [here](https://github.com/dramamine/leftovers-again/blob/master/CHANGELOG.md).
