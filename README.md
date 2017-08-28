@@ -66,7 +66,7 @@ node -v
 npm install leftovers-again
 
 # run generator script
-node node_modules/leftovers-again/lib/scripts/generate.js
+node node_modules/leftovers-again/src/scripts/generate.js
 
 # afterwards, your bot is ready to go
 ```bash
