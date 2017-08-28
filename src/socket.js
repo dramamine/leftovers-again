@@ -27,7 +27,7 @@ class Socket extends Connection {
     this.chatroom = chatroom;
     this.format = format;
 
-    Log.log(`connecting to: ${server}:${port}`);
+    Log.log(`connecting to: ${server}:${port} with name ${nickname}`);
     this.build(`ws://${server}:${port}/showdown/websocket`);
 
     listener.subscribe('challstr', this.login.bind(this));
@@ -118,10 +118,10 @@ server logs for debugging.
     let data = '';
     if (!this.password) {
       requestOptions.method = 'GET';
-      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
+      requestOptions.path += '?act=getassertion&userid=' + encodeURI(this.nickname) + '&challstr=' + challengekeyid + '%7C' + challenge;
     } else {
       requestOptions.method = 'POST';
-      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challengekeyid=' + challengekeyid + '&challenge=' + challenge;
+      data = 'act=login&name=' + encodeURI(this.nickname) + '&pass=' + encodeURI(this.password) + '&challstr=' + challengekeyid + '%7C' + challenge;
       requestOptions.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': data.length
