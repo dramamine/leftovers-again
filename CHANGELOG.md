@@ -1,3 +1,6 @@
+[0.11.2] - 2017-08-27
+- Update login command
+
 [0.11.1] - 2017-08-24
 - Update documentation
 
