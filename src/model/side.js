@@ -9,7 +9,8 @@ const clean = x => x.replace(/move:/gi, '').replace(/ /g, '').toLowerCase();
 // some effects can stack multiple times.
 const STACKS = {
   [SideConditions.SPIKES]: 3,
-  [SideConditions.STEALTHROCK]: 3
+  [SideConditions.STEALTHROCK]: 3,
+  [SideConditions.TOXICSPIKES]: 2
 };
 
 /**
