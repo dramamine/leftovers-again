@@ -13,7 +13,7 @@ npm install leftovers-again
 ```
 
 ### Initialize Your Bot
-To create your first bot, run `node node_modules/leftovers-again/lib/scripts/generate.js`.
+To create your first bot, run `node node_modules/leftovers-again/src/scripts/generate.js`.
 
 Note that you'll want to have a good idea of [what format you'd like to compete in](http://pokemonforever.com/Thread-A-Beginner-s-Guide-to-Smogon). Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
 
