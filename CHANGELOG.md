@@ -1,3 +1,7 @@
+[0.11.3] - 2017-08-29
+- Merge PR about toxic spikes stacking
+- Change all formats to be gen7
+
 [0.11.2] - 2017-08-27
 - Update login command
 
