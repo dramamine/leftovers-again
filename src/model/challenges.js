@@ -43,12 +43,18 @@ class Challenger {
     listener.subscribe('updatechallenges', this.onUpdateChallenges.bind(this));
     listener.subscribe('_battleReport', this.onBattleReport.bind(this));
     listener.subscribe('_lobbyUpdate', this.challengeSomeone.bind(this));
+    listener.subscribe('_nickUpdate', this.nickUpdate.bind(this));
 
 
     // all the users we've seen
     this.users = {};
     this.challengesFrom = {};
     this.challengeTo = {};
+  }
+
+  // for nickname updates... kinda hacky sorry
+  nickUpdate(name) {
+    this.nickname = name;
   }
 
   /**
