@@ -1,3 +1,6 @@
+[0.11.4] - 2017-08-31
+- Hacky fix for nickname collisions
+
 [0.11.3] - 2017-08-29
 - Merge PR about toxic spikes stacking
 - Change all formats to be gen7
