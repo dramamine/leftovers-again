@@ -115,6 +115,7 @@ class Battle {
    * @return {Boolean}  True if we had to make a decision; false otherwise
    */
   handleRequest(json) {
+    if (!json) return;
     const data = JSON.parse(json);
 
     // this is not a request, just data.

@@ -1,3 +1,6 @@
+[0.11.5] - 2017-09-18
+- Handle empty requests
+
 [0.11.4] - 2017-08-31
 - Hacky fix for nickname collisions
 
