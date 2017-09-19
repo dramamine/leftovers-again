@@ -28,7 +28,8 @@ class Socket extends Connection {
     this.format = format;
 
     Log.log(`connecting to: ${server}:${port} with name ${nickname}`);
-    this.build(`ws://${server}:${port}/showdown/websocket`);
+    this.url = `ws://${server}:${port}/showdown/websocket`;
+    this.build(this.url);
 
     listener.subscribe('challstr', this.login.bind(this));
     listener.subscribe('updateuser', this.onUpdateUser.bind(this));
@@ -139,8 +140,14 @@ server logs for debugging.
           Log.error(`failed to log in; nick ${this.nickname} is registered - invalid or no password given.
     Make sure the nickname in your package.json isn\'t already taken, or
     Register your nickname on http://play.pokemonshowdown.com/ and add
-    "nickname" and "password" to your package.json file.`);
-          process.exit(-1);
+    "nickname" and "password" to your package.json file.
+
+    For now I'm going to add some random digits to your name and try again...`);
+          this.nickname += (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+          this.close();
+          this.build(this.url);
+          return;
+          // process.exit(-1);
         }
         if (chunks.length < 50) {
           Log.error('failed to log in: ' + chunks);

@@ -5,12 +5,17 @@ const path = require('path');
 const Handlebars = require('handlebars');
 
 // valid formats involving choosing your team
-const formatsWithTeams = ['gen7pokebankanythinggoes', 'anythinggoes',
-  'gen7pokebankubers', 'ubers',
-  'gen7pokebankou', 'gen7ou', 'ou', 'pu', 'nu', 'lc', 'monotype'];
+const formatsWithTeams = ['gen7anythinggoes',
+  'gen7ou',
+  'gen7ubers',
+  'gen7uu',
+  'gen7ru',
+  'gen7nu',
+  'gen7lc',
+];
 
 // formats without teams, plus the above
-const formats = ['gen7randombattle', 'gen6randombattle'].concat(formatsWithTeams);
+const formats = ['gen7randombattle'].concat(formatsWithTeams);
 
 const languages = ['nodejs'];
 

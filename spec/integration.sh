@@ -6,7 +6,7 @@ rm -rf lib src node_modules package.json .babelrc
 npm install leftovers-again
 
 # wish I could automate this
-node node_modules/leftovers-again/lib/scripts/generate.js
+node node_modules/leftovers-again/src/scripts/generate.js
 
 # post-generation...
 yarn

@@ -1,7 +1,7 @@
 const Typechart = require('@la/game/typechart');
 const Damage = require('@la/game/damage');
 //Damage.getDamageResult(attacker, defender, move)
-const Moves = require('@la/game/moves');
+const Moves = require('@la/data/moves');
 const Side = require('@la/model/side');
 
 var Fsm = require("./Base/FSM");

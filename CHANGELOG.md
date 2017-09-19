@@ -1,3 +1,16 @@
+[0.11.5] - 2017-09-18
+- Handle empty requests
+
+[0.11.4] - 2017-08-31
+- Hacky fix for nickname collisions
+
+[0.11.3] - 2017-08-29
+- Merge PR about toxic spikes stacking
+- Change all formats to be gen7
+
+[0.11.2] - 2017-08-27
+- Update login command
+
 [0.11.1] - 2017-08-24
 - Update documentation
 

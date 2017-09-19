@@ -92,6 +92,7 @@ class Lobby {
         break;
       case '1':
         Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
+        listener.relay('_nickUpdate', util.toId(nick));
         mynick = util.toId(nick);
         if (this.users.has(mynick)) {
           Log.error('weird that users array had my nickname in it.');
