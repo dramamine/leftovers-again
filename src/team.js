@@ -165,7 +165,7 @@ class Team {
         evs.forEach((ev) => { // eslint-disable-line
           numAndLabel = ev.trim().split(' ');
           evLabel = numAndLabel[1].trim().toLowerCase();
-          if (['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(evLabel) === -1) {
+          if (['hp', 'atk', 'def',  'spa', 'spd', 'spe'].indexOf(evLabel) === -1) {
             console.error('something weird with ev label', evLabel, line);
           } else {
             mon.evs[evLabel] = parseInt(numAndLabel[0].trim(), 10);
@@ -180,7 +180,7 @@ class Team {
         ivs.forEach((iv) => { // eslint-disable-line
           numAndLabel = iv.trim().split(' ');
           ivLabel = numAndLabel[1].trim().toLowerCase();
-          if (!['hp', 'spa', 'spd', 'spe', 'atk', 'def'].indexOf(ivLabel)) {
+          if (!['hp', 'atk', 'def',  'spa', 'spd', 'spe'].indexOf(ivLabel) === -1) {
             Log.warn('something weird with iv label', ivLabel, line);
           } else {
             mon.ivs[ivLabel] = parseInt(numAndLabel[0].trim(), 10);
@@ -190,6 +190,8 @@ class Team {
         mon.moves.push(line.replace('-', '').trim());
       } else if (line.indexOf('Shiny: Y') === 0) {
         mon.shiny = true;
+      } else if (line.indexOf('Level:') === 0) {
+        mon.level = parseInt(line.replace('Level:', '').trim(), 10);
       } else if (line.indexOf('Happiness:') === 0) {
         mon.happiness = parseInt(line.replace('Happiness:', '').trim(), 10);
       } else if (line.indexOf('Nature') > 0) {

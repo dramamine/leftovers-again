@@ -2,7 +2,7 @@
  * Use dudes that trap the opponent. Good for seeing if the bot can handle
  * this without crashing.
  *
- * npm start -- research/trapper
+ * npm start -- research/trapper --loglevel=5
  */
 
 
@@ -13,8 +13,8 @@ module.exports = class Trapper extends AI {
   constructor() {
     super();
     this.meta = {
-      accepts: 'anythinggoes',
-      format: 'anythinggoes',
+      accepts: ['gen7anythinggoes', 'anythinggoes'],
+      format: 'gen7anythinggoes',
       nickname: 'Trapper ★marten★'
     };
 
@@ -67,6 +67,7 @@ Troppy (Trapinch) @ Berry Juice
 Level: 5
 Ability: Arena Trap
 EVs: 156 HP / 36 Atk / 236 Def / 76 SpD
+IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 Adamant Nature
 - Earthquake
 - Feint
@@ -77,6 +78,7 @@ Whinenaut (Wynaut) @ Berry Juice
 Level: 5
 Ability: Shadow Tag
 EVs: 236 HP / 132 Def / 132 SpD
+IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 Bold Nature
 - Encore
 - Counter

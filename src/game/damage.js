@@ -368,6 +368,10 @@ class Damage {
       return [40];
     }
 
+    if (move.name.indexOf('Hidden Power')!=-1){
+        move.type = move.name.replace("Hidden Power ","");
+    }
+
     if (move.bp === 0) {
       return [0];
     }

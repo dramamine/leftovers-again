@@ -49,6 +49,21 @@ IVs: 0 Atk
 
 const utm = '|alakazammega|alakazite|magicguard|psychic,hiddenpowerfire,shadowball,taunt|Timid|,,,252,4,252||,0,,,,|||';
 
+const whine = `
+Whinenaut (Wynaut) @ Berry Juice
+Level: 5
+Ability: Shadow Tag
+EVs: 236 HP / 132 Def / 132 SpD
+IVs: 1 HP / 2 Atk / 3 Def / 4 SpA / 5 SpD / 6 Spe
+Bold Nature
+- Encore
+- Counter
+- Mirror Coat
+- Safeguard
+`;
+
+const whineutm = 'Whinenaut|wynaut|berryjuice||encore,counter,mirrorcoat,safeguard|Bold|236,,132,,132,||1,2,3,4,5,6||5|';
+
 
 describe('team', () => {
   describe('interpretOneSmogon', () => {
@@ -91,5 +106,20 @@ describe('team', () => {
     const asString = Array.from(new Array(6), () => smogon).join('\n\n\n\n\n');
     const team = Team.interpretSmogon('\n\n' + asString + '\n\n');
     expect(team.length).toEqual(6);
+  });
+
+  it('should interpret IVs properly', () => {
+    const mon = Team.interpretOneSmogon(whine);
+    expect(mon.ivs.hp).toEqual(1);
+    expect(mon.ivs.atk).toEqual(2);
+    expect(mon.ivs.spe).toEqual(6);
+  });
+  it('should interpret level properly', () => {
+    const mon = Team.interpretOneSmogon(whine);
+    expect(mon.level).toEqual(5);
+  });
+  it('should output this mon properly', () => {
+    const packed = Team.packTeam([Team.interpretOneSmogon(whine)]);
+    expect(packed).toEqual(whineutm);
   });
 });
