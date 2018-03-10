@@ -309,7 +309,6 @@ class BattleStore {
    * last turn, they need to choose a mon to send in. This is unused.
    */
   handleRequest(json) {
-    console.log('my json:', json, json.length, typeof json);
     if (!json) return;
 
     const data = JSON.parse(json);
