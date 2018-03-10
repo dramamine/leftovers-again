@@ -34,6 +34,20 @@ describe('damage calculator', () => {
       expect(ghosttype[ghosttype.length - 1]).toEqual(0);
     });
   });
+
+  describe('hidden power', () => {
+    it('should understand Hidden Power types', () => {
+      const flying = Damage.getDamageResult(
+        'eevee', 'meowth', 'hiddenpowerflying');
+      const ice = Damage.getDamageResult(
+        'eevee', 'meowth', 'hiddenpowerice');
+      expect(flying[0]).toEqual(ice[0]);
+      const fighting = Damage.getDamageResult(
+        'eevee', 'meowth', 'hiddenpowerfightin');
+      expect(fighting[0]).toBeGreaterThan(ice[0]);
+    });
+  });
+
   describe('boosts', () => {
     it('should handle +1 boosted attack', () => {
       const attacker = util.researchPokemonById('eevee');

@@ -118,7 +118,7 @@ describe('team', () => {
     const mon = Team.interpretOneSmogon(whine);
     expect(mon.level).toEqual(5);
   });
-  fit('should output this mon properly', () => {
+  it('should output this mon properly', () => {
     const packed = Team.packTeam([Team.interpretOneSmogon(whine)]);
     expect(packed).toEqual(whineutm);
   });
