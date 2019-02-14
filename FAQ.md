@@ -15,7 +15,7 @@ npm install leftovers-again
 ### Initialize Your Bot
 To create your first bot, run `node node_modules/leftovers-again/src/scripts/generate.js`.
 
-Note that you'll want to have a good idea of [what format you'd like to compete in](https://www.smogon.com/forums/threads/the-beginners-guide-to-pok%C3%A9mon-showdown.3496279/). Most formats reqire you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
+Note that you'll want to have a good idea of [what format you'd like to compete in](https://www.smogon.com/forums/threads/the-beginners-guide-to-pok%C3%A9mon-showdown.3496279/). Most formats require you to choose a valid team for that format (besides ones where your team is randomly assigned to you). If you don't want to worry about team validation, just choose the format 'anythinggoes' for now.
 
 ### Your bot already works.
 Try battling your bot against a simple opponent - one who chooses moves at random, and one who switches into other Pokemon only when necessary.
