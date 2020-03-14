@@ -40,12 +40,12 @@ This downloads and installs a forked copy of the official Showdown server. The f
 ### Choosing Your Team
 The `team()` function should return a string that matches the Smogon format. So, if you build a team on [Pokemon Showdown](http://play.pokemonshowdown.com/) using the Teambuilder, or if you copy Pokemon data from [Smogon](http://www.smogon.com/), you can paste it in this function.
 
-The `team()` takes team data in other formats - see the [code documentation](http://metal-heart.org/static/docs/class/src/lib/team.js~Team.html) for more details.
+The `team()` takes team data in other formats - see the [code documentation](https://avadavat.github.io/leftovers-again/class/src/team.js~Team.html) for more details.
 
 Note that if you're playing the `randombattle` format, you don't need to define `team()`.
 
 ### What's in a request?
-The heart of developing a bot lies in processing the `state` data from each turn / request, and choosing your moves & switches wisely. Check the [code documentation](http://metal-heart.org/static/docs/class/src/ai.js~AI.html) for more details.
+The heart of developing a bot lies in processing the `state` data from each turn / request, and choosing your moves & switches wisely. Check the [code documentation](https://avadavat.github.io/leftovers-again/class/src/ai.js~AI.html) for more details.
 
 ### How do I respond to a request?
 The preferred way is to return new instances of MOVE or SWITCH. Example code:
@@ -67,9 +67,9 @@ The unpreferred way is to return the string '/MOVE 4' or '/SWITCH 6' (1-indexed 
 ## Reading State
 
 ### Where are the docs on `state`?
-[code documentation](http://metal-heart.org/static/docs/class/src/ai.js~AI.html#instance-method-decide)
+[code documentation](https://avadavat.github.io/leftovers-again/class/src/ai.js~AI.html#instance-method-decide)
 
-Besides the docs for `state`, you'll also wnat to familiarize yourself with what's in a [Pokemon object](http://metal-heart.org/static/docs/typedef/index.html#static-typedef-PokemonData) and what's in a [Move object](http://metal-heart.org/static/docs/typedef/index.html#static-typedef-MoveData)
+Besides the docs for `state`, you'll also wnat to familiarize yourself with what's in a [Pokemon object](https://avadavat.github.io/leftovers-again/typedef/index.html#static-typedef-PokemonData) and what's in a [Move object](https://avadavat.github.io/leftovers-again/typedef/index.html#static-typedef-MoveData)
 
 Seriously, read the docs!
 
