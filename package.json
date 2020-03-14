@@ -54,7 +54,7 @@
     "babel-cli": "^6.8.0",
     "babel-eslint": "^7.0.0",
     "babel-preset-latest": "^6.16.0",
-    "esdoc": "^0.4.6",
+    "esdoc": "^1.1.0",
     "esdoc-node": "^1.0.2",
     "eslint": "^3.7.0",
     "eslint-config-airbnb": "^12.0.0",
@@ -64,7 +64,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "jasmine-es6": "^0.1.10",
-    "jasmine-node": "^1.14.5",
+    "jasmine-node": "^3.0.0",
     "lodash": "^4.6.1",
     "npm-run-all": "^4.0.2",
     "underscore": "^1.8.3"
