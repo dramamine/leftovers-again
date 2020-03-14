@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ai.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/ai.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * AI class. Extend this when creating your bot.
+ */
+class AI {
+  constructor() {} // eslint-disable-line
+
+  /**
+   * Abstract function that must be overridden.
+   *
+   * @param  {String} opponent Your opponent&apos;s nickname, in case you want to
+   * pull any shenanigans in particular for this player.
+   *
+   * @return {String}   A Showdown-formatted team string.
+   */
+  team(opponent) { // eslint-disable-line
+    return this.meta.team || &apos;&apos;;
+  }
+
+  /**
+   * Abstract function that must be overridden.
+   *
+   * @param  {object} state a State object. This object has the following
+   * properties:
+   *
+   * @param {Object} state.self Details about your pokemon.
+   *
+   * @param {PokemonData|Array&lt;PokemonData&gt;} state.self.active  Contains any of your mons
+   * who are &quot;active&quot;, i.e. on the front lines this turn. This is intended to
+   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.
+   *
+   * @param {Array&lt;PokemonData&gt;} state.self.reserve All the Pokemon on your side.
+   * Note that this includes your active Pokemon, who have the property &apos;active&apos;
+   * set to true. You can switch into any Pokemon where neither &apos;active&apos;,
+   * &apos;disabled&apos;, nor &apos;dead&apos; are true.
+   *
+   * @param {Object} state.opponent Details about your opponent&apos;s pokemons.
+   *
+   * @param {PokemonData|Array&lt;PokemonData&gt;} state.opponent.active  Contains any of your
+   * opponent&apos;s mons who are &quot;active&quot;, i.e. on the front lines this turn. This
+   * is intended to be a single Pokemon in Singles matches and an array of
+   * Pokemon in Doubles and Triples.
+   *
+   * @param {Array&lt;PokemonData&gt;} state.opponent.reserve  All the Pokemon on your
+   * opponent&apos;s side, that you have seen.
+   *
+   * @param {number} rqid  The request ID. This is needed for server replies
+   * and is not really something you need to worry about.
+   *
+   * @return {Decision} a Decision object, or a Promise that resolves to a
+   *         Decision object.
+   *
+   *
+   */
+  decide(state) { // eslint-disable-line
+    console.error(&apos;You need to implement decide() in your AI class!&apos;);
+    return false;
+  }
+}
+
+module.exports = AI;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

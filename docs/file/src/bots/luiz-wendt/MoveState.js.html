@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/bots/luiz-wendt/MoveState.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/bots/luiz-wendt/MoveState.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const {MOVE, SWITCH} = require(&apos;@la/decisions&apos;);
+const Damage = require(&apos;@la/game/damage&apos;);
+const Side = require(&apos;@la/model/side&apos;);
+
+var Sideo = new Side();
+
+var move0 = function(state) {
+    return new MOVE(0);
+}
+var move1 = function(state) {
+    return new MOVE(1);
+}
+var move2 = function(state) {
+    return new MOVE(2);
+}
+var move3 = function(state) {
+    return new MOVE(3);
+}
+
+function haveRecoil(moveID) {
+    if(moveID == &apos;doubleedge&apos;)
+        return true;
+    if(moveID == &apos;bravebird&apos;)
+        return true;
+    if(moveID == &apos;flareblitz&apos;)
+       return true;
+    if(moveID == &apos;headcharge&apos;)
+       return true;
+    if(moveID == &apos;headsmash&apos;)
+        return true;
+    if(moveID == &apos;highjumpkick&apos;)
+        return true;
+    if(moveID == &apos;jumpkick&apos;)
+        return true;
+    if(moveID == &apos;lightofruin&apos;)
+        return true;
+    if(moveID == &apos;struggle&apos;)
+        return true;
+    if(moveID == &apos;submission&apos;)
+        return true;
+    if(moveID == &apos;takedown&apos;)
+        return true;
+    if(moveID == &apos;volttackle&apos;)
+        return true;
+    if(moveID == &apos;wildcharge&apos;)
+        return true;
+    if(moveID == &apos;woodhammer&apos;)
+        return true;
+
+    return false
+
+}
+
+function isEnemyWithStatus(enem, stateID) {
+    if(enem.statuses) {
+        for(var i in enem.statuses) {
+            if(enem.statuses[i] == stateID) {
+                 return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+var Calcule = function(state, moveID, global) {
+    var enem = state.opponent.active;
+    var against = global.ourPokemons[state.self.active.id].against[enem.id];
+    if(state.self.active == null) {
+        console.error(&quot;o ativo n&#xE3;o existe&quot;);
+        return -404;
+    }
+    else if(state.self.active.moves == null) {
+        console.error(&quot;os moves n&#xE3;o existem&quot;);
+        console.error(state.self.active);
+        //return -404;
+    }
+    var move = state.self.active.moves[moveID];
+    if(move == null)
+        return -404;
+    if(move.disabled)
+        return -404;
+    if(move.pp == 0)
+        return -404;
+
+
+    var pok = state.self.active;
+
+    var dmg = Damage.getDamageResult(pok, enem, move);
+
+    var value = 0;
+
+    var dmgMin = dmg[0];
+    var dmgMax = dmg[dmg.length -1];
+
+    var dmgMean = 0;
+
+    for(var i in dmg) {
+        dmgMean += dmg[i];
+    };
+
+    dmgMean /= dmg.length;
+
+
+    var enemStats = Damage.assumeStats(enem);
+    //var enemHP = (enem.hp/100) * (enemStats.hp);
+    //console.log(&quot;HP: &quot; + (enem.hp/100) + &quot;, &quot; + (enemStats.hp) + &quot; = &quot; + enemHP)
+
+    //Casos especiais
+
+    if(move.id == &quot;substitute&quot; &amp;&amp; pok.hppct &lt; 0.25)
+        return -100;
+
+    if(move.id == &quot;explosion&quot;){
+        if(pok.hppct &gt; 0.2)
+            value -= 100;
+        else
+            value -= 20;
+    }
+
+
+    if(move.id == &quot;fakeout&quot;) {
+        if((global.lastSwitch.turn + 1) != state.turn) // esse move s&#xF3; funciona na primeira vez. -.-
+            return -404;
+    }
+
+    if(move.id == &quot;return&quot;) {
+        value += 40;
+    }
+
+    if(haveRecoil(move.id))
+        value -= 50;
+
+    if(move.drain)
+        value += 20;
+
+    if(move.flags.charge)
+        value -= 100;
+
+    if(dmgMax &gt;= enem.hp) {
+        //console.log(&quot;hp : &quot; + enem.hp);
+        if(dmgMin &gt;= enem.hp) {
+            value += 250;
+        }
+        if(dmgMean &gt;= enem.hp) {
+            value += 100;
+        }
+        value += 650;
+        value += move.pp;
+        value += move.priority * 10;
+
+    }
+    else {
+
+        value += dmgMean;
+        if(pok.hp &lt;= against.bestMinE)
+            value += move.priority * 20;
+        else
+            value += move.priority * 2;
+
+
+
+        //EXCLUIR ISSO DEPOIS DE ADICIONAR STATE DE SIDE CONDITION
+        if(move.sideCondition) {
+            // Se for um side condition que diminue o dano do inimigo
+            if(move.sideCondition == &apos;lightscreen&apos; &amp;&amp;
+               move.sideCondition == &apos;luckychant&apos; &amp;&amp;
+               move.sideCondition == &apos;mist&apos; &amp;&amp;
+               move.sideCondition == &apos;reflect&apos; &amp;&amp;
+               move.sideCondition == &apos;safeguard&apos; &amp;&amp;
+               move.sideCondition == &apos;tailwind&apos;
+              ){
+                value += 40;
+
+               }
+            else if(move.sideCondition == &apos;matblock&apos;) { // se for esse ataque aqui que eu n&#xE3;o entendi
+                value += 15;
+            }
+
+        }
+
+        if(move.boosts) {
+            if(move.target == &quot;normal&quot;) {
+                for (var i in move.boosts) {
+                    value += -move.boosts[i] * 14;
+                }
+            }
+            else if(move.target == &quot;self&quot;)
+            {
+                for (var i in move.boosts) {
+                    value += move.boosts[i] * 10;
+                }
+            }
+        }
+
+        if(move.self) {
+            if(move.self.boosts) {
+                for(i in move.self.boosts)
+                    value += move.self.boosts[i] * 10;
+            }
+        }
+
+
+        if(move.secondary) {
+            if(move.secondary.self) {
+                if(move.secondary.self.boosts) {
+                    if(move.secondary.chance) {
+                        for(i in move.secondary.self.boosts) {
+                            value += move.secondary.self.boosts[i] * 0.1 * move.secondary.chance;
+                        }
+                    }
+                    else {
+                        for(i in move.secondary.self.boosts){
+                            value += move.secondary.self.boosts[i] * 10;
+                        }
+                    }
+                }
+
+            }
+            if(move.secondary.status) {
+               if(!isEnemyWithStatus(enem, move.secondary.status)) {
+                      if(move.secondary.chance) {
+                          value += 0.5 * move.secondary.chance;
+                      }
+                      else {
+                          value += 50;
+                      }
+               }
+            }
+
+            if(move.secondary.volatileStatus){
+                var bdo = false;
+                if(enem.volatileStatus) {
+                    if(enem.volatileStatus[move.secondary.volatileStatus] == null) {
+                        bdo = true;
+                    }
+                }
+                else {
+                    bdo = true;
+                }
+                if(bdo) {
+                    if(move.secondary.chance) {
+                        value += 0.5 * move.secondary.chance;
+                    }
+                    else {
+                        value += 50;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    if(move.accuracy &gt; 20) {
+            value *= move.accuracy;
+            value /= 100;
+    }
+
+    // console.log(move.id +&quot; : &quot; + dmgMin + &quot;, &quot; + dmgMean + &quot;, &quot; + dmgMax + &quot; : &quot; + value);
+
+    return value;
+
+}
+
+
+var Calcule0 = function(state, global) {
+    return Calcule(state, 0, global);
+}
+var Calcule1 = function(state, global) {
+    return Calcule(state, 1, global);
+}
+var Calcule2 = function(state, global) {
+    return Calcule(state, 2, global);
+}
+var Calcule3 = function(state, global) {
+    return Calcule(state, 3, global);
+}
+
+module.exports ={
+    move0 : move0,
+    move1 : move1,
+    move2 : move2,
+    move3 : move3,
+    calcule0 : Calcule0,
+    calcule1 : Calcule1,
+    calcule2 : Calcule2,
+    calcule3 : Calcule3,
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/game/damage.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/game/damage.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const Typechart = require(&apos;./typechart&apos;);
+const util = require(&apos;../pokeutil&apos;);
+
+const AT = &apos;atk&apos;;
+const DF = &apos;def&apos;;
+const SA = &apos;spa&apos;;
+const SD = &apos;spd&apos;;
+const SP = &apos;spe&apos;;
+const HP = &apos;hp&apos;;
+const gen = 7;
+
+const STATS = [AT, DF, SA, SD, SP, HP];
+
+const ASSUME_LEVEL = 75;
+
+const NATURES = {
+  adamant: [AT, SA],
+  bashful: [null, null],
+  bold: [DF, AT],
+  brave: [AT, SP],
+  calm: [SD, AT],
+  careful: [SD, SA],
+  docile: [null, null],
+  gentle: [SD, DF],
+  hardy: [null, null],
+  hasty: [SP, DF],
+  impish: [DF, SA],
+  jolly: [SP, SA],
+  lax: [DF, SD],
+  lonely: [AT, DF],
+  mild: [SA, DF],
+  modest: [SA, AT],
+  naive: [SP, SD],
+  naughty: [AT, SD],
+  quiet: [SA, SP],
+  quirky: [null, null],
+  rash: [SA, SD],
+  relaxed: [DF, SP],
+  sassy: [SD, SP],
+  serious: [null, null],
+  timid: [SP, AT]
+};
+
+class Damage {
+  processPokemon(mon) {
+    // console.log(mon);
+    // just adding some stuff to see if we can get this workin&apos;
+    // mon.ability = mon.baseAbility;
+
+
+    mon.weight = mon.weightkg;
+    mon.type1 = &apos;&apos;;
+    mon.type2 = &apos;&apos;;
+    if (mon.types.length &lt; 1 || mon.types.length &gt; 2) {
+      console.warn(&apos;weird type length&apos;, mon.types);
+    }
+    mon.type1 = mon.types[0];
+    mon.type2 = (mon.types.length === 2)
+      ? mon.types[1]
+      : &apos;&apos;;
+    mon.nature = &apos;serious&apos;;
+
+    mon.level = mon.level || ASSUME_LEVEL;
+
+    mon.status = (mon.statuses)
+      ? mon.statuses.join(&apos; &apos;) // string vs array
+      : &apos;&apos;;
+    mon.ability = mon.ability || mon.abilities[&apos;0&apos;];
+    mon.item = mon.item || &apos;&apos;;
+    mon.gender = &apos;M&apos;;
+
+    this.calculateStats(mon);
+
+    return mon;
+  }
+
+  /**
+   * Calculate the &apos;stats&apos; object, which takes baseStats, boosts, EVs, and IVs
+   * into account. Default values are provided for boosts, EVs, and IVs if the
+   * object doesn&apos;t currently have these set.
+   *
+   * @param  A reference to the mon in question.
+   * @return The pokemon, with updated values for &apos;boosts&apos;, &apos;evs&apos;, &apos;ivs&apos;, and
+   * &apos;stats&apos;.
+   */
+  calculateStats(mon) {
+    mon.boosts = Object.assign({
+      [AT]: 0,
+      [DF]: 0,
+      [SA]: 0,
+      [SD]: 0,
+      [SP]: 0
+    }, mon.boosts);
+
+    mon.evs = Object.assign({
+      [AT]: 84,
+      [DF]: 84,
+      [SA]: 84,
+      [SD]: 84,
+      [SP]: 84,
+      [HP]: 84
+    }, mon.evs);
+
+    mon.ivs = Object.assign({
+      [AT]: 31,
+      [DF]: 31,
+      [SA]: 31,
+      [SD]: 31,
+      [SP]: 31,
+      [HP]: 31
+    }, mon.ivs);
+
+    // REMINDER: if it exists, &apos;stats&apos; is already modified based on baseStats,
+    // EVs, IVs, and level, but not boosts!
+    if (!mon.stats) {
+      mon.stats = {};
+    }
+    [AT, SA, DF, SD, SP, HP].forEach((stat) =&gt; {
+      if (!mon.stats[stat]) {
+        this.assumeStat(mon, stat);
+      }
+    });
+
+    if (!mon.boostedStats) {
+      mon.boostedStats = {};
+    }
+    [AT, SA, DF, SD, SP].forEach((stat) =&gt; {
+      mon.boostedStats[stat] = getModifiedStat(
+        mon.stats[stat], mon.boosts[stat]);
+    });
+    return mon;
+  }
+
+  processMove(move) {
+    move.isCrit = false;
+    move.bp = move.basePower;
+    move.isPulse = move.name === &apos;Pulse&apos;;
+    move.isBite = move.name === &apos;Bite&apos;;
+    move.isSpread = move.name === &apos;Spread&apos;; // ??
+    move.hits = move.multihit || 1; // lol needs more tests
+    move.ignoresDefenseBoosts = move.ignoreDefensive || false;
+    move.makesContact = (move.flags &amp;&amp; move.flags.contact) || false;
+    move.hasSecondaryEffect = !!move.secondary;
+
+    // isAerilate || isPixilate || isRefrigerate
+    return move;
+  }
+
+
+  /**
+   * Use the maximum value for a stat. This means we&apos;ll use 252 EVs and a
+   * strong nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we&apos;re assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see assumeStat
+   */
+  maximizeStat(mon, stat) {
+    return this.assumeStat(mon, stat, 252, 1.1);
+  }
+
+  /**
+   * Use the minimum value for a stat. This means we&apos;ll use 0 EVs and a weak
+   * nature for that stat.
+   *
+   * @param  {Object} mon  The Pokemon object.
+   * @param  {String/Enum} stat The stat we&apos;re assuming.
+   *
+   * @return {Object} The modified Pokemon object with mon.stats.{stat} defined.
+   *
+   * @see assumeStat
+   */
+  minimizeStat(mon, stat) {
+    return this.assumeStat(mon, stat, 0, 0.9);
+  }
+
+  /**
+   * Updates a certain stat if it isn&apos;t already set.
+
+   * @param  {Object} mon The pokemon object. This is modified directly.
+   * Expects the following properties:
+   * level: {Number} The Pokemon&apos;s level
+   * baseStats: {Object} The Pokemon&apos;s unmodified (pre-EV and IV) stats
+   * stats: {Object} The Pokemon&apos;s modified stats.
+   * nature: {String} (optional) The Pokemon&apos;s nature; use natureMultiplier if
+   * this is undefined.
+   * @param  {Enum/String} stat The stat to maybe update.
+   * @param  {Number} evs The EV number, ex. 252.
+   * @param  {Number} natureMultiplier The nature multiplier to use if the
+   *                                   mon doesn&apos;t have a nature set. Should
+   *                                   be in [0.9, 1, 1.1].
+   */
+  assumeStat(mon, stat, evs = 85, natureMultiplier = 1) {
+    if (!mon.stats[stat]) {
+      mon.stats[stat] = this.calculateStat(mon, stat, evs, natureMultiplier);
+    }
+    return mon;
+  }
+
+
+  /**
+   * Calculates a certain stat.
+   *
+   * HP = ((Base * 2 + IV + EV/4) * Level / 100) + Level + 10
+   * Stat = (((Base * 2 + IV + EV/4) * Level / 100) + 5) * Naturemod
+   *
+   * @param  {Object} mon The pokemon object. This is modified directly.
+   * Expects the following properties:
+   * level: {Number} The Pokemon&apos;s level
+   * baseStats: {Object} The Pokemon&apos;s unmodified (pre-EV and IV) stats
+   * stats: {Object} The Pokemon&apos;s modified stats.
+   * nature: {String} (optional) The Pokemon&apos;s nature; use natureMultiplier if
+   * this is undefined.
+   * @param  {Enum/String} stat The stat to maybe update.
+   * @param  {Number} evs The EV number, ex. 252.
+   * @param  {Number} natureMultiplier The nature multiplier to use if the
+   *                                   mon doesn&apos;t have a nature set. Should
+   *                                   be in [0.9, 1, 1.1].
+   */
+  calculateStat(mon, stat, evs = 0, natureMultiplier = 1) {
+    if (!mon.baseStats[stat]) {
+      console.error(&apos;missing the stat I need:&apos; + stat);
+      console.error(mon.baseStats);
+    }
+
+
+    const evBonus = Math.floor(evs / 4);
+    const addThis = stat === &apos;hp&apos; ? (mon.level + 10) : 5;
+    const calculated = ((mon.baseStats[stat] * 2 + 31 + evBonus) *
+      (mon.level / 100) + addThis);
+
+    const nature = (mon.nature
+        ? this.getNatureMultiplier(mon.nature, stat)
+        : natureMultiplier);
+
+    return Math.floor(calculated * nature);
+  }
+
+  /**
+   * Get the multiplier for a given nature and stat.
+   *
+   * @param  {String/Enum} nature A nature.
+   * @param  {String/Enum} stat   A stat.
+   * @return {Number} A number in [0.9, 1, 1.1]. 1 is returned for undefined
+   * natures.
+   */
+  getNatureMultiplier(nature, stat) {
+    if (!nature) return 1;
+    if (!NATURES[nature]) {
+      console.log(&apos;invalid nature! &apos; + nature);
+      return 1;
+    }
+    if (NATURES[nature][0] === stat) return 1.1;
+    if (NATURES[nature][1] === stat) return 0.9;
+    return 1;
+  }
+
+  /**
+   * Helper function to give a pokemon its stats. This is based on logic for
+   * randombattles. Check the client code data/scripts.js::randomSet. There
+   * are lots of exceptions that I didn&apos;t include here, read the client code
+   * for more details.
+   *
+   */
+  assumeStats(mon) {
+    if (!mon.stats) mon.stats = {};
+    [AT, SA, DF, SD, SP, HP].forEach( stat =&gt; {
+      if (!mon.stats[stat]) {
+        mon.stats[stat] = this.calculateStat(mon, stat, 85, 1);
+      }
+    });
+
+    // assume HP if we can
+    if (mon.hppct &amp;&amp; mon.stats.hp) {
+      mon.maxhp = mon.stats.hp;
+      mon.hp = mon.stats.hp * mon.hppct / 100;
+    } else if (!mon.hp) {
+      mon.hp = mon.hppct || 100;
+      mon.maxhp = 100;
+    }
+    if (isNaN(mon.hp)) {
+      Log.error(&apos;dude, assumeStats fucked up! cant let that happen.&apos;);
+      console.error(mon);
+      exit;
+    }
+    return mon;
+  }
+
+  getRecoilDamage(attacker, defender, move, damage) {
+    if (typeof move === &apos;string&apos;) {
+      move = util.researchMoveById(move); // eslint-disable-line
+    }
+
+    if (attacker.ability === &apos;rockhead&apos;) return 0;
+    if (move.id === &apos;struggle&apos;) {
+      return pokeRound(attacker.maxhp * 0.25);
+    }
+    let cumulative = 0;
+    if (attacker.item === &apos;lifeorb&apos;) {
+      cumulative += attacker.maxhp * 0.1;
+    }
+
+    // dmg percent multiplier. 0-1
+    let factor = 0;
+    switch (move.id) {
+      case &apos;headcharge&apos;:
+      case &apos;submission&apos;:
+      case &apos;takedown&apos;:
+      case &apos;wildcharge&apos;:
+        factor = 0.25;
+        break;
+
+      case &apos;bravebird&apos;:
+      case &apos;doubleedge&apos;:
+      case &apos;flareblitz&apos;:
+      case &apos;volttackle&apos;:
+      case &apos;woodhammer&apos;:
+        factor = 0.33;
+        break;
+      case &apos;headsmash&apos;:
+        factor = 0.5;
+        break;
+      case &apos;explosion&apos;:
+        cumulative += attacker.maxhp;
+        break;
+      default:
+        break;
+    }
+
+    if (attacker.ability === &apos;reckless&apos;) factor = factor * 2;
+
+    return cumulative + damage * factor;
+  }
+
+  getDamageResult(a, d, move, field = {}, maxOnly = false) {
+    // console.log(&apos;field coming in:&apos;, field, defaultField.weather);
+    if (typeof a === &apos;string&apos;) {
+      a = util.researchPokemonById(a);
+    }
+    if (typeof d === &apos;string&apos;) {
+      d = util.researchPokemonById(d);
+    }
+    if (typeof move === &apos;string&apos;) {
+      move = util.researchMoveById(move);
+    }
+
+    let attacker = Object.assign({}, a);
+    let defender = Object.assign({}, d);
+
+    const defaults = Object.assign({}, defaultField);
+    field = Object.assign(defaults, field); // eslint-disable-line
+
+    attacker = this.processPokemon(attacker);
+    defender = this.processPokemon(defender);
+    move = this.processMove(move);
+
+    const description = {
+      &apos;attackerName&apos;: attacker.species,
+      &apos;moveName&apos;: move.name,
+      &apos;defenderName&apos;: defender.species
+    };
+
+
+    if (move.name === &apos;Dragon Rage&apos;) {
+      return [40];
+    }
+
+    if (move.name.indexOf(&apos;Hidden Power&apos;)!=-1){
+        move.type = move.name.replace(&quot;Hidden Power &quot;,&quot;&quot;);
+    }
+
+    if (move.bp === 0) {
+      return [0];
+    }
+
+    if ([&apos;Physical&apos;, &apos;Special&apos;].indexOf(move.category) === -1) {
+      return [0];
+    }
+
+    let defAbility = defender.ability || &apos;&apos;;
+    if ([&apos;Mold Breaker&apos;, &apos;Teravolt&apos;, &apos;Turboblaze&apos;].indexOf(attacker.ability) !== -1) {
+      defAbility = &apos;&apos;;
+      description.attackerAbility = attacker.ability;
+    }
+
+    const isCritical = move.isCrit &amp;&amp; [&apos;Battle Armor&apos;, &apos;Shell Armor&apos;].indexOf(defAbility) === -1;
+
+    if (move.name === &apos;Weather Ball&apos;) {
+      move.type = field.weather.indexOf(&apos;Sun&apos;) !== -1 ? &apos;Fire&apos;
+        : field.weather.indexOf(&apos;Rain&apos;) !== -1 ? &apos;Water&apos;
+          : field.weather === &apos;Sand&apos; ? &apos;Rock&apos;
+            : field.weather === &apos;Hail&apos; ? &apos;Ice&apos;
+              : &apos;Normal&apos;;
+      description.weather = field.weather;
+      description.moveType = move.type;
+    } else if (move.name === &apos;Judgment&apos; &amp;&amp; attacker.item.indexOf(&apos;Plate&apos;) !== -1) {
+      move.type = getItemBoostType(attacker.item);
+    } else if (move.name === &apos;Natural Gift&apos; &amp;&amp; attacker.item.indexOf(&apos;Berry&apos;) !== -1) {
+      const gift = getNaturalGift(attacker.item);
+      move.type = gift.t;
+      move.bp = gift.p;
+      description.attackerItem = attacker.item;
+      description.moveBP = move.bp;
+      description.moveType = move.type;
+    } else if (move.name === &apos;Nature Power&apos;) {
+      move.type = field.terrain === &apos;Electric&apos; ? &apos;Electric&apos; :
+      field.terrain === &apos;Grassy&apos; ? &apos;Grass&apos; :
+      field.terrain === &apos;Misty&apos; ? &apos;Fairy&apos; :
+      field.terrain === &apos;Psychic&apos; ? &apos;Psychic&apos; :
+      &apos;Normal&apos;;
+    }
+
+    const isAerilate = attacker.ability === &apos;Aerilate&apos; &amp;&amp; move.type === &apos;Normal&apos;;
+    const isPixilate = attacker.ability === &apos;Pixilate&apos; &amp;&amp; move.type === &apos;Normal&apos;;
+    const isRefrigerate = attacker.ability === &apos;Refrigerate&apos; &amp;&amp; move.type === &apos;Normal&apos;;
+    const isGalvanize = attacker.ability === &apos;Galvanize&apos; &amp;&amp; move.type === &apos;Normal&apos;;
+    const isLiquidVoice = attacker.ability === &apos;Liquid Voice&apos; &amp;&amp; move.isSound;
+
+    if (isAerilate) {
+      move.type = &apos;Flying&apos;;
+    } else if (isPixilate) {
+      move.type = &apos;Fairy&apos;;
+    } else if (isRefrigerate) {
+      move.type = &apos;Ice&apos;;
+    } else if (attacker.ability === &apos;Normalize&apos;) {
+      move.type = &apos;Normal&apos;;
+      description.attackerAbility = attacker.ability;
+    }
+
+    const typeEffect1 = getMoveEffectiveness(move, defender.type1, attacker.ability === &apos;Scrappy&apos; || field.isForesight, field.isGravity);
+    const typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, attacker.ability === &apos;Scrappy&apos; || field.isForesight, field.isGravity) : 1;
+    let typeEffectiveness = typeEffect1 * typeEffect2;
+    const priorityImmune = move.hasPriority &amp;&amp;
+      (defAbility === &apos;Queenly Majesty&apos; || defAbility === &apos;Dazzling&apos;) &amp;&amp;
+      ([&apos;Mold Breaker&apos;, &apos;Teravolt&apos;, &apos;Turboblaze&apos;].indexOf(attacker.ability) !== -1)
+      || (move.givesHealth &amp;&amp; attacker.ability === &apos;triage&apos;);
+
+
+    if (typeEffectiveness === 0) {
+      return [0];
+    }
+    if ((defAbility === &apos;Wonder Guard&apos; &amp;&amp; typeEffectiveness &lt;= 1) ||
+      (move.type === &apos;Grass&apos; &amp;&amp; defAbility === &apos;Sap Sipper&apos;) ||
+      (move.type === &apos;Fire&apos; &amp;&amp; defAbility.indexOf(&apos;Flash Fire&apos;) !== -1) ||
+      (move.type === &apos;Water&apos; &amp;&amp; [&apos;Dry Skin&apos;, &apos;Storm Drain&apos;, &apos;Water Absorb&apos;].indexOf(defAbility) !== -1) ||
+      (move.type === &apos;Electric&apos; &amp;&amp; [&apos;Lightning Rod&apos;, &apos;Lightningrod&apos;, &apos;Motor Drive&apos;, &apos;Volt Absorb&apos;].indexOf(defAbility) !== -1) ||
+      (move.type === &apos;Ground&apos; &amp;&amp; !field.isGravity &amp;&amp; defAbility === &apos;Levitate&apos;) ||
+      (move.isBullet &amp;&amp; defAbility === &apos;Bulletproof&apos;) ||
+      (move.isSound &amp;&amp; defAbility === &apos;Soundproof&apos;) || priorityImmune) {
+      description.defenderAbility = defAbility;
+      return [0];
+    }
+    if (field.weather === &apos;Strong Winds&apos; &amp;&amp; (defender.type1 === &apos;Flying&apos; ||
+      defender.type2 === &apos;Flying&apos;) &amp;&amp; Typechart.compare(move.type, &apos;Flying&apos;) &gt; 1) {
+      typeEffectiveness /= 2;
+      description.weather = field.weather;
+    }
+    if (move.type === &apos;Ground&apos; &amp;&amp; !field.isGravity &amp;&amp; defender.item === &apos;Air Balloon&apos;) {
+      description.defenderItem = defender.item;
+      return [0];
+    }
+
+    // never used, except in output string
+    // description.HPEVs = defender.HPEVs + &apos; HP&apos;;
+
+    if (move.name === &apos;Seismic Toss&apos; || move.name === &apos;Night Shade&apos;) {
+      let lv = attacker.level;
+      if (attacker.ability === &apos;Parental Bond&apos;) {
+        lv *= 2;
+      }
+      return [lv];
+    }
+
+    if (move.name === &apos;Super Fang&apos;) {
+      return [Math.ceil(defender.hp / 2)];
+    }
+
+    if (move.hits &gt; 1) {
+      description.hits = move.hits;
+    }
+
+
+    const turnOrder = attacker.boostedStats[SP] &gt; defender.boostedStats[SP] ? &apos;FIRST&apos; : &apos;LAST&apos;;
+
+
+    // //////////////////////////////
+    // //////// BASE POWER //////////
+    // //////////////////////////////
+    let basePower;
+    switch (move.name) {
+      case &apos;Payback&apos;:
+        basePower = turnOrder === &apos;LAST&apos; ? 100 : 50;
+        description.moveBP = basePower;
+        break;
+      case &apos;Electro Ball&apos;:
+        const r = Math.floor(attacker.boostedStats[SP] / defender.boostedStats[SP]);
+        basePower = r &gt;= 4 ? 150 : r &gt;= 3 ? 120 : r &gt;= 2 ? 80 : 60;
+        description.moveBP = basePower;
+        break;
+      case &apos;Gyro Ball&apos;:
+        basePower = Math.min(150, Math.floor(25 * defender.boostedStats[SP] / attacker.boostedStats[SP]));
+        description.moveBP = basePower;
+        break;
+      case &apos;Punishment&apos;:
+        basePower = Math.min(200, 60 + 20 * countBoosts(defender.boosts));
+        description.moveBP = basePower;
+        break;
+      case &apos;Low Kick&apos;:
+      case &apos;Grass Knot&apos;:
+        const w = defender.weight;
+        basePower = w &gt;= 200 ? 120 : w &gt;= 100 ? 100 : w &gt;= 50 ? 80 : w &gt;= 25 ? 60 : w &gt;= 10 ? 40 : 20;
+        description.moveBP = basePower;
+        break;
+      case &apos;Hex&apos;:
+        // this used to check for &apos;Healthy&apos;, but this str will be empty for our system
+        basePower = move.bp * (defender.status !== &apos;&apos; ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case &apos;Heavy Slam&apos;:
+      case &apos;Heat Crash&apos;:
+        const wr = attacker.weight / defender.weight;
+        basePower = wr &gt;= 5 ? 120 : wr &gt;= 4 ? 100 : wr &gt;= 3 ? 80 : wr &gt;= 2 ? 60 : 40;
+        description.moveBP = basePower;
+        break;
+      case &apos;Stored Power&apos;:
+        basePower = 20 + 20 * countBoosts(attacker.boosts);
+        description.moveBP = basePower;
+        break;
+      case &apos;Acrobatics&apos;:
+        basePower = attacker.item === &apos;Flying Gem&apos; || attacker.item === &apos;&apos; ? 110 : 55;
+        description.moveBP = basePower;
+        break;
+      case &apos;Wake-Up Slap&apos;:
+        basePower = move.bp * (defender.status === &apos;Asleep&apos; ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case &apos;Weather Ball&apos;:
+        basePower = field.weather !== &apos;&apos; ? 100 : 50;
+        description.moveBP = basePower;
+        break;
+      case &apos;Fling&apos;:
+        basePower = getFlingPower(attacker.item);
+        description.moveBP = basePower;
+        description.attackerItem = attacker.item;
+        break;
+      case &apos;Eruption&apos;:
+      case &apos;Water Spout&apos;:
+        basePower = Math.max(1, Math.floor(150 * attacker.hp / attacker.maxhp));
+        console.log(&apos;bp: &apos;, basePower);
+        description.moveBP = basePower;
+        break;
+      case &apos;Flail&apos;:
+      case &apos;Reversal&apos;:
+        const p = Math.floor(48 * attacker.curHP / attacker.maxHP);
+        basePower = p &lt;= 1 ? 200 : p &lt;= 4 ? 150 : p &lt;= 9 ? 100 : p &lt;= 16 ? 80 : p &lt;= 32 ? 40 : 20;
+        description.moveBP = basePower;
+        break;
+      case &apos;Earthquake&apos;:
+        basePower = (field.terrain === &apos;Grassy&apos;) ? move.bp / 2 : move.bp;
+        description.terrain = field.terrain;
+        break;
+      case &apos;Nature Power&apos;:
+        basePower = (field.terrain === &apos;Electric&apos; || field.terrain === &apos;Grassy&apos;) ? 90 : (field.terrain === &apos;Misty&apos;) ? 95 : 80;
+        break;
+      case &apos;Venoshock&apos;:
+        basePower = move.bp * (defender.status === &apos;Poisoned&apos; ? 2 : 1);
+        description.moveBP = basePower;
+        break;
+      case &apos;Return&apos;:
+        basePower = 102; // assume max happiness
+        break;
+      default:
+        basePower = move.bp;
+    }
+
+    const bpMods = [];
+    if ((attacker.ability === &apos;Technician&apos; &amp;&amp; basePower &lt;= 60) ||
+      (attacker.ability === &apos;Flare Boost&apos; &amp;&amp; attacker.status === &apos;Burned&apos; &amp;&amp; move.category === &apos;Special&apos;) ||
+      (attacker.ability === &apos;Toxic Boost&apos; &amp;&amp; (attacker.status === &apos;Poisoned&apos; || attacker.status === &apos;Badly Poisoned&apos;) &amp;&amp;
+      move.category === &apos;Physical&apos;)) {
+      bpMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    } else if (attacker.ability === &apos;Analytic&apos; &amp;&amp; turnOrder !== &apos;FIRST&apos;) {
+      bpMods.push(0x14CD);
+      description.attackerAbility = attacker.ability;
+    } else if (attacker.ability === &apos;Sand Force&apos; &amp;&amp; field.weather === &apos;Sand&apos; &amp;&amp; [&apos;Rock&apos;, &apos;Ground&apos;, &apos;Steel&apos;].indexOf(move.type) !== -1) {
+      bpMods.push(0x14CD);
+      description.attackerAbility = attacker.ability;
+      description.weather = field.weather;
+    } else if ((attacker.ability === &apos;Reckless&apos; &amp;&amp; move.hasRecoil) ||
+      (attacker.ability === &apos;Iron Fist&apos; &amp;&amp; move.isPunch)) {
+      bpMods.push(0x1333);
+      description.attackerAbility = attacker.ability;
+    }
+
+    if (defAbility === &apos;Heatproof&apos; &amp;&amp; move.type === &apos;Fire&apos;) {
+      bpMods.push(0x800);
+      description.defenderAbility = defAbility;
+    } else if (defAbility === &apos;Dry Skin&apos; &amp;&amp; move.type === &apos;Fire&apos;) {
+      bpMods.push(0x1400);
+      description.defenderAbility = defAbility;
+    } else if (defAbility === &apos;Fluffy&apos; &amp;&amp; move.makesContact &amp;&amp; move.type === &apos;Fire&apos;) {
+       bpMods.push(0x2000);
+       description.defenderAbility = defAbility;
+    } else if (defAbility === &apos;Fluffy&apos; &amp;&amp; (move.makesContact &amp;&amp; !attacker.ability === &apos;Long Reach&apos;)) {
+       bpMods.push(0x800);
+       description.defenderAbility = defAbility;
+    }
+
+
+    if (attacker.ability === &apos;Sheer Force&apos; &amp;&amp; move.hasSecondaryEffect) {
+      bpMods.push(0x14CD);
+      description.attackerAbility = attacker.ability;
+    }
+
+    if (getItemBoostType(attacker.item) === move.type) {
+      bpMods.push(0x1333);
+      description.attackerItem = attacker.item;
+    } else if ((attacker.item === &apos;Muscle Band&apos; &amp;&amp; move.category === &apos;Physical&apos;) ||
+      (attacker.item === &apos;Wise Glasses&apos; &amp;&amp; move.category === &apos;Special&apos;)) {
+      bpMods.push(0x1199);
+      description.attackerItem = attacker.item;
+    } else if (((attacker.item === &apos;Adamant Orb&apos; &amp;&amp; attacker.name === &apos;Dialga&apos;) ||
+      (attacker.item === &apos;Lustrous Orb&apos; &amp;&amp; attacker.name === &apos;Palkia&apos;) ||
+      (attacker.item === &apos;Griseous Orb&apos; &amp;&amp; attacker.name === &apos;Giratina-O&apos;)) &amp;&amp;
+      (move.type === attacker.type1 || move.type === attacker.type2)) {
+      bpMods.push(0x1333);
+      description.attackerItem = attacker.item;
+    } else if (attacker.item === move.type + &apos; Gem&apos;) {
+      bpMods.push(gen &gt;= 6 ? 0x14CD : 0x1800);
+      description.attackerItem = attacker.item;
+    }
+
+    if ((move.name === &apos;Facade&apos; &amp;&amp; [&apos;Burned&apos;, &apos;Paralyzed&apos;, &apos;Poisoned&apos;, &apos;Badly Poisoned&apos;].indexOf(attacker.status) !== -1) ||
+      (move.name === &apos;Brine&apos; &amp;&amp; defender.curHP &lt;= defender.maxHP / 2) ||
+      (move.name === &apos;Venoshock&apos; &amp;&amp; (defender.status === &apos;Poisoned&apos; || defender.status === &apos;Badly Poisoned&apos;))) {
+      bpMods.push(0x2000);
+      description.moveBP = move.bp * 2;
+    } else if ((move.name === &apos;Solar Beam&apos; || move.name === &apos;SolarBeam&apos;) &amp;&amp; [&apos;Rain&apos;, &apos;Heavy Rain&apos;, &apos;Sand&apos;, &apos;Hail&apos;].indexOf(field.weather) !== -1) {
+      bpMods.push(0x800);
+      description.moveBP = move.bp / 2;
+      description.weather = field.weather;
+    } else if (gen &gt;= 6 &amp;&amp; move.name === &apos;Knock Off&apos; &amp;&amp; !(defender.item === &apos;&apos; ||
+      (defender.species === &apos;Giratina-O&apos; &amp;&amp; defender.item === &apos;Griseous Orb&apos;) ||
+      (defender.species.indexOf(&apos;Arceus&apos;) !== -1 &amp;&amp; defender.item.indexOf(&apos;Plate&apos;) !== -1))) {
+      bpMods.push(0x1800);
+      description.moveBP = move.bp * 1.5;
+    }
+
+    if (field.isHelpingHand) {
+      bpMods.push(0x1800);
+      description.isHelpingHand = true;
+    }
+
+    if (isAerilate || isPixilate || isRefrigerate || isGalvanize) {
+      bpMods.push(0x14CD);
+      description.attackerAbility = attacker.ability;
+    } else if ((attacker.ability === &apos;Mega Launcher&apos; &amp;&amp; move.isPulse) ||
+      (attacker.ability === &apos;Strong Jaw&apos; &amp;&amp; move.isBite)) {
+      bpMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    } else if (attacker.ability === &apos;Tough Claws&apos; &amp;&amp; move.makesContact &amp;&amp;
+      attacker.ability !== &apos;Long Reach&apos;) {
+      bpMods.push(0x1547);
+      description.attackerAbility = attacker.ability;
+    }
+
+    const isAttackerAura = attacker.ability === (move.type + &apos; Aura&apos;);
+    const isDefenderAura = defAbility === (move.type + &apos; Aura&apos;);
+    if (isAttackerAura || isDefenderAura) {
+      if (attacker.ability === &apos;Aura Break&apos; || defAbility === &apos;Aura Break&apos;) {
+        bpMods.push(0x0C00);
+        description.attackerAbility = attacker.ability;
+        description.defenderAbility = defAbility;
+      } else {
+        bpMods.push(0x1547);
+        if (isAttackerAura) {
+          description.attackerAbility = attacker.ability;
+        }
+        if (isDefenderAura) {
+          description.defenderAbility = defAbility;
+        }
+      }
+    }
+    basePower = Math.max(1, pokeRound(basePower * chainMods(bpMods) / 0x1000));
+
+
+
+    // //////////////////////////////
+    // //////// (SP)ATTACK //////////
+    // //////////////////////////////
+    let attack;
+    const attackSource = move.name === &apos;Foul Play&apos; ? defender : attacker;
+    const attackStat = move.category === &apos;Physical&apos; ? AT : SA;
+    // description.attackEVs = attacker.evs[attackStat] +
+    //   (NATURES[attacker.nature][0] === attackStat ? &apos;+&apos; : NATURES[attacker.nature][1] === attackStat ? &apos;-&apos; : &apos;&apos;)
+    //   + &apos; &apos; + toSmogonStat(attackStat);
+
+    // if (attackSource.boosts[attackStat] === 0 || (isCritical &amp;&amp; attackSource.boosts[attackStat] &lt; 0)) {
+    //   attack = attackSource.rawStats[attackStat];
+    // } else if (defAbility === &apos;Unaware&apos;) {
+    //   attack = attackSource.rawStats[attackStat];
+    //   description.defenderAbility = defAbility;
+    // } else {
+    //   attack = attackSource.stats[attackStat];
+    //   description.attackBoost = attackSource.boosts[attackStat];
+    // }
+    // @TODO I caused a lot of fuckery here - the original code is using raw
+    // stats a lot here, for some reason.
+    attack = attackSource.boostedStats[attackStat];
+
+    // unlike all other attack modifiers, Hustle gets applied directly
+    if (attacker.ability === &apos;Hustle&apos; &amp;&amp; move.category === &apos;Physical&apos;) {
+      attack = pokeRound(attack * 3 / 2);
+      description.attackerAbility = attacker.ability;
+    }
+
+    const atMods = [];
+    if (defAbility === &apos;Thick Fat&apos; &amp;&amp; (move.type === &apos;Fire&apos; || move.type === &apos;Ice&apos;)) {
+      atMods.push(0x800);
+      description.defenderAbility = defAbility;
+    }
+
+    if ((attacker.ability === &apos;Guts&apos; &amp;&amp; attacker.status !== &apos;Healthy&apos; &amp;&amp; move.category === &apos;Physical&apos;) ||
+      (attacker.ability === &apos;Overgrow&apos; &amp;&amp; attacker.curHP &lt;= attacker.maxHP / 3 &amp;&amp; move.type === &apos;Grass&apos;) ||
+      (attacker.ability === &apos;Blaze&apos; &amp;&amp; attacker.curHP &lt;= attacker.maxHP / 3 &amp;&amp; move.type === &apos;Fire&apos;) ||
+      (attacker.ability === &apos;Torrent&apos; &amp;&amp; attacker.curHP &lt;= attacker.maxHP / 3 &amp;&amp; move.type === &apos;Water&apos;) ||
+      (attacker.ability === &apos;Swarm&apos; &amp;&amp; attacker.curHP &lt;= attacker.maxHP / 3 &amp;&amp; move.type === &apos;Bug&apos;)) {
+      atMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    } else if (attacker.ability === &apos;Flash Fire (activated)&apos; &amp;&amp; move.type === &apos;Fire&apos;) {
+      atMods.push(0x1800);
+      description.attackerAbility = &apos;Flash Fire&apos;;
+    } else if ((attacker.ability === &apos;Solar Power&apos; &amp;&amp; field.weather.indexOf(&apos;Sun&apos;) !== -1 &amp;&amp; move.category === &apos;Special&apos;) ||
+      (attacker.ability === &apos;Flower Gift&apos; &amp;&amp; field.weather.indexOf(&apos;Sun&apos;) !== -1 &amp;&amp; move.category === &apos;Physical&apos;)) {
+      atMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+      description.weather = field.weather;
+    } else if ((attacker.ability === &apos;Defeatist&apos; &amp;&amp; attacker.curHP &lt;= attacker.maxHP / 2) ||
+      (attacker.ability === &apos;Slow Start&apos; &amp;&amp; move.category === &apos;Physical&apos;)) {
+      atMods.push(0x800);
+      description.attackerAbility = attacker.ability;
+    } else if ((attacker.ability === &apos;Huge Power&apos; || attacker.ability === &apos;Pure Power&apos;) &amp;&amp; move.category === &apos;Physical&apos;) {
+      atMods.push(0x2000);
+      description.attackerAbility = attacker.ability;
+    }
+
+    if ((attacker.item === &apos;Thick Club&apos; &amp;&amp; (attacker.species === &apos;Cubone&apos; || attacker.species === &apos;Marowak&apos;) &amp;&amp; move.category === &apos;Physical&apos;) ||
+      (attacker.item === &apos;Deep Sea Tooth&apos; &amp;&amp; attacker.species === &apos;Clamperl&apos; &amp;&amp; move.category === &apos;Special&apos;) ||
+      (attacker.item === &apos;Light Ball&apos; &amp;&amp; attacker.species === &apos;Pikachu&apos;)) {
+      atMods.push(0x2000);
+      description.attackerItem = attacker.item;
+    } else if ((gen &lt; 7 &amp;&amp; attacker.item === &apos;Soul Dew&apos; &amp;&amp; (attacker.species === &apos;Latios&apos; || attacker.species === &apos;Latias&apos;) &amp;&amp; move.category === &apos;Special&apos;) ||
+      (attacker.item === &apos;Choice Band&apos; &amp;&amp; move.category === &apos;Physical&apos;) ||
+      (attacker.item === &apos;Choice Specs&apos; &amp;&amp; move.category === &apos;Special&apos;)) {
+      atMods.push(0x1800);
+      description.attackerItem = attacker.item;
+    }
+
+    attack = Math.max(1, pokeRound(attack * chainMods(atMods) / 0x1000));
+    // //////////////////////////////
+    // /////// (SP)DEFENSE //////////
+    // //////////////////////////////
+    let defense;
+    const hitsPhysical = move.category === &apos;Physical&apos; || move.dealsPhysicalDamage;
+    const defenseStat = hitsPhysical ? DF : SD;
+    // description.defenseEVs = defender.evs[defenseStat] +
+    //   (NATURES[defender.nature][0] === defenseStat ? &apos;+&apos; : NATURES[defender.nature][1] === defenseStat ? &apos;-&apos; : &apos;&apos;) + &apos; &apos; +
+    //   toSmogonStat(defenseStat);
+
+    // if (defender.boosts[defenseStat] === 0 || (isCritical &amp;&amp; defender.boosts[defenseStat] &gt; 0) || move.ignoresDefenseBoosts) {
+    //   defense = defender.baseStats[defenseStat];
+    // } else if (attacker.ability === &apos;Unaware&apos;) {
+    //   defense = defender.baseStats[defenseStat];
+    //   description.attackerAbility = attacker.ability;
+    // } else {
+    //   defense = defender.stats[defenseStat];
+    //   description.defenseBoost = defender.boosts[defenseStat];
+    // }
+    defense = defender.boostedStats[defenseStat];
+
+
+    // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
+    if (field.weather === &apos;Sand&apos; &amp;&amp; (defender.type1 === &apos;Rock&apos; || defender.type2 === &apos;Rock&apos;) &amp;&amp; !hitsPhysical) {
+      defense = pokeRound(defense * 3 / 2);
+      description.weather = field.weather;
+    }
+
+    const dfMods = [];
+    if (defAbility === &apos;Marvel Scale&apos; &amp;&amp; defender.status !== &apos;Healthy&apos; &amp;&amp; hitsPhysical) {
+      dfMods.push(0x1800);
+      description.defenderAbility = defAbility;
+    } else if (defAbility === &apos;Flower Gift&apos; &amp;&amp; field.weather.indexOf(&apos;Sun&apos;) !== -1 &amp;&amp; !hitsPhysical) {
+      dfMods.push(0x1800);
+      description.defenderAbility = defAbility;
+      description.weather = field.weather;
+    }
+
+    if ((defender.item === &apos;Deep Sea Scale&apos; &amp;&amp; defender.species === &apos;Clamperl&apos; &amp;&amp; !hitsPhysical) ||
+      (defender.item === &apos;Metal Powder&apos; &amp;&amp; defender.species === &apos;Ditto&apos;) ||
+      (gen &lt; 7 &amp;&amp; defender.item === &apos;Soul Dew&apos; &amp;&amp; (defender.species === &apos;Latios&apos; || defender.species === &apos;Latias&apos;) &amp;&amp; !hitsPhysical) ||
+      (defender.item === &apos;Assault Vest&apos; &amp;&amp; !hitsPhysical) || defender.item === &apos;Eviolite&apos;) {
+      dfMods.push(0x1800);
+      description.defenderItem = defender.item;
+    }
+
+    if (defAbility === &apos;Fur Coat&apos; &amp;&amp; hitsPhysical) {
+      dfMods.push(0x2000);
+      description.defenderAbility = defAbility;
+    }
+
+    defense = Math.max(1, pokeRound(defense * chainMods(dfMods) / 0x1000));
+
+    // //////////////////////////////
+    // ////////// DAMAGE ////////////
+    // //////////////////////////////
+    let baseDamage = Math.floor(Math.floor((Math.floor((2 * attacker.level) / 5 + 2) * basePower * attack) / defense) / 50 + 2);
+    if (field.format !== &apos;Singles&apos; &amp;&amp; move.isSpread) {
+      baseDamage = pokeRound(baseDamage * 0xC00 / 0x1000);
+    }
+    const isSunny = field.weather &amp;&amp; field.weather.indexOf(&apos;Sun&apos;) &gt;= 0;
+    const isRainy = field.weather &amp;&amp; field.weather.indexOf(&apos;Rain&apos;) &gt;= 0;
+    if ((isSunny &amp;&amp; move.type === &apos;Fire&apos;) || (isRainy &amp;&amp; move.type === &apos;Water&apos;)) {
+      baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
+      description.weather = field.weather;
+    } else if ( (isSunny &amp;&amp; move.type === &apos;Water&apos;) || (isRainy &amp;&amp; move.type === &apos;Fire&apos;)) {
+      baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
+      description.weather = field.weather;
+    } else if ((field.weather === &apos;Harsh Sunshine&apos; &amp;&amp; move.type === &apos;Water&apos;) || (field.weather === &apos;Heavy Rain&apos; &amp;&amp; move.type === &apos;Fire&apos;)) {
+      return [0];
+    }
+    if (field.isGravity || (attacker.type1 !== &apos;Flying&apos; &amp;&amp; attacker.type2 !== &apos;Flying&apos; &amp;&amp;
+      attacker.item !== &apos;Air Balloon&apos; &amp;&amp; attacker.ability !== &apos;Levitate&apos;)) {
+      if (field.terrain === &apos;Electric&apos; &amp;&amp; move.type === &apos;Electric&apos;) {
+        baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
+        description.terrain = field.terrain;
+      } else if (field.terrain === &apos;Grassy&apos; &amp;&amp; move.type === &apos;Grass&apos;) {
+        baseDamage = pokeRound(baseDamage * 0x1800 / 0x1000);
+        description.terrain = field.terrain;
+      }
+    }
+    if (field.isGravity || (defender.type1 !== &apos;Flying&apos; &amp;&amp; defender.type2 !== &apos;Flying&apos; &amp;&amp;
+      defender.item !== &apos;Air Balloon&apos; &amp;&amp; defender.ability !== &apos;Levitate&apos;)) {
+      if (field.terrain === &apos;Misty&apos; &amp;&amp; move.type === &apos;Dragon&apos;) {
+        baseDamage = pokeRound(baseDamage * 0x800 / 0x1000);
+        description.terrain = field.terrain;
+      }
+    }
+    if (isCritical) {
+      baseDamage = Math.floor(baseDamage * (gen &gt;= 6 ? 1.5 : 2));
+      description.isCritical = isCritical;
+    }
+    // the random factor is applied between the crit mod and the stab mod, so don&apos;t apply anything below this until we&apos;re inside the loop
+    let stabMod = 0x1000;
+    if (move.type === attacker.type1 || move.type === attacker.type2) {
+      if (attacker.ability === &apos;Adaptability&apos;) {
+        stabMod = 0x2000;
+        description.attackerAbility = attacker.ability;
+      } else {
+        stabMod = 0x1800;
+      }
+    } else if (attacker.ability === &apos;Protean&apos;) {
+      stabMod = 0x1800;
+      description.attackerAbility = attacker.ability;
+    }
+
+    const applyBurn = (attacker.status === &apos;Burned&apos; &amp;&amp; move.category === &apos;Physical&apos; &amp;&amp; attacker.ability !== &apos;Guts&apos; &amp;&amp; !move.ignoresBurn);
+    description.isBurned = applyBurn;
+    const finalMods = [];
+    if (field.isReflect &amp;&amp; move.category === &apos;Physical&apos; &amp;&amp; !isCritical) {
+      finalMods.push(field.format !== &apos;Singles&apos; ? 0xA8F : 0x800);
+      description.isReflect = true;
+    } else if (field.isLightScreen &amp;&amp; move.category === &apos;Special&apos; &amp;&amp; !isCritical) {
+      finalMods.push(field.format !== &apos;Singles&apos; ? 0xA8F : 0x800);
+      description.isLightScreen = true;
+    }
+    if ((defAbility === &apos;Multiscale&apos; || defAbility === &apos;Shadow Shield&apos;) &amp;&amp; defender.curHP === defender.maxHP) {
+      finalMods.push(0x800);
+      description.defenderAbility = defAbility;
+    }
+    if (attacker.ability === &apos;Tinted Lens&apos; &amp;&amp; typeEffectiveness &lt; 1) {
+      finalMods.push(0x2000);
+      description.attackerAbility = attacker.ability;
+    }
+
+
+
+
+    if (attacker.ability === &apos;Steelworker&apos; &amp;&amp; move.type === &apos;Steel&apos;) {
+      finalMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    }
+    if (field.isFriendGuard) {
+      finalMods.push(0xC00);
+      description.isFriendGuard = true;
+    }
+    if (attacker.ability === &apos;Sniper&apos; &amp;&amp; isCritical) {
+      finalMods.push(0x1800);
+      description.attackerAbility = attacker.ability;
+    }
+
+    if ((defAbility === &apos;Solid Rock&apos; || defAbility === &apos;Filter&apos; ||
+      defAbility === &apos;Prism Armor&apos;) &amp;&amp; typeEffectiveness &gt; 1) {
+      finalMods.push(0xC00);
+      description.defenderAbility = defAbility;
+    }
+    if (attacker.item === &apos;Expert Belt&apos; &amp;&amp; typeEffectiveness &gt; 1) {
+      finalMods.push(0x1333);
+      description.attackerItem = attacker.item;
+    } else if (attacker.item === &apos;Life Orb&apos;) {
+      finalMods.push(0x14CC);
+      description.attackerItem = attacker.item;
+    }
+    if (getBerryResistType(defender.item) === move.type &amp;&amp; (typeEffectiveness &gt; 1 || move.type === &apos;Normal&apos;) &amp;&amp;
+      attacker.ability !== &apos;Unnerve&apos;) {
+      finalMods.push(0x800);
+      description.defenderItem = defender.item;
+    }
+
+
+
+    const finalMod = chainMods(finalMods);
+    const damage = [];
+    let i = 0;
+    if (maxOnly) i = 15;
+    for (; i &lt; 16; i++) {
+      let final = Math.floor(baseDamage * (85 + i) / 100);
+      final = pokeRound(final * stabMod / 0x1000);
+      final = Math.floor(final * typeEffectiveness);
+      if (applyBurn) {
+        final = Math.floor(final / 2);
+      }
+      final = Math.max(1, final);
+      final = pokeRound(final * finalMod / 0x1000);
+
+      // deal with Parental Bond
+      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat multiplier until I know the specifics
+      if (attacker.ability === &apos;Parental Bond&apos; &amp;&amp; move.hits === 1 &amp;&amp; (field.format === &apos;Singles&apos; || !move.isSpread)) {
+        const bondFactor = gen &lt; 7 ? 3/2 : 5/4; // in gen 7, 2nd hit was reduced from 50% to 25%
+        damage[i] = Math.floor(damage[i] * bondFactor);
+        description.attackerAbility = attacker.ability;
+      }
+
+      // is 2nd hit half BP? half attack? half damage range? keeping it as a flat 1.5x until I know the specifics
+      if (attacker.ability === &apos;Parental Bond&apos; &amp;&amp; move.hits === 1 &amp;&amp;
+        (field.format === &apos;Singles&apos; || !move.isSpread)) {
+        final = Math.floor(damage[i] * 3 / 2);
+      }
+      if (maxOnly) return final;
+      damage[i] = final;
+    }
+
+    if (damage[0] &amp;&amp; isNaN(damage[0])) {
+      console.log(&apos;cant believe getDamageResult is tryna return NaN&apos;);
+      console.log(baseDamage, finalMod, typeEffectiveness, stabMod);
+      exit();
+    }
+    return damage;
+  }
+
+  /**
+   * @TODO WORK IN PROGRESS
+   *
+   * @param  {[type]} mine     [description]
+   * @param  {[type]} yours    [description]
+   * @param  {[type]} myMove   [description]
+   * @param  {[type]} yourMove [description]
+   * @return {[type]}          [description]
+   */
+  goesFirst(mine, yours) {
+    if (mine.ability === &apos;Prankster&apos; &amp;&amp; mine.move.type === &apos;Status&apos;) {
+      myMove.priority = 1;
+    }
+    if (yours.ability === &apos;Prankster&apos; &amp;&amp; yours.move.type === &apos;Status&apos;) {
+      yours.priority = 1;
+    }
+    const myStats = mine.boostedStats || mine.stats || {};
+    const yourStats = yours.boostedStats || yours.stats || {};
+
+    return (mine.move.priority &gt; yours.move.priority ||
+      myStats.spe &gt; yourStats.spe);
+  }
+}
+
+const damage = new Damage();
+module.exports = damage;
+
+function chainMods(mods) {
+  let M = 0x1000;
+  for (let i = 0; i &lt; mods.length; i++) {
+    if (mods[i] !== 0x1000) {
+      M = ((M * mods[i]) + 0x800) &gt;&gt; 12;
+    }
+  }
+  return M;
+}
+
+function getMoveEffectiveness(move, type, isGhostRevealed, isGravity) {
+  // console.log(&apos;getMoveEffectiveness:&apos;, move, type, isGhostRevealed, isGravity);
+  if (isGhostRevealed &amp;&amp; type === &apos;Ghost&apos; &amp;&amp; (move.type === &apos;Normal&apos; || move.type === &apos;Fighting&apos;)) {
+    return 1;
+  } else if (isGravity &amp;&amp; type === &apos;Flying&apos; &amp;&amp; move.type === &apos;Ground&apos;) {
+    return 1;
+  } else if (move.name === &apos;Freeze-Dry&apos; &amp;&amp; type === &apos;Water&apos;) {
+    return 2;
+  } else if (move.name === &apos;Flying Press&apos;) {
+    return Typechart.compare(&apos;Fighting&apos;, type) * Typechart.compare(&apos;Flying&apos;, type);
+  }
+  return Typechart.compare(move.type, type);
+}
+
+function getModifiedStat(stat, mod) {
+  return mod &gt; 0 ? Math.floor(stat * (2 + mod) / 2)
+    : mod &lt; 0 ? Math.floor(stat * 2 / (2 - mod))
+      : stat;
+}
+
+function getFinalSpeed(pokemon, weather) {
+  let speed = getModifiedStat(pokemon.baseStats[SP], pokemon.boosts[SP]);
+  if (pokemon.item === &apos;Choice Scarf&apos;) {
+    speed = Math.floor(speed * 1.5);
+  } else if (pokemon.item === &apos;Macho Brace&apos; || pokemon.item === &apos;Iron Ball&apos;) {
+    speed = Math.floor(speed / 2);
+  }
+  if ((pokemon.ability === &apos;Chlorophyll&apos; &amp;&amp; weather.indexOf(&apos;Sun&apos;) !== -1) ||
+    (pokemon.ability === &apos;Sand Rush&apos; &amp;&amp; weather === &apos;Sand&apos;) ||
+    (pokemon.ability === &apos;Swift Swim&apos; &amp;&amp; weather.indexOf(&apos;Rain&apos;) !== -1)) {
+    speed *= 2;
+  }
+  return speed;
+}
+
+function checkAirLock(pokemon, field) {
+  if (pokemon.ability === &apos;Air Lock&apos; || pokemon.ability === &apos;Cloud Nine&apos;) {
+    field.clearWeather();
+  }
+}
+function checkForecast(pokemon, weather) {
+  if (pokemon.ability === &apos;Forecast&apos; &amp;&amp; pokemon.name === &apos;Castform&apos;) {
+    if (weather.indexOf(&apos;Sun&apos;) !== -1) {
+      pokemon.type1 = &apos;Fire&apos;;
+    } else if (weather.indexOf(&apos;Rain&apos;) !== -1) {
+      pokemon.type1 = &apos;Water&apos;;
+    } else if (weather === &apos;Hail&apos;) {
+      pokemon.type1 = &apos;Ice&apos;;
+    } else {
+      pokemon.type1 = &apos;Normal&apos;;
+    }
+    pokemon.type2 = &apos;&apos;;
+  }
+}
+function checkKlutz(pokemon) {
+  if (pokemon.ability === &apos;Klutz&apos;) {
+    pokemon.item = &apos;&apos;;
+  }
+}
+function checkIntimidate(source, target) {
+  if (source.ability === &apos;Intimidate&apos;) {
+    if (target.ability === &apos;Contrary&apos; || target.ability === &apos;Defiant&apos;) {
+      target.boosts[AT] = Math.min(6, target.boosts[AT] + 1);
+    } else if ([&apos;Clear Body&apos;, &apos;White Smoke&apos;, &apos;Hyper Cutter&apos;, &apos;Full Metal Body&apos;].indexOf(target.ability) !== -1) {
+      return;
+    } else if (target.ability === &apos;Simple&apos;) {
+      target.boosts[AT] = Math.max(-6, target.boosts[AT] - 2);
+    } else {
+      target.boosts[AT] = Math.max(-6, target.boosts[AT] - 1);
+    }
+  }
+}
+function checkDownload(source, target) {
+  if (source.ability === &apos;Download&apos;) {
+    if (target.stats[SD] &lt;= target.stats[DF]) {
+      source.boosts[SA] = Math.min(6, source.boosts[SA] + 1);
+    } else {
+      source.boosts[AT] = Math.min(6, source.boosts[AT] + 1);
+    }
+  }
+}
+function checkInfiltrator(attacker, affectedSide) {
+  if (attacker.ability === &apos;Infiltrator&apos;) {
+    affectedSide.isReflect = false;
+    affectedSide.isLightScreen = false;
+  }
+}
+// @TODO check to see if this works for our boosts object
+function countBoosts(boosts) {
+  let sum = 0;
+  for (let i = 0; i &lt; STATS.length; i++) {
+    if (boosts[STATS[i]] &gt; 0) {
+      sum += boosts[STATS[i]];
+    }
+  }
+  return sum;
+}
+
+// GameFreak rounds DOWN on .5
+function pokeRound(num) {
+  return (num % 1 &gt; 0.5) ? Math.ceil(num) : Math.floor(num);
+}
+
+// gross: pulling these from itemdata
+//
+
+
+function getItemBoostType(item) {
+  switch (item) {
+  case &apos;Draco Plate&apos;:
+  case &apos;Dragon Fang&apos;:
+    return &apos;Dragon&apos;;
+  case &apos;Dread Plate&apos;:
+  case &apos;BlackGlasses&apos;:
+  case &apos;Black Glasses&apos;:
+    return &apos;Dark&apos;;
+  case &apos;Earth Plate&apos;:
+  case &apos;Soft Sand&apos;:
+    return &apos;Ground&apos;;
+  case &apos;Fist Plate&apos;:
+  case &apos;Black Belt&apos;:
+    return &apos;Fighting&apos;;
+  case &apos;Flame Plate&apos;:
+  case &apos;Charcoal&apos;:
+    return &apos;Fire&apos;;
+  case &apos;Icicle Plate&apos;:
+  case &apos;NeverMeltIce&apos;:
+  case &apos;Never-Melt Ice&apos;:
+    return &apos;Ice&apos;;
+  case &apos;Insect Plate&apos;:
+  case &apos;SilverPowder&apos;:
+  case &apos;Silver Powder&apos;:
+    return &apos;Bug&apos;;
+  case &apos;Iron Plate&apos;:
+  case &apos;Metal Coat&apos;:
+    return &apos;Steel&apos;;
+  case &apos;Meadow Plate&apos;:
+  case &apos;Rose Incense&apos;:
+  case &apos;Miracle Seed&apos;:
+    return &apos;Grass&apos;;
+  case &apos;Mind Plate&apos;:
+  case &apos;Odd Incense&apos;:
+  case &apos;TwistedSpoon&apos;:
+  case &apos;Twisted Spoon&apos;:
+    return &apos;Psychic&apos;;
+  case &apos;Pixie Plate&apos;:
+    return &apos;Fairy&apos;;
+  case &apos;Sky Plate&apos;:
+  case &apos;Sharp Beak&apos;:
+    return &apos;Flying&apos;;
+  case &apos;Splash Plate&apos;:
+  case &apos;Sea Incense&apos;:
+  case &apos;Wave Incense&apos;:
+  case &apos;Mystic Water&apos;:
+    return &apos;Water&apos;;
+  case &apos;Spooky Plate&apos;:
+  case &apos;Spell Tag&apos;:
+    return &apos;Ghost&apos;;
+  case &apos;Stone Plate&apos;:
+  case &apos;Rock Incense&apos;:
+  case &apos;Hard Stone&apos;:
+    return &apos;Rock&apos;;
+  case &apos;Toxic Plate&apos;:
+  case &apos;Poison Barb&apos;:
+    return &apos;Poison&apos;;
+  case &apos;Zap Plate&apos;:
+  case &apos;Magnet&apos;:
+    return &apos;Electric&apos;;
+  case &apos;Silk Scarf&apos;:
+  case &apos;Pink Bow&apos;:
+  case &apos;Polkadot Bow&apos;:
+    return &apos;Normal&apos;;
+  default:
+    return &apos;&apos;;
+  }
+}
+
+function getBerryResistType(berry) {
+  switch (berry) {
+  case &apos;Chilan Berry&apos;:
+    return &apos;Normal&apos;;
+  case &apos;Occa Berry&apos;:
+    return &apos;Fire&apos;;
+  case &apos;Passho Berry&apos;:
+    return &apos;Water&apos;;
+  case &apos;Wacan Berry&apos;:
+    return &apos;Electric&apos;;
+  case &apos;Rindo Berry&apos;:
+    return &apos;Grass&apos;;
+  case &apos;Yache Berry&apos;:
+    return &apos;Ice&apos;;
+  case &apos;Chople Berry&apos;:
+    return &apos;Fighting&apos;;
+  case &apos;Kebia Berry&apos;:
+    return &apos;Poison&apos;;
+  case &apos;Shuca Berry&apos;:
+    return &apos;Ground&apos;;
+  case &apos;Coba Berry&apos;:
+    return &apos;Flying&apos;;
+  case &apos;Payapa Berry&apos;:
+    return &apos;Psychic&apos;;
+  case &apos;Tanga Berry&apos;:
+    return &apos;Bug&apos;;
+  case &apos;Charti Berry&apos;:
+    return &apos;Rock&apos;;
+  case &apos;Kasib Berry&apos;:
+    return &apos;Ghost&apos;;
+  case &apos;Haban Berry&apos;:
+    return &apos;Dragon&apos;;
+  case &apos;Colbur Berry&apos;:
+    return &apos;Dark&apos;;
+  case &apos;Babiri Berry&apos;:
+    return &apos;Steel&apos;;
+  case &apos;Roseli Berry&apos;:
+    return &apos;Fairy&apos;;
+  default:
+    return &apos;&apos;;
+  }
+}
+
+function getFlingPower(item) {
+  return item === &apos;Iron Ball&apos; ? 130
+    : item === &apos;Hard Stone&apos; ? 100
+    : item.indexOf(&apos;Plate&apos;) !== -1 || [&apos;Deep Sea Tooth&apos;, &apos;Thick Club&apos;].indexOf(item) !== -1 ? 90
+    : [&apos;Assault Vest&apos;, &apos;Weakness Policy&apos;].indexOf(item) !== -1 ? 80
+    : [&apos;Poison Barb&apos;, &apos;Dragon Fang&apos;].indexOf(item) !== -1 ? 70
+    : [&apos;Adamant Orb&apos;, &apos;Lustrous Orb&apos;, &apos;Macho Brace&apos;, &apos;Stick&apos;].indexOf(item) !== -1 ? 60
+    : item === &apos;Sharp Beak&apos; ? 50
+    : item === &apos;Eviolite&apos; ? 40
+    : [&apos;Black Belt&apos;, &apos;Black Sludge&apos;, &apos;Black Glasses&apos;, &apos;Charcoal&apos;, &apos;Deep Sea Scale&apos;, &apos;Flame Orb&apos;, &apos;King\&apos;s Rock&apos;,
+        &apos;Life Orb&apos;, &apos;Light Ball&apos;, &apos;Magnet&apos;, &apos;Metal Coat&apos;, &apos;Miracle Seed&apos;, &apos;Mystic Water&apos;, &apos;Never-Melt Ice&apos;,
+        &apos;Razor Fang&apos;, &apos;Soul Dew&apos;, &apos;Spell Tag&apos;, &apos;Toxic Orb&apos;, &apos;Twisted Spoon&apos;].indexOf(item) !== -1 ? 30
+    : 10;
+}
+
+function getNaturalGift(item) {
+  const gift = {
+    &apos;Apicot Berry&apos;: {&apos;t&apos;: &apos;Ground&apos;, &apos;p&apos;: 100},
+    &apos;Babiri Berry&apos;: {&apos;t&apos;: &apos;Steel&apos;, &apos;p&apos;: 80},
+    &apos;Belue Berry&apos;: {&apos;t&apos;: &apos;Electric&apos;, &apos;p&apos;: 100},
+    &apos;Charti Berry&apos;: {&apos;t&apos;: &apos;Rock&apos;, &apos;p&apos;: 80},
+    &apos;Chesto Berry&apos;: {&apos;t&apos;: &apos;Water&apos;, &apos;p&apos;: 80},
+    &apos;Chilan Berry&apos;: {&apos;t&apos;: &apos;Normal&apos;, &apos;p&apos;: 80},
+    &apos;Chople Berry&apos;: {&apos;t&apos;: &apos;Fighting&apos;, &apos;p&apos;: 80},
+    &apos;Coba Berry&apos;: {&apos;t&apos;: &apos;Flying&apos;, &apos;p&apos;: 80},
+    &apos;Colbur Berry&apos;: {&apos;t&apos;: &apos;Dark&apos;, &apos;p&apos;: 80},
+    &apos;Custap Berry&apos;: {&apos;t&apos;: &apos;Ghost&apos;, &apos;p&apos;: 100},
+    &apos;Durin Berry&apos;: {&apos;t&apos;: &apos;Water&apos;, &apos;p&apos;: 100},
+    &apos;Enigma Berry&apos;: {&apos;t&apos;: &apos;Bug&apos;, &apos;p&apos;: 100},
+    &apos;Ganlon Berry&apos;: {&apos;t&apos;: &apos;Ice&apos;, &apos;p&apos;: 100},
+    &apos;Haban Berry&apos;: {&apos;t&apos;: &apos;Dragon&apos;, &apos;p&apos;: 80},
+    &apos;Jaboca Berry&apos;: {&apos;t&apos;: &apos;Dragon&apos;, &apos;p&apos;: 100},
+    &apos;Kasib Berry&apos;: {&apos;t&apos;: &apos;Ghost&apos;, &apos;p&apos;: 80},
+    &apos;Kebia Berry&apos;: {&apos;t&apos;: &apos;Poison&apos;, &apos;p&apos;: 80},
+    &apos;Kee Berry&apos;: {&apos;t&apos;: &apos;Fairy&apos;, &apos;p&apos;: 100},
+    &apos;Lansat Berry&apos;: {&apos;t&apos;: &apos;Flying&apos;, &apos;p&apos;: 100},
+    &apos;Leppa Berry&apos;: {&apos;t&apos;: &apos;Fighting&apos;, &apos;p&apos;: 80},
+    &apos;Liechi Berry&apos;: {&apos;t&apos;: &apos;Grass&apos;, &apos;p&apos;: 100},
+    &apos;Lum Berry&apos;: {&apos;t&apos;: &apos;Flying&apos;, &apos;p&apos;: 80},
+    &apos;Maranga Berry&apos;: {&apos;t&apos;: &apos;Dark&apos;, &apos;p&apos;: 100},
+    &apos;Micle Berry&apos;: {&apos;t&apos;: &apos;Rock&apos;, &apos;p&apos;: 100},
+    &apos;Occa Berry&apos;: {&apos;t&apos;: &apos;Fire&apos;, &apos;p&apos;: 80},
+    &apos;Oran Berry&apos;: {&apos;t&apos;: &apos;Poison&apos;, &apos;p&apos;: 80},
+    &apos;Passho Berry&apos;: {&apos;t&apos;: &apos;Water&apos;, &apos;p&apos;: 80},
+    &apos;Payapa Berry&apos;: {&apos;t&apos;: &apos;Psychic&apos;, &apos;p&apos;: 80},
+    &apos;Petaya Berry&apos;: {&apos;t&apos;: &apos;Poison&apos;, &apos;p&apos;: 100},
+    &apos;Rawst Berry&apos;: {&apos;t&apos;: &apos;Grass&apos;, &apos;p&apos;: 80},
+    &apos;Rindo Berry&apos;: {&apos;t&apos;: &apos;Grass&apos;, &apos;p&apos;: 80},
+    &apos;Roseli Berry&apos;: {&apos;t&apos;: &apos;Fairy&apos;, &apos;p&apos;: 80},
+    &apos;Rowap Berry&apos;: {&apos;t&apos;: &apos;Dark&apos;, &apos;p&apos;: 100},
+    &apos;Salac Berry&apos;: {&apos;t&apos;: &apos;Fighting&apos;, &apos;p&apos;: 100},
+    &apos;Shuca Berry&apos;: {&apos;t&apos;: &apos;Ground&apos;, &apos;p&apos;: 80},
+    &apos;Sitrus Berry&apos;: {&apos;t&apos;: &apos;Psychic&apos;, &apos;p&apos;: 80},
+    &apos;Starf Berry&apos;: {&apos;t&apos;: &apos;Psychic&apos;, &apos;p&apos;: 100},
+    &apos;Tanga Berry&apos;: {&apos;t&apos;: &apos;Bug&apos;, &apos;p&apos;: 80},
+    &apos;Wacan Berry&apos;: {&apos;t&apos;: &apos;Electric&apos;, &apos;p&apos;: 80},
+    &apos;Watmel Berry&apos;: {&apos;t&apos;: &apos;Fire&apos;, &apos;p&apos;: 100},
+    &apos;Yache Berry&apos;: {&apos;t&apos;: &apos;Ice&apos;, &apos;p&apos;: 80}
+  }[item];
+  if (gift) {
+    if (gen &lt; 6) {
+      gift.p -= 20;
+    }
+    return gift;
+  }
+  return {&apos;t&apos;: &apos;Normal&apos;, &apos;p&apos;: 1 };
+}
+
+const defaultField = {
+  terrain: &apos;&apos;,
+  isGravity: &apos;&apos;,
+  isReflect: &apos;&apos;,
+  isLightScreen: &apos;&apos;,
+  isForesight: &apos;&apos;,
+  weather: &apos;None&apos;
+};
+
+// function Field() {
+//     var format = $(&apos;input:radio[name=&apos;format&apos;]:checked&apos;).val();
+//     var isGravity = $(&apos;#gravity&apos;).prop(&apos;checked&apos;);
+//     var isSR = [$(&apos;#srL&apos;).prop(&apos;checked&apos;), $(&apos;#srR&apos;).prop(&apos;checked&apos;)];
+//     var weather;
+//     var spikes;
+//     if (gen === 2) {
+//         spikes = [$(&apos;#gscSpikesL&apos;).prop(&apos;checked&apos;) ? 1 : 0, $(&apos;#gscSpikesR&apos;).prop(&apos;checked&apos;) ? 1 : 0];
+//         weather = $(&apos;input:radio[name=&apos;gscWeather&apos;]:checked&apos;).val();
+//     } else {
+//         weather = $(&apos;input:radio[name=&apos;weather&apos;]:checked&apos;).val();
+//         spikes = [~~$(&apos;input:radio[name=&apos;spikesL&apos;]:checked&apos;).val(), ~~$(&apos;input:radio[name=&apos;spikesR&apos;]:checked&apos;).val()];
+//     }
+//     var terrain = ($(&apos;input:checkbox[name=&apos;terrain&apos;]:checked&apos;).val()) ? $(&apos;input:checkbox[name=&apos;terrain&apos;]:checked&apos;).val() : &apos;;
+//     var isReflect = [$(&apos;#reflectL&apos;).prop(&apos;checked&apos;), $(&apos;#reflectR&apos;).prop(&apos;checked&apos;)];
+//     var isLightScreen = [$(&apos;#lightScreenL&apos;).prop(&apos;checked&apos;), $(&apos;#lightScreenR&apos;).prop(&apos;checked&apos;)];
+//     var isForesight = [$(&apos;#foresightL&apos;).prop(&apos;checked&apos;), $(&apos;#foresightR&apos;).prop(&apos;checked&apos;)];
+//     var isHelpingHand = [$(&apos;#helpingHandR&apos;).prop(&apos;checked&apos;), $(&apos;#helpingHandL&apos;).prop(&apos;checked&apos;)]; // affects attacks against opposite side
+
+//     this.getWeather = function() {
+//         return weather;
+//     };
+//     this.clearWeather = function() {
+//         weather = &apos;;
+//     };
+//     this.getSide = function(i) {
+//         return new Side(format, terrain, weather, isGravity, isSR[i], spikes[i], isReflect[i], isLightScreen[i], isForesight[i], isHelpingHand[i]);
+//     };
+// }
+
+// function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLightScreen, isForesight, isHelpingHand) {
+//     this.format = format;
+//     this.terrain = terrain;
+//     this.weather = weather;
+//     this.isGravity = isGravity;
+//     this.isSR = isSR;
+//     this.spikes = spikes;
+//     this.isReflect = isReflect;
+//     this.isLightScreen = isLightScreen;
+//     this.isForesight = isForesight;
+//     this.isHelpingHand = isHelpingHand;
+// }
+//
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

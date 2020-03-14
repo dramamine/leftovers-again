@@ -1,0 +1,1751 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "Identifier",
+      "id": {
+        "type": "Identifier",
+        "name": "AI",
+        "range": [
+          63,
+          65
+        ],
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 6
+          },
+          "end": {
+            "line": 4,
+            "column": 8
+          }
+        }
+      },
+      "superClass": null,
+      "body": {
+        "type": "ClassBody",
+        "body": [
+          {
+            "type": "MethodDefinition",
+            "key": {
+              "type": "Identifier",
+              "name": "constructor",
+              "range": [
+                70,
+                81
+              ],
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 2
+                },
+                "end": {
+                  "line": 5,
+                  "column": 13
+                }
+              }
+            },
+            "value": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [],
+              "body": {
+                "type": "BlockStatement",
+                "body": [],
+                "range": [
+                  84,
+                  86
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 16
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 18
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                81,
+                86
+              ],
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 13
+                },
+                "end": {
+                  "line": 5,
+                  "column": 18
+                }
+              }
+            },
+            "kind": "constructor",
+            "computed": false,
+            "range": [
+              70,
+              86
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 2
+              },
+              "end": {
+                "line": 5,
+                "column": 18
+              }
+            },
+            "trailingComments": [
+              {
+                "type": "Line",
+                "value": " eslint-disable-line",
+                "range": [
+                  87,
+                  109
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 41
+                  }
+                }
+              },
+              {
+                "type": "Block",
+                "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {String} opponent Your opponent's nickname, in case you want to\n   * pull any shenanigans in particular for this player.\n   *\n   * @return {String}   A Showdown-formatted team string.\n   ",
+                "range": [
+                  113,
+                  372
+                ],
+                "loc": {
+                  "start": {
+                    "line": 7,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 14,
+                    "column": 5
+                  }
+                }
+              }
+            ],
+            "static": false
+          },
+          {
+            "type": "MethodDefinition",
+            "key": {
+              "type": "Identifier",
+              "name": "team",
+              "range": [
+                375,
+                379
+              ],
+              "loc": {
+                "start": {
+                  "line": 15,
+                  "column": 2
+                },
+                "end": {
+                  "line": 15,
+                  "column": 6
+                }
+              }
+            },
+            "value": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "opponent",
+                  "range": [
+                    380,
+                    388
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 15,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 15,
+                      "column": 15
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ReturnStatement",
+                    "argument": {
+                      "type": "LogicalExpression",
+                      "operator": "||",
+                      "left": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              426,
+                              430
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 16,
+                                "column": 11
+                              },
+                              "end": {
+                                "line": 16,
+                                "column": 15
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "meta",
+                            "range": [
+                              431,
+                              435
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 16,
+                                "column": 16
+                              },
+                              "end": {
+                                "line": 16,
+                                "column": 20
+                              }
+                            }
+                          },
+                          "range": [
+                            426,
+                            435
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 16,
+                              "column": 11
+                            },
+                            "end": {
+                              "line": 16,
+                              "column": 20
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "team",
+                          "range": [
+                            436,
+                            440
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 16,
+                              "column": 21
+                            },
+                            "end": {
+                              "line": 16,
+                              "column": 25
+                            }
+                          }
+                        },
+                        "range": [
+                          426,
+                          440
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 16,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 16,
+                            "column": 25
+                          }
+                        }
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "value": "",
+                        "raw": "''",
+                        "range": [
+                          444,
+                          446
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 16,
+                            "column": 29
+                          },
+                          "end": {
+                            "line": 16,
+                            "column": 31
+                          }
+                        }
+                      },
+                      "range": [
+                        426,
+                        446
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 16,
+                          "column": 11
+                        },
+                        "end": {
+                          "line": 16,
+                          "column": 31
+                        }
+                      }
+                    },
+                    "range": [
+                      419,
+                      447
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 16,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 16,
+                        "column": 32
+                      }
+                    },
+                    "leadingComments": [
+                      {
+                        "type": "Line",
+                        "value": " eslint-disable-line",
+                        "range": [
+                          392,
+                          414
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 15,
+                            "column": 19
+                          },
+                          "end": {
+                            "line": 15,
+                            "column": 41
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "range": [
+                  390,
+                  451
+                ],
+                "loc": {
+                  "start": {
+                    "line": 15,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 17,
+                    "column": 3
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                379,
+                451
+              ],
+              "loc": {
+                "start": {
+                  "line": 15,
+                  "column": 6
+                },
+                "end": {
+                  "line": 17,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "method",
+            "computed": false,
+            "range": [
+              375,
+              451
+            ],
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 2
+              },
+              "end": {
+                "line": 17,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Line",
+                "value": " eslint-disable-line",
+                "range": [
+                  87,
+                  109
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 41
+                  }
+                }
+              },
+              {
+                "type": "Block",
+                "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {String} opponent Your opponent's nickname, in case you want to\n   * pull any shenanigans in particular for this player.\n   *\n   * @return {String}   A Showdown-formatted team string.\n   ",
+                "range": [
+                  113,
+                  372
+                ],
+                "loc": {
+                  "start": {
+                    "line": 7,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 14,
+                    "column": 5
+                  }
+                }
+              }
+            ],
+            "trailingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {object} state a State object. This object has the following\n   * properties:\n   *\n   * @param {Object} state.self Details about your pokemon.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.self.active  Contains any of your mons\n   * who are \"active\", i.e. on the front lines this turn. This is intended to\n   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.self.reserve All the Pokemon on your side.\n   * Note that this includes your active Pokemon, who have the property 'active'\n   * set to true. You can switch into any Pokemon where neither 'active',\n   * 'disabled', nor 'dead' are true.\n   *\n   * @param {Object} state.opponent Details about your opponent's pokemons.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.opponent.active  Contains any of your\n   * opponent's mons who are \"active\", i.e. on the front lines this turn. This\n   * is intended to be a single Pokemon in Singles matches and an array of\n   * Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.opponent.reserve  All the Pokemon on your\n   * opponent's side, that you have seen.\n   *\n   * @param {number} rqid  The request ID. This is needed for server replies\n   * and is not really something you need to worry about.\n   *\n   * @return {Decision} a Decision object, or a Promise that resolves to a\n   *         Decision object.\n   *\n   *\n   ",
+                "range": [
+                  455,
+                  1972
+                ],
+                "loc": {
+                  "start": {
+                    "line": 19,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 53,
+                    "column": 5
+                  }
+                }
+              }
+            ],
+            "static": false
+          },
+          {
+            "type": "MethodDefinition",
+            "key": {
+              "type": "Identifier",
+              "name": "decide",
+              "range": [
+                1975,
+                1981
+              ],
+              "loc": {
+                "start": {
+                  "line": 54,
+                  "column": 2
+                },
+                "end": {
+                  "line": 54,
+                  "column": 8
+                }
+              }
+            },
+            "value": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "state",
+                  "range": [
+                    1982,
+                    1987
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 54,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 54,
+                      "column": 14
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "Identifier",
+                          "name": "console",
+                          "range": [
+                            2018,
+                            2025
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 55,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 55,
+                              "column": 11
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "error",
+                          "range": [
+                            2026,
+                            2031
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 55,
+                              "column": 12
+                            },
+                            "end": {
+                              "line": 55,
+                              "column": 17
+                            }
+                          }
+                        },
+                        "range": [
+                          2018,
+                          2031
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 55,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 55,
+                            "column": 17
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Literal",
+                          "value": "You need to implement decide() in your AI class!",
+                          "raw": "'You need to implement decide() in your AI class!'",
+                          "range": [
+                            2032,
+                            2082
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 55,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 55,
+                              "column": 68
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        2018,
+                        2083
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 55,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 55,
+                          "column": 69
+                        }
+                      }
+                    },
+                    "range": [
+                      2018,
+                      2084
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 55,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 55,
+                        "column": 70
+                      }
+                    },
+                    "leadingComments": [
+                      {
+                        "type": "Line",
+                        "value": " eslint-disable-line",
+                        "range": [
+                          1991,
+                          2013
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 54,
+                            "column": 18
+                          },
+                          "end": {
+                            "line": 54,
+                            "column": 40
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ReturnStatement",
+                    "argument": {
+                      "type": "Literal",
+                      "value": false,
+                      "raw": "false",
+                      "range": [
+                        2096,
+                        2101
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 56,
+                          "column": 11
+                        },
+                        "end": {
+                          "line": 56,
+                          "column": 16
+                        }
+                      }
+                    },
+                    "range": [
+                      2089,
+                      2102
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 56,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 56,
+                        "column": 17
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  1989,
+                  2106
+                ],
+                "loc": {
+                  "start": {
+                    "line": 54,
+                    "column": 16
+                  },
+                  "end": {
+                    "line": 57,
+                    "column": 3
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                1981,
+                2106
+              ],
+              "loc": {
+                "start": {
+                  "line": 54,
+                  "column": 8
+                },
+                "end": {
+                  "line": 57,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "method",
+            "computed": false,
+            "range": [
+              1975,
+              2106
+            ],
+            "loc": {
+              "start": {
+                "line": 54,
+                "column": 2
+              },
+              "end": {
+                "line": 57,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {object} state a State object. This object has the following\n   * properties:\n   *\n   * @param {Object} state.self Details about your pokemon.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.self.active  Contains any of your mons\n   * who are \"active\", i.e. on the front lines this turn. This is intended to\n   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.self.reserve All the Pokemon on your side.\n   * Note that this includes your active Pokemon, who have the property 'active'\n   * set to true. You can switch into any Pokemon where neither 'active',\n   * 'disabled', nor 'dead' are true.\n   *\n   * @param {Object} state.opponent Details about your opponent's pokemons.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.opponent.active  Contains any of your\n   * opponent's mons who are \"active\", i.e. on the front lines this turn. This\n   * is intended to be a single Pokemon in Singles matches and an array of\n   * Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.opponent.reserve  All the Pokemon on your\n   * opponent's side, that you have seen.\n   *\n   * @param {number} rqid  The request ID. This is needed for server replies\n   * and is not really something you need to worry about.\n   *\n   * @return {Decision} a Decision object, or a Promise that resolves to a\n   *         Decision object.\n   *\n   *\n   ",
+                "range": [
+                  455,
+                  1972
+                ],
+                "loc": {
+                  "start": {
+                    "line": 19,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 53,
+                    "column": 5
+                  }
+                }
+              }
+            ],
+            "static": false
+          }
+        ],
+        "range": [
+          66,
+          2108
+        ],
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 9
+          },
+          "end": {
+            "line": 58,
+            "column": 1
+          }
+        }
+      },
+      "range": [
+        57,
+        2108
+      ],
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 58,
+          "column": 1
+        }
+      },
+      "leadingComments": [],
+      "name": "_",
+      "trailingComments": []
+    },
+    {
+      "type": "Identifier",
+      "declaration": {
+        "type": "Identifier",
+        "name": "AI",
+        "range": [
+          2125,
+          2127
+        ],
+        "loc": {
+          "start": {
+            "line": 60,
+            "column": 15
+          },
+          "end": {
+            "line": 60,
+            "column": 17
+          }
+        }
+      },
+      "range": [
+        2110,
+        2128
+      ],
+      "loc": {
+        "start": {
+          "line": 60,
+          "column": 0
+        },
+        "end": {
+          "line": 60,
+          "column": 18
+        }
+      },
+      "name": "_",
+      "leadingComments": [],
+      "trailingComments": []
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "ClassDeclaration",
+        "id": {
+          "type": "Identifier",
+          "name": "AI",
+          "range": [
+            63,
+            65
+          ],
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 6
+            },
+            "end": {
+              "line": 4,
+              "column": 8
+            }
+          }
+        },
+        "superClass": null,
+        "body": {
+          "type": "ClassBody",
+          "body": [
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "constructor",
+                "range": [
+                  70,
+                  81
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 13
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [],
+                  "range": [
+                    84,
+                    86
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 16
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 18
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  81,
+                  86
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 18
+                  }
+                }
+              },
+              "kind": "constructor",
+              "computed": false,
+              "range": [
+                70,
+                86
+              ],
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 2
+                },
+                "end": {
+                  "line": 5,
+                  "column": 18
+                }
+              },
+              "trailingComments": [
+                {
+                  "type": "Line",
+                  "value": " eslint-disable-line",
+                  "range": [
+                    87,
+                    109
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 19
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 41
+                    }
+                  }
+                },
+                {
+                  "type": "Block",
+                  "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {String} opponent Your opponent's nickname, in case you want to\n   * pull any shenanigans in particular for this player.\n   *\n   * @return {String}   A Showdown-formatted team string.\n   ",
+                  "range": [
+                    113,
+                    372
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 7,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 14,
+                      "column": 5
+                    }
+                  }
+                }
+              ],
+              "static": false
+            },
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "team",
+                "range": [
+                  375,
+                  379
+                ],
+                "loc": {
+                  "start": {
+                    "line": 15,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 15,
+                    "column": 6
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [
+                  {
+                    "type": "Identifier",
+                    "name": "opponent",
+                    "range": [
+                      380,
+                      388
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 15,
+                        "column": 7
+                      },
+                      "end": {
+                        "line": 15,
+                        "column": 15
+                      }
+                    }
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "argument": {
+                        "type": "LogicalExpression",
+                        "operator": "||",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "MemberExpression",
+                            "computed": false,
+                            "object": {
+                              "type": "ThisExpression",
+                              "range": [
+                                426,
+                                430
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 16,
+                                  "column": 11
+                                },
+                                "end": {
+                                  "line": 16,
+                                  "column": 15
+                                }
+                              }
+                            },
+                            "property": {
+                              "type": "Identifier",
+                              "name": "meta",
+                              "range": [
+                                431,
+                                435
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 16,
+                                  "column": 16
+                                },
+                                "end": {
+                                  "line": 16,
+                                  "column": 20
+                                }
+                              }
+                            },
+                            "range": [
+                              426,
+                              435
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 16,
+                                "column": 11
+                              },
+                              "end": {
+                                "line": 16,
+                                "column": 20
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "team",
+                            "range": [
+                              436,
+                              440
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 16,
+                                "column": 21
+                              },
+                              "end": {
+                                "line": 16,
+                                "column": 25
+                              }
+                            }
+                          },
+                          "range": [
+                            426,
+                            440
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 16,
+                              "column": 11
+                            },
+                            "end": {
+                              "line": 16,
+                              "column": 25
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "Literal",
+                          "value": "",
+                          "raw": "''",
+                          "range": [
+                            444,
+                            446
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 16,
+                              "column": 29
+                            },
+                            "end": {
+                              "line": 16,
+                              "column": 31
+                            }
+                          }
+                        },
+                        "range": [
+                          426,
+                          446
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 16,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 16,
+                            "column": 31
+                          }
+                        }
+                      },
+                      "range": [
+                        419,
+                        447
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 16,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 16,
+                          "column": 32
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Line",
+                          "value": " eslint-disable-line",
+                          "range": [
+                            392,
+                            414
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 15,
+                              "column": 19
+                            },
+                            "end": {
+                              "line": 15,
+                              "column": 41
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "range": [
+                    390,
+                    451
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 15,
+                      "column": 17
+                    },
+                    "end": {
+                      "line": 17,
+                      "column": 3
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  379,
+                  451
+                ],
+                "loc": {
+                  "start": {
+                    "line": 15,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 17,
+                    "column": 3
+                  }
+                }
+              },
+              "kind": "method",
+              "computed": false,
+              "range": [
+                375,
+                451
+              ],
+              "loc": {
+                "start": {
+                  "line": 15,
+                  "column": 2
+                },
+                "end": {
+                  "line": 17,
+                  "column": 3
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Line",
+                  "value": " eslint-disable-line",
+                  "range": [
+                    87,
+                    109
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 19
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 41
+                    }
+                  }
+                },
+                {
+                  "type": "Block",
+                  "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {String} opponent Your opponent's nickname, in case you want to\n   * pull any shenanigans in particular for this player.\n   *\n   * @return {String}   A Showdown-formatted team string.\n   ",
+                  "range": [
+                    113,
+                    372
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 7,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 14,
+                      "column": 5
+                    }
+                  }
+                }
+              ],
+              "trailingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {object} state a State object. This object has the following\n   * properties:\n   *\n   * @param {Object} state.self Details about your pokemon.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.self.active  Contains any of your mons\n   * who are \"active\", i.e. on the front lines this turn. This is intended to\n   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.self.reserve All the Pokemon on your side.\n   * Note that this includes your active Pokemon, who have the property 'active'\n   * set to true. You can switch into any Pokemon where neither 'active',\n   * 'disabled', nor 'dead' are true.\n   *\n   * @param {Object} state.opponent Details about your opponent's pokemons.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.opponent.active  Contains any of your\n   * opponent's mons who are \"active\", i.e. on the front lines this turn. This\n   * is intended to be a single Pokemon in Singles matches and an array of\n   * Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.opponent.reserve  All the Pokemon on your\n   * opponent's side, that you have seen.\n   *\n   * @param {number} rqid  The request ID. This is needed for server replies\n   * and is not really something you need to worry about.\n   *\n   * @return {Decision} a Decision object, or a Promise that resolves to a\n   *         Decision object.\n   *\n   *\n   ",
+                  "range": [
+                    455,
+                    1972
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 19,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 53,
+                      "column": 5
+                    }
+                  }
+                }
+              ],
+              "static": false
+            },
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "decide",
+                "range": [
+                  1975,
+                  1981
+                ],
+                "loc": {
+                  "start": {
+                    "line": 54,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 54,
+                    "column": 8
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [
+                  {
+                    "type": "Identifier",
+                    "name": "state",
+                    "range": [
+                      1982,
+                      1987
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 54,
+                        "column": 9
+                      },
+                      "end": {
+                        "line": 54,
+                        "column": 14
+                      }
+                    }
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "CallExpression",
+                        "callee": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "Identifier",
+                            "name": "console",
+                            "range": [
+                              2018,
+                              2025
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 55,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 55,
+                                "column": 11
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "error",
+                            "range": [
+                              2026,
+                              2031
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 55,
+                                "column": 12
+                              },
+                              "end": {
+                                "line": 55,
+                                "column": 17
+                              }
+                            }
+                          },
+                          "range": [
+                            2018,
+                            2031
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 55,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 55,
+                              "column": 17
+                            }
+                          }
+                        },
+                        "arguments": [
+                          {
+                            "type": "Literal",
+                            "value": "You need to implement decide() in your AI class!",
+                            "raw": "'You need to implement decide() in your AI class!'",
+                            "range": [
+                              2032,
+                              2082
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 55,
+                                "column": 18
+                              },
+                              "end": {
+                                "line": 55,
+                                "column": 68
+                              }
+                            }
+                          }
+                        ],
+                        "range": [
+                          2018,
+                          2083
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 55,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 55,
+                            "column": 69
+                          }
+                        }
+                      },
+                      "range": [
+                        2018,
+                        2084
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 55,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 55,
+                          "column": 70
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Line",
+                          "value": " eslint-disable-line",
+                          "range": [
+                            1991,
+                            2013
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 54,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 54,
+                              "column": 40
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ReturnStatement",
+                      "argument": {
+                        "type": "Literal",
+                        "value": false,
+                        "raw": "false",
+                        "range": [
+                          2096,
+                          2101
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 56,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 56,
+                            "column": 16
+                          }
+                        }
+                      },
+                      "range": [
+                        2089,
+                        2102
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 56,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 56,
+                          "column": 17
+                        }
+                      }
+                    }
+                  ],
+                  "range": [
+                    1989,
+                    2106
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 54,
+                      "column": 16
+                    },
+                    "end": {
+                      "line": 57,
+                      "column": 3
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  1981,
+                  2106
+                ],
+                "loc": {
+                  "start": {
+                    "line": 54,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 57,
+                    "column": 3
+                  }
+                }
+              },
+              "kind": "method",
+              "computed": false,
+              "range": [
+                1975,
+                2106
+              ],
+              "loc": {
+                "start": {
+                  "line": 54,
+                  "column": 2
+                },
+                "end": {
+                  "line": 57,
+                  "column": 3
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {object} state a State object. This object has the following\n   * properties:\n   *\n   * @param {Object} state.self Details about your pokemon.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.self.active  Contains any of your mons\n   * who are \"active\", i.e. on the front lines this turn. This is intended to\n   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.self.reserve All the Pokemon on your side.\n   * Note that this includes your active Pokemon, who have the property 'active'\n   * set to true. You can switch into any Pokemon where neither 'active',\n   * 'disabled', nor 'dead' are true.\n   *\n   * @param {Object} state.opponent Details about your opponent's pokemons.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.opponent.active  Contains any of your\n   * opponent's mons who are \"active\", i.e. on the front lines this turn. This\n   * is intended to be a single Pokemon in Singles matches and an array of\n   * Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.opponent.reserve  All the Pokemon on your\n   * opponent's side, that you have seen.\n   *\n   * @param {number} rqid  The request ID. This is needed for server replies\n   * and is not really something you need to worry about.\n   *\n   * @return {Decision} a Decision object, or a Promise that resolves to a\n   *         Decision object.\n   *\n   *\n   ",
+                  "range": [
+                    455,
+                    1972
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 19,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 53,
+                      "column": 5
+                    }
+                  }
+                }
+              ],
+              "static": false
+            }
+          ],
+          "range": [
+            66,
+            2108
+          ],
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 9
+            },
+            "end": {
+              "line": 58,
+              "column": 1
+            }
+          }
+        },
+        "range": [
+          57,
+          2108
+        ],
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 0
+          },
+          "end": {
+            "line": 58,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * AI class. Extend this when creating your bot.\n ",
+            "range": [
+              0,
+              56
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 3,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "__esdoc__pseudo_export": false,
+        "trailingComments": []
+      },
+      "range": [
+        2110,
+        2128
+      ],
+      "loc": {
+        "start": {
+          "line": 60,
+          "column": 0
+        },
+        "end": {
+          "line": 60,
+          "column": 18
+        }
+      },
+      "leadingComments": null
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    57,
+    2128
+  ],
+  "loc": {
+    "start": {
+      "line": 4,
+      "column": 0
+    },
+    "end": {
+      "line": 60,
+      "column": 18
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * AI class. Extend this when creating your bot.\n ",
+      "range": [
+        0,
+        56
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " eslint-disable-line",
+      "range": [
+        87,
+        109
+      ],
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 19
+        },
+        "end": {
+          "line": 5,
+          "column": 41
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {String} opponent Your opponent's nickname, in case you want to\n   * pull any shenanigans in particular for this player.\n   *\n   * @return {String}   A Showdown-formatted team string.\n   ",
+      "range": [
+        113,
+        372
+      ],
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 2
+        },
+        "end": {
+          "line": 14,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " eslint-disable-line",
+      "range": [
+        392,
+        414
+      ],
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 19
+        },
+        "end": {
+          "line": 15,
+          "column": 41
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Abstract function that must be overridden.\n   *\n   * @param  {object} state a State object. This object has the following\n   * properties:\n   *\n   * @param {Object} state.self Details about your pokemon.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.self.active  Contains any of your mons\n   * who are \"active\", i.e. on the front lines this turn. This is intended to\n   * be a single Pokemon in Singles matches and an array of Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.self.reserve All the Pokemon on your side.\n   * Note that this includes your active Pokemon, who have the property 'active'\n   * set to true. You can switch into any Pokemon where neither 'active',\n   * 'disabled', nor 'dead' are true.\n   *\n   * @param {Object} state.opponent Details about your opponent's pokemons.\n   *\n   * @param {PokemonData|Array<PokemonData>} state.opponent.active  Contains any of your\n   * opponent's mons who are \"active\", i.e. on the front lines this turn. This\n   * is intended to be a single Pokemon in Singles matches and an array of\n   * Pokemon in Doubles and Triples.\n   *\n   * @param {Array<PokemonData>} state.opponent.reserve  All the Pokemon on your\n   * opponent's side, that you have seen.\n   *\n   * @param {number} rqid  The request ID. This is needed for server replies\n   * and is not really something you need to worry about.\n   *\n   * @return {Decision} a Decision object, or a Promise that resolves to a\n   *         Decision object.\n   *\n   *\n   ",
+      "range": [
+        455,
+        1972
+      ],
+      "loc": {
+        "start": {
+          "line": 19,
+          "column": 2
+        },
+        "end": {
+          "line": 53,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " eslint-disable-line",
+      "range": [
+        1991,
+        2013
+      ],
+      "loc": {
+        "start": {
+          "line": 54,
+          "column": 18
+        },
+        "end": {
+          "line": 54,
+          "column": 40
+        }
+      }
+    }
+  ]
+}

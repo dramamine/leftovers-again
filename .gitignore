@@ -8,7 +8,6 @@ error.log
 log/
 src/bots/randombattle/predictor/matchups.json
 coverage/
-docs/
 leftovers-again.sublime-workspace
 leftovers-again.sublime-project
 bots/predictor/

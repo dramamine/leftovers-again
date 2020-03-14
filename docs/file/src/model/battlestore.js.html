@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/model/battlestore.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/model/battlestore.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// import Pokemon from &apos;model/pokemon&apos;;
+const Side = require(&apos;./side&apos;);
+const Barn = require(&apos;./pokebarn&apos;);
+const util = require(&apos;../pokeutil&apos;);
+const Log = require(&apos;../log&apos;);
+const Weather = require(&apos;../constants/weather&apos;);
+
+/**
+ * Store for tracking the status of the battle.
+ *
+ */
+class BattleStore {
+  constructor() {
+    // The array of all Pokemons involved in the battle.
+    this.allmon = [];
+
+    this.barn = new Barn();
+
+    this.forceSwitch = false;
+    this.teamPreview = false;
+
+    this.myId = null;
+
+    this.lastmove = null;
+    this.events = [];
+    this.statuses = [];
+    this.turn = 0;
+    this.weather = Weather.NONE;
+    this.sides = [];
+
+    this.handlers = {
+      &apos;-damage&apos;: this.handleDamage,
+      move: this.handleMove,
+      switch: this.handleSwitch,
+      drag: this.handleSwitch,
+      request: this.handleRequest,
+      turn: this.handleTurn,
+      faint: this.handleFaint,
+      heal: this.handleHeal,
+      player: this.handlePlayer,
+      replace: this.handleReplace,
+      &apos;-fail&apos;: this.handleFail,
+      &apos;-miss&apos;: this.handleMiss,
+      &apos;-boost&apos;: this.handleBoost,
+      &apos;-unboost&apos;: this.handleUnboost,
+      &apos;-status&apos;: this.handleStatus,
+      &apos;-curestatus&apos;: this.handleCureStatus,
+      &apos;-weather&apos;: this.handleWeather,
+      &apos;-sidestart&apos;: this.handleSideStart,
+      &apos;-sideend&apos;: this.handleSideEnd,
+
+      // same signature
+      &apos;-formechange&apos;: this.handleDetailsChange,
+      &apos;detailschange&apos;: this.handleDetailsChange
+    };
+
+    // NOT sent to user. temporary storage.
+    this.names = {};
+  }
+
+  /**
+   * Instead of listening directly to server messages, we instantiate a
+   * BattleStore elsewhere and have whatever created this Store pass messages
+   * along to this. This design is probably bad, but I did this so that we
+   * can have one BattleStore associated with each Battle ID, and the
+   * class instantiating BattleStore is responsible for routing battle
+   * messages to the correct BattleStore.
+   *
+   * @param  {String} type    The message type.
+   * @param  {Array} message  The parameters for that message.
+   */
+  handle(type, message) {
+    if (this.handlers[type]) {
+      this.handlers[type].apply(this, message);
+    }
+  }
+
+
+  handleSwitch(ident, details, condition) {
+    const pos = util.identToPos(ident);
+    const former = this.barn.findByPos(pos);
+
+    const mon = this.barn.findOrCreate(ident, details);
+    mon.position = pos;
+    mon.active = true;
+
+    if (former) {
+      former.position = null;
+      former.active = false;
+    }
+
+    mon.useCondition(condition);
+    mon.useDetails(details); // @TODO is this necessary?
+
+    this.events.push({
+      type: &apos;switch&apos;,
+      player: util.identToOwner(ident),
+      turn: this.turn,
+      from: former ? former.species : null,
+      frompos: mon.position,
+      to: mon.species,
+      topos: mon.position,
+      condition: condition.replace(&apos;\\/&apos;, &apos;/&apos;)
+    });
+  }
+
+  /**
+   * Handles a move that happened.
+   *
+   * Moves have updated information in the form of idents, so let&apos;s record
+   * those here.
+   *
+   * We also record the move that happened in the events array in case anyone
+   * wants to use them.
+   *
+   * @param  {String} actor The ident of the Pokemon who made a move.
+   * @param  {String} move  The name of the move, ex. &apos;Stealth Rock&apos;
+   * @param  {[type]} target [description]
+   * @return {[type]}        [description]
+   */
+  handleMove(actor, move, target) {
+    const actingMon = this.barn.find(actor);
+    if (!actingMon) {
+      Log.error(&apos;battlestore.handleMove: couldnt find &apos; + actor + &apos; in this haystack:&apos;);
+      this.barn.allmon.forEach(mon =&gt; Log.error(mon.ident + &apos;|&apos; + mon.details));
+    } else {
+      actingMon.recordMove(move);
+    }
+  }
+
+  handleReplace(ident, details, condition) {
+    this.barn.replace(ident, details, condition);
+  }
+
+  handleMiss(actor, target) {
+    const lastmove = this.events[this.events.length - 1];
+    lastmove.miss = true;
+  }
+
+  handleFail(target) {
+    const lastmove = this.events[this.events.length - 1];
+    lastmove.miss = true;
+  }
+
+  handleBoost(target, stat, stage) {
+    const mon = this.barn.find(target);
+    mon.useBoost(stat, +stage);
+  }
+
+  handleUnboost(target, stat, stage) {
+    this.handleBoost(target, stat, -1 * +stage);
+  }
+
+  handleStatus(target, status) {
+    const mon = this.barn.find(target);
+    mon.addStatus(status);
+  }
+
+  handleCureStatus(target, status) {
+    const mon = this.barn.find(target);
+    mon.removeStatus(status);
+  }
+
+  handleDamage(target, condition, explanation) {
+    const mon = this.barn.find(target);
+
+    let move;
+    // @TODO lazy implementation
+    if (explanation) {
+      move = {
+        type: &apos;damage&apos;,
+        turn: this.turn,
+        from: explanation,
+        topos: mon.position
+      };
+      this.events.push(move);
+    } else {
+      move = this.events[this.events.length - 1];
+    }
+
+    move.prevhp = mon.hp;
+    move.prevcondition = mon.condition;
+
+    mon.useCondition(condition);
+
+    move.nexthp = mon.hp;
+    move.nextcondition = mon.condition;
+    if (mon.dead) {
+      move.killed = true;
+    }
+    move.damage = move.prevhp - move.nexthp;
+    move.damagepct = Math.round(100 * move.damage / mon.maxhp);
+
+    // think I was using this to validate damage numbers
+    // if (mon.maxhp !== 100 &amp;&amp; move.damage &gt; 20) {
+    //   Log.toFile(&apos;damagerangetest&apos;, move.damage + &apos;,&apos;);
+    // }
+
+    if (explanation &amp;&amp; explanation.indexOf(&apos;[from] item:&apos;) &gt;= 0) {
+      const item = explanation.replace(&apos;[from] item: &apos;, &apos;&apos;);
+      mon.setItem(item);
+    }
+  }
+
+  handleFaint(ident) {
+    const mon = this.barn.find(ident);
+    if (!mon) {
+      Log.error(&apos;couldnt find that pokemon&apos; + ident);
+      Log.error(JSON.stringify(this.barn.all()));
+    }
+    mon.useCondition(&apos;0 fnt&apos;);
+  }
+
+  // @TODO this is pretty much thte same as the damage function
+  handleHeal(target, condition, explanation) {
+    const mon = this.barn.find(target);
+    mon.useCondition(condition);
+    if (!mon.item &amp;&amp; explanation &amp;&amp;
+      explanation.indexOf(&apos;[from] item:&apos;) &gt;= 0) {
+      const item = explanation.replace(&apos;[from] item: &apos;, &apos;&apos;);
+      mon.setItem(item);
+    }
+  }
+
+  /**
+   * Saves the name of the player.
+   *
+   * @param  {String} id        The id of the player, ex. &apos;p1&apos; or &apos;p2&apos;
+   * @param  {String} name      The name of the player, ex. &apos;5nowden&apos;
+   * @param  {[type]} something  ignored
+   */
+  handlePlayer(id, name, something) { //eslint-disable-line
+    if (!name) return;
+    this.names[id] = util.toId(name);
+  }
+
+  /**
+   * Handles the turn message, i.e. what turn it is.
+   *
+   * We only use this for tracking &apos;what happened on what turn&apos;.
+   *
+   * When we get this message, we also record the status of each active
+   * Pokemon, in our statuses array.
+   *
+   * @param  {Number} x The turn number.
+   */
+  handleTurn(x) {
+    this.turn = parseInt(x, 10);
+
+    const isactive = mon =&gt; !mon.dead &amp;&amp; (!!mon.position || mon.active);
+    this.barn.all().filter(isactive).forEach((mon) =&gt; {
+      this.statuses.push({
+        turn: this.turn,
+        position: mon.position,
+        condition: mon.condition,
+        species: mon.species
+        // boosts: mon.boosts || null
+      });
+    });
+  }
+  /**
+   * Handles an incoming request. The one parameter to this is a string of
+   * JSON, known as the request.
+   *
+   *  what does the request look like? WELL. These properties are all integrated
+   *  into the {@link AI} object, so you probably want to look at that instead.
+   *  But in case you&apos;re wondering what the actual data from the server looks
+   *  like, keep reading.
+   *
+   *  {@link MoveData} objects here are limited and contain only &apos;move&apos; (the
+   *  move name, ex. &apos;Fake Out&apos;, &apos;id&apos; ex. &apos;fakeout&apos;, &apos;pp&apos;, &apos;maxpp&apos;, &apos;target&apos;,
+   *  and &apos;disabled&apos;.
+   *
+   * {@link PokemonData} objects are limited and contain only &apos;ident&apos;, &apos;details&apos;,
+   * &apos;condition&apos;, &apos;hp&apos;, &apos;maxhp&apos;, &apos;active&apos;, &apos;stats&apos;, &apos;moves&apos;, &apos;baseAbility&apos;,
+   * &apos;item&apos;, &apos;pokeball&apos;, and &apos;canMegaEvo&apos;.
+   *
+   * With most of this information, we may know the things already, ex. we
+   * know if a Pokemon took damage or not. However there are lots of ways we
+   * would get out of sync if we didn&apos;t accept and process all of this
+   * information. So we do that.
+   *
+   * You&apos;ll notice the request does not contain information about the
+   * opponent! It&apos;s left as an exercise to US to keep track of the opponent&apos;s
+   * state.
+   *
+   * @param {String} json The string of JSON which makes up the request.
+   *
+   * @param {Array&lt;Object&gt;} json.active  An array containing the moves that
+   * your active Pokemon can perform. The size of the array is the number of
+   * active Pokemon on your side, ex. in Singles matches, the array length is 1.
+   * @param {Array&lt;MoveData&gt;} json.active[].moves            (the 4 moves of your active pokemon)
+   * @param {Array&lt;Boolean&gt;}  json.forceSwitch  booleans for each position that
+   * needs to switch out. ex. [true] means it&apos;s a singles match and your mon
+   * needs to switch out. [false, true] means it&apos;s a doubles match and your
+   * second mon needs to switch out.
+   * @param {Boolean} json.noCancel  Moves cannot be cancelled in the interval
+   * between sending the move and the server receiving your opponent&apos;s move.
+   * This is unused.
+   * @param {String} json.rqid  The request ID. ex. &apos;1&apos; for the first turn, &apos;2&apos; for the second, etc.
+   *          These don&apos;t match up perfectly with turns bc you may have to swap
+   *          out pokemon if one dies, etc.
+   * @param {Object} json.side
+   * @param {String} json.side.id    either &apos;p1&apos; or &apos;p2&apos;
+   * @param {String} json.side.name  your name
+   * @param {Array&lt;PokemonData&gt;} json.side.pokemon   6 of them. they&apos;re the pokemon on yr side.
+   * @param {Boolean} json.wait  True if this is not a request - just updated
+   * information. The opponent needs to do something; ex. if their mon feinted
+   * last turn, they need to choose a mon to send in. This is unused.
+   */
+  handleRequest(json) {
+    if (!json) return;
+
+    const data = JSON.parse(json);
+    // requests are the first place we figure out who we are.
+    // -- plato
+    if (!this.myId) {
+      this.myId = data.side.id;
+      this.yourId = this.myId === &apos;p1&apos; ? &apos;p2&apos; : &apos;p1&apos;;
+    }
+
+    if (data.side &amp;&amp; data.side.pokemon) {
+      // handle some stuff during the first request
+      for (let i = 0; i &lt; data.side.pokemon.length; i++) {
+        const mon = data.side.pokemon[i];
+        const ref = this.barn.findOrCreate(mon.ident, mon.details);
+        // first round, we shouldn&apos;t have any active mon yet!
+        // but the request DOES set the first pokemon in Reserve to active!
+        // it&apos;s a property of the mon.
+        // I think this is handled quite differently in the web client.
+        if (data.teamPreview) delete mon.active;
+
+        ref.assimilate(mon);
+        ref.order = i;
+      }
+    }
+
+    // need to know these later. update to false to replace stale info.
+    this.forceSwitch = data.forceSwitch || false;
+    this.teamPreview = data.teamPreview || false;
+
+    if (data.rqid) {
+      this.rqid = data.rqid;
+    }
+
+    if (data.active) {
+      // process this later.
+      this.activeData = data.active;
+    }
+  }
+
+  handleWeather(weather) {
+    this.weather = weather;
+  }
+
+  /**
+   * ex. |-sidestart|p1: 5nowden4189|move: Stealth Rock
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
+  handleSideStart(side, action) {
+    Log.warn(`got side effect! ${side}: ${action}`);
+    // ex. &apos;p1&apos; or &apos;p2&apos;
+    const id = side.split(&apos;:&apos;).shift().trim();
+    if (!this.sides[id]) {
+      this.sides[id] = new Side();
+    }
+    this.sides[id].digest(action);
+  }
+
+  /**
+   * @param  {String} side   Which players id is it?
+   * @param  {String} action What happened?
+   */
+  handleSideEnd(side, action) {
+    // ex. &apos;p1&apos; or &apos;p2&apos;
+    const id = side.split(&apos;:&apos;).shift().trim();
+    if (!this.sides[id]) {
+      return;
+    }
+    this.sides[id].remove(action);
+  }
+
+  /**
+   * Forme change! This came up a lot with castform, probs some other pokes too.
+   * ex: |-formechange|p2a: Castform|Castform-Sunny|[msg]|[from] ability: Forecast
+   * ex: |detailschange|p2a: Charizard|Charizard-Mega-X, M
+   * ex. |detailschange|p2a: Sabbs|Sableye-Mega, M
+   *
+   * @param  {String} ident  The id of the pokemon
+   * @param  {String} species  The pokemon&apos;s new species
+   * @param  {String} hpstatus Not sure, always seems to be [msg]
+   * @param  {String} reason  Why did these details change?
+   */
+  handleDetailsChange(ident, details, hpstatus, reason) {
+    const updated = this.barn.replace(ident, details, null);
+  }
+
+
+  /**
+   * Output function for getting an object representation of the current
+   * battle.
+   *
+   * This is usually called right after &apos;handleRequest&apos;, because requests
+   * usually mean we&apos;re trying to get the battle&apos;s state and make some
+   * decisions based on it.
+   *
+   * This function has NO EFFECT on the store&apos;s internal state; this is
+   * important for consistency!
+   *
+   * @return {Object} An object representing the battle&apos;s current state. See
+   * the documentation in AI for a detailed description.
+   *
+   * @relation AI
+   */
+  data() {
+    const output = {
+      self: {},
+      opponent: {}
+    };
+    // const output = _.clone(this.state, true);
+    const dataGetter = mon =&gt; mon.data();
+    const iamowner = mon =&gt; mon.owner === this.myId;
+    const youareowner = mon =&gt; mon.owner !== this.myId;
+    const isactive = mon =&gt; !mon.dead &amp;&amp; (!!mon.position || mon.active);
+    const byPosition = (a, b) =&gt; b.position - a.position;
+    const byOrder = (a, b) =&gt; a.order - b.order;
+
+
+    // use getState so we can filter out any crap.
+    output.self.active = this.barn.all()
+      .filter(iamowner)
+      .filter(isactive)
+      .map(dataGetter)
+      .sort(byPosition);
+    // @TODO thinking about trying this. why are there actives during teamPreview?
+    // if (this.teamPreview) {
+    //   output.self.active = [];
+    // }
+
+    output.opponent.active = this.barn.all()
+      .filter(youareowner)
+      .filter(isactive)
+      .map(dataGetter)
+      .sort(byPosition);
+    output.self.reserve = this.barn.all()
+      .filter(iamowner)
+      .sort(byOrder)
+      .map(dataGetter);
+    output.opponent.reserve = this.barn.all()
+      .filter(youareowner)
+      .sort(byOrder) // @TODO does this do anything
+      .map(dataGetter);
+
+    if (output.opponent.active.length &gt; 0 &amp;&amp; !output.opponent.active[0].owner) {
+      Log.warn(&apos;stop the presses! pokemon with no owner.&apos;);
+      Log.warn(output.opponent.active[0]);
+      process.exit(-1);
+    }
+
+    if (output.self.active.length &gt; 1) {
+      Log.warn(&apos;stop the presses! too many active pokemon&apos;);
+      Log.warn(output.self.active);
+    }
+
+    // this was causing some errors before. could use some more research...
+    // @TODO why aren&apos;t we clearing out activeData?
+    if (this.activeData &amp;&amp; output.self.active.length === this.activeData.length) {
+      for (let i = 0; i &lt; this.activeData.length; i++) {
+        // researching moves and copying them over
+        const movesArr = this.activeData[i].moves;
+        const updated = movesArr.map( (move) =&gt; { // eslint-disable-line
+          return Object.assign(move, util.researchMoveById(move.id));
+        });
+
+        if (this.activeData[i].canZMove) {
+          this.activeData[i].canZMove.forEach((name, zIndex) =&gt; {
+            if (name) {
+              updated[zIndex].canZMove = true;
+              updated[zIndex].zMove = util.researchMoveById(util.toId(name));
+            }
+          });
+        }
+
+        output.self.active[i].moves = updated;
+
+        // for mega-evolution
+        if (this.activeData[i].canMegaEvo) {
+          output.self.active[i].canMegaEvo = this.activeData[i].canMegaEvo;
+        }
+      }
+    }
+
+    // compress arrays to singles
+    if (output.self.active.length === 1) {
+      output.self.active = output.self.active[0];
+    }
+    if (output.opponent.active.length === 1) {
+      output.opponent.active = output.opponent.active[0];
+    }
+
+    if (this.forceSwitch) output.forceSwitch = true;
+    if (this.teamPreview) output.teamPreview = true;
+
+
+    output.rqid = this.rqid;
+    output.turn = this.turn;
+    output.weather = this.weather;
+
+    if (this.sides[this.myId]) {
+      output.self.side = this.sides[this.myId].data();
+    }
+    if (this.sides[this.yourId]) {
+      output.opponent.side = this.sides[this.yourId].data();
+    }
+
+    return output;
+  }
+
+  /**
+   * Returns your nickname.
+   * @return {String} Your nickname.
+   */
+  get myNick() {
+    return this.names[this.myId];
+  }
+
+  /**
+   * Returns the nickname of your opponent.
+   * @return {String} Opponent&apos;s nickname.
+   */
+  get yourNick() {
+    if (this.myId === &apos;p1&apos;) return this.names.p2;
+    if (this.myId === &apos;p2&apos;) return this.names.p1;
+    return null;
+  }
+
+}
+
+module.exports = BattleStore;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/pokeutil.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/pokeutil.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Utility functions.
+ *
+ */
+const BattleMovedex = require(&apos;./data/moves.json&apos;);
+const HonkoMovedex = require(&apos;./data/moves-ext.json&apos;);
+const BattlePokedex = require(&apos;./data/pokedex.json&apos;);
+const log = require(&apos;./log&apos;);
+
+class PokeUtil {
+  /**
+   * Return the Smogon official ID for a given Pokemon. This works on both
+   * Pokemon &apos;species&apos; and move &apos;name&apos; fields. Use this field when you need
+   * the &apos;standardized&apos; name. These are used when you&apos;re looking up stuff from
+   * the data folder.
+   *
+   * @param  {String} text The field to transform.
+   * @return {String}      The ID.
+   */
+  toId(text) {
+    let name = &apos;&apos;;
+    if (!text) return name;
+
+    // most lines copied from server code..
+    name = (&apos;&apos; + text).replace(/[\|\s\[\],&apos;]+/g, &apos;&apos;).toLowerCase().trim();
+
+    // these lines are not! but I needed them.
+    name = name.replace(/[\-\. ]+/g, &apos;&apos;);
+
+    name = name.replace(/[^a-z0-9]/gi, &apos;&apos;);
+
+    if (name.length &gt; 18) {
+      name = name.substr(0, 18).trim();
+    }
+    return name;
+  }
+
+  /**
+   * Get an object fulla data about a move.
+   *
+   * Data is sourced both from the official Smogon server and from the Honko
+   * damage calculator. Honko data helps with the damage calculator.
+   * @param  {String} id The move ID.
+   * @return {Move}  A Move object.
+   */
+  researchMoveById(id) {
+    // hidden power moves end with &apos;60&apos;. hidden power ground comes out as
+    // hiddenpowerground6 due to the 18-character limit. it&apos;s kept as
+    // hiddenpowerground in our data.
+    id = this.toId(id).replace(/6[0]?$/, &apos;&apos;); // eslint-disable-line
+
+    if (!BattleMovedex[id]) {
+      log.warn(`couldn&apos;t find my move ${id}`);
+      return {
+        name: id,
+        id: this.toId(id)
+      };
+    }
+
+    const battleData = BattleMovedex[id] || {};
+    const honkoData = HonkoMovedex[id] || {};
+
+    return Object.assign(battleData, honkoData);
+  }
+
+  /**
+   * Get an object fulla data about a Pokemon.
+   *
+   * Data is a limited number of fields from the official Smogon server
+   * data files.
+   *
+   * @param  {String} id The Pokemon ID.
+   * @return {Pokemon}   A Pokemon object.
+   */
+  researchPokemonById(id) {
+    id = this.toId(id); // eslint-disable-line
+    if (BattlePokedex[id]) {
+      const res = this.clone(BattlePokedex[id]);
+      res.id = id;
+      return res;
+    }
+
+    log.warn(`couldn&apos;t find my pokemon ${id}`);
+    return {
+      name: id,
+      id
+    };
+  }
+
+  /**
+   * Combine two boost objects. (For example, use this to apply boost effects
+   * to a mon&apos;s existing boosts.) Boost objects have keys for their stats
+   * (atk, def, spa, spd, spe) and values representing their boost level.
+   *
+   * @param  {Object} old     A boost object.
+   * @param  {Object} updates A boost object.
+   * @return {Object}         A boost object.
+   */
+  boostCombiner(old = {}, updates = {}) {
+    Object.keys(updates).forEach((boost) =&gt; {
+      old[boost] = Math.min(6, Math.max(-6,
+        (old[boost] || 0) + updates[boost]));
+    });
+    return old;
+  }
+
+  /**
+   * Apply boost levels to a stat.
+   *
+   * @param  {Number} stat The calculated stat.
+   * @param  {Number} mod  The boost level, from -6 to 6.
+   * @return {Number} The stat including the boost multiplier.
+   */
+  boostMultiplier(stat, mod = 0) {
+    return mod &gt; 0 ? Math.floor(stat * (2 + mod) / 2)
+      : mod &lt; 0 ? Math.floor(stat * 2 / (2 - mod))
+        : stat;
+  }
+
+  /**
+   * Get the position from the &apos;ident&apos;.
+   * @param  {String} ident The Pokemon ident.
+   * @return {String} The position.
+   */
+  identToPos(ident) {
+    const posStr = ident.substr(0, ident.indexOf(&apos;:&apos;));
+    const position = (posStr.length === 3) ? posStr : null;
+    return position;
+  }
+
+  /**
+   * Get the owner from the &apos;ident&apos;.
+   * @param  {String} ident The Pokemon ident.
+   * @return {String} The owner.
+   */
+  identToOwner(ident) {
+    return ident.substr(0, 2);
+  }
+
+  identWithoutPosition(ident) {
+    const splits = ident.split(&apos;:&apos;);
+    const player = splits[0];
+    const nickname = splits.slice(1).join(&apos;:&apos;)
+    return player.substr(0, 2) + &apos;:&apos; + nickname;
+  }
+
+  clone(x) {
+    return JSON.parse(JSON.stringify(x));
+  }
+
+}
+
+const util = new PokeUtil();
+module.exports = util;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

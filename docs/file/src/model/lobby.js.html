@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/model/lobby.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/model/lobby.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+const Log = require(&apos;../log&apos;);
+const listener = require(&apos;../listener&apos;);
+const util = require(&apos;../pokeutil&apos;);
+
+let mynick = &apos;&apos;;
+
+/**
+ * Used for managing challenges to other users.
+ */
+class Lobby {
+  /**
+   * Constructor.
+   * @param  {boolean} scrappy Set to true if we want this user to challenge
+   * everyone in the lobby and everyone who joins the lobby later.
+   * @param  {String}  format  The type of match we&apos;re challenging
+   * opponents to. By default, the challenge type used matches the &apos;format&apos;
+   * field of the bot&apos;s package.json
+   *
+   * @return Constructor
+   */
+  constructor() {
+    listener.subscribe(&apos;updateuser&apos;, this.onUpdateUser.bind(this));
+    listener.subscribe(&apos;users&apos;, this.onUserList.bind(this));
+    listener.subscribe(&apos;j&apos;, this.onUserJoin.bind(this));
+    listener.subscribe(&apos;l&apos;, this.onUserLeave.bind(this));
+
+    this.onUpdateUser = this.onUpdateUser.bind(this);
+
+    // all the users we&apos;ve seen
+    this.users = new Set();
+  }
+
+  /**
+   * Remove all our listeners before you destroy this.
+   *
+   */
+  destroy() {
+    listener.unsubscribe(&apos;users&apos;, this.onUserList);
+    listener.unsubscribe(&apos;updateuser&apos;, this.onUpdateUser);
+    listener.unsubscribe(&apos;j&apos;, this.onUserJoin);
+    listener.unsubscribe(&apos;l&apos;, this.onUserLeave);
+  }
+
+  /**
+   * Updates the user state to reflect that the user joined.
+   *
+   * @param  {string} user The user who joined.
+   */
+  onUserJoin([user]) {
+    const cleaned = util.toId(user);
+    if (cleaned === mynick) return;
+    if (!this.users.has(cleaned)) {
+      this.users.add(cleaned);
+      listener.relay(&apos;_lobbyUpdate&apos;, this.users);
+    }
+  }
+
+  /**
+   * Updates the user state to reflect that this user left.
+   *
+   * @param  {string} user The nickname of the user who left.
+   */
+  onUserLeave([user]) {
+    const cleaned = util.toId(user);
+    if (this.users.delete(cleaned)) {
+      listener.relay(&apos;_lobbyUpdate&apos;, this.users);
+    }
+  }
+
+  onUserList([users]) {
+    let opponent; // user for iterator
+    const userList = users.split(&apos;, &apos;);
+    // userlist[0] is just the count of users. skip it
+    for (let i = 1; i &lt; userList.length; i++) {
+      opponent = util.toId(userList[i]);
+      this.users.add(opponent);
+    }
+    listener.relay(&apos;_lobbyUpdate&apos;, this.users);
+  }
+
+  /**
+   * Handles the updateuser message. We use this to know our own nickname and
+   * avoid challenging ourselves (like a noob would)
+   *
+   * @param  {String} nick  Our assigned nickname.
+   * @param  {Integer} status Unused.
+   */
+  onUpdateUser([nick, status]) { // eslint-disable-line
+    switch (status) {
+      case &apos;0&apos;:
+        break;
+      case &apos;1&apos;:
+        Log.warn(`Successfully logged in as ${nick} (${util.toId(nick)})`);
+        listener.relay(&apos;_nickUpdate&apos;, util.toId(nick));
+        mynick = util.toId(nick);
+        if (this.users.has(mynick)) {
+          Log.error(&apos;weird that users array had my nickname in it.&apos;);
+          this.users.delete(mynick);
+          listener.relay(&apos;_lobbyUpdate&apos;, this.users);
+        }
+        break;
+      default:
+        Log.error(`Weird status when trying to log in: ${status} ${nick}`);
+        break;
+    }
+  }
+
+  getUsers() {
+    return Array.from(this.users);
+  }
+}
+
+module.exports = Lobby;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

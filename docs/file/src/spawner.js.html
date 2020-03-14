@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/spawner.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/spawner.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const { spawn } = require(&apos;child_process&apos;);
+const fs = require(&apos;fs&apos;);
+const path = require(&apos;path&apos;);
+const Log = require(&apos;./log&apos;);
+
+/**
+ * Array of all spawned threads.
+ * @type {Array}
+ */
+const children = [];
+
+class Spawner {
+  /**
+   * Spawn a node instance that runs the given bot. Logs errors, but suppresses
+   * stdout.
+   *
+   * @param  {[type]} path The bot path. This gets &apos;required&apos; and is generally
+   * expected to be in the &apos;bots&apos; folder and not collide with any other
+   * modules (other bots, or modules in src/).
+   * @return {[type]}      [description]
+   */
+  spawn(botpath) {
+    Log.warn(`spawning opponent with path ${botpath}`);
+
+    // start script
+    const locations = [
+      path.join(__dirname, &apos;../src/app.js&apos;),
+      &apos;node_modules/leftovers-again/src/app.js&apos;
+    ];
+
+    let stat;
+    const script = locations.find((location) =&gt; {
+      try {
+        stat = fs.statSync(location);
+        return stat.isFile();
+      } catch (e) {
+        return false;
+      }
+    });
+
+    if (!script) {
+      Log.error(`Couldn&apos;t find app.js script, which is needed to spawn new instances.
+I looked here: ${locations}`);
+    }
+
+    const op = spawn(&apos;node&apos;, [script,
+      `${botpath}`, &apos;--loglevel=5&apos;
+    ], {
+      cwd: &apos;./&apos;
+    });
+    // op.stdout.on(&apos;data&apos;, (data) =&gt; {
+    //   console.log(data);
+    // });
+    // op.stderr.on(&apos;data&apos;, (data) =&gt; {
+    //   Log.err(&apos;error from child process:&apos;);
+    //   Log.err(data);
+    // });
+
+    op.on(&apos;close&apos;, (code) =&gt; {
+      Log.err(`child process for ${botpath} exited with code ${code}`);
+      Log.err(&apos;We shouldn\&apos;t go on if our opponent is gone.&apos;);
+      process.exit();
+    });
+
+    children.push(op);
+  }
+
+  // server() {
+  //   let resolved = false;
+  //   return new Promise((resolve, reject) =&gt; {
+  //     console.log(&apos;spawning a server...&apos;);
+  //     const op = spawn(&apos;node&apos;, [
+  //       __dirname + &apos;/../node_modules/pokemon-showdown&apos;
+  //     ], {
+  //       cwd: __dirname + &apos;/../node_modules/pokemon-showdown&apos;
+  //     });
+  //     op.stdout.on(&apos;data&apos;, (msg) =&gt; {
+  //       if (resolved) return;
+  //       console.log(`${msg}`);
+  //       if (msg.indexOf(&apos;Worker now listening on&apos;) === 0) {
+  //         console.log(&apos;resolving...&apos;);
+  //         // op.stdout.end();
+  //         resolved = true;
+  //         setTimeout(resolve, 1000);
+  //       }
+  //     });
+  //     op.on(&apos;error&apos;, (err) =&gt; {
+  //       console.log(&apos;Failed to start server. Maybe one was already running?&apos;);
+  //       console.log(err);
+  //       console.log(&apos;rejecting...&apos;);
+  //       reject();
+  //     });
+  //     op.stderr.on(&apos;data&apos;, (err) =&gt; {
+  //       console.error(`${err}`);
+  //     });
+  //     children.push(op);
+  //   });
+  // }
+
+  /**
+   * kill all your children...
+   */
+  kill() {
+    children.forEach((child) =&gt; {
+      if (child.stdin) child.stdin.pause();
+      child.kill();
+    });
+  }
+}
+
+module.exports = new Spawner();
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

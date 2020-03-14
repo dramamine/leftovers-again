@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/bots/gabriel-cunegato/bot.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/bots/gabriel-cunegato/bot.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * MilkBot531
+ *
+ */
+const KO = require(&apos;@la/game/kochance&apos;);
+const {MOVE, SWITCH} = require(&apos;@la/decisions&apos;);
+const Damage = require(&apos;@la/game/damage&apos;);
+const Typechart = require(&apos;@la/game/typechart&apos;);
+var _damage = require(&apos;@la/game/damage&apos;);
+var _damage2 = _interopRequireDefault(_damage);
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+var pkmn = [];
+var dmgDone= [];
+
+//turnControl
+var turnsInBattle = 0;
+var lastPKMNInBattle;
+var hpLost;
+var lastHP = 100;
+var healMove;
+var stallMove;
+var strat = { normal:1 , switch:2 , heal:3 , stall:4};
+var currentStrat = strat.normal;
+
+class MilkBot531 {
+
+
+  decide(state) {
+
+
+      var presumedStats = Damage.assumeStats(state.opponent.active);
+
+     // var opSpeed = Damage.calculateStat(state.opponent.active,state.opponent.active.stats.spe);
+
+      turnControl(state);
+
+      if (state.forceSwitch)
+      {
+          const myMon = findBestAttacker(state);
+          console.log(myMon.species);
+          // return a Decision object. SWITCH takes Pokemon objects, Pokemon names,
+          // and the reserve index [0-5] of the Pokemon you&apos;re switching into.
+          lastHP = myMon.hppct;
+          return new SWITCH(myMon.species);
+      }
+
+      var bestMove = findBestMove(state);
+        var dmg = _damage2.default.getDamageResult(state.self.active, state.opponent.active, state.self.active.moves[bestMove]);
+       // console.log(dmg);
+      //  console.log(state.opponent.active.stats.hp);
+     // console.log(state.opponent.active.baseStats.hp);
+        var koChancepls = KO.predictKO(dmg,state.opponent.active);
+      if (koChancepls.turns == null)
+          {
+              koChancepls.turns = 999;
+          }
+        console.log(koChancepls.chance + &apos;% de KO em turnos: &apos; +koChancepls.turns );
+        //if (maxDamage &lt; 100 &amp;&amp; state.self.active.hppct &gt; 40 &amp;&amp; koChancepls &lt; 2)
+
+      if (state.self.active.statuses.indexOf(&apos;trapped&apos;) == -1) //Se n&#xE3;o est&#xE1; TRAPPED
+          {
+
+              if(state.self.active.hppct &gt; 40 &amp;&amp; koChancepls.turns &gt; 2)
+              {
+                  var newBestMon = findBestAttacker(state);
+                  if (newBestMon.species != state.self.active.species)
+                  {
+                      console.log (&apos;Troca!!!&apos; + state.self.active.species + &apos; por &apos;+ newBestMon.species);
+                      if (newBestMon != null)
+                      {
+                          lastHP = newBestMon.hppct;
+                          return new SWITCH(newBestMon.species);
+                      }
+                  }
+                  else
+                  {
+                      console.log(&apos;Foi o mesmo11!!1!!&apos;);
+                  }
+              }
+          }
+    console.log(&apos;\n Escolhendo Ataque contra Tipo: &apos; + state.opponent.active.types[0] + &quot; e &quot; + state.opponent.active.types[1] +&apos; e Habilidade &apos; + state.opponent.active.abilities);
+	console.log(&apos;\n Escolhi o: &apos; + state.self.active.moves[bestMove].name +&apos;\n com dano: &apos; + _damage2.default.getDamageResult(state.self.active, state.opponent.active, state.self.active.moves[bestMove]));
+    return new MOVE(bestMove);
+
+        }
+
+  // randomly chooses an element from an array
+  _pickOne(arr)
+    {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+
+}
+
+function findBestAttacker(state)
+    {
+        var monID = null; //recebe mon
+        var optimalScore = 0;
+        var myMons = state.self.reserve.filter(mon =&gt; !mon.dead);
+        var maxDamage = -1;
+        var bestMove = 0;
+        var numberOfTurnsKO = 999;
+        var optimalKO = 1000;
+        var pctKO = 0;
+        var optimalPct = 0;
+        var movePriori = -1;
+        var optimalPriori = -1;
+        var presumedStats = Damage.assumeStats(state.opponent.active);
+        var monScores = [];
+        for (var i = 0; i &lt; myMons.length; i++)
+        {
+
+            console.log(&apos;!!! Testando o PKMN: &apos; + myMons[i].species +&apos; com speed: &apos; +myMons[i].stats.spe +&apos; Contra oponente de speed &apos; + state.opponent.active.stats.spe);
+            myMons[i].score = evaluateMon(state,myMons[i],state.opponent.active);
+            if(myMons[i].score &gt; optimalScore)
+                {
+                    optimalScore = myMons[i].score;
+                    monID = myMons[i];
+                }
+
+        }
+                   console.log(&apos;\n Deveria estar usando &apos; + monID.species);
+            return(monID);
+    }
+
+function findBestMove(state)
+    {
+        var maxDamage = -1;
+        var bestMove = 0;
+        var numberOfTurnsKO = 999;
+        var optimalKO = 1000;
+        var pctKO = 0;
+        var optimalPct = 0;
+        var movePriori = -1;
+        var optimalPriori = -1;
+        for (var idx = 0; idx &lt; state.self.active.moves.length; idx++ )
+        {
+            var move = state.self.active.moves[idx];
+            if (move.disabled) continue;
+            if (move.name == &apos;U-turn&apos; || move.name == &apos;Volt Switch&apos;) continue;
+            if (move.pp &lt;= 0) continue;
+            var est = [];
+            try
+            {
+                est = _damage2.default.getDamageResult(state.self.active, state.opponent.active, move);
+                est = dealWithExceptions(move,state.self.active,state.opponent.active,est);
+                var KOInfo = KO.predictKO(est,state.opponent.active);
+                numberOfTurnsKO = KOInfo.turns;
+                pctKO = KOInfo.chance;
+                if(numberOfTurnsKO == null)
+                {
+                    numberOfTurnsKO =  999;
+                }
+                //var typeEff = Typechart.compare(move.type,state.opponent.active.types);
+                if(move.name == &apos;Fake Out&apos; &amp;&amp; turnsInBattle == 0) numberOfTurnsKO = -10; //Caso especial do Fake Out. SEMPRE vale a pena usar Fake Out no inimigo se &#xE9; o primeiro turno do Pokemon(do bot) em campo.
+                if(move.name == &apos;Fake Out&apos; &amp;&amp; turnsInBattle &gt; 0) numberOfTurnsKO = 1000; //MAS se n&#xE3;o for o primeiro turno, golpe n&#xE3;o faz absolutamente nada.
+                if(move.name == healMove &amp;&amp; currentStrat == strat.heal)
+                {
+                    numberOfTurnsKO = -5;
+                    currentStrat = strat.normal;
+                    //console.log(&apos;\u0007&apos;);
+
+
+                }
+                if (currentStrat == strat.stall)
+                    {
+                        if(move.name == stallMove &amp;&amp; state.opponent.active.statuses.indexOf(&apos;tox&apos;) == -1)
+                            {
+                                numberOfTurnsKO = -4;
+                                console.log(&apos;\u0007&apos;);
+                                currentStrat = strat.normal;
+                            }
+                            if (state.opponent.active.statuses.indexOf(&apos;tox&apos;) !== -1 &amp;&amp; move.name == &apos;Protect&apos; &amp;&amp; state.self.active.prevMoves[0].name != &apos;Protect&apos;)
+                            {
+                                numberOfTurnsKO = -3;
+                                currentStrat = strat.normal;
+                                console.log(&apos;\u0007&apos;);
+                            }
+
+                    }
+
+
+                movePriori = move.priority;
+                console.log (&apos;----------&apos;);
+                console.log(&apos;Move: &apos; + move.name + &apos; com KO em: &apos; + numberOfTurnsKO + &apos; Priori: &apos; + move.priority + &apos; TypeEff: &apos; + Typechart.compare(move.type,state.opponent.active.types));
+                console.log(&apos;Damage: &apos; + est);
+
+            }
+            catch (e)
+            {
+                console.log(e);
+                console.log(state.self.active, state.opponent.active, move);
+            }
+
+           // if (est[0] &gt; maxDamage)
+           // {
+           //     maxDamage = est[0];
+           //     bestMove = idx;
+           // }
+
+            if (numberOfTurnsKO &lt;= optimalKO)
+                {
+                    if (numberOfTurnsKO &lt; optimalKO)
+                        {
+                            optimalKO = numberOfTurnsKO;
+                            optimalPct = pctKO;
+                            bestMove = idx;
+                            optimalPriori = movePriori;
+                        }
+
+                    if (numberOfTurnsKO == optimalKO)
+                        {
+                            if(pctKO &gt; optimalPct)
+                                {
+                                    optimalKO = numberOfTurnsKO;
+                                    optimalPct = pctKO;
+                                    bestMove = idx;
+                                    optimalPriori = movePriori;
+                                }
+                        }
+
+                }
+                if(movePriori &gt; optimalPriori)
+                {
+                        if (numberOfTurnsKO == optimalKO)
+                        {
+                                optimalKO = numberOfTurnsKO;
+                                optimalPct = pctKO;
+                                bestMove = idx;
+                                optimalPriori = movePriori;
+                        }
+
+                         // if (numberOfTurnsKO == optimalKO)
+                         // {
+                         //     if(pctKO &gt; optimalPct)
+                         //     {
+                         //         optimalKO = numberOfTurnsKO;
+                         //         optimalPct = pctKO;
+                         //         bestMove = idx;
+                         //         optimalPriori = movePriori;
+                         //     }
+                         // }
+
+
+                }
+
+        }
+
+    return bestMove;
+}
+
+function turnControl(state)
+{
+    console.log(state.self.active.hppct + &apos; &#xC9; O HP QUE TENHO AGORA?&apos;);
+    var healName = [&apos;Roost&apos;,&apos;Slack Off&apos;,&apos;Synthesis&apos;,&apos;Recover&apos;,&apos;Softboiled&apos;,&apos;Milk Drink&apos;,&apos;Heal Order&apos;,&apos;Moonlight&apos;,&apos;Morning Sun&apos;];
+    var stallName = [&apos;Toxic&apos;];
+    var hasToxic = false;
+    var myMoves = state.self.active.moves;
+    healMove = undefined;
+    stallMove = undefined;
+    currentStrat = strat.normal;
+    //Verifica se o PKMN tem algum tipo de cura.
+    if (myMoves != undefined)
+        {
+
+            for (var i = 0; i &lt; myMoves.length; i++)
+            {
+
+                var move = myMoves[i];
+               // if (move.disabled) continue;
+                if(healName.indexOf(move.name) !== -1)
+                    {
+                        healMove = move.name;
+                    }
+                if(stallName.indexOf(move.name) !== -1)
+                    {
+                        stallMove = move.name;
+                    }
+            }
+        }
+    ///
+    if(stallMove != undefined)
+        {
+
+            var bestMove = findBestMove(state);
+            console.log (&apos;passou best&apos;);
+            var est = _damage2.default.getDamageResult(state.self.active, state.opponent.active, state.self.active.moves[bestMove]);
+            console.log (&apos;passou est&apos;);
+            est = dealWithExceptions(bestMove,state.self.active,state.opponent.active,est);
+            console.log (&apos;passou excep&apos;);
+            var KOInfo = KO.predictKO(est,state.opponent.active);
+            console.log (&apos;passou KO&apos;);
+            var numberOfTurnsKO = KOInfo.turns;
+            if (numberOfTurnsKO &gt; 3 &amp;&amp; state.opponent.active.types.indexOf(&apos;Poison&apos;) == -1 &amp;&amp; state.opponent.active.types.indexOf(&apos;Steel&apos;) == -1)
+            {
+                currentStrat = strat.stall;
+                console.log(&apos;\u0007&apos;);
+            }
+
+        }
+    if(healMove != undefined &amp;&amp; state.self.active.hppct &lt; 65 &amp;&amp; hpLost &lt; 50)
+        {
+            currentStrat = strat.heal;
+        }
+    if(lastPKMNInBattle == state.self.active.species)
+    {
+        turnsInBattle++;
+        console.log(state.self.active.species +&apos; na batalha por::: &apos; + turnsInBattle)
+    }
+    else
+    {
+        turnsInBattle = 0;
+        console.log(&apos;Trocou de PKMN. Reseta counter&apos;)
+    }
+    if (turnsInBattle == 0)
+    {
+      //  hpLost = 0;
+       // lastHP = state.self.active.hppct;
+        hpLost = lastHP - state.self.active.hppct;
+
+    }
+    if(turnsInBattle &gt; 0)
+    {
+            hpLost = lastHP - state.self.active.hppct;
+           // console.log(&apos;HP Perdido foi???????&apos; + hpLost);
+    }
+    console.log(hpLost +&apos;HP Perdido!&apos;);
+    lastPKMNInBattle = state.self.active.species;
+
+
+}
+
+function dealWithExceptions(mov,a,d,prevDmg)
+{
+   // var typeEffect1 = Damage.getMoveEffectiveness(move, defender.type1, attacker.ability === &apos;Scrappy&apos;, 0);
+    //var typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, attacker.ability === &apos;Scrappy&apos;) : 1;
+    var dmg = prevDmg;
+    var move = mov;
+    var defender = d;
+    var attacker = a;
+    var typeEffectiveness;// = Typechart.compare(move,defender.types);
+    if (move.type === &apos;Ground&apos; &amp;&amp; defender.item === &apos;Air Balloon&apos;)
+    {
+
+        //description.defenderItem = defender.item;
+        console.log(&apos;MAN&#xC9; DO BAL&#xC3;O!!!!!!!!!!!!!!!!!!!!!!&apos;);
+        return [0];
+    }
+    if (defender.ability != undefined)
+        {
+    if (typeEffectiveness &lt; 2 &amp;&amp; defender.ability ===&apos;Wonder Guard&apos; || move.type === &apos;Grass&apos; &amp;&amp; defender.ability === &apos;Sap Sipper&apos; || move.type === &apos;Fire&apos; &amp;&amp; defender.ability.indexOf(&apos;Flash Fire&apos;) !== -1 || move.type === &apos;Water&apos; &amp;&amp; [&apos;Dry Skin&apos;, &apos;Storm Drain&apos;, &apos;Water Absorb&apos;].indexOf(defender.ability) !== -1 || move.type === &apos;Electric&apos; &amp;&amp; [&apos;Lightning Rod&apos;, &apos;Lightningrod&apos;, &apos;Motor Drive&apos;, &apos;Volt Absorb&apos;].indexOf(defender.ability) !== -1 || move.type === &apos;Ground&apos; &amp;&amp; defender.ability === &apos;Levitate&apos; || move.isBullet &amp;&amp; defender.ability === &apos;Bulletproof&apos; || move.isSound &amp;&amp; defender.ability === &apos;Soundproof&apos;) {
+        //description.defenderAbility = defAbility;
+        console.log(&apos;CAIU NA EXCE&#xC7;&#xC3;O, BOBALH&#xC3;O!!!!!!!&apos;);
+        return [0];
+      }
+        }
+    return prevDmg;
+}
+
+
+function evaluateMon(state,myMon,otherMon)
+{
+    var oponente = otherMon;
+    var typeEffDef = 1;
+    var typeEff2 = 0;
+    var score = 0
+    var maxDamage = -1;
+    var bestMove = 0;
+    var numberOfTurnsKO = 999;
+    var optimalKO = 1000;
+    var pctKO = 0;
+    var optimalPct = 0;
+    var movePriori = -1;
+    var optimalPriori = -1;
+    var presumedStats = Damage.assumeStats(state.opponent.active);
+    //TESTA MOVES
+    for (var idx = 0; idx &lt; myMon.moves.length; idx++ )
+    {
+        var move = myMon.moves[idx];
+        if (move.disabled) continue;
+        if (move.name == &apos;U-turn&apos; || move.name == &apos;Volt Switch&apos;) continue;
+        if (move.pp &lt;= 0) continue;
+        var est = [];
+        try
+        {
+            est = _damage2.default.getDamageResult(myMon, oponente, move);
+            est = dealWithExceptions(move,myMon,oponente,est);
+            var KOInfo = KO.predictKO(est,oponente);
+            numberOfTurnsKO = KOInfo.turns;
+            pctKO = KOInfo.chance;
+            if(numberOfTurnsKO == null)
+            {
+                numberOfTurnsKO =  999;
+            }
+            movePriori = move.priority;
+            if (movePriori == undefined) movePriori = 0; //N&#xE3;o retorna 0 quando o pokemon est&#xE1; na reserve.
+
+        }
+        catch (e)
+        {
+            console.log(e);
+            console.log(myMon, oponente, move);
+        }
+            if (numberOfTurnsKO &lt;= optimalKO)
+            {
+                if (numberOfTurnsKO &lt; optimalKO)
+                    {
+                        optimalKO = numberOfTurnsKO;
+                        optimalPct = pctKO;
+                        bestMove = idx;
+                        optimalPriori = movePriori;
+                    }
+                if (numberOfTurnsKO == optimalKO)
+                    {
+                        if(pctKO &gt; optimalPct)
+                            {
+                                optimalKO = numberOfTurnsKO;
+                                optimalPct = pctKO;
+                                bestMove = idx;
+                                optimalPriori = movePriori;
+                            }
+                    }
+            }
+            if(movePriori &gt; optimalPriori) //PRIORITY VEM PRIMEIRO. Se o PKMN matar na mesma quantia de turnos, melhor usar um ataque mais r&#xE1;pido.
+            {
+                    if (numberOfTurnsKO == optimalKO)
+                    {
+                            optimalKO = numberOfTurnsKO;
+                            optimalPct = pctKO;
+                            optimalPriori = movePriori;
+
+                    }
+
+
+            }
+
+
+    }
+    score = score + 3/optimalKO; console.log(&apos;Score de KO: +&apos; + 2/optimalKO);
+    score = score + pctKO/1000; console.log(&apos;Score de PCT: +&apos; + pctKO/1000);
+    if(optimalPriori &gt; 0)
+    {
+        score = score+0.01; console.log(&apos;Score de Priori: +0.01&apos;);
+    }
+    if (myMon.stats.spe &gt; oponente.stats.spe)
+    {
+        score = score+1; console.log(&apos;Score de Speed: +1&apos;);
+    }
+    var opoType1 = oponente.types[0];
+
+
+    var opoType2 = oponente.types[1];
+    var eff1;
+    eff1 = Typechart.compare(opoType1,myMon.types); console.log(opoType1 + &apos; &apos; +eff1);
+    var eff2;
+    if (opoType2 != undefined)
+    {
+        eff2 = Typechart.compare(opoType2,myMon.types); console.log(opoType2 + &apos; &apos; +eff2);
+    }
+    else eff2 = 1;
+    typeEffDef = 1 - ((eff1+eff2)/8);
+    score = score+typeEffDef; console.log(&apos;Score de Defesa de Type: &apos; + typeEffDef);
+    console.log(&apos;SCORE FINAL: &apos; +score);
+    return score;
+}
+
+module.exports = MilkBot531;
+
+
+//Ability de absorb
+//Sucker Punch Free Ride
+//Switch loop ou U-Turn/Volt Switch (kinda)
+//Dragon Tail(usar)
+//Melhorar switch levando considera&#xE7;&#xE3;o o tipo
+//SE canTank, buff the fuck up (ou heal)
+//SEM FAKEOUT NO GHOST</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/reporters/matchstatus.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/reporters/matchstatus.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const chalk = require(&apos;chalk&apos;);
+
+const HP_BAR_LENGTH = 10;
+const EXTRA_MON_ICON = &apos;O&apos;;
+const DEAD_MON_ICON = &apos;X&apos;;
+const UNKNOWN_MON_ICON = &apos;?&apos;;
+// const MY_BACKGROUND = chalk.bgYellow;
+// const YOUR_BACKGROUND = chalk.bgCyan;
+const MY_TEXT = chalk.bold.black;
+const YOUR_TEXT = chalk.bold.black;
+const EMPTY = &apos;           &apos;;
+
+class MatchStatus {
+  report(state) {
+    const myLastMove = state.self.active.prevMoves
+      ? state.self.active.prevMoves[0]
+      : &apos;&apos;;
+    const yourLastMove = state.opponent.active.prevMoves
+      ? state.opponent.active.prevMoves[0]
+      : &apos;&apos;;
+
+    const stuff = this.padLeft(myLastMove, 12) + &apos; | &apos; +
+
+      this.padLeft(
+        this.statusString(state.self.active.statuses) + &apos; &apos; +
+        this.boostString(state.self.active.boosts)
+      , 15) + &apos; &apos; +
+
+      this.padLeft(
+        state.self.active.species
+      , 10) + &apos; &apos; +
+
+      this.hp(state.self.active.hppct || EMPTY) + &apos; | &apos; +
+
+      this.myReserve(state.self.reserve) + &apos; | &apos; +
+      this.yourReserve(state.opponent.reserve) + &apos; | &apos; +
+
+      this.hp(state.opponent.active.hppct || EMPTY) + &apos; &apos; +
+
+      this.padRight(
+        state.opponent.active.species
+      , 10) + &apos; &apos; +
+
+      this.padRight(
+        this.statusString(state.opponent.active.statuses) + &apos; &apos; +
+        this.boostString(state.opponent.active.boosts)
+      , 15) + &apos; | &apos; +
+
+      this.padRight(yourLastMove, 12) + &apos;&apos;;
+    console.log(stuff);
+  }
+  hp(hppct) {
+    const blox = Math.floor(hppct / HP_BAR_LENGTH);
+    const antiblox = HP_BAR_LENGTH - blox;
+    return chalk.bgGreen(&apos; &apos;.repeat(blox)) + chalk.bgRed(&apos; &apos;.repeat(antiblox));
+  }
+
+  statusString(statuses) {
+    if (!statuses || statuses.length === 0) return &apos;&apos;;
+    if (statuses.length &lt;= 2) {
+      return &apos;[&apos; + statuses.join(&apos; &apos;) + &apos;]&apos;;
+    }
+    return &apos;[&apos; + statuses.map(str =&gt; str.substr(0, 2)).join(&apos; &apos;).substr(0, 8) + &apos;]&apos;;
+  }
+
+  boostString(boosts = {}) {
+    let out = &apos;&apos;;
+    Object.keys(boosts).forEach((key) =&gt; {
+      const mod = (boosts[key] &gt; 0)
+        ? &apos;+&apos;.repeat(boosts[key])
+        : &apos;-&apos;.repeat(-1 * boosts[key]);
+      out += key + mod + &apos; &apos;;
+    });
+    return out.trim();
+  }
+
+  myReserve(reserve) {
+    const myAlive = reserve.filter(mon =&gt; !mon.dead).length;
+    const myDead = reserve.filter(mon =&gt; mon.dead).length;
+
+    const stuff = MY_TEXT(
+      this.padLeft(DEAD_MON_ICON.repeat(myDead), 6)
+    );
+    return stuff;
+  }
+  yourReserve(reserve) {
+    const yourAlive = reserve.filter(mon =&gt; !mon.dead).length;
+    const yourDead = reserve.filter(mon =&gt; mon.dead).length;
+
+    const stuff = YOUR_TEXT(
+      this.padRight(DEAD_MON_ICON.repeat(yourDead), 6)
+    );
+    return stuff;
+  }
+
+  padLeft(nr = &apos; &apos;, n, str) {
+    if (nr.length &gt;= n) return nr.substr(0, n);
+    return Array(n - String(nr).length + 1).join(str || &apos; &apos;) + nr;
+  }
+  padRight(nr = &apos; &apos;, n, str) {
+    if (nr.length &gt;= n) return nr.substr(0, n);
+    return nr + Array(n - String(nr).length + 1).join(str || &apos; &apos;);
+  }
+}
+
+module.exports = new MatchStatus();
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

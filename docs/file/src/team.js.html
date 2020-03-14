@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/team.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/team.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const util = require(&apos;./pokeutil&apos;);
+const Log = require(&apos;./log&apos;);
+const fs = require(&apos;fs&apos;);
+
+/**
+ * Teams: so documented.
+ *
+ * This class is used for creating a team and relaying it to the server.
+ *
+ * @see http://play.pokemonshowdown.com/teambuilder
+ */
+class Team {
+  /**
+   * Team constructor.
+   *
+   * @param {Array&lt;Pokemon&gt;|String} Either a Smogon string, or an array of
+   * Pokemon data. Smogon strings are preferred; if you use an array here,
+   * you&apos;re responsible for data validation and you&apos;d better read more of this
+   * file to figure out what you need.
+   */
+  constructor(tm) {
+    if (Array.isArray(tm) &amp;&amp; Team.seemsValid(tm)) {
+      this.self = tm;
+    } else if (typeof tm === &apos;string&apos;) {
+      const team = Team.interpretSmogon(tm);
+      if (Team.seemsValid(team)) {
+        this.self = team;
+      }
+    }
+  }
+
+  /**
+   * Get team value as an array.
+   */
+  asArray() {
+    return this.self;
+  }
+
+  /**
+   * Get the team as a utm message (for sending to the server).
+   */
+  asUtm() {
+    return Team.packTeam(this.self);
+  }
+
+  /**
+   * Pick a random team for the player. This is designed for situations where
+   * you want to play against a &apos;randombattle&apos; bot, but want to play a format
+   * that requires teams. Can also be used for testing, ex. you want to play
+   * random battles but with a set team.
+   *
+   * The file used here, randomteams.txt, is just something I compiled from
+   * logging actual teams that you could get during a randombattle. Note that
+   * this isn&apos;t a true representation of all the possibilities you can get from
+   * a randombattle, as you can get teams that are considered invalid for
+   * anythinggoes due to having weird moves / items. I removed those for better
+   * compatibility.
+   *
+   * @param {Integer} seed  The line number to use.
+   */
+  static random(seed = undefined) {
+    const data = fs.readFileSync(__dirname + &apos;/data/randomteams.txt&apos;, &apos;utf8&apos;);
+    const lines = data.split(&apos;\n&apos;);
+
+    if (seed === undefined) {
+      seed = Team._getNextSeed();
+      if (!seed) {
+        seed = Math.floor(Math.random() * lines.length); // eslint-disable-line
+      }
+    //
+    }
+    Log.debug(&apos;random team seed: &apos; + seed, lines.length);
+    if (seed &gt; lines.length) {
+      throw new Error(&apos;File end reached without finding line&apos;);
+    }
+    return JSON.parse(lines[seed]);
+  }
+
+  /**
+   * Iterate on random seeds. Doing this temporarily becuase lots of the teams
+   * are not valid for anythinggoes so we want to error out and manually remove
+   * them.
+   */
+  static _getNextSeed() {
+    const data = fs.readFileSync(&apos;./tmp/lastseed&apos;, &apos;utf8&apos;);
+
+    // increment
+    const updated = parseInt(data, 10) + 1;
+    Log.debug(`random team seed: read ${data} and am writing ${updated}`);
+    if (isNaN(updated)) return null;
+    fs.writeFile(&apos;./tmp/lastseed&apos;, updated);
+    return data.trim();
+  }
+
+  /**
+   * Some quick checks to see if this team is valid.
+   * @param  {Array} tm The team array
+   * @return {Boolean} True if the team seems valid; false otherwise
+   */
+  static seemsValid(tm) {
+    let member;
+    for (let i = 0; i &lt; tm.length; i++) {
+      member = tm[i];
+      if (!member.name &amp;&amp; !member.species) {
+        Log.error(&apos;a pokemon didn\&apos;t have a name or species!&apos;);
+        return false;
+      }
+      if (!Array.isArray(member.moves)) {
+        Log.error(&apos;property \&apos;moves\&apos; must be an array of move names.&apos;);
+        return false;
+      }
+      if (member.moves.length &gt; 4) {
+        Log.error(&apos;more moves than I expected.&apos;);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Interpret a Smogon team.
+   *
+   * @param {String}  The Smogon team string, like you see on forums and
+   * Smogon pages and whatnot.
+   * @return {Array&lt;Pokemon&gt;}  An array of Pokemon-lookin&apos; objects.
+   */
+  static interpretSmogon(str) {
+    const mons = str.split(&apos;\n\n&apos;);
+    const team = [];
+    mons.forEach((lines) =&gt; {
+      const mon = Team.interpretOneSmogon(lines);
+      if (mon.species) {
+        team.push(mon);
+      }
+    });
+    return team;
+  }
+
+  /**
+   * Interpret one Smogon-mon.
+   *
+   * @param {String}  The Smogon string, like you see on forums and
+   * Smogon pages and whatnot.
+   * @return {Pokemon}  A Pokemon-lookin&apos; object. Has properties such as
+   * ability, evs, moves, ivs, shiny, happiness, nature, gender, species, name,
+   * and item.
+   */
+  static interpretOneSmogon(str) {
+    const mon = {
+      moves: []
+    };
+    const lines = str.split(&apos;\n&apos;);
+    let line;
+    for (let i = 0; i &lt; lines.length; i++) {
+      line = lines[i].trim();
+      if (!line) continue;
+      if (line.indexOf(&apos;Ability:&apos;) === 0) {
+        mon.ability = line.replace(&apos;Ability:&apos;, &apos;&apos;).trim();
+      } else if (line.indexOf(&apos;EVs:&apos;) === 0) {
+        mon.evs = {};
+        const evs = line.replace(&apos;EVs:&apos;, &apos;&apos;).split(&apos;/&apos;);
+
+        let numAndLabel;
+        let evLabel;
+        evs.forEach((ev) =&gt; { // eslint-disable-line
+          numAndLabel = ev.trim().split(&apos; &apos;);
+          evLabel = numAndLabel[1].trim().toLowerCase();
+          if ([&apos;hp&apos;, &apos;atk&apos;, &apos;def&apos;,  &apos;spa&apos;, &apos;spd&apos;, &apos;spe&apos;].indexOf(evLabel) === -1) {
+            console.error(&apos;something weird with ev label&apos;, evLabel, line);
+          } else {
+            mon.evs[evLabel] = parseInt(numAndLabel[0].trim(), 10);
+          }
+        });
+      } else if (line.indexOf(&apos;IVs:&apos;) === 0) {
+        mon.ivs = {};
+        const ivs = line.replace(&apos;IVs:&apos;, &apos;&apos;).split(&apos;/&apos;);
+
+        let numAndLabel;
+        let ivLabel;
+        ivs.forEach((iv) =&gt; { // eslint-disable-line
+          numAndLabel = iv.trim().split(&apos; &apos;);
+          ivLabel = numAndLabel[1].trim().toLowerCase();
+          if (![&apos;hp&apos;, &apos;atk&apos;, &apos;def&apos;,  &apos;spa&apos;, &apos;spd&apos;, &apos;spe&apos;].indexOf(ivLabel) === -1) {
+            Log.warn(&apos;something weird with iv label&apos;, ivLabel, line);
+          } else {
+            mon.ivs[ivLabel] = parseInt(numAndLabel[0].trim(), 10);
+          }
+        });
+      } else if (line.indexOf(&apos;-&apos;) === 0) {
+        mon.moves.push(line.replace(&apos;-&apos;, &apos;&apos;).trim());
+      } else if (line.indexOf(&apos;Shiny: Y&apos;) === 0) {
+        mon.shiny = true;
+      } else if (line.indexOf(&apos;Level:&apos;) === 0) {
+        mon.level = parseInt(line.replace(&apos;Level:&apos;, &apos;&apos;).trim(), 10);
+      } else if (line.indexOf(&apos;Happiness:&apos;) === 0) {
+        mon.happiness = parseInt(line.replace(&apos;Happiness:&apos;, &apos;&apos;).trim(), 10);
+      } else if (line.indexOf(&apos;Nature&apos;) &gt; 0) {
+        mon.nature = line.replace(&apos;Nature&apos;, &apos;&apos;).trim();
+      } else if (line.length &gt; 0 &amp;&amp; !mon.species) {
+        let nameAndGender = line;
+        if (line.indexOf(&apos;@&apos;) &gt; 0) {
+          const splitLine = line.split(&apos;@&apos;);
+          nameAndGender = splitLine[0].trim();
+          mon.item = splitLine[1].trim();
+        }
+        if (nameAndGender.indexOf(&apos;(M)&apos;) &gt; 0) {
+          mon.gender = &apos;M&apos;;
+          nameAndGender = nameAndGender.replace(&apos;(M)&apos;, &apos;&apos;);
+        } else if (nameAndGender.indexOf(&apos;(F)&apos;) &gt; 0) {
+          mon.gender = &apos;F&apos;;
+          nameAndGender = nameAndGender.replace(&apos;(F)&apos;, &apos;&apos;);
+        }
+        const nicknames = nameAndGender.match(/\((.+)\)/);
+        if (nicknames) {
+          mon.name = nameAndGender.split(&apos; (&apos;)[0];
+          mon.species = nicknames[1];
+        } else {
+          mon.species = nameAndGender.trim();
+        }
+      }
+    }
+    return mon;
+  }
+  /**
+   * Turn a Pokemon team into a string to send to the server.
+
+   * Code transformed from Pokemon-Showdown tools.js
+   *
+   * @param  {Array&lt;Pokemon&gt;} team  The team array.
+   * @return {String}  A string to send to the server.
+   */
+  static packTeam(team) {
+    if (!team) return &apos;&apos;;
+
+    let buf = &apos;&apos;;
+
+    for (let i = 0; i &lt; team.length; i++) {
+      const set = team[i];
+      if (buf) {
+        buf += &apos;]&apos;;
+      }
+
+      // name
+      buf += set.name || &apos;&apos;;
+
+      const id = util.toId(set.species || set.name);
+
+      buf += &apos;|&apos; + id;
+
+      // item
+      buf += &apos;|&apos; + util.toId(set.item);
+
+      // ability
+      const abilities = (set.abilities)
+        ? set.abilities
+        : util.researchPokemonById(id).abilities;
+
+      // @TODO
+      // suspicious of this. what if we just sent &apos;id&apos; instead of these 0,1,H shortcuts?
+      const ability = util.toId(set.ability);
+      if (abilities) {
+        if (ability === util.toId(abilities[&apos;0&apos;])) {
+          buf += &apos;|&apos;;
+        } else if (ability === util.toId(abilities[&apos;1&apos;])) {
+          buf += &apos;|1&apos;;
+        } else if (ability === util.toId(abilities[&apos;H&apos;])) { // eslint-disable-line
+          buf += &apos;|H&apos;;
+        } else {
+          buf += &apos;|&apos; + ability;
+        }
+      } else {
+        buf += &apos;|&apos; + ability;
+      }
+
+      // moves
+      buf += &apos;|&apos; + set.moves.map(util.toId).join(&apos;,&apos;);
+
+      // nature
+      buf += &apos;|&apos; + (set.nature || &apos;Serious&apos;);
+
+      // evs
+      let evs = &apos;|&apos;;
+      if (set.evs) {
+        evs = &apos;|&apos; + (set.evs.hp || &apos;&apos;) +
+          &apos;,&apos; + (set.evs.atk || &apos;&apos;) +
+          &apos;,&apos; + (set.evs.def || &apos;&apos;) +
+          &apos;,&apos; + (set.evs.spa || &apos;&apos;) +
+          &apos;,&apos; + (set.evs.spd || &apos;&apos;) +
+          &apos;,&apos; + (set.evs.spe || &apos;&apos;);
+      }
+      if (evs === &apos;|,,,,,&apos;) {
+        buf += &apos;|&apos;;
+      } else {
+        buf += evs;
+      }
+
+      // gender
+      if (set.gender &amp;&amp; set.gender !== util.researchPokemonById(id).gender) {
+        buf += &apos;|&apos; + set.gender;
+      } else {
+        buf += &apos;|&apos;;
+      }
+
+      // ivs
+      let ivs = &apos;|&apos;;
+      if (set.ivs) {
+        ivs = &apos;|&apos; + (set.ivs.hp === 31 || set.ivs.hp === undefined ? &apos;&apos; : set.ivs.hp) +
+        &apos;,&apos; + (set.ivs.atk === 31 || set.ivs.atk === undefined ? &apos;&apos; : set.ivs.atk) +
+        &apos;,&apos; + (set.ivs.def === 31 || set.ivs.def === undefined ? &apos;&apos; : set.ivs.def) +
+        &apos;,&apos; + (set.ivs.spa === 31 || set.ivs.spa === undefined ? &apos;&apos; : set.ivs.spa) +
+        &apos;,&apos; + (set.ivs.spd === 31 || set.ivs.spd === undefined ? &apos;&apos; : set.ivs.spd) +
+        &apos;,&apos; + (set.ivs.spe === 31 || set.ivs.spe === undefined ? &apos;&apos; : set.ivs.spe);
+      }
+      if (ivs === &apos;|,,,,,&apos;) {
+        buf += &apos;|&apos;;
+      } else {
+        buf += ivs;
+      }
+
+      // shiny
+      if (set.shiny) {
+        buf += &apos;|S&apos;;
+      } else {
+        buf += &apos;|&apos;;
+      }
+
+      // level
+      if (set.level &amp;&amp; set.level !== 100) {
+        buf += &apos;|&apos; + set.level;
+      } else {
+        buf += &apos;|&apos;;
+      }
+
+      // happiness
+      if (set.happiness !== undefined &amp;&amp; set.happiness !== 255) {
+        buf += &apos;|&apos; + set.happiness;
+      } else {
+        buf += &apos;|&apos;;
+      }
+    }
+    return buf;
+  }
+}
+
+module.exports = Team;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/bots/elitefour/elitefour.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/bots/elitefour/elitefour.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ *
+ *
+ */
+
+const AI = require(&apos;@la/ai&apos;);
+const Typechart = require(&apos;@la/game/typechart&apos;);
+
+const { MOVE, SWITCH } = require(&apos;@la/decisions&apos;);
+
+/**
+ * This is used in calculating randomness. If the exponent is 1, you&apos;ll end
+ * up using flat weight numbers; at higher exponents you will more often favor
+ * the moves that you decided you&apos;re more likely to use. Ex. if we have a super
+ * effective move, we want the chance that we&apos;ll use it to be REALLY high.
+ *
+ */
+const randomnessExponent = 2;
+
+const weights = {
+  effectiveness: {
+    weight: 10,
+    // check typechart for all possibilities
+    value: (val) =&gt; {
+      return {
+        0: 0,
+        0.5: 1,
+        1: 2,
+        2: 10,
+        4: 20
+      }[val];
+    }
+  },
+  // boolean
+  stabby: {
+    weight: 10,
+  },
+  // this # is the chance that the effect will happen (ex. 10% or 100%)
+  status: {
+    weight: 10,
+  },
+  unboost: {
+    weight: 10,
+  },
+  prioritykill: {
+    weight: 15,
+  },
+  recoil: {
+    weight: -5
+  },
+  // for whatever random stuff we wanna throw in here.
+  bonus: {
+    weight: 1
+  }
+
+};
+
+module.exports = class EliteFour extends AI {
+  constructor(meta) {
+    super(meta);
+
+    this.lastMove = null;
+    this.weights = weights;
+    this.randomnessExponent = randomnessExponent;
+  }
+
+  decide(state) {
+    if (state.forceSwitch) {
+      // our pokemon died :(
+      // choose a random one
+      const possibleMons = state.self.reserve.filter((mon) =&gt; {
+        if (mon.condition === &apos;0 fnt&apos;) return false;
+        if (mon.active) return false;
+        return true;
+      });
+      const myMon = this.pickOne(possibleMons);
+      return new SWITCH(myMon);
+    }
+
+    if (state.teamPreview) {
+      // always pick the first mon
+      return new SWITCH(0);
+    }
+
+    const fitness = {};
+    const totalFitness = {};
+    state.self.active.moves.forEach((move) =&gt; {
+      if (move.disabled) return;
+      fitness[move.id] = {};
+
+      // favor super-effective moves, disfavor ineffective / weak moves
+      fitness[move.id].effectiveness = Typechart.compare(move.type,
+        state.opponent.active.types);
+
+      fitness[move.id].stabby = !!state.self.active.types.indexOf(move.type);
+
+      // favor unboosting moves on non-unboosted opponents,
+      // as long as we didn&apos;t just try this move.
+      if (move.category === &apos;Status&apos; &amp;&amp; move.id !== this.lastMove &amp;&amp;
+      move.boosts) {
+        [&apos;atk&apos;, &apos;spa&apos;, &apos;spd&apos;, &apos;spe&apos;, &apos;def&apos;].forEach((type) =&gt; {
+          if (!move.boosts[type]) return;
+
+          if (state.opponent.active.boosts &amp;&amp; state.opponent.active.boosts[type] &amp;&amp;
+          state.opponent.active.boosts[type] &lt; 0) return;
+
+          // OK, we&apos;re in the clear here.
+          fitness[move.id].unboost = true;
+        });
+      }
+
+      // favor status moves on non-statused opponents,
+      // as long as we didn&apos;t just try this move.
+      if (move.secondary &amp;&amp; move.id !== this.lastMove) {
+        if (!state.opponent.active.conditions ||
+          !state.opponent.active.conditions.indexOf(move.secondary.status) &gt;= 0) {
+          fitness[move.id].status = move.secondary.chance;
+        }
+      }
+      // @TODO check volatileStatus for moves like Confuse Ray
+
+      // priority moves
+      if (move.priority &gt; 0 &amp;&amp; state.opponent.active.hp &lt; 25) {
+        fitness[move.id].prioritykill = true;
+      }
+
+      // unfavor moves that leave me dead
+      // @TODO I don&apos;t like that hppct and active opponent&apos;s hp are both percent fields
+      if (move.recoil &amp;&amp; state.self.active.hppct &lt; 33) {
+        fitness[move.id].recoil = true;
+      }
+
+      if (move.id === &apos;flail&apos; &amp;&amp; state.self.active.hppct &lt; 33) {
+        fitness[move.id].bonus = 20;
+      }
+
+      totalFitness[move.id] = this.sumFitness(fitness[move.id]);
+    });
+
+    // pick a move from total fitness
+    const myMove = this.pickMoveByFitness(totalFitness);
+    return new MOVE(myMove);
+  }
+
+  sumFitness(obj) {
+    let sum = 0;
+    for (const key in obj) {
+      if (weights[key]) {
+        // run the value function if it exists;
+        // else, convert the value to a number and use that.
+        const value = weights[key].value
+          ? weights[key].value(obj[key])
+          : +obj[key];
+
+        sum = sum + weights[key].weight * value;
+      }
+    }
+    return sum;
+  }
+
+  pickMoveByFitness(moveArr) {
+    let total = 0;
+    const weighted = {};
+    for (const move in moveArr) {
+      if ({}.hasOwnProperty.call(moveArr, move)) {
+        weighted[move] = moveArr[move] &gt;= 0
+          ? Math.pow(moveArr[move], randomnessExponent)
+          : 0;
+        total += weighted[move];
+      }
+    }
+    const myVal = Math.random() * total;
+    let accum = 0;
+    for (const move in weighted) {
+      if ({}.hasOwnProperty.call(weighted, move)) {
+        accum += weighted[move];
+        if (accum &gt; myVal) return move;
+      }
+    }
+    // something went wrong
+    return false;
+  }
+
+  // random
+  pickOne(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

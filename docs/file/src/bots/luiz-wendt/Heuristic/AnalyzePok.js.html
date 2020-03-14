@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">src/bots/luiz-wendt/Heuristic/AnalyzePok.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/dramamine/leftovers-again.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ai.js~AI.html">AI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/battle.js~Battle.html">Battle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/connection.js~Connection.html">Connection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~Decision.html">Decision</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~MOVE.html">MOVE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/decisions.js~SWITCH.html">SWITCH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listener.js~Listener.html">Listener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/monkey.js~Monkey.html">Monkey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/report.js~Report.html">Report</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/team.js~Team.html">Team</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-botFinder">botFinder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-start">start</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">game</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/game/typechart.js~Typechart.html">Typechart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">interfaces</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/cli.js~Interactive.html">Interactive</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/interfaces/params.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">model</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/battlestore.js~BattleStore.html">BattleStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/challenges.js~Challenger.html">Challenger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/lobby.js~Lobby.html">Lobby</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/pokemon.js~Pokemon.html">Pokemon</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/side.js~Side.html">Side</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/model/timer.js~Timer.html">Timer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-MoveData">MoveData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-PokemonData">PokemonData</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/bots/luiz-wendt/Heuristic/AnalyzePok.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const Typechart = require(&apos;@la/game/typechart&apos;);
+const Damage = require(&apos;@la/game/damage&apos;);
+const Moves = require(&apos;@la/data/moves&apos;);
+const Side = require(&apos;@la/model/side&apos;);
+
+var EvaluateEnemy = require(&quot;./EvaluateEnemy&quot;);
+
+module.exports = function (pok, enemy, isOurs) {
+    var pokObj;
+    if(pok == null) {
+        return null;
+    }
+
+    if(pok.dead) {
+        return null;
+    }
+
+    if(isOurs) {
+         pokObj = {
+             maxhp : pok.maxhp,
+             haveStatus : false,
+             status : [],
+             haveBoostDown : false,
+             boostDowns : [],
+             haveBoost : false,
+             boosts : [],
+             haveHazard : false,
+             hazards : [],
+             haveHeal : false,
+             heal : [],
+             isSweeper : false,
+             batonpass : false,
+             haveSubstitute : false,
+             haveProtect : false,
+             moves : pok.moves,
+             havePriority : false,
+             against : {},
+             haveLeechSeed : false,
+             haveYawn : false,
+             haveConfusionInEnemy: false,
+             haveDrain : false,
+             haveSleep : false,
+
+         };
+          //pokObj = ourPokemons[pok.id];
+     }
+    /*else {
+          theirsPokemons[pok.id] = {
+              haveStatus : false,
+              status : [],
+              haveStatusDown : false,
+              statusDowns : {},
+              haveBoost : false,
+              boosts : [],
+              haveHazard : false,
+              hazards : {},
+              haveHeal : false,
+              isSweeper : false,
+              bottomPass : false,
+              haveSubstitute : false,
+              haveProtect : false,
+              haveRetreat : false,
+              haveForceSwitch : false,
+              moves : pok.moves,
+              hasPriority : false,
+              against : {},
+         };
+         pokObj = theirsPokemons[pok.id];
+    }*/
+
+    var damageDoneIn = {};
+
+    var arrayMoves = [];
+    if(isOurs) {
+        arrayMoves = pok.moves;
+    }
+    else{
+        for(var moveID in pok.seenMoves) {
+            arrayMoves.push(Moves[moveID]);
+        }
+    }
+
+    for (var move in pok.moves) {
+        if(pok.moves[move].pp &lt;= 0)
+            continue;
+
+        for(var pokEnemy in enemy.reserve) {
+            if(!damageDoneIn[enemy.reserve[pokEnemy].id]) {
+                    damageDoneIn[enemy.reserve[pokEnemy].id] = {};
+                }
+            damageDoneIn[enemy.reserve[pokEnemy].id][move] = Damage.getDamageResult(pok, enemy.reserve[pokEnemy], pok.moves[move]);
+        }
+
+        if(pok.moves[move].self)  { //se tem algo em si mesmo
+            if(pok.moves[move].self.boosts) { // se for um boost
+                pokObj.haveBoost = true;
+                pokObj.boosts.push(pok.moves[move].self.boosts);
+            }
+
+        }
+        if(pok.moves[move].boosts) {
+            if(pok.moves[move].target == &quot;normal&quot;) {
+                pokObj.haveBoostDown = true;
+                pokObj.boostDowns.push(pok.moves[move].boosts);
+            }
+            else
+            {
+                pokObj.haveBoost = true;
+                pokObj.boosts.push(pok.moves[move].self.boosts);
+            }
+        }
+        if(pok.moves[move].id == &apos;substitute&apos;) {
+            pokObj.haveSubstitute = true;
+        }
+        else if(pok.moves[move].id == &apos;wish&apos;) {
+            pokObj.haveHeal = true;
+            pokObj.heal.push(&apos;wish&apos;)
+        }
+        else if(pok.moves[move].id == &apos;batonpass&apos;) {
+             pokObj.batonpass = true;
+        }
+        if(pok.moves[move].status) {
+            pokObj.haveStatus = true;
+            pokObj.status.push(pok.moves[move].status);
+            if(pok.moves[move].status == &apos;slp&apos;) {
+                pokObj.haveSleep = true;
+            }
+        }
+        if(pok.moves[move].priority &gt; 0) {
+            pokObj.havePriority = true;
+        }
+        if(pok.moves[move].volatileStatus) {
+            if(pok.moves[move].volatileStatus == &apos;yawn&apos;) {
+                pokObj.haveYawn = true;
+            }
+            else if(pok.moves[move].volatileStatus == &apos;leechseed&apos;) {
+                pokObj.haveLeechSeed = true;
+            }
+            else if(pok.moves[move].volatileStatus == &apos;protect&apos;) {
+                    pokObj.haveProtect = true;
+            }
+            else if(pok.moves[move].volatileStatus == &apos;confusion&apos; &amp;&amp; pok.moves[move].target == &apos;normal&apos;) {
+                    pokObj.haveConfusionInEnemy = true;
+            }
+
+        }
+        if(pok.moves[move].drain) {
+            pokObj.haveDrain = true;
+        }
+        if(pok.moves[move].heal) {
+            pokObj.haveHeal = true;
+        }
+        if(pok.moves[move].sideCondition) {
+            if(pok.moves[move].sideCondition == &apos;lightscreen&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;luckychant&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;mist&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;reflect&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;safeguard&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;tailwind&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;toxicspikes&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;spikes&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;stealthrock&apos; &amp;&amp;
+               pok.moves[move].sideCondition == &apos;stickyweb&apos;
+              ) {
+               pokObj.haveHazard = true;
+               pokObj.hazards.push(pok.moves[move].sideCondition);
+            }
+
+        }
+
+        if(pok.moves[move].secondary) {
+            if(pok.moves[move].secondary.self) {
+                if(pok.moves[move].secondary.self.boosts) {
+                    if(pok.moves[move].secondary.chance) {
+                        if(pok.moves[move].secondary.chance == 100) {
+                            pokObj.haveBoost = true;
+                            pokObj.boosts.push(pok.moves[move].secondary.self.boosts);
+                        }
+                    }
+                    else {
+                        pokObj.haveBoost = true;
+                        pokObj.boosts.push(pok.moves[move].secondary.self.boosts);
+                    }
+                }
+            }
+            if(pok.moves[move].secondary.status) {
+                if(pok.moves[move].secondary.chance) {
+                    if(pok.moves[move].secondary.chance == 100) {
+                        pokObj.haveStatus = true;
+                        pokObj.status.push(pok.moves[move].secondary.status);
+                        if(pok.moves[move].secondary.status == &apos;slp&apos;) {
+                            pokObj.haveSleep = true;
+                        }
+                    }
+                }
+                else {
+                    pokObj.haveStatus = true;
+                    pokObj.status.push(pok.moves[move].secondary.status);
+                    if(pok.moves[move].secondary.status == &apos;slp&apos;) {
+                        pokObj.haveSleep = true;
+                    }
+                }
+            }
+            if(pok.moves[move].secondary.volatileStatus) {
+                if(pok.moves[move].secondary.volatileStatus == &apos;confusion&apos;) {
+                    if(pok.moves[move].secondary.chance) {
+                        if(pok.moves[move].secondary.chance == 100) {
+                            pokObj.haveConfusionInEnemy = true;
+                        }
+                    }
+                    else {
+                        pokObj.haveConfusionInEnemy = true;
+                    }
+                }
+
+            }
+        }
+    }
+
+    if(pokObj.haveBoost) {
+
+        var haveTrueBoost = false;
+        var boosts = {
+            atk : false,
+            def : false,
+            hp : false,
+            spa : false,
+            spd : false,
+            spe : false,
+        };
+
+        for(var i in pokObj.boosts) {
+
+            for(var a in pokObj.boosts[i]) {
+
+                if(pokObj.boosts[i][a] &gt; 0) {
+                    haveTrueBoost = true;
+                    boosts[a] = true;
+                    //console.log(&quot;non bullshit &quot; + a + &quot; &quot; + pokObj.boosts[i][a] + &quot; &quot; + pok.id);
+                }
+                else {
+                    //console.log(&quot;This &quot; + a + &quot; &quot; + pokObj.boosts[i][a] + &quot; is bullshit&quot;+ &quot; &quot; + pok.id);
+                }
+            }
+        }
+
+        pokObj.haveBoost = haveTrueBoost;
+        pokObj.boosts = boosts;
+    }
+
+    if(pokObj.batonpass) {
+        if(!pokObj.haveBoost) {
+            pokObj.batonpass = false;
+        }
+    }
+
+    if(pokObj.haveBoost) { // SWEEP CHECK
+        if(pokObj.boosts.spe) {
+            var haveRecover = false;
+            if(pokObj.haveHeal) {
+                haveRecover = true;
+            }
+            else if(pokObj.haveHeal) {
+                haveRecover = true;
+            }
+            else if(pokObj.haveYawn) {
+                haveRecover = true;
+            }
+            else if(pokObj.haveConfusionInEnemy) {
+                haveRecover = true;
+            }
+            else if(pokObj.haveSleep) {
+                haveRecover = true;
+            }
+            if(haveRecover) {
+                var haveMoveUp = false;
+                for(var move in pok.moves) {
+                    if(pok.moves[move].category == &apos;Special&apos; &amp;&amp; pokObj.boosts.spa) {
+                         pokObj.isSweeper = &apos;special&apos;;
+                    }
+                    else if(pok.moves[move].category == &apos;Physical&apos; &amp;&amp; pokObj.boosts.atk) {
+                        haveMoveUp = &apos;physical&apos;;
+                    }
+                }
+            }
+            else {
+                console.log(&quot;No Recover :(&quot;);
+            }
+        }
+    }
+
+    for(var pokEnemy in enemy.reserve) {
+        pokObj.against[enemy.reserve[pokEnemy].id] = {};
+        pokObj.against[enemy.reserve[pokEnemy].id].max = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].min = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].bestMin = 0;
+
+        for (var move in pok.moves) {
+
+            if(!damageDoneIn[enemy.reserve[pokEnemy].id][move]) {
+                continue;
+            }
+
+            for(var index in  damageDoneIn[enemy.reserve[pokEnemy].id][move]) {
+                if( pokObj.against[enemy.reserve[pokEnemy].id].min == 0) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].min = damageDoneIn[enemy.reserve[pokEnemy].id][move][index]
+                }
+                else if(pokObj.against[enemy.reserve[pokEnemy].id].min &gt; damageDoneIn[enemy.reserve[pokEnemy].id][move][index]) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].min = damageDoneIn[enemy.reserve[pokEnemy].id][move][index];
+                }
+                if(pokObj.against[enemy.reserve[pokEnemy].id].max &lt; damageDoneIn[enemy.reserve[pokEnemy].id][move][index]) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].max = damageDoneIn[enemy.reserve[pokEnemy].id][move][index];
+                    pokObj.against[enemy.reserve[pokEnemy].id].bestMin = damageDoneIn[enemy.reserve[pokEnemy].id][move][0]
+                }
+            }
+        }
+
+        pokObj.against[enemy.reserve[pokEnemy].id].maxE = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].minE = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].bestMinE = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].knownMoves = enemy.reserve[pokEnemy].seenMoves.length;
+
+        for(var move in enemy.reserve[pokEnemy].seenMoves) {
+
+            var movement = Moves[enemy.reserve[pokEnemy].seenMoves[move]];
+
+            var damage = Damage.getDamageResult(pok, enemy.reserve[pokEnemy], movement);
+
+            for(var index in damage) {
+                if(pokObj.against[enemy.reserve[pokEnemy].id].minE == 0) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].minE = damage[index];
+                }
+                else if( pokObj.against[enemy.reserve[pokEnemy].id].minE &gt;  damage[index]) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].minE = damage[index];
+                }
+                if(pokObj.against[enemy.reserve[pokEnemy].id].maxE &lt;  damage[index]) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].maxE = damage[index];
+                    pokObj.against[enemy.reserve[pokEnemy].id].bestMinE = damage[0];
+                }
+            }
+
+
+        }
+
+        pokObj.against[enemy.reserve[pokEnemy].id].types = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].typeAttack = 0;
+        pokObj.against[enemy.reserve[pokEnemy].id].typeDefending = 0;
+
+        for(var pokT in pok.types) {
+            for(var pokE in enemy.reserve[pokEnemy].types) {
+                // my type attacking their type
+                var t = Typechart.compare(pok.types[pokT], enemy.reserve[pokEnemy].types[pokE]);
+                if(t == 0) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeAttack -= 3;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types -= 3;
+                }
+                else if(t == 0.5) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeAttack -= 1;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types -= 1;
+                }
+                else if(t == 2){
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeAttack += 2;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types += 2;
+                }
+
+                // their type atacking my type
+                t = Typechart.compare(enemy.reserve[pokEnemy].types[pokE], pok.types[pokT]);
+                if(t == 0) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeDefending += 3;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types += 3;
+                }
+                else if(t == 0.5) {
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeDefending += 1;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types += 1;
+                }
+                else if(t == 2){
+                    pokObj.against[enemy.reserve[pokEnemy].id].typeDefending -= 3;
+                    pokObj.against[enemy.reserve[pokEnemy].id].types -= 3;
+                }
+
+            }
+        }
+        //console.log(pok.types + &quot; against &quot; + enemy.reserve[pokEnemy].types + &quot; = &quot; + pokObj.against[enemy.reserve[pokEnemy].id].types)
+
+        pokObj.against[enemy.reserve[pokEnemy].id].value = EvaluateEnemy(pokObj, enemy.reserve[pokEnemy].id);
+
+        //console.log(pok.id + &quot; against &quot; + enemy.reserve[pokEnemy].id + &quot; = &quot; + pokObj.against[enemy.reserve[pokEnemy].id].value);
+    }
+
+
+
+    return pokObj;
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

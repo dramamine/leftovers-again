@@ -1,0 +1,73 @@
+{
+  "name": "leftovers-again",
+  "version": "0.11.7",
+  "description": "Pokemon Showdown - Bot Client",
+  "main": "src/main.js",
+  "files": [
+    "src",
+    "spec",
+    "templates",
+    "scripts",
+    "CONTRIBUTING.md",
+    "README.md",
+    "FAQ.md"
+  ],
+  "scripts": {
+    "docs": "./node_modules/.bin/esdoc -c esdoc.json",
+    "docs:publish": "curl --data \"gitUrl=git@github.com:dramamine/leftovers-again.git\" https://doc.esdoc.org/api/create",
+    "lint": "node ./node_modules/eslint/bin/eslint.js src",
+    "test": "jasmine",
+    "develop": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "server": "cd deps/Pokemon-Showdown && node app.js",
+    "client": "./scripts/open-client.sh",
+    "generate": "./src/scripts/generate.js",
+    "release": "npm-run-all test docs docs:publish && echo '\n\nGreat! Now make sure you bumped version and run `npm publish`.'"
+  },
+  "_moduleAliases": {
+    "leftovers-again": "src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dramamine/leftovers-again.git"
+  },
+  "bugs": "https://github.com/dramamine/leftovers-again/issues",
+  "keywords": [
+    "pokemon"
+  ],
+  "author": "marten",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "cheerio": "^0.20.0",
+    "glob": "^7.0.3",
+    "handlebars": "^4.0.5",
+    "inquirer": "^1.0.2",
+    "jasmine": "^2.7.0",
+    "minimist": "~1.2.0",
+    "module-alias": "^2.0.1",
+    "rimraf": "^2.5.4",
+    "ws": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.8.0",
+    "babel-eslint": "^7.0.0",
+    "babel-preset-latest": "^6.16.0",
+    "esdoc": "^0.4.6",
+    "esdoc-node": "^1.0.2",
+    "eslint": "^3.7.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-jasmine": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "jasmine-es6": "^0.1.10",
+    "jasmine-node": "^1.14.5",
+    "lodash": "^4.6.1",
+    "npm-run-all": "^4.0.2",
+    "underscore": "^1.8.3"
+  },
+  "engine": "node >= 6.0.0"
+}
