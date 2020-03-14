@@ -3,7 +3,7 @@
 Live server running here: http://cyberdyne.psim.us
 
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
-Full code documentation [here](http://metal-heart.org/static/docs/).
+Full code documentation [here](https://avadavat.github.io/leftovers-again/).
 
 This is the official repository for an ongoing AI competition for Pokemon battles.
 
@@ -97,7 +97,7 @@ npm start -- --production
 
 FAQ/Getting started guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
 
-Code documentation [here](http://metal-heart.org/static/docs/).
+Code documentation [here](https://avadavat.github.io/leftovers-again/).
 
 Contribution guide [here](https://github.com/dramamine/leftovers-again/blob/master/CONTRIBUTING.md).
 
