@@ -125,7 +125,9 @@ const questions = [
  */
 const writePackage = (source, more, destination) => {
   const combined = Object.assign(source, more);
-  fs.writeFile(destination, JSON.stringify(combined, null, 2));
+  fs.writeFile(destination, JSON.stringify(combined, null, 2), (err) => {
+    if (err) console.error('Error writing file:', destination, parsed, err);
+  });
 };
 
 /**
