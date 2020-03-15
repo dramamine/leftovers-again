@@ -3,6 +3,7 @@
   "version": "0.11.7",
   "description": "Pokemon Showdown - Bot Client",
   "main": "src/main.js",
+  "types": "src/main.d.ts",
   "files": [
     "src",
     "spec",
