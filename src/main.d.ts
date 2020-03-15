@@ -80,7 +80,7 @@ declare namespace LeftoversAgain {
 		onUserJoin: (user: string) => void;
 		onUserLeave: (user: string) => void;
 		// below only in models
-		challengeSomeone: (users: Set<any>) => void;	// TODO
+		challengeSomeone: (users?: Set<any>) => void;	// TODO
 		sendTeam: (opponent: string) => boolean;
 		tryChallenge: (opponent: any) => any;	// TODO
 	}
@@ -99,7 +99,7 @@ declare namespace LeftoversAgain {
 		id: number | string | object;
 		target: number;
 
-		constructor(id: number | string | object, target: number);	// TODO
+		constructor(id: number | string | object, target: number);
 	}
 
 	class Interactive {
@@ -134,6 +134,7 @@ declare namespace LeftoversAgain {
 	}
 
 	class MOVE extends Decision {
+		constructor(id: number | string | object, target?: number);
 		setMegaEvo: (should: boolean) => void;
 		useZMove: (should: boolean) => void;
 	}
@@ -143,7 +144,7 @@ declare namespace LeftoversAgain {
 
 		updateMoveList: (moves: Array<any>) => Array<any>;	// TODO
 		addStatus: (status: string) => void;
-		assimilate: (object) => void;	// TODO
+		assimilate: (obj: object) => void;	// TODO
 		data: () => Pokemon;
 		recordMove: (move: string) => void;
 		removeStatus: (status: string) => void;
@@ -169,7 +170,7 @@ declare namespace LeftoversAgain {
 	}
 
 	class SWITCH extends Decision {
-
+		constructor(id: number | string | object, target?: number);
 	}
 
 	class Team {
@@ -199,10 +200,12 @@ declare namespace LeftoversAgain {
 		accuracy: number | boolean;
 		basePower: number;
 		category: string;
+		disabled: boolean;
 		flags: {
 			authentic: boolean;
 			bite: boolean;
 			bullet: boolean;
+			canZMove: boolean;	// Docs say this is outside flags, assuming is a typo
 			charge: boolean;
 			contact: boolean;
 			defrost: boolean;
@@ -220,7 +223,6 @@ declare namespace LeftoversAgain {
 			snatch: boolean;
 			sound: boolean;
 		};
-		canZMove: boolean;	// TODO: should this be inside the flags object? Looks like typo in docs
 		id: string;
 		name: string;
 		priority: number;
@@ -287,6 +289,7 @@ declare namespace LeftoversAgain {
 			reserve: Array<PokemonData>
 		};
 		turn: any;	// TODO
+		forceSwitch: boolean;
 	}
 
 	function botFinder(path: string): object;	// TODO
