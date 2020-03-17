@@ -1,3 +1,5 @@
+import { BattleStore } from "./model/battlestore";
+
 export class Report {
   constructor();
 

@@ -1,4 +1,4 @@
-class Pokemon {
+export class Pokemon {
   constructor(ident: string, details: string);
 
   updateMoveList(moves: Array<any>): Array<any>; // TODO

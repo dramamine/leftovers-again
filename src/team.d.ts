@@ -1,3 +1,5 @@
+import { Pokemon } from "./model/pokemon";
+
 export class Team {
   constructor(tm: Array<Pokemon> | string);
 

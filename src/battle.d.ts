@@ -1,3 +1,7 @@
+import { Connection } from "./connection";
+import { Decision } from "./decisions";
+import { PokemonData } from "./model/pokemon";
+
 export class Battle {
   constructor(bid: string, connection: Connection, botpath: string);
 
