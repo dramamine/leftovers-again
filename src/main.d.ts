@@ -5,4 +5,4 @@
 import { AI } from "./ai";
 
 export function botFinder(path: string): object; // TODO
-export function start(metadata: object, Bot: AI): object; // TODO
+export function start(metadata: object, Bot: { new(): AI }): object; // TODO
