@@ -11,6 +11,7 @@ const Challenger = require('./model/challenges');
 const Lobby = require('./model/lobby');
 const Log = require('./log');
 const { MOVE, SWITCH } = require('./decisions');
+const AI = require('./ai');
 
 let challenger;
 let myconnection;
@@ -165,5 +166,6 @@ const start = (metadata, Bot) => {
 module.exports = {
   start,
   MOVE,
-  SWITCH
+  SWITCH,
+  AI
 };
