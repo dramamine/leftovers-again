@@ -35,7 +35,7 @@ declare namespace LeftoversAgain {
 		};
 		decide(state: State): void;
 		forfeit(): void;
-		formatMessage(bid: string, choice: Choice, state: BattleState): string;	// TODO: Choice & BattleState undefined
+		formatMessage(bid: string, choice: Decision, state: State): string;
 		getHelp(): void;
 		handle(type: string, message: Array<object>): void;	// TODO
 		handleCant(target: string, reason: string, move: string): void;
