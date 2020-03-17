@@ -2,7 +2,7 @@
  * MeetTheFakers
  *
  */
-const AI = require('@la/ai');
+const { AI } = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 const Typechart = require('@la/game/typechart');
 const Damage = require('@la/game/damage');

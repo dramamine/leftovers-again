@@ -3,7 +3,7 @@
  *
  * npm run develop -- --bot=predetermined-random
  */
-const AI = require('@la/ai');
+const { AI } = require('@la/ai');
 const team = require('@la/game/team');
 const { MOVE, SWITCH } = require('@la/decisions');
 

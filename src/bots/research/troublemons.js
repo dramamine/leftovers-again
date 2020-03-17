@@ -5,7 +5,7 @@
  * npm run develop -- --bot=research/troublemons
  */
 
-const AI = require('@la/ai');
+const { AI } = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 
 module.exports = class Trouble extends AI {

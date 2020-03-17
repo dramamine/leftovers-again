@@ -4,7 +4,7 @@
  * npm run develop -- --bot=research/spikes
  */
 
-const AI = require('@la/ai');
+const { AI } = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'spikes';

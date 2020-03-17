@@ -3,7 +3,7 @@
  *
  */
 
-const AI = require('@la/ai');
+const { AI } = require('@la/ai');
 const Damage = require('@la/game/damage');
 const KO = require('@la/game/kochance');
 const Typechart = require('@la/game/typechart');
