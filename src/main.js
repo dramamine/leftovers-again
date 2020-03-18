@@ -1,16 +1,17 @@
-require('module-alias').addAlias('@la', __dirname);
-const socket = require('./socket');
-const monkey = require('./monkey');
-const listener = require('./listener');
-const defaults = require('./defaults');
-const BotManager = require('./botmanager');
-const BattleManager = require('./battlemanager');
-const Spawner = require('./spawner');
-const Interactive = require('./interfaces/cli');
-const Challenger = require('./model/challenges');
-const Lobby = require('./model/lobby');
-const Log = require('./log');
-const { MOVE, SWITCH } = require('./decisions');
+require("module-alias").addAlias("@la", __dirname);
+const socket = require("./socket");
+const monkey = require("./monkey");
+const listener = require("./listener");
+const defaults = require("./defaults");
+const BotManager = require("./botmanager");
+const BattleManager = require("./battlemanager");
+const Spawner = require("./spawner");
+const Interactive = require("./interfaces/cli");
+const Challenger = require("./model/challenges");
+const Lobby = require("./model/lobby");
+const Log = require("./log");
+const { SWITCH, MOVE } = require("./decisions");
+const AI = require("./ai");
 
 let challenger;
 let myconnection;
@@ -69,11 +70,11 @@ Leftovers Again: interface for Pokemon Showdown bots
 /**
  * argv: i.e., process.argv
  */
-const start = (metadata, Bot) => {
+function start(metadata, Bot) {
   const info = new BotManager(metadata, Bot);
 
   // process cmdline args
-  const args = require('minimist')(process.argv.slice(2));
+  const args = require("minimist")(process.argv.slice(2));
 
   let config = {};
   if (args.config) {
@@ -89,7 +90,7 @@ const start = (metadata, Bot) => {
     Spawner.spawn(args.opponent);
     args.scrappy = true;
   } else if (args.opponents) {
-    args.opponents.split(',').forEach((opponent) => {
+    args.opponents.split(",").forEach(opponent => {
       Spawner.spawn(opponent);
     });
     args.scrappy = true;
@@ -97,16 +98,31 @@ const start = (metadata, Bot) => {
 
   // for everything else, check args, then bot info, then defaults.
   // lots of these, you wouldn't really want them in bot info, but eh, whatever.
-  const params = ['scrappy', 'format', 'nickname', 'password', 'server', 'matches',
-    'production', 'prodServer', 'loglevel', 'results', 'test', 'timeout'];
-  params.forEach((param) => {
-    args[param] = args[param] || metadata[param] || config[param] || defaults[param];
+  const params = [
+    "scrappy",
+    "format",
+    "nickname",
+    "password",
+    "server",
+    "matches",
+    "production",
+    "prodServer",
+    "loglevel",
+    "results",
+    "test",
+    "timeout"
+  ];
+  params.forEach(param => {
+    args[param] =
+      args[param] || metadata[param] || config[param] || defaults[param];
   });
 
   // use prodServer if user had --production flag
   if (args.production) {
     if (args.scrappy) {
-      Log.error('Come on! You can\'t challenge EVERYONE on the PRODUCTION server.');
+      Log.error(
+        "Come on! You can't challenge EVERYONE on the PRODUCTION server."
+      );
       process.exit();
     }
     args.server = args.prodServer;
@@ -145,25 +161,29 @@ const start = (metadata, Bot) => {
     });
   }
 
-
   // do something when app is closing
-  process.on('exit', exitHandler.bind(null, {
-    cleanup: true
-  }));
+  process.on(
+    "exit",
+    exitHandler.bind(null, {
+      cleanup: true
+    })
+  );
 
   // catches ctrl+c event
-  process.on('SIGINT', exitHandler.bind(null, {
-    exit: true
-  }));
+  process.on(
+    "SIGINT",
+    exitHandler.bind(null, {
+      exit: true
+    })
+  );
 
   // catches uncaught exceptions
-  process.on('uncaughtException', exitHandler.bind(null, {
-    exit: true
-  }));
-};
+  process.on(
+    "uncaughtException",
+    exitHandler.bind(null, {
+      exit: true
+    })
+  );
+}
 
-module.exports = {
-  start,
-  MOVE,
-  SWITCH
-};
+module.exports = { AI, start, SWITCH, MOVE };
