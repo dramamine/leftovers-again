@@ -3,7 +3,7 @@
  *
  * npm run develop -- --bot=research/sunnyday
  */
-const { AI } = require('@la/ai');
+const AI = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 
 module.exports = class SunnyDay extends AI {

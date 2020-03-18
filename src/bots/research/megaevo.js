@@ -5,7 +5,7 @@
  * npm run develop -- --bot=research/megaevo
  */
 
-const { AI } = require('@la/ai');
+const AI = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 
 const moveId = 'scald';

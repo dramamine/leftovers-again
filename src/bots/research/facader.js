@@ -18,7 +18,7 @@
  * npm run develop -- --bot=anythinggoes/tester/facader.js
  */
 
-const { AI } = require('@la/ai');
+const AI = require('@la/ai');
 const { MOVE, SWITCH } = require('@la/decisions');
 const Damage = require('@la/game/damage');
 const Log = require('@la/log');

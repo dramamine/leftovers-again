@@ -2,7 +2,7 @@
  * Emptiest bot.
  *
  */
-const { AI } = require('@la/ai');
+const AI = require('@la/ai');
 
 class Blank extends AI {
   constructor() {
