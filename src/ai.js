@@ -12,8 +12,9 @@ class AI {
    *
    * @return {String}   A Showdown-formatted team string.
    */
-  team(opponent) { // eslint-disable-line
-    return this.meta.team || '';
+  team(opponent) {
+    // eslint-disable-line
+    return this.meta.team || "";
   }
 
   /**
@@ -51,10 +52,11 @@ class AI {
    *
    *
    */
-  decide(state) { // eslint-disable-line
-    console.error('You need to implement decide() in your AI class!');
+  decide(state) {
+    // eslint-disable-line
+    console.error("You need to implement decide() in your AI class!");
     return false;
   }
 }
 
-module.exports = {AI};
+module.exports = AI;
