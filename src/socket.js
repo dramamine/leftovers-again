@@ -205,8 +205,8 @@ server logs for debugging.
       // console.error(`failed to log in, still guest (status code ${status})`);
       return false;
     }
-    if (nick !== this.nickname) {
-      Log.error('nickname was ', nick, ' expecting ', this.nickname);
+    if (nick.trim() !== this.nickname) {
+      Log.error('nickname was ' + nick + ' expecting ' + this.nickname);
       return false;
     }
 
