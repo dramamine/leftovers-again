@@ -83,9 +83,7 @@ const questions = [
     name: 'description',
     message: 'Write a description for your bot (optional)',
     default: existingPackage.description || 'the very best',
-    filter: (str) => {
-      return str.replace(/\"/g, '');
-    }
+    filter: (str) => str.replace(/\"/g, '')
   },
   {
     name: 'format',
