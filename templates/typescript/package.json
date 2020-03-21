@@ -13,7 +13,6 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "husky": "^4.2.3",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
@@ -32,10 +31,5 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run prettier"
-    }
   }
 }
