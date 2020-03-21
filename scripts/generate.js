@@ -75,7 +75,8 @@ const questions = [
     message: 'What is your bot\'s name? (Capitalized, no spaces)',
     default: existingPackage.name || 'Terminator',
     filter: (str) => str.replace(/\W/g, '').replace(/^./, (match) => match.toUpperCase())
-  }, {
+  },
+  {
     name: 'description',
     message: 'Write a description for your bot (optional)',
     default: existingPackage.description || 'the very best',
@@ -167,7 +168,7 @@ inquirer.prompt(questions).then((answers) => {
     answers.team = true;
   }
 
-  const lang = 'nodejs';
+  const { lang } = answers;
   // @TODO this goes to tmp but should eventually go to 'bots'
   // const folder = 'bots/' + answers.repo;
   // fs.mkdirSync(folder);
