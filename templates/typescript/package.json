@@ -1,0 +1,41 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.0",
+  "description": "the very best",
+  "main": "src/bot.js",
+  "format": "{{format}}",
+  "accepts": "{{accept}}",
+  "nickname": "{{Repo}}",
+  "type": "module",
+  "dependencies": {
+    "@types/node": "^13.9.1",
+    "leftovers-again": "git+ssh://git@github.com/avadavat/leftovers-again.git#2e8b868ce172518c6a71f23356bd4684fbac0bc7",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "develop": "nodemon src/app.js",
+    "start": "node --experimental-modules --experimental-json-modules --es-module-specifier-resolution=node build/src/app.js",
+    "server": "cd Pokemon-Showdown && npm start",
+    "prettier": "pretty-quick --staged --pattern \"**/*.*(js|jsx|ts|tsx)\"",
+    "prettier-check": "prettier --check \"**/*.*(js|jsx|ts|tsx)\"",
+    "prettier-full": "prettier --write \"**/*.*(js|jsx|ts|tsx)\""
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier"
+    }
+  }
+}
