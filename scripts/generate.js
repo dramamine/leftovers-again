@@ -17,7 +17,7 @@ const formatsWithTeams = ['gen7anythinggoes',
 // formats without teams, plus the above
 const formats = ['gen7randombattle'].concat(formatsWithTeams);
 
-const languages = ['nodejs'];
+const languages = ['nodejs', 'typescript'];
 
 /**
  * Try to 'require' stuff without crashing out
@@ -90,7 +90,7 @@ const questions = [
   {
     name: 'format',
     message: 'What battle format are you writing for? (The main difference being, '
-    + 'whether your team is predetermined or random.)',
+      + 'whether your team is predetermined or random.)',
     type: 'list',
     choices: formats
   },
