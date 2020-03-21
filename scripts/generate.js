@@ -74,11 +74,7 @@ const questions = [
     name: 'Repo',
     message: 'What is your bot\'s name? (Capitalized, no spaces)',
     default: existingPackage.name || 'Terminator',
-    filter: (str) => {
-      return str.replace(/\W/g, '').replace(/^./, (match) => {
-        return match.toUpperCase();
-      });
-    }
+    filter: (str) => str.replace(/\W/g, '').replace(/^./, (match) => match.toUpperCase())
   }, {
     name: 'description',
     message: 'Write a description for your bot (optional)',
