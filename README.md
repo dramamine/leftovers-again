@@ -1,6 +1,6 @@
 ## LEFTOVERS AGAIN: A Pokemon AI Battle Arena
 
-Live server running here: http://cyberdyne.psim.us
+EDIT: Live server "Cyberdyne" is down for now. Everything still works great locally. If you're interested in maintaining a live server please contact me.
 
 'Getting Started' guide [here](https://github.com/dramamine/leftovers-again/blob/master/FAQ.md).
 Full code documentation [here](http://metal-heart.org/static/docs/).
