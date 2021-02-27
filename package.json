@@ -42,7 +42,7 @@
     "cheerio": "^0.20.0",
     "glob": "^7.0.3",
     "handlebars": "^4.0.5",
-    "inquirer": "^1.0.2",
+    "inquirer": "^6.4.1",
     "jasmine": "^2.7.0",
     "minimist": "~1.2.0",
     "module-alias": "^2.0.1",
